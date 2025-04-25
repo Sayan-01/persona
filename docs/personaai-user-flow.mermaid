@@ -1,0 +1,60 @@
+graph TD
+    A["New User"] -->|"Signs Up"| B["Registration"]
+    B -->|"Creates Account"| C["Onboarding Process"]
+    
+    C -->|"Step 1"| D["Define Writing Tone"]
+    D -->|"Step 2"| E["Select Industry/Niche"]
+    E -->|"Step 3"| F["Define Target Audience"]
+    F -->|"Step 4"| G["Set Content Goals"]
+    G -->|"Step 5"| H["Add Sample Content"]
+    H -->|"Complete"| I["Dashboard"]
+    
+    J["Existing User"] -->|"Logs In"| I
+    
+    I -->|"View Stats"| K["Content Overview"]
+    I -->|"Quick Actions"| L["Action Hub"]
+    
+    L -->|"Generate Ideas"| M["Content Brain - Ideas"]
+    L -->|"Create Content"| N["Content Brain - Create"]
+    L -->|"Enhance Content"| O["Content Brain - Enhance"]
+    L -->|"Schedule Posts"| P["Content Calendar"]
+    
+    M -->|"Select Idea"| N
+    N -->|"Generate"| Q["Content Draft"]
+    O -->|"Improve"| Q
+    
+    Q -->|"Edit"| R["Content Editor"]
+    R -->|"Save"| S["Save to Drafts"]
+    R -->|"Schedule"| T["Add to Calendar"]
+    R -->|"Publish Now"| U["Post to Platform"]
+    
+    S -->|"View All"| V["Content Management"]
+    T -->|"View Schedule"| P
+    U -->|"Track Performance"| W["Analytics"]
+    
+    I -->|"Manage Content"| V
+    V -->|"Filter: Drafts"| V1["View Drafts"]
+    V -->|"Filter: Scheduled"| V2["View Scheduled"]
+    V -->|"Filter: Posted"| V3["View Posted"]
+    
+    V1 -->|"Edit"| R
+    V2 -->|"Reschedule"| T
+    V3 -->|"Duplicate"| R
+    
+    I -->|"View Calendar"| P
+    P -->|"Add Content"| N
+    P -->|"Reschedule"| T
+    
+    I -->|"Update Settings"| X["Settings"]
+    X -->|"Persona Settings"| Y["Update AI Persona"]
+    X -->|"Account Settings"| Z["Update Profile"]
+    X -->|"Notifications"| AA["Configure Alerts"]
+    X -->|"Security"| AB["Password/2FA"]
+    X -->|"Billing"| AC["Manage Subscription"]
+    
+    Y -->|"Save Changes"| I
+    Z -->|"Save Changes"| I
+    AA -->|"Save Changes"| I
+    AB -->|"Save Changes"| I
+    AC -->|"Upgrade Plan"| AD["Payment Process"]
+    AD -->|"Complete"| I

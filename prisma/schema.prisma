@@ -1,0 +1,207 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum ContentStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContentType {
+  POST
+  ARTICLE
+  SOCIAL_MEDIA
+  EMAIL
+  OTHER
+}
+
+enum IdeaStatus {
+  NEW
+  IN_PROGRESS
+  CONVERTED
+  DISCARDED
+}
+
+enum ScheduleStatus {
+  SCHEDULED
+  PUBLISHED
+  CANCELLED
+}
+
+enum PlanType {
+  FREE
+  BASIC
+  PRO
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PENDING
+}
+
+model User {
+  id                  String         @id @default(uuid())
+  name                String
+  password            String?
+  isVarified          Boolean        @default(false)
+  isAdmin             Boolean        @default(false)
+  varifiedToken       String
+  varifiedTokenExpire DateTime?
+  avatarUrl           String?        @db.Text
+  email               String         @unique
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  // Profile and Settings
+  profile       Profile?
+  aiPersona     AIPersona?
+  notifications NotificationSettings?
+  security      SecuritySettings?
+  subscription  Subscription?
+  
+  // Content Related
+  contents      Content[]
+  ideas         Idea[]
+  calendar      CalendarEntry[]
+
+  @@map("users")
+}
+
+model Profile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  industry        String?
+  targetAudience  String?
+  contentGoals    String[]
+  writingTone     String?
+  sampleContent   String?
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("profiles")
+}
+
+model AIPersona {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  tone            String[]
+  style           String[]
+  preferences     Json?
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("ai_personas")
+}
+
+// Content Management
+model Content {
+  id          String        @id @default(cuid())
+  title       String
+  body        String
+  status      ContentStatus
+  type        ContentType
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  publishedAt DateTime?
+  
+  // Relations
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+  calendar    CalendarEntry?
+  analytics   Analytics?
+  
+  // Enhancement History
+  enhancements Enhancement[]
+  
+  @@map("contents")
+}
+
+model Idea {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  status      IdeaStatus
+  createdAt   DateTime  @default(now())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  
+  @@map("ideas")
+}
+
+model Enhancement {
+  id          String    @id @default(cuid())
+  contentId   String
+  content     Content   @relation(fields: [contentId], references: [id])
+  changes     String
+  createdAt   DateTime  @default(now())
+  
+  @@map("enhancements")
+}
+
+model CalendarEntry {
+  id          String    @id @default(cuid())
+  contentId   String    @unique
+  content     Content   @relation(fields: [contentId], references: [id])
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  scheduledFor DateTime
+  status      ScheduleStatus
+  
+  @@map("calendar_entries")
+}
+
+model Analytics {
+  id          String    @id @default(cuid())
+  contentId   String    @unique
+  content     Content   @relation(fields: [contentId], references: [id])
+  views       Int       @default(0)
+  engagement  Json?
+  performance Json?
+  
+  @@map("analytics")
+}
+
+// Settings and Configuration
+model NotificationSettings {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  email       Boolean   @default(true)
+  push        Boolean   @default(true)
+  preferences Json?
+  
+  @@map("notification_settings")
+}
+
+model SecuritySettings {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  twoFactorEnabled Boolean @default(false)
+  lastPasswordChange DateTime?
+  
+  @@map("security_settings")
+}
+
+model Subscription {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan        PlanType
+  startDate   DateTime  @default(now())
+  endDate     DateTime?
+  status      SubscriptionStatus
+  
+  @@map("subscriptions")
+}
