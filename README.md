@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 PersonaAI — Your Personal Branding Content Studio.
 
-## Getting Started
+Create, Manage, and Grow Your Personal Brand — Powered by AI, Tailored Uniquely to You.
 
-First, run the development server:
+## 🚀 Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+PersonaAI is a micro-SaaS platform that helps founders, freelancers, marketers, and niche creators build a strong, consistent, and authentic personal brand online.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+It learns your voice, understands your goals, and automatically ideates, writes, designs, and schedules content across platforms like LinkedIn, Twitter (X), Blogs, and Email — all tailored only for you.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+✅ No more writer’s block
+✅ No more inconsistent posting
+✅ No more generic AI content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+With PersonaAI, it's like having your own personal branding agency — at your fingertips.
 
-## Learn More
+## Key Features
 
-To learn more about Next.js, take a look at the following resources:
+User Persona Builder
+→ Trains AI on your goals, tone, backstory, and industry.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+AI-Powered Content Brain
+→ Generates tailored content ideas and trends, aligned with your brand.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Multi-Platform Writer
+→ Instantly create posts for LinkedIn, X/Twitter, Medium blogs, and newsletters.
 
-## Deploy on Vercel
+Content Calendar & Scheduling
+→ Plan, organize, and auto-post your content to stay consistent.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Personal Brand Score
+→ Gamified tracking of your brand consistency, tone match, and engagement growth.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech Stack
+
+Frontend: Next.js, TailwindCSS, shadcn/ui
+
+Backend: Next.js, PostgreSQL, prisma
+
+AI: OpenAI GPT-4 / DeepSeek
+
+Emails: Resend
+
+Scheduling: Cron Jobs
+
+## Target Audience
+
+Solopreneurs
+
+Freelancers
+
+Startup founders
+
+Personal brand consultants
+
+Niche creators (coaches, indie hackers, marketers)
+
+## Roadmap
+
+MVP Launch (Persona Builder + Content Generator + Scheduler)
+
+Voice Model Improvements (User training data fine-tuning)
+
+Image & Visual Content Generation
+
+Browser Extension Assistant
+
+Agency API & White-Label Support
+
+## Monetization Strategy
+
+Subscription Plans (Starter, Pro, Agency)
+
+Pay-per-credit Add-ons (for long-form posts, visuals)
+
+Affiliate Program to drive growth
+
+Note: Our goal is to keep costs minimal during early stages. APIs like OpenAI / DeepSeek are the only paid services until we generate revenue.
+
+## Launch Plans
+
+Product Hunt
+
+Twitter/X Marketing
+
+LinkedIn Growth Communities
+
+Indie Hackers, Reddit
+
+Partnerships with personal brand coaches
+
+## Contributing
+
+Interested in contributing ideas, feedback, or growth strategies?
+Feel free to open an issue or reach out directly!
+
+## Contact
+
+Founder: Sayan Das
+Email: sayandas61668@gmail.com
+Website: Coming Soon 🚀
+
+## Final Note
+
+PersonaAI is not just another AI writing tool.
+It's your personalized brand-building companion, helping you grow your influence, one authentic post at a time.
+
+🔥 Let's build your personal brand — powered by YOU.
