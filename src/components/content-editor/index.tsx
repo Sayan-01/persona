@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -12,8 +12,20 @@ interface ContentEditorProps {
   onEnhance?: () => void
 }
 
-export function ContentEditor({ initialContent = "", onSave, onEnhance }: ContentEditorProps) {
-  const [content, setContent] = useState(initialContent)
+export function ContentEditor({ initialContent, onSave, onEnhance }: ContentEditorProps) {
+  const [content, setContent] = useState("")
+  
+  useEffect(() => {
+    if (initialContent) {
+      // Parse and format the content if it's a JSON string
+      try {
+        const formattedContent = initialContent.replace(/\\n/g, '\n').replace(/^"|"$/g, '');
+        setContent(formattedContent);
+      } catch (error) {
+        setContent(initialContent);
+      }
+    }
+  }, [initialContent]);
 
   return (
     <Card className="p-4">
@@ -37,8 +49,9 @@ export function ContentEditor({ initialContent = "", onSave, onEnhance }: Conten
       <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="min-h-[300px]"
+        className="min-h-[500px] font-mono text-sm"
         placeholder="Write or edit your content here..."
+        style={{ whiteSpace: 'pre-wrap', lineHeight: '1.5' }}
       />
     </Card>
   )

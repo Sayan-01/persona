@@ -12,9 +12,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Sparkles, RefreshCw, ThumbsUp, Copy, MessageSquare, ArrowRight, CheckCircle2, LightbulbIcon, Wand2, Clock, Send } from "lucide-react";
 import { ContentEditor } from "@/components/content-editor";
 import AiPrompt from "../../../../../AI/IdeaGeneratePrompt";
+import generateContentPrompt from "../../../../../AI/ContentGeneratePrompt";
 import { getUserAIPersona, getUserProfile } from "../../../../../server/user-profile";
 import IdeaCard from "./ideaCard";
-import ContentIdeas from "./tabs/ContentIdeas";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
@@ -47,9 +47,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   }, [user]);
 
   const handleGenerate = async (type: string) => {
-    const prompt = AiPrompt(promptDetails.topic, promptDetails.platform, promptDetails.numberOfIdeas, userProfile, aiPersona);
     switch (type) {
       case "idea generate":
+        const ideaPrompt = AiPrompt(promptDetails.topic, promptDetails.platform, promptDetails.numberOfIdeas, userProfile, aiPersona);
         setGenerating(true);
         try {
           const res = await fetch("/api/generate-content-idea", {
@@ -58,7 +58,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              prompt: prompt,
+              prompt: ideaPrompt,
             }),
           });
 
@@ -68,13 +68,58 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           const data = await res.json();
           if (data) {
             const dataObj = JSON.parse(data);
-            console.log(dataObj.contentIdeas);
-            setResult(dataObj.contentIdeas);
+            setResult(dataObj);
             if (activeTab === "ideas") {
               setShowIdeas(true);
             } else if (activeTab === "enhance") {
               setShowEnhanced(true);
             }
+          }
+          setGenerating(false);
+        } catch (error) {
+          console.log(error);
+          setGenerating(false);
+        }
+        break;
+
+      case "content generate":
+        setGenerating(true);
+        try {
+          const contentPrompt = generateContentPrompt({
+            platform: contentType,
+            topic: promptDetails.topic,
+            keyPoints: selectedIdea?.keyPoints || [],
+            hashtags: selectedIdea?.hashtags || [],
+            contentLength: "medium",
+            tone: aiPersona?.tone || "professional",
+            userPersona: {
+              industry: userProfile?.industry,
+              expertise: userProfile?.expertise,
+              style: aiPersona?.writingStyle,
+            },
+          });
+
+          const res = await fetch("/api/generate-content-idea", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              prompt: contentPrompt,
+            }),
+          });
+
+          if (!res.ok) {
+            throw new Error("Failed to generate content.");
+          }
+
+          const data = await res.json();
+          if (data) {
+            const dataObj = JSON.parse(data);
+            console.log(dataObj);
+
+            setContentDraft(dataObj.content);
+            setShowDraft(true);
           }
 
           setGenerating(false);
@@ -83,7 +128,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           setGenerating(false);
         }
         break;
-      case "content generate":
     }
   };
 
@@ -376,7 +420,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
 
             {/* Add Content Editor */}
             <ContentEditor
-              initialContent={selectedIdea ? `${selectedIdea.title}\n\n${selectedIdea.description}` : ""}
+              initialContent={contentDraft as string}
               onSave={handleContentSave}
               onEnhance={handleEnhanceContent}
             />
@@ -420,7 +464,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               </div>
             )}
 
-            {showDraft && (
+            {!showDraft && (
               <Card>
                 <CardHeader>
                   <CardTitle>Content Draft</CardTitle>
