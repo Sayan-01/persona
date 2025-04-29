@@ -19,7 +19,7 @@ const HeroSection = () => {
     },
   };
   return (
-    <section className="relative min-h-[90vh] w-full overflow-hidden bg-gradient-to-b from-[#c5d7ff] to-white dark:from-gray-900 dark:to-gray-950                 ">
+    <section className="relative min-h-[90vh] w-full overflow-hidden bg-gradient-to-b from-[#e0e7ff] via-[#f5f7ff] to-white dark:from-gray-950 dark:via-blue-950/20 dark:to-gray-950">
       <div className="w-full max-w-7xl mx-auto mt-20">
         <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
         <motion.div
@@ -30,10 +30,10 @@ const HeroSection = () => {
         >
           <motion.div
             variants={fadeInUp}
-            className="inline-flex items-center rounded-full border border-blue-200 bg-white/50 px-3 py-1 text-sm font-medium text-blue-900 backdrop-blur-sm dark:border-blue-800 dark:bg-gray-900/50 dark:text-blue-100"
+            className="inline-flex items-center rounded-full border border-blue-200/50 bg-white/80 px-4 py-1.5 text-sm font-medium text-blue-900 backdrop-blur-sm dark:border-blue-800/50 dark:bg-gray-900/80 dark:text-blue-100"
           >
             <span className="mr-2">✨</span>
-            Revolutionizing Content Creation
+            AI-Powered Content Generation
             <ChevronRight className="ml-1 h-4 w-4" />
           </motion.div>
 
@@ -41,14 +41,14 @@ const HeroSection = () => {
             variants={fadeInUp}
             className="mt-8 max-w-4xl text-center text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl md:text-7xl"
           >
-            Streamline Your <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">Customer Relationships</span>
+            Your Personal AI <span className="bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent">Content Assistant</span>
           </motion.h1>
 
           <motion.p
             variants={fadeInUp}
-            className="mt-6 max-w-2xl text-center text-lg text-gray-600 dark:text-gray-300"
+            className="mt-6 max-w-[680px] text-center text-lg text-gray-700 dark:text-gray-200"
           >
-            Lead tracking to analytics, everything your team needs for success. Create content that resonates with your audience using AI-powered insights.
+            Effortlessly create, enhance, and manage your content with AI. From the social media posts to marketing copy, PersonaAI helps you maintain a consistent brand voice across all platforms.
           </motion.p>
 
           <motion.div
@@ -58,9 +58,9 @@ const HeroSection = () => {
             <Link href="/signup">
               <Button
                 size="lg"
-                className="group h-12 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-8 text-white hover:shadow-lg hover:shadow-blue-500/25"
+                className="group h-12 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-8 text-white hover:shadow-lg hover:shadow-blue-500/25 dark:hover:shadow-violet-500/20 transition-all duration-300"
               >
-                Get Started Free
+                Start Creating
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
@@ -68,7 +68,7 @@ const HeroSection = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="h-12 rounded-full border-blue-200 px-8 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-gray-900"
+                className="h-12 rounded-full border-blue-200 bg-white/50 px-8 hover:bg-blue-50 dark:border-blue-800 dark:bg-gray-900/50 dark:hover:bg-blue-950 transition-all duration-300"
               >
                 See how it works
               </Button>
@@ -77,7 +77,7 @@ const HeroSection = () => {
 
           <motion.div
             variants={fadeInUp}
-            className="mt-16 w-full max-w-6xl rounded-3xl border bg-white/50 p-4 shadow-2xl shadow-blue-500/10 backdrop-blur-sm dark:bg-gray-900/50 md:p-8"
+            className="mt-16 w-full max-w-6xl rounded-3xl border border-blue-100/50 bg-white/80 p-4 shadow-2xl shadow-blue-500/10 backdrop-blur-sm dark:border-blue-900/50 dark:bg-gray-900/80 dark:shadow-blue-500/5 md:p-8"
           >
             <div className="aspect-[16/9] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-blue-100 to-violet-100 dark:from-blue-950 dark:to-violet-950">
               <div className="flex h-full items-center justify-center">

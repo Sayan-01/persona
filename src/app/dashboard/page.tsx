@@ -1,3 +1,10 @@
+import { BrandScore } from "@/components/dashboard/brand-score"
+import { ContentCalendar } from "@/components/dashboard/content-calendar"
+import { DashboardHeader } from "@/components/dashboard/dashboard-header"
+import { DashboardNav } from "@/components/dashboard/dashboard-nav"
+import { PersonaList } from "@/components/dashboard/persona-list"
+import { RecentActivity } from "@/components/dashboard/recent-activity"
+import { UserNav } from "@/components/dashboard/user-nav"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FileText, Zap, Calendar, Sparkles, PlusCircle, ArrowRight, TrendingUp, CheckCircle2 } from "lucide-react"
@@ -235,6 +242,12 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+      <BrandScore/>
+      {/* <ContentCalendar/> */}
+      <DashboardNav/>
+      <PersonaList/>
+      <RecentActivity/>
+      <UserNav/>
     </div>
   )
 }

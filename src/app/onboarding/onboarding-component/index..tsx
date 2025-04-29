@@ -1,73 +1,74 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { ArrowLeft, ArrowRight, Check} from "lucide-react"
-import { useToast } from "@/components/ui/use-toast"
-import { upsertOnboardingProfile } from "../../../../server/user-profile"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { upsertOnboardingProfile } from "../../../../server/user-profile";
 
 export default function OnboardingComponent({ user }: { user: any }) {
-  const router = useRouter()
-  const { toast } = useToast()
-  const [step, setStep] = useState(1)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter();
+  const { toast } = useToast();
+  const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [persona, setPersona] = useState({
     tone: "",
-    toneNotes: "",
     industry: "",
+    specialization: "",
     targetAudience: "" as string,
+    usp: "",
     contentGoals: [] as string[],
     sampleContent: "",
-  })
+  });
 
   const handleNext = async () => {
     if (step < 5) {
-      setStep(step + 1)
+      setStep(step + 1);
     } else {
       if (!user?.id) {
         toast({
           title: "Authentication required",
           description: "Please sign in to save your persona settings.",
           variant: "destructive",
-        })
-        return
+        });
+        return;
       }
 
-      setIsSubmitting(true)
+      setIsSubmitting(true);
       try {
         await upsertOnboardingProfile({
           userId: user.id,
           ...persona,
-        })
+        });
         toast({
           title: "Success!",
           description: "Your AI persona has been configured.",
-        })
-        router.push("/dashboard")
+        });
+        router.push("/dashboard");
       } catch (error) {
         toast({
           title: "Error",
           description: "Failed to save your persona settings. Please try again.",
           variant: "destructive",
-        })
+        });
       } finally {
-        setIsSubmitting(false)
+        setIsSubmitting(false);
       }
     }
-  }
+  };
 
   const handleBack = () => {
     if (step > 1) {
-      setStep(step - 1)
+      setStep(step - 1);
     }
-  }
+  };
 
   return (
     <main className="flex-1 py-24">
@@ -164,17 +165,6 @@ export default function OnboardingComponent({ user }: { user: any }) {
                     </Label>
                   </div>
                 </RadioGroup>
-
-                <div className="space-y-2 pt-4">
-                  <Label htmlFor="customToneNotes">Additional Tone Preferences (Optional)</Label>
-                  <Textarea
-                    id="customToneNotes"
-                    placeholder="Add any specific tone preferences or examples of content you'd like to emulate..."
-                    value={persona.toneNotes}
-                    onChange={(e) => setPersona({ ...persona, toneNotes: e.target.value })}
-                    className="h-20"
-                  />
-                </div>
               </div>
             </CardContent>
             <CardFooter className="flex justify-between">
@@ -204,8 +194,8 @@ export default function OnboardingComponent({ user }: { user: any }) {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="industry">Primary Industry</Label>
+                <div className="space-y-4">
+                  <Label htmlFor="industry ">Primary Industry</Label>
                   <Select
                     value={persona.industry}
                     onValueChange={(value) => setPersona({ ...persona, industry: value })}
@@ -228,9 +218,11 @@ export default function OnboardingComponent({ user }: { user: any }) {
                   </Select>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="specialization">Specialization (Optional)</Label>
+                <div className="space-y-4">
+                  <Label htmlFor="specialization">Specialization</Label>
                   <Input
+                    value={persona.specialization}
+                    onChange={(e) => setPersona({ ...persona, specialization: e.target.value })}
                     id="specialization"
                     placeholder="e.g., AI Development, Content Marketing, etc."
                   />
@@ -244,7 +236,10 @@ export default function OnboardingComponent({ user }: { user: any }) {
               >
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back
               </Button>
-              <Button onClick={handleNext}>
+              <Button
+                onClick={handleNext}
+                disabled={!persona.industry || !persona.specialization}
+              >
                 Next <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </CardFooter>
@@ -255,12 +250,12 @@ export default function OnboardingComponent({ user }: { user: any }) {
         {step === 3 && (
           <Card>
             <CardHeader>
-              <CardTitle>Define Your Target Audience</CardTitle>
-              <CardDescription>Who are you creating content for?</CardDescription>
+              <CardTitle>Explane Your company unique selling points</CardTitle>
+              <CardDescription>What makes your company stand out from the competition?</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="space-y-2">
+                <div className="space-y-4">
                   <Label htmlFor="role">Primary Audience Role</Label>
                   <Select
                     value={persona.targetAudience}
@@ -280,19 +275,11 @@ export default function OnboardingComponent({ user }: { user: any }) {
                     </SelectContent>
                   </Select>
                 </div>
-
                 <div className="space-y-2">
-                  <Label htmlFor="demographics">Demographics (Optional)</Label>
-                  <Input
-                    id="demographics"
-                    placeholder="e.g., Age range, location, etc."
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="interests">Interests & Pain Points</Label>
                   <Textarea
-                    id="interests"
+                    value={persona.usp}
+                    onChange={(e) => setPersona({ ...persona, usp: e.target.value })}
+                    id="usp"
                     placeholder="What does your audience care about? What problems are they trying to solve?"
                     className="min-h-[100px]"
                   />
@@ -306,7 +293,10 @@ export default function OnboardingComponent({ user }: { user: any }) {
               >
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back
               </Button>
-              <Button onClick={handleNext}>
+              <Button
+                onClick={handleNext}
+                disabled={!persona.usp}
+              >
                 Next <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </CardFooter>
@@ -364,7 +354,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
               >
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back
               </Button>
-              <Button onClick={handleNext}>
+              <Button onClick={handleNext} disabled={!persona.contentGoals.length}>
                 Next <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </CardFooter>

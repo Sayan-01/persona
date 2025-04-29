@@ -1,0 +1,43 @@
+{
+  "id": "c1d637e9-8890-4956-b22e-4e1e836333e0",
+  "email": "sayandas61668@gmail.com",
+  "name": "Sayan Das",
+  "createdAt": "2025-04-28T18:16:17.850Z",
+  "updatedAt": "2025-04-29T05:43:41.400Z",
+  "profile": {
+    "id": "fb667cdc-54e6-427b-ad58-edf33bed56a2",
+    "userId": "c1d637e9-8890-4956-b22e-4e1e836333e0",
+    "industry": "technology",
+    "specialization": "AI developer, technology, saas, agency",
+    "targetAudience": "small-business",
+    "usp": "Our Saas business is a no code saas which help non technical user to build a perfect website for there business. our startup also provide a ecosystem like provide website template, after services in our agency and more",
+    "contentGoals": ["sell"],
+    "sampleContent": "🚀 Welcome to Azeorex: Elevating Your Web Presence! 💻✨\n\nAt Azeorex, we offer a complete range of tech solutions tailored to your needs! Whether you're looking to create stunning websites, sleek templates, or powerful backend solutions, we've got you covered.\n\n🎨 Our Services Include:\n\n1️⃣ Premium Website Templates & Components\n💡 Craft beautifully designed templates that stand out and speed up development!\n\n2️⃣ Complete MERN Stack & Next.js Websites\n🚀 Build robust, scalable web applications that perform seamlessly across devices.\n\n3️⃣ Backend Solutions\n🔧 Handle user management, authentication, and database systems with ease.\n\n4️⃣ Custom Design & Personal Websites\n🎨 Tailored solutions that perfectly represent your personal brand or business.\n\nLet us take your website design and development to the next level! Get in touch to start your project today.\n\n🔗 Visit us at: azeorex.com\n📧 Email us: azeorex01@gmail.com\n\n#WebDesign #MERNStack #NextJS #CustomDesign #WebsiteDevelopment #Azeorex #TechSolutions #PremiumTemplates #WebDevelopment #AzeorexSolutions"
+  },
+  "aiPersona": {
+    "id": "3487a554-82c6-4b67-9a30-c630516e5e9d",
+    "userId": "c1d637e9-8890-4956-b22e-4e1e836333e0",
+    "tone": ["conversational"],
+    "style": ["informal", "engaging", "natural"],
+    "preferences": {
+      "content": {
+        "maxLength": 1000,
+        "minLength": 200,
+        "useEmojis": true,
+        "formatting": {
+          "citationStyle": "apa",
+          "useStatistics": true,
+          "useBulletPoints": true
+        }
+      },
+      "language": {
+        "level": "conversational",
+        "primary": "en-US"
+      },
+      "industryTerms": {
+        "avoid": [],
+        "preferred": ["innovation", "solution", "platform", "scalable", "efficient"]
+      }
+    }
+  }
+}

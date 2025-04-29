@@ -83,10 +83,11 @@ model User {
 model Profile {
   id              String   @id @default(cuid())
   userId          String   @unique
-  industry        String?
-  targetAudience  String?
+  industry        String
+  specialization  String
+  targetAudience  String
+  usp             String
   contentGoals    String[]
-  writingTone     String?
   sampleContent   String?
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   

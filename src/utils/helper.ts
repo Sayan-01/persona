@@ -58,16 +58,19 @@ export const generateAIPreferences = (tone: string, industry?: string) => {
     case "educational":
       preferences.content.minLength = 600;
       preferences.content.maxLength = 2500;
+      preferences.content.useEmojis = true;
       preferences.language.level = "technical";
       break;
     case "persuasive":
       preferences.content.minLength = 300;
       preferences.content.maxLength = 1500;
+      preferences.content.useEmojis = true;
       preferences.language.level = "persuasive";
       break;
     case "empathetic":
       preferences.content.minLength = 250;
       preferences.content.maxLength = 1200;
+      preferences.content.useEmojis = true;
       preferences.language.level = "supportive";
       break;
   }

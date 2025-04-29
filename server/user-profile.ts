@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { db } from "@/lib/db";
 import { determineStyleFromTone, generateAIPreferences } from "@/utils/helper";
 import { v4 } from "uuid";
@@ -6,11 +6,12 @@ import { v4 } from "uuid";
 interface OnboardingData {
   userId: string;
   tone: string;
-  toneNotes?: string;
-  industry?: string;
-  targetAudience?: string;
-  contentGoals?: string[];
-  sampleContent?: string;
+  industry: string;
+  specialization: string;
+  targetAudience: string;
+  usp: string;
+  contentGoals: string[];
+  sampleContent: string;
 }
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
@@ -31,31 +32,23 @@ interface AIPersonaPreferences {
       citationStyle: string;
     };
   };
-  industryTerms?:any
+  industryTerms?: any;
 }
 
 export const upsertOnboardingProfile = async (data: OnboardingData) => {
-  const { userId, tone, toneNotes, industry, targetAudience, contentGoals, sampleContent } = data;
+  const { userId, tone, industry, specialization, targetAudience, usp, contentGoals, sampleContent } = data;  
 
   try {
-    const profile = await (db as any).profile.upsert({
-      where: {
-        userId: userId,
-      },
-      update: {
-        industry: industry || null,
-        targetAudience: targetAudience || null,
-        contentGoals: contentGoals || [],
-        writingTone: tone || null,
-        sampleContent: sampleContent || null,
-      },
-      create: {
+    const profile = await (db as any).profile.create({
+     
+      data: {
         id: v4(),
         userId: userId,
         industry: industry || null,
-        targetAudience: targetAudience || "",
+        specialization: specialization || null,
+        targetAudience: targetAudience || null,
+        usp: usp || null,
         contentGoals: contentGoals || [],
-        writingTone: tone || null,
         sampleContent: sampleContent || null,
       },
     });
@@ -88,19 +81,16 @@ export const upsertOnboardingProfile = async (data: OnboardingData) => {
       data: {
         updatedAt: new Date(),
       },
-    });    
+    });
 
     return { profile, aiPersona };
   } catch (error) {
     console.error("Error in updateOnboardingProfile:", error);
     throw new Error("Failed to update profile and AI persona");
   }
-}
+};
 
-export const updateAIPersonaPreferences = async (
-  userId: string,
-  preferences: Partial<AIPersonaPreferences>
-) => {
+export const updateAIPersonaPreferences = async (userId: string, preferences: Partial<AIPersonaPreferences>) => {
   try {
     const aiPersona = await (db as any).AIPersona.update({
       where: {
@@ -116,7 +106,7 @@ export const updateAIPersonaPreferences = async (
     console.error("Error in updateAIPersonaPreferences:", error);
     throw new Error("Failed to update AI persona preferences");
   }
-}
+};
 
 export const getUserAIPersona = async (userId: string) => {
   try {
@@ -128,7 +118,7 @@ export const getUserAIPersona = async (userId: string) => {
     console.error("Error in getUserAIPersona:", error);
     throw new Error("Failed to fetch user AI persona");
   }
-}
+};
 
 export const getUserProfile = async (userId: string) => {
   try {

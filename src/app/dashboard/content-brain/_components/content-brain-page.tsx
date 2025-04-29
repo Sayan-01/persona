@@ -11,10 +11,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sparkles, RefreshCw, ThumbsUp, Copy, MessageSquare, ArrowRight, CheckCircle2, LightbulbIcon, Wand2, Clock, Send } from "lucide-react";
 import { ContentEditor } from "@/components/content-editor";
-import AiPrompt from "../../../../../AI/IdeaGeneratePrompt";
+import { IdeaGenerateProps } from "../../../../../AI/IdeaGeneratePrompt";
 import generateContentPrompt from "../../../../../AI/ContentGeneratePrompt";
 import { getUserAIPersona, getUserProfile } from "../../../../../server/user-profile";
 import IdeaCard from "./ideaCard";
+import enhanceContentPrompt from "../../../../../AI/EnhanceContentPrompt";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
@@ -28,28 +29,34 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const [generating, setGenerating] = useState(false);
   const [showIdeas, setShowIdeas] = useState(false);
   const [result, setResult] = useState<any>([]);
+  const [contentForEnhance, setContentForEnhance] = useState("");
+  const [enhanceType, setEnhanceType] = useState("rewrite");
   const [promptDetails, setPromptDetails] = useState({
     topic: "",
     numberOfIdeas: "3",
     platform: "",
   });
+  const [enhanceContent, setEnhanceContent] = useState("");
 
   const [userProfile, setUserProfile] = useState<any>(null);
-  const [aiPersona, setAIPersona] = useState<any>(null);
 
   useEffect(() => {
-    if (user) {
-      const userProfileDetails = getUserProfile(user.id);
-      setUserProfile(userProfileDetails);
-      const aiPersonaDetails = getUserAIPersona(user.id);
-      setAIPersona(aiPersonaDetails);
-    }
+    const fetchProfile = async () => {
+      if (user) {
+        const userProfileDetails = await getUserProfile(user.id);
+        setUserProfile(userProfileDetails);
+        
+      }
+    };
+    fetchProfile();
   }, [user]);
 
   const handleGenerate = async (type: string) => {
     switch (type) {
       case "idea generate":
-        const ideaPrompt = AiPrompt(promptDetails.topic, promptDetails.platform, promptDetails.numberOfIdeas, userProfile, aiPersona);
+        console.log("dog", promptDetails, userProfile);
+        const ideaPrompt = IdeaGenerateProps({topic: promptDetails.topic, numberOfIdeas: promptDetails.numberOfIdeas, platform: promptDetails.platform, userProfile: userProfile.profile, aiPersona: userProfile.aiPersona});
+        console.log("anksn", ideaPrompt);
         setGenerating(true);
         try {
           const res = await fetch("/api/generate-content-idea", {
@@ -66,6 +73,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             throw new Error("Failed to fetch AI template.");
           }
           const data = await res.json();
+          console.log(data);
           if (data) {
             const dataObj = JSON.parse(data);
             setResult(dataObj);
@@ -77,7 +85,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           }
           setGenerating(false);
         } catch (error) {
-          console.log(error);
+          console.log("Error in idea generation", error);
           setGenerating(false);
         }
         break;
@@ -91,12 +99,48 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             keyPoints: selectedIdea?.keyPoints || [],
             hashtags: selectedIdea?.hashtags || [],
             contentLength: "medium",
-            tone: aiPersona?.tone || "professional",
-            userPersona: {
-              industry: userProfile?.industry,
-              expertise: userProfile?.expertise,
-              style: aiPersona?.writingStyle,
+            userProfile: userProfile.profile,
+            userPersona: userProfile.aiPersona,
+          });
+          console.log("sajn",contentPrompt);
+          
+
+          const res = await fetch("/api/generate-content-idea", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+              prompt: contentPrompt,
+            }),
+          });
+
+          if (!res.ok) {
+            throw new Error("Failed to generate content.");
+          }
+
+          const data = await res.json();
+          if (data) {
+            const dataObj = JSON.parse(data);
+            setContentDraft(dataObj.content);
+            setShowDraft(true);
+          }
+
+          setGenerating(false);
+        } catch (error) {
+          console.log(error);
+          setGenerating(false);
+        }
+        break;
+      case "content enhance":
+        setGenerating(true);
+        try {
+          const contentPrompt = enhanceContentPrompt({
+            platform: contentType,
+            content: contentForEnhance,
+            enhanceType: enhanceType,
+            userProfile: userProfile.profile,
+            userPersona: userProfile.aiPersona,
           });
 
           const res = await fetch("/api/generate-content-idea", {
@@ -116,9 +160,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           const data = await res.json();
           if (data) {
             const dataObj = JSON.parse(data);
-            console.log(dataObj);
 
-            setContentDraft(dataObj.content);
+            setEnhanceContent(dataObj.content);
             setShowDraft(true);
           }
 
@@ -424,36 +467,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               onSave={handleContentSave}
               onEnhance={handleEnhanceContent}
             />
-            <div className="space-y-2">
-              <Label>Content Status</Label>
-              <RadioGroup
-                value={contentStatus}
-                onValueChange={setContentStatus}
-                className="flex space-x-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem
-                    value="draft"
-                    id="s1"
-                  />
-                  <Label htmlFor="s1">Save as Draft</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem
-                    value="scheduled"
-                    id="s2"
-                  />
-                  <Label htmlFor="s2">Schedule Post</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem
-                    value="published"
-                    id="s3"
-                  />
-                  <Label htmlFor="s3">Publish Now</Label>
-                </div>
-              </RadioGroup>
-            </div>
+
             {contentStatus === "scheduled" && (
               <div className="space-y-2">
                 <Label htmlFor="schedule-date">Schedule Date & Time</Label>
@@ -464,48 +478,76 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               </div>
             )}
 
-            {!showDraft && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Content Draft</CardTitle>
-                  <CardDescription>Review and publish your content</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="whitespace-pre-wrap rounded-md border p-4">{contentDraft}</div>
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowDraft(false)}
+            <Card>
+              <CardHeader>
+                <CardTitle>Content Draft</CardTitle>
+                <CardDescription>Review and publish your content</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 mb-4">
+                  <Label>Content Status</Label>
+                  <RadioGroup
+                    value={contentStatus}
+                    onValueChange={setContentStatus}
+                    className="flex space-x-4"
                   >
-                    Back to Editor
-                  </Button>
-                  <Button
-                    onClick={handleContentAction}
-                    className="gap-2"
-                  >
-                    {contentStatus === "draft" && (
-                      <>
-                        <CheckCircle2 className="h-4 w-4" />
-                        Save to Drafts
-                      </>
-                    )}
-                    {contentStatus === "scheduled" && (
-                      <>
-                        <Clock className="h-4 w-4" />
-                        Schedule Post
-                      </>
-                    )}
-                    {contentStatus === "published" && (
-                      <>
-                        <Send className="h-4 w-4" />
-                        Publish Now
-                      </>
-                    )}
-                  </Button>
-                </CardFooter>
-              </Card>
-            )}
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="draft"
+                        id="s1"
+                      />
+                      <Label htmlFor="s1">Save as Draft</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="scheduled"
+                        id="s2"
+                      />
+                      <Label htmlFor="s2">Schedule Post</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem
+                        value="published"
+                        id="s3"
+                      />
+                      <Label htmlFor="s3">Publish Now</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+                <div className="whitespace-pre-wrap rounded-md border p-4">{contentDraft}</div>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowDraft(false)}
+                >
+                  Back to Editor
+                </Button>
+                <Button
+                  onClick={handleContentAction}
+                  className="gap-2"
+                >
+                  {contentStatus === "draft" && (
+                    <>
+                      <CheckCircle2 className="h-4 w-4" />
+                      Save to Drafts
+                    </>
+                  )}
+                  {contentStatus === "scheduled" && (
+                    <>
+                      <Clock className="h-4 w-4" />
+                      Schedule Post
+                    </>
+                  )}
+                  {contentStatus === "published" && (
+                    <>
+                      <Send className="h-4 w-4" />
+                      Publish Now
+                    </>
+                  )}
+                </Button>
+              </CardFooter>
+            </Card>
           </div>
         </TabsContent>
 
@@ -532,6 +574,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               <div className="space-y-2">
                 <Label htmlFor="existing-content">Paste Your Content</Label>
                 <Textarea
+                  value={contentForEnhance}
+                  onChange={(e) => setContentForEnhance(e.target.value)}
                   id="existing-content"
                   placeholder="Paste the content you want to enhance"
                   className="min-h-[150px]"
@@ -542,6 +586,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 <RadioGroup
                   defaultValue="rewrite"
                   className="grid grid-cols-2 gap-4"
+                  value={enhanceType}
+                  onValueChange={(value) => setEnhanceType(value)}
                 >
                   <div className="flex items-center space-x-2 rounded-md border p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
                     <RadioGroupItem
@@ -598,9 +644,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 </RadioGroup>
               </div>
             </CardContent>
-            {/* <CardFooter>
+            <CardFooter>
               <Button
-                onClick={handleGenerate}
+                onClick={() => handleGenerate("content enhance")}
                 disabled={generating}
                 className="w-full gap-2"
               >
@@ -616,7 +662,11 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   </>
                 )}
               </Button>
-            </CardFooter> */}
+            </CardFooter>
+            <ContentEditor
+              initialContent={enhanceContent}
+              onSave={() => {}}
+            />
           </Card>
 
           {showEnhanced && (
