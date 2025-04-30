@@ -15,7 +15,7 @@ import { Paytone_One } from "next/font/google";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { generateVerificationToken } from "@/utils/token";
 import { IsUserEmailExist } from "../../../server/actions";
-import { sendCodeThroughNodemailer } from "../../../server/otp";
+import { sendCodeThroughNodemailer } from "../../../server/auth";
 
 const pay = Paytone_One({ subsets: ["latin"], weight: "400" });
 

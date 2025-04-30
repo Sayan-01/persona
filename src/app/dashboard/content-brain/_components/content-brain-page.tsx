@@ -16,6 +16,7 @@ import generateContentPrompt from "../../../../../AI/ContentGeneratePrompt";
 import { getUserAIPersona, getUserProfile } from "../../../../../server/user-profile";
 import IdeaCard from "./ideaCard";
 import enhanceContentPrompt from "../../../../../AI/EnhanceContentPrompt";
+import SocialShareButtons from "@/components/buttons/SocialShareButtons";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
@@ -37,7 +38,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     platform: "",
   });
   const [enhanceContent, setEnhanceContent] = useState("");
-
   const [userProfile, setUserProfile] = useState<any>(null);
 
   useEffect(() => {
@@ -54,9 +54,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const handleGenerate = async (type: string) => {
     switch (type) {
       case "idea generate":
-        console.log("dog", promptDetails, userProfile);
         const ideaPrompt = IdeaGenerateProps({topic: promptDetails.topic, numberOfIdeas: promptDetails.numberOfIdeas, platform: promptDetails.platform, userProfile: userProfile.profile, aiPersona: userProfile.aiPersona});
-        console.log("anksn", ideaPrompt);
         setGenerating(true);
         try {
           const res = await fetch("/api/generate-content-idea", {
@@ -73,10 +71,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             throw new Error("Failed to fetch AI template.");
           }
           const data = await res.json();
-          console.log(data);
           if (data) {
-            const dataObj = JSON.parse(data);
-            setResult(dataObj);
+            const dataObj = JSON.parse(data);            
+            setResult(dataObj.contentIdeas);
             if (activeTab === "ideas") {
               setShowIdeas(true);
             } else if (activeTab === "enhance") {
@@ -102,7 +99,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             userProfile: userProfile.profile,
             userPersona: userProfile.aiPersona,
           });
-          console.log("sajn",contentPrompt);
           
 
           const res = await fetch("/api/generate-content-idea", {
@@ -462,11 +458,11 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             </Card>
 
             {/* Add Content Editor */}
-            <ContentEditor
+            {/* <ContentEditor
               initialContent={contentDraft as string}
               onSave={handleContentSave}
               onEnhance={handleEnhanceContent}
-            />
+            /> */}
 
             {contentStatus === "scheduled" && (
               <div className="space-y-2">
@@ -477,6 +473,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 />
               </div>
             )}
+            <SocialShareButtons content={contentDraft} postId={undefined} />
 
             <Card>
               <CardHeader>
