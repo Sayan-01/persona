@@ -1,39 +1,43 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {
-  PlusCircle,
-  FileText,
-  Calendar,
-  Edit,
-  ArrowUpRight,
-  Trash2,
-  Filter,
-  Search,
-  MoreHorizontal,
-  CheckCircle2,
-  Clock,
-} from "lucide-react"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PlusCircle, FileText, Calendar, Edit, ArrowUpRight, Trash2, Filter, Search, MoreHorizontal, CheckCircle2, Clock } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { deleteDraft, getDrafts, getPostedContent, getScheduledContent } from "../../../../server/post";
 
 export default function ContentPage() {
-  const [activeTab, setActiveTab] = useState("all")
+  const [activeTab, setActiveTab] = useState("all");
+  const [drafts, setDrafts] = useState<any>([]);
+  const [postedContent, setPostedContent] = useState<any>([]);
+  const [scheduledContent, setScheduledContent] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchDrafts = async () => {
+      const drafts = await getDrafts();
+      setDrafts(drafts);
+    };
+    fetchDrafts();
+    const fetchPostedContent = async () => {
+      const postedContent = await getPostedContent();
+      setPostedContent(postedContent);
+    };
+    fetchPostedContent();
+    const fetchScheduledContent = async () => {
+      const scheduledContent = await getScheduledContent();
+      setScheduledContent(scheduledContent);
+    };
+    fetchScheduledContent();
+  }, []);
 
   return (
-    <div className="container py-8">
+    <div className="container py-8 ">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">My Content</h1>
@@ -49,9 +53,15 @@ export default function ContentPage() {
         <div className="flex w-full gap-2 sm:w-auto">
           <div className="relative w-full sm:w-64">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-            <Input placeholder="Search content..." className="pl-9" />
+            <Input
+              placeholder="Search content..."
+              className="pl-9"
+            />
           </div>
-          <Button variant="outline" size="icon">
+          <Button
+            variant="outline"
+            size="icon"
+          >
             <Filter className="h-4 w-4" />
           </Button>
         </div>
@@ -69,7 +79,11 @@ export default function ContentPage() {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-6"
+      >
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="drafts">Drafts</TabsTrigger>
@@ -77,7 +91,10 @@ export default function ContentPage() {
           <TabsTrigger value="posted">Posted</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="all" className="space-y-4">
+        <TabsContent
+          value="all"
+          className="space-y-4"
+        >
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <Card className="overflow-hidden">
               <div className="bg-purple-50 px-4 py-2 dark:bg-purple-900/20">
@@ -89,12 +106,20 @@ export default function ContentPage() {
                     Draft
                   </Badge>
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                    >
                       <Edit className="h-4 w-4" />
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -120,25 +145,28 @@ export default function ContentPage() {
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-2">
                   <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg" alt="LinkedIn" />
+                    <AvatarImage
+                      src="/placeholder.svg"
+                      alt="LinkedIn"
+                    />
                     <AvatarFallback className="bg-blue-600 text-[10px]">LI</AvatarFallback>
                   </Avatar>
                   <p className="text-sm font-medium">LinkedIn Post</p>
                 </div>
-                <CardTitle className="mt-2 line-clamp-2 text-base">
-                  AI in Business Operations: Transforming Decision-Making
-                </CardTitle>
+                <CardTitle className="mt-2 line-clamp-2 text-base">AI in Business Operations: Transforming Decision-Making</CardTitle>
                 <CardDescription className="line-clamp-2">Created 2 days ago • Professional Tone</CardDescription>
               </CardHeader>
               <CardContent className="pb-4">
                 <p className="line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
-                  The integration of AI in business operations is revolutionizing how companies make strategic
-                  decisions. AI systems can process vast amounts of data to identify patterns and insights that would be
-                  impossible for humans to detect...
+                  The integration of AI in business operations is revolutionizing how companies make strategic decisions. AI systems can process vast amounts of data to identify patterns and insights
+                  that would be impossible for humans to detect...
                 </p>
               </CardContent>
               <CardFooter className="flex justify-end border-t pt-4">
-                <Button variant="outline" className="gap-1.5">
+                <Button
+                  variant="outline"
+                  className="gap-1.5"
+                >
                   Edit Draft
                 </Button>
               </CardFooter>
@@ -155,12 +183,20 @@ export default function ContentPage() {
                     Scheduled
                   </Badge>
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                    >
                       <Edit className="h-4 w-4" />
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -186,24 +222,27 @@ export default function ContentPage() {
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-2">
                   <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg" alt="Twitter" />
+                    <AvatarImage
+                      src="/placeholder.svg"
+                      alt="Twitter"
+                    />
                     <AvatarFallback className="bg-sky-500 text-[10px]">TW</AvatarFallback>
                   </Avatar>
                   <p className="text-sm font-medium">Twitter Thread</p>
                 </div>
-                <CardTitle className="mt-2 line-clamp-2 text-base">
-                  5 Tips for Managing Remote Teams Effectively
-                </CardTitle>
+                <CardTitle className="mt-2 line-clamp-2 text-base">5 Tips for Managing Remote Teams Effectively</CardTitle>
                 <CardDescription className="line-clamp-2">Scheduled for May 25, 2025 at 10:00 AM</CardDescription>
               </CardHeader>
               <CardContent className="pb-4">
                 <p className="line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
-                  1/ Managing remote teams requires a different approach than traditional office settings. Here are 5
-                  tips I've learned leading distributed teams for the past 3 years...
+                  1/ Managing remote teams requires a different approach than traditional office settings. Here are 5 tips I've learned leading distributed teams for the past 3 years...
                 </p>
               </CardContent>
               <CardFooter className="flex justify-end border-t pt-4">
-                <Button variant="outline" className="gap-1.5">
+                <Button
+                  variant="outline"
+                  className="gap-1.5"
+                >
                   <Calendar className="h-4 w-4" />
                   Reschedule
                 </Button>
@@ -221,12 +260,20 @@ export default function ContentPage() {
                     Posted
                   </Badge>
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                    >
                       <ArrowUpRight className="h-4 w-4" />
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -251,24 +298,27 @@ export default function ContentPage() {
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-2">
                   <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg" alt="LinkedIn" />
+                    <AvatarImage
+                      src="/placeholder.svg"
+                      alt="LinkedIn"
+                    />
                     <AvatarFallback className="bg-blue-600 text-[10px]">LI</AvatarFallback>
                   </Avatar>
                   <p className="text-sm font-medium">LinkedIn Post</p>
                 </div>
-                <CardTitle className="mt-2 line-clamp-2 text-base">
-                  The Future of Work: Trends to Watch in 2025
-                </CardTitle>
+                <CardTitle className="mt-2 line-clamp-2 text-base">The Future of Work: Trends to Watch in 2025</CardTitle>
                 <CardDescription className="line-clamp-2">Posted on May 15, 2025 • 127 reactions</CardDescription>
               </CardHeader>
               <CardContent className="pb-4">
                 <p className="line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
-                  As we approach the mid-point of 2025, several workplace trends are becoming clear. The hybrid model is
-                  here to stay, but with new innovations in collaboration technology...
+                  As we approach the mid-point of 2025, several workplace trends are becoming clear. The hybrid model is here to stay, but with new innovations in collaboration technology...
                 </p>
               </CardContent>
               <CardFooter className="flex justify-end border-t pt-4">
-                <Button variant="outline" className="gap-1.5">
+                <Button
+                  variant="outline"
+                  className="gap-1.5"
+                >
                   <ArrowUpRight className="h-4 w-4" />
                   View Post
                 </Button>
@@ -285,12 +335,20 @@ export default function ContentPage() {
                     Draft
                   </Badge>
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                    >
                       <Edit className="h-4 w-4" />
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -316,24 +374,27 @@ export default function ContentPage() {
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-2">
                   <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg" alt="LinkedIn" />
+                    <AvatarImage
+                      src="/placeholder.svg"
+                      alt="LinkedIn"
+                    />
                     <AvatarFallback className="bg-blue-600 text-[10px]">LI</AvatarFallback>
                   </Avatar>
                   <p className="text-sm font-medium">LinkedIn Article</p>
                 </div>
-                <CardTitle className="mt-2 line-clamp-2 text-base">
-                  How to Build a Customer-Centric Organization
-                </CardTitle>
+                <CardTitle className="mt-2 line-clamp-2 text-base">How to Build a Customer-Centric Organization</CardTitle>
                 <CardDescription className="line-clamp-2">Created 1 week ago • Professional Tone</CardDescription>
               </CardHeader>
               <CardContent className="pb-4">
                 <p className="line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
-                  In today's competitive landscape, customers expect personalized, seamless experiences. Building a
-                  truly customer-centric organization requires alignment across all departments...
+                  In today's competitive landscape, customers expect personalized, seamless experiences. Building a truly customer-centric organization requires alignment across all departments...
                 </p>
               </CardContent>
               <CardFooter className="flex justify-end border-t pt-4">
-                <Button variant="outline" className="gap-1.5">
+                <Button
+                  variant="outline"
+                  className="gap-1.5"
+                >
                   Edit Draft
                 </Button>
               </CardFooter>
@@ -343,7 +404,85 @@ export default function ContentPage() {
 
         <TabsContent value="drafts">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {/* Add draft cards here (similar format to the cards above) */}
+            {drafts.map((draft: any) => (
+              <Card
+                key={draft.id}
+                className="overflow-hidden"
+              >
+                <div className="bg-purple-50 px-4 py-2 dark:bg-purple-900/20">
+                  <div className="flex items-center justify-between">
+                    <Badge
+                      variant="outline"
+                      className="border-purple-200 bg-purple-100 text-purple-700 dark:border-purple-800 dark:bg-purple-900 dark:text-purple-300"
+                    >
+                      Draft
+                    </Badge>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>
+                            <Calendar className="mr-2 h-4 w-4" />
+                            <span>Schedule</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <FileText className="mr-2 h-4 w-4" />
+                            <span>Duplicate</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem className="text-red-600 dark:text-red-400">
+                            <div className="flex gap-4" onClick={() => deleteDraft(draft.id)}>
+                              <Trash2 className="h-4 w-4" />
+                              <span>Delete</span>
+                            </div>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </div>
+                </div>
+                <CardHeader className="pb-2">
+                  <div className="flex items-center gap-2">
+                    <Avatar className="h-6 w-6">
+                      <AvatarImage
+                        src="/placeholder.svg"
+                        alt="LinkedIn"
+                      />
+                      <AvatarFallback className="bg-blue-600 text-[10px]">LI</AvatarFallback>
+                    </Avatar>
+                    <p className="text-sm font-medium">{draft.platform}</p>
+                  </div>
+                  <CardTitle className="mt-2 line-clamp-2 text-base">{draft.title}</CardTitle>
+                  <CardDescription className="line-clamp-2">Created 2 days ago • Professional Tone</CardDescription>
+                </CardHeader>
+                <CardContent className="pb-4">
+                  <p className="line-clamp-3 text-sm text-gray-500 dark:text-gray-400">{draft.body}</p>
+                </CardContent>
+                <CardFooter className="flex justify-end border-t pt-4">
+                  <Button
+                    variant="outline"
+                    className="gap-1.5"
+                  >
+                    Edit Draft
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
           </div>
         </TabsContent>
 
@@ -361,12 +500,20 @@ export default function ContentPage() {
                     Scheduled
                   </Badge>
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                    >
                       <Edit className="h-4 w-4" />
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -392,24 +539,27 @@ export default function ContentPage() {
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-2">
                   <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg" alt="Twitter" />
+                    <AvatarImage
+                      src="/placeholder.svg"
+                      alt="Twitter"
+                    />
                     <AvatarFallback className="bg-sky-500 text-[10px]">TW</AvatarFallback>
                   </Avatar>
                   <p className="text-sm font-medium">Twitter Thread</p>
                 </div>
-                <CardTitle className="mt-2 line-clamp-2 text-base">
-                  5 Tips for Managing Remote Teams Effectively
-                </CardTitle>
+                <CardTitle className="mt-2 line-clamp-2 text-base">5 Tips for Managing Remote Teams Effectively</CardTitle>
                 <CardDescription className="line-clamp-2">Scheduled for May 25, 2025 at 10:00 AM</CardDescription>
               </CardHeader>
               <CardContent className="pb-4">
                 <p className="line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
-                  1/ Managing remote teams requires a different approach than traditional office settings. Here are 5
-                  tips I've learned leading distributed teams for the past 3 years...
+                  1/ Managing remote teams requires a different approach than traditional office settings. Here are 5 tips I've learned leading distributed teams for the past 3 years...
                 </p>
               </CardContent>
               <CardFooter className="flex justify-end border-t pt-4">
-                <Button variant="outline" className="gap-1.5">
+                <Button
+                  variant="outline"
+                  className="gap-1.5"
+                >
                   <Calendar className="h-4 w-4" />
                   Reschedule
                 </Button>
@@ -432,12 +582,20 @@ export default function ContentPage() {
                     Posted
                   </Badge>
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                    >
                       <ArrowUpRight className="h-4 w-4" />
                     </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -462,24 +620,27 @@ export default function ContentPage() {
               <CardHeader className="pb-2">
                 <div className="flex items-center gap-2">
                   <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg" alt="LinkedIn" />
+                    <AvatarImage
+                      src="/placeholder.svg"
+                      alt="LinkedIn"
+                    />
                     <AvatarFallback className="bg-blue-600 text-[10px]">LI</AvatarFallback>
                   </Avatar>
                   <p className="text-sm font-medium">LinkedIn Post</p>
                 </div>
-                <CardTitle className="mt-2 line-clamp-2 text-base">
-                  The Future of Work: Trends to Watch in 2025
-                </CardTitle>
+                <CardTitle className="mt-2 line-clamp-2 text-base">The Future of Work: Trends to Watch in 2025</CardTitle>
                 <CardDescription className="line-clamp-2">Posted on May 15, 2025 • 127 reactions</CardDescription>
               </CardHeader>
               <CardContent className="pb-4">
                 <p className="line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
-                  As we approach the mid-point of 2025, several workplace trends are becoming clear. The hybrid model is
-                  here to stay, but with new innovations in collaboration technology...
+                  As we approach the mid-point of 2025, several workplace trends are becoming clear. The hybrid model is here to stay, but with new innovations in collaboration technology...
                 </p>
               </CardContent>
               <CardFooter className="flex justify-end border-t pt-4">
-                <Button variant="outline" className="gap-1.5">
+                <Button
+                  variant="outline"
+                  className="gap-1.5"
+                >
                   <ArrowUpRight className="h-4 w-4" />
                   View Post
                 </Button>
@@ -489,5 +650,5 @@ export default function ContentPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

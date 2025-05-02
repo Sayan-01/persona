@@ -17,6 +17,9 @@ import { getUserAIPersona, getUserProfile } from "../../../../../server/user-pro
 import IdeaCard from "./ideaCard";
 import enhanceContentPrompt from "../../../../../AI/EnhanceContentPrompt";
 import SocialShareButtons from "@/components/buttons/SocialShareButtons";
+import ButtonLayout from "@/components/buttons/button-layout";
+import { toast } from "sonner";
+import { saveAsDraft } from "../../../../../server/post";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
@@ -176,8 +179,17 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     setContentType(platform.toLowerCase().includes("linkedin") ? "linkedin" : "twitter");
   };
 
-  const handleContentAction = () => {
-    // TO DO: implement content action logic
+  const handleContentAction = async (contentStatus:string) => {
+    if(!selectedIdea?.title || !selectedIdea?.platform){
+      toast("No content is present")
+      return
+    }
+    switch (contentStatus){
+      case "draft" :
+        const res = await saveAsDraft({title:selectedIdea?.title, body:contentDraft, platform:selectedIdea.platform});
+        if(res) toast("🟢 Draft saved successfully")
+    }
+       
   };
 
   const handleContentSave = (content: string) => {
@@ -193,7 +205,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
 
   return (
     <div className="container py-8">
-      <div className="mb-8 flex flex-col gap-2">
+      <div className="mb-12 flex flex-col gap-2 w-max mx-auto items-center">
         <h1 className="text-3xl font-bold">AI Content Brain</h1>
         <p className="text-gray-500 dark:text-gray-400">Generate ideas, enhance content, and create engaging posts</p>
       </div>
@@ -473,7 +485,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 />
               </div>
             )}
-            <SocialShareButtons content={contentDraft} postId={undefined} />
+            <SocialShareButtons
+              content={contentDraft}
+              postId={undefined}
+            />
 
             <Card>
               <CardHeader>
@@ -520,8 +535,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 >
                   Back to Editor
                 </Button>
-                <Button
-                  onClick={handleContentAction}
+                <ButtonLayout
+                  onClick={() => handleContentAction(contentStatus)}
                   className="gap-2"
                 >
                   {contentStatus === "draft" && (
@@ -542,7 +557,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       Publish Now
                     </>
                   )}
-                </Button>
+                </ButtonLayout>
               </CardFooter>
             </Card>
           </div>

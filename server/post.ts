@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { db } from "@/lib/db";
 import { platform } from "os";
@@ -7,24 +7,25 @@ import { revalidatePath } from "next/cache";
 import { postToFacebook } from "@/lib/facebook";
 import { postToTwitter } from "@/lib/twitter";
 
-export async function saveAsDraft(data: { title: string; body: string, platform:string }) {
+export async function saveAsDraft(data: { title: string; body: string; platform: string }) {
   const session = await auth();
 
   if (!session?.user?.id) {
     throw new Error("Unauthorized");
   }
 
-  db.content.create({
+  await db.content.create({
     data: {
       title: data.title,
       body: data.body,
       status: "Draft",
-      platform:data.platform,
+      platform: data.platform,
       userId: session.user.id,
     },
   });
-
+  
   revalidatePath("/dashboard");
+  return true;
 }
 
 export async function publishPost(postId: string, platform: "facebook" | "twitter") {
@@ -75,6 +76,36 @@ export async function schedulePost(postId: string, scheduledAt: Date) {
   });
 
   revalidatePath("/dashboard");
+}
+
+export async function getDrafts() {
+  const session = await auth();
+
+  const drafts = await db.content.findMany({
+    where: { userId: session?.user?.id, status: "Draft" },
+  });
+
+  return drafts;
+}
+
+export async function getPostedContent() {
+  const session = await auth();
+
+  const postedContent = await db.content.findMany({
+    where: { userId: session?.user?.id, status: "Published" },
+  });
+
+  return postedContent;
+}
+
+export async function getScheduledContent() {
+  const session = await auth();
+
+  const scheduledContent = await db.content.findMany({
+    where: { userId: session?.user?.id, status: "Scheduled" },
+  });
+
+  return scheduledContent;
 }
 
 export async function deleteDraft(postId: string) {

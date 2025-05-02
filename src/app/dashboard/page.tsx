@@ -1,27 +1,29 @@
-import { BrandScore } from "@/components/dashboard/brand-score"
-import { ContentCalendar } from "@/components/dashboard/content-calendar"
-import { DashboardHeader } from "@/components/dashboard/dashboard-header"
-import { DashboardNav } from "@/components/dashboard/dashboard-nav"
-import { PersonaList } from "@/components/dashboard/persona-list"
-import { RecentActivity } from "@/components/dashboard/recent-activity"
-import { UserNav } from "@/components/dashboard/user-nav"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText, Zap, Calendar, Sparkles, PlusCircle, ArrowRight, TrendingUp, CheckCircle2 } from "lucide-react"
+import { BrandScore } from "@/components/dashboard/brand-score";
+import { PersonaList } from "@/components/dashboard/persona-list";
+import { RecentActivity } from "@/components/dashboard/recent-activity";
+import { UserNav } from "@/components/dashboard/user-nav";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { FileText, Zap, Calendar, Sparkles, PlusCircle, ArrowRight, TrendingUp, CheckCircle2 } from "lucide-react";
+import DashboardHeading from "./_components/dashboard-heading";
 
 export default function DashboardPage() {
   return (
     <div className="container py-8">
-      <div className="mb-8 flex flex-col gap-2">
-        <h1 className="text-3xl font-bold">Welcome to PersonaAI</h1>
-        <p className="text-gray-500 dark:text-gray-400">Let's start creating content that sounds like you</p>
-      </div>
+      <DashboardHeading
+        title={"Welcome to PersonaAI"}
+        description={"Let's start creating content that sounds like you"}
+      />
 
       {/* Quick Actions */}
       <div className="mb-8">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold">Quick Actions</h2>
-          <Button variant="ghost" size="sm" className="gap-1.5">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="gap-1.5"
+          >
             View All <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
@@ -35,7 +37,10 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-500 dark:text-gray-400">Get content ideas based on your persona</p>
-              <Button variant="outline" className="mt-4 w-full">
+              <Button
+                variant="outline"
+                className="mt-4 w-full"
+              >
                 Brainstorm
               </Button>
             </CardContent>
@@ -61,7 +66,10 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-500 dark:text-gray-400">Improve or rewrite existing content</p>
-              <Button variant="outline" className="mt-4 w-full">
+              <Button
+                variant="outline"
+                className="mt-4 w-full"
+              >
                 Enhance
               </Button>
             </CardContent>
@@ -75,7 +83,10 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-500 dark:text-gray-400">Plan your content publishing calendar</p>
-              <Button variant="outline" className="mt-4 w-full">
+              <Button
+                variant="outline"
+                className="mt-4 w-full"
+              >
                 Schedule
               </Button>
             </CardContent>
@@ -150,7 +161,10 @@ export default function DashboardPage() {
                       <div className="text-xs text-gray-500 dark:text-gray-400">LinkedIn • Draft</div>
                     </div>
                   </div>
-                  <Button variant="ghost" size="sm">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                  >
                     Edit
                   </Button>
                 </div>
@@ -166,7 +180,10 @@ export default function DashboardPage() {
                       <div className="text-xs text-gray-500 dark:text-gray-400">Twitter • Scheduled</div>
                     </div>
                   </div>
-                  <Button variant="ghost" size="sm">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                  >
                     View
                   </Button>
                 </div>
@@ -182,7 +199,10 @@ export default function DashboardPage() {
                       <div className="text-xs text-gray-500 dark:text-gray-400">LinkedIn • Posted</div>
                     </div>
                   </div>
-                  <Button variant="ghost" size="sm">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                  >
                     View
                   </Button>
                 </div>
@@ -207,7 +227,11 @@ export default function DashboardPage() {
                   <div className="font-medium">AI in Customer Experience</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">High engagement potential</div>
                 </div>
-                <Button size="sm" variant="outline" className="gap-1.5">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-1.5"
+                >
                   <PlusCircle className="h-4 w-4" />
                   Create
                 </Button>
@@ -220,7 +244,11 @@ export default function DashboardPage() {
                   <div className="font-medium">Future of Remote Work</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">Rising search trends</div>
                 </div>
-                <Button size="sm" variant="outline" className="gap-1.5">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-1.5"
+                >
                   <PlusCircle className="h-4 w-4" />
                   Create
                 </Button>
@@ -233,7 +261,11 @@ export default function DashboardPage() {
                   <div className="font-medium">Sustainable Business Practices</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">Growing audience interest</div>
                 </div>
-                <Button size="sm" variant="outline" className="gap-1.5">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-1.5"
+                >
                   <PlusCircle className="h-4 w-4" />
                   Create
                 </Button>
@@ -242,12 +274,11 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-      <BrandScore/>
+      <BrandScore />
       {/* <ContentCalendar/> */}
-      <DashboardNav/>
-      <PersonaList/>
-      <RecentActivity/>
-      <UserNav/>
+      <PersonaList />
+      <RecentActivity />
+      <UserNav />
     </div>
-  )
+  );
 }
