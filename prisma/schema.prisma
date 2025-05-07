@@ -76,8 +76,28 @@ model User {
   contents      Content[]
   ideas         Idea[]
   calendar      CalendarEntry[]
+  accounts      Account[]
 
   @@map("users")
+}
+
+model Account {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  provider        String
+  providerAccountId String
+  type            String
+  access_token    String?
+  refresh_token   String?
+  expires_at      Int?
+  token_type      String?
+  scope           String?
+  id_token        String?
+  session_state   String?
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("accounts")
+  @@unique([provider, providerAccountId])
 }
 
 model Profile {

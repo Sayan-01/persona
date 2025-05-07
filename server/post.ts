@@ -30,12 +30,25 @@ export async function saveAsDraft(data: { title: string; body: string; platform:
 
 export async function publishPost(postId: string, platform: "facebook" | "twitter") {
   const session = await auth();
+
+  if (!session?.user?.id) {
+    return { error: "Unauthorized", success: false };
+  }
+
+  const account = await db.account.findUnique({
+    where: { userId: session?.user?.id, provider: platform },
+  });
+
+  if (!account) {
+    return { error: "Account not found", success: false };
+  }
+
   const post = await db.content.findUnique({
     where: { id: postId, userId: session?.user?.id },
   });
 
   if (!post) {
-    throw new Error("Post not found");
+    return { error: "Post not found", success: false };
   }
 
   try {

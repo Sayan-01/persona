@@ -9,20 +9,19 @@ import { Sidebar } from "./_components/sidebar";
 import ButtonLayout from "@/components/buttons/button-layout";
 import Search from "@/components/global/search";
 
+
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-screen">
-      <aside className="hidden w-[274px] p-3 flex-col  bg-background lg:flex">
+    <div className="flex h-screen bg-[#111111]">
+      <aside className="hidden w-[250px] flex-col lg:flex  p-3">
         <Sidebar />
       </aside>
-      <div className="flex flex-col flex-1 h-screen relative overflow-auto">
-        <header className="h-[112px] sticky top-0 z-30 bg-background w-full p-6">
+      <div className="flex flex-col flex-1  relative overflow-auto">
+        <header className="h-[112px] sticky top-0 z-30 w-full p-6 py-4 ">
           <div className="container flex h-16 items-center justify-between gap-4 py-4">
-            <Search/>       
+            <Search />
             <div className="flex items-center gap-4">
-              <ButtonLayout
-                icon
-              >
+              <ButtonLayout icon>
                 <Bell className="h-4 w-4" />
                 <span className="sr-only">Notifications</span>
               </ButtonLayout>

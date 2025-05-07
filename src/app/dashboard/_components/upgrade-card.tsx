@@ -8,9 +8,9 @@ const UpgradeCard = () => {
       </h2>
       <p className="opacity-60 font-light leading-[1.35] mb-3">
         Unlock all the features include
-        <br /> AI and more
+         AI and more
       </p>
-      <div className="rounded-full bg-gradient-to-r from-[#e3e587] via-[#9b28ff] to-[#e72ff1] px-4 py-1.5 font-semibold flex items-center justify-center">Upgrade</div>
+      <div className="rounded-full bg-gradient-to-r from-[#e3e587] via-[#9b28ff] to-[#e72ff1] px-4 py-2 font-semibold flex items-center justify-center">Upgrade</div>
     </div>
   );
 };

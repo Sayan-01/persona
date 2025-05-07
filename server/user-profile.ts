@@ -2,6 +2,7 @@
 import { db } from "@/lib/db";
 import { determineStyleFromTone, generateAIPreferences } from "@/utils/helper";
 import { v4 } from "uuid";
+import { auth } from "../auth";
 
 interface OnboardingData {
   userId: string;
@@ -156,5 +157,34 @@ export const getUserProfile = async (userId: string) => {
   } catch (error) {
     console.error("Error in getUserProfile:", error);
     throw new Error("Failed to fetch user profile");
+  }
+};
+
+export const getUserInfo = async () => {
+  const session = await auth();
+
+  try {
+    const userProfile = await db.user.findUnique({
+      where: {
+        id: session?.user?.id,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+        accounts: true
+      }
+    });
+
+    if (!userProfile) {
+      throw new Error("User not found");
+    }
+
+    return userProfile;
+  } catch (error) {
+    console.error("Error in getUserInfo:", error);
+    throw new Error("Failed to fetch user info");
   }
 };

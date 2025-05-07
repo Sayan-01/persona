@@ -10,7 +10,7 @@ export function SiteHeader({ session }: { session: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-white/95 dark:bg-gray-950/95 rounded-full backdrop-blur-md max-w-7xl mx-auto border border-blue-100/50 dark:border-blue-900/50 shadow-sm">
+    <header className="w-full bg-white/60 rounded-full backdrop-blur-md max-w-7xl mx-auto border border-blue-100/50 ">
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6">
           <Link
@@ -22,25 +22,25 @@ export function SiteHeader({ session }: { session: any }) {
           <nav className="hidden md:flex gap-6">
             <Link
               href="#features"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
             >
               Features
             </Link>
             <Link
               href="#pricing"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
             >
               Pricing
             </Link>
             <Link
               href="#testimonials"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
             >
               Testimonials
             </Link>
             <Link
               href="#faq"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
             >
               FAQ
             </Link>
@@ -52,7 +52,7 @@ export function SiteHeader({ session }: { session: any }) {
             <Link href="/dashboard">
               <Button
                 variant="outline"
-                className="rounded-full border-blue-200 bg-white/50 text-blue-700 hover:bg-blue-50 hover:text-blue-800 dark:border-blue-800 dark:bg-gray-900/50 dark:text-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-200"
+                className="rounded-full border-blue-200 bg-white/50 text-blue-700 hover:bg-blue-50 hover:text-blue-800 "
               >
                 Dashboard
               </Button>
@@ -62,13 +62,13 @@ export function SiteHeader({ session }: { session: any }) {
               <Link href="/auth/login">
                 <Button
                   variant="ghost"
-                  className="text-gray-800 hover:text-blue-700 hover:bg-blue-50/50 dark:text-gray-200 dark:hover:text-blue-300 dark:hover:bg-blue-950/50"
+                  className="text-gray-800 hover:text-blue-700 hover:bg-blue-50/50 "
                 >
                   Login
                 </Button>
               </Link>
               <Link href="/auth/register">
-                <Button className="rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:shadow-md hover:shadow-blue-500/25 dark:hover:shadow-violet-500/20">Get Started</Button>
+                <Button className="rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:shadow-md hover:shadow-blue-500/25 ">Get Started</Button>
               </Link>
             </>
           )}
@@ -79,7 +79,7 @@ export function SiteHeader({ session }: { session: any }) {
             variant="ghost"
             size="icon"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-gray-800 hover:text-blue-700 dark:text-gray-200 dark:hover:text-blue-300"
+            className="text-gray-800 hover:text-blue-700 "
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
@@ -90,28 +90,28 @@ export function SiteHeader({ session }: { session: any }) {
           <nav className="flex flex-col gap-4">
             <Link
               href="#features"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >
               Features
             </Link>
             <Link
               href="#pricing"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >
               Pricing
             </Link>
             <Link
               href="#testimonials"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >
               Testimonials
             </Link>
             <Link
               href="#faq"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400"
+              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >
               FAQ
@@ -120,13 +120,13 @@ export function SiteHeader({ session }: { session: any }) {
               <Link href="/auth/login">
                 <Button
                   variant="outline"
-                  className="w-full border-blue-200 bg-white/50 text-blue-700 hover:bg-blue-50 hover:text-blue-800 dark:border-blue-800 dark:bg-gray-900/50 dark:text-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-200"
+                  className="w-full border-blue-200 bg-white/50 text-blue-700 hover:bg-blue-50 hover:text-blue-800 "
                 >
                   Login
                 </Button>
               </Link>
               <Link href="auth/register">
-                <Button className="w-full rounded-full bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 text-white hover:shadow-md hover:shadow-blue-500/25 dark:hover:shadow-violet-500/20">Get Started</Button>
+                <Button className="w-full rounded-full bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 text-white hover:shadow-md hover:shadow-blue-500/25 ">Get Started</Button>
               </Link>
             </div>
           </nav>

@@ -1,6 +1,9 @@
+"use client";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DashboardHeading from "../_components/dashboard-heading";
+import { onOAuthInstagram } from "../../../../server/integration";
+import { getUserInfo } from "../../../../server/user-profile";
 
 interface integration {
   title: string;
@@ -61,9 +64,27 @@ const integrations = [
 ];
 
 const page = () => {
+  const [userInfo, serUserInfo] = useState<any>();
+  const onInstaOAuth = () => onOAuthInstagram("instagram");
+
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await getUserInfo();
+      if (res) {
+        serUserInfo(res);
+      }
+    };
+    getUser()
+  }, []);
+
+  const integrated = userInfo?.accounts?.some((account: any) => account.provider === "instagram");
+
   return (
     <div className="py-8">
-      <DashboardHeading title="Social Media Integrations" description="Integrate your social media for manage your content etc."/>
+      <DashboardHeading
+        title="Social Media Integrations"
+        description="Integrate your social media for manage your content etc."
+      />
       <div className="max-w-2xl mx-auto flex flex-col gap-5">
         {integrations.map((item: integration, idx: number) => (
           <div
@@ -75,7 +96,12 @@ const page = () => {
               <h2>{item.title}</h2>
               <p className="text-sm opacity-60">{item.description}</p>
             </div>
-            <div className="py-1.5 px-4 rounded-full bg-gradient-to-br hover:opacity-80 from-[#3352cc] to-[#1c2070]">Connect</div>
+            <button
+              className="cursor-pointer disabled:opacity-50 py-1.5 px-4 rounded-full bg-gradient-to-br hover:opacity-80 from-[#3352cc] to-[#1c2070]"
+              onClick={onInstaOAuth}
+            >
+              {integrated ? "Connected" : "Connect"}
+            </button>
           </div>
         ))}
       </div>

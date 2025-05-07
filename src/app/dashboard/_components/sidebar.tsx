@@ -10,6 +10,7 @@ import { LayoutDashboard, Calendar, Settings, HelpCircle, LogOut, Sparkles, File
 import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
 import ButtonLayout from "@/components/buttons/button-layout";
 
+
 interface NavItem {
   title: string;
   href: string;
@@ -54,14 +55,13 @@ export function Sidebar() {
   ];
 
   return (
-    <nav className="border-2 border-[#5b5b5b] w-full h-full bg-gradient-to-b from-[#768bdd] via-[#171717] to-[#768bdd] rounded-3xl overflow-hidden">
-      <div className="  flex flex-col justify-between h-full w-full gap-y-5 p-3 bg-[#171717] opacity-90 bg-clip-border backdrop-blur-3xl backdrop-filter">
+      <div className=" border flex flex-col justify-between h-full w-full gap-y-5 p-3 bg-[#171717] opacity-90 bg-clip-border backdrop-blur-3xl backdrop-filter rounded-3xl">
         <Link
           href="/"
-          className="flex items-center gap-2 p-2 py-4 justify-center"
+          className="flex items-center gap-2 p-2 pt-4 pb-0 justify-center"
         >
           {/* <Sparkles className="h-6 w-6 text-purple-600" strokeWidth={2.4}/> */}
-          <span className="text-3xl font-bold text-[#879fff]  ">PersonaAI</span>
+          <span className="text-3xl font-extrabold text-[#879fff]  ">PersonaAI</span>
         </Link>
         <div className="flex flex-col gap-2 h-full">
           {navItems.map((item, index) => (
@@ -79,10 +79,6 @@ export function Sidebar() {
             </Link>
           ))}
         </div>
-        <Button className="mt-4 gap-1.5">
-          <PlusCircle className="h-4 w-4" />
-          Create Content
-        </Button>
         <div className="mt-2 border-t pt-6">
           <Link href="/help">
             <Button
@@ -105,6 +101,5 @@ export function Sidebar() {
           <UpgradeCard />
         </div>
       </div>
-    </nav>
   );
 }
