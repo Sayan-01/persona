@@ -9,7 +9,7 @@ import DashboardHeading from "./_components/dashboard-heading";
 
 export default function DashboardPage() {
   return (
-    <div className="container py-8">
+    <div className=" py-8">
       <DashboardHeading
         title={"Welcome to PersonaAI"}
         description={"Let's start creating content that sounds like you"}

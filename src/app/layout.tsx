@@ -1,11 +1,11 @@
 import type React from "react";
 import type { Metadata } from "next";
-import {  DM_Sans, Mona_Sans } from "next/font/google";
+import {  DM_Sans, Inter, Mona_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
-const mona = DM_Sans({ subsets: ["latin"]});
+const monaa = Inter({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "PersonaAI - AI-Powered Content Creation",
@@ -25,7 +25,7 @@ export default function RootLayout({
     >
       <body
         cz-shortcut-listen="true"
-        className={`font-sans ${mona.className}`}
+        className={`font-sans ${monaa.className}`}
       >
         <ThemeProvider
           attribute="class"

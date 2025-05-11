@@ -34,7 +34,6 @@ const features = [
     icon: FileText,
     color: "from-orange-600 to-red-600",
   },
-  /////
   {
     title: "Content Calendar",
     description: "Manage, schedule, and organize your content across multiple platforms from a single dashboard.",

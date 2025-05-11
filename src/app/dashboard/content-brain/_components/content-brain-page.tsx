@@ -20,6 +20,8 @@ import SocialShareButtons from "@/components/buttons/SocialShareButtons";
 import ButtonLayout from "@/components/buttons/button-layout";
 import { toast } from "sonner";
 import { saveAsDraft } from "../../../../../server/post";
+import AIinput from "@/components/global/ai-input";
+import DashboardHeading from "../../_components/dashboard-heading";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
@@ -42,13 +44,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   });
   const [enhanceContent, setEnhanceContent] = useState("");
   const [userProfile, setUserProfile] = useState<any>(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
       if (user) {
         const userProfileDetails = await getUserProfile(user.id);
         setUserProfile(userProfileDetails);
-        
       }
     };
     fetchProfile();
@@ -57,7 +59,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const handleGenerate = async (type: string) => {
     switch (type) {
       case "idea generate":
-        const ideaPrompt = IdeaGenerateProps({topic: promptDetails.topic, numberOfIdeas: promptDetails.numberOfIdeas, platform: promptDetails.platform, userProfile: userProfile.profile, aiPersona: userProfile.aiPersona});
+        const ideaPrompt = IdeaGenerateProps({
+          topic: promptDetails.topic,
+          numberOfIdeas: promptDetails.numberOfIdeas,
+          platform: promptDetails.platform,
+          userProfile: userProfile.profile,
+          aiPersona: userProfile.aiPersona,
+        });
         setGenerating(true);
         try {
           const res = await fetch("/api/generate-content-idea", {
@@ -75,7 +83,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           }
           const data = await res.json();
           if (data) {
-            const dataObj = JSON.parse(data);            
+            const dataObj = JSON.parse(data);
             setResult(dataObj.contentIdeas);
             if (activeTab === "ideas") {
               setShowIdeas(true);
@@ -102,7 +110,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             userProfile: userProfile.profile,
             userPersona: userProfile.aiPersona,
           });
-          
 
           const res = await fetch("/api/generate-content-idea", {
             method: "POST",
@@ -179,17 +186,16 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     setContentType(platform.toLowerCase().includes("linkedin") ? "linkedin" : "twitter");
   };
 
-  const handleContentAction = async (contentStatus:string) => {
-    if(!selectedIdea?.title || !selectedIdea?.platform){
-      toast("No content is present")
-      return
+  const handleContentAction = async (contentStatus: string) => {
+    if (!selectedIdea?.title || !selectedIdea?.platform) {
+      toast("No content is present");
+      return;
     }
-    switch (contentStatus){
-      case "draft" :
-        const res = await saveAsDraft({title:selectedIdea?.title, body:contentDraft, platform:selectedIdea.platform});
-        if(res) toast("🟢 Draft saved successfully")
+    switch (contentStatus) {
+      case "draft":
+        const res = await saveAsDraft({ title: selectedIdea?.title, body: contentDraft, platform: selectedIdea.platform });
+        if (res) toast("🟢 Draft saved successfully");
     }
-       
   };
 
   const handleContentSave = (content: string) => {
@@ -204,38 +210,43 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   };
 
   return (
-    <div className="container py-8">
-      <div className="mb-12 flex flex-col gap-2 w-max mx-auto items-center">
-        <h1 className="text-3xl font-bold">AI Content Brain</h1>
-        <p className="text-gray-500 dark:text-gray-400">Generate ideas, enhance content, and create engaging posts</p>
-      </div>
-
+    <div className="max-w-5xl mx-auto my-10">
+      <DashboardHeading
+        title={"AI Content Brain"}
+        description="Generate innovative ideas, elevate your content, and craft consistently
+          engaging, impactful, and share-worthy posts daily."
+      />
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
-        className="space-y-4"
       >
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid gap-3 w-full grid-cols-3 h-28 bg-transparent px-0">
           <TabsTrigger
             value="ideas"
-            className="gap-2"
+            className="gap-2 whitespace-normal p-4 flex flex-col items-start  h-26  bg-[#18181b] border data-[state=active]:border-[#222225] border-[#222225] data-[state=active]:!bg-[#222225] rounded-xl text-md"
           >
-            <LightbulbIcon className="h-4 w-4" />
-            Content Ideas
+            <div className="flex items-center gap-2">
+              <span className="h-8 w-8 flex items-center justify-center bg-yellow-200/20 rounded-[8px]">💡</span> Content Ideas
+            </div>
+            <p className="text-sm opacity-60 text-start font-normal">Generate fresh content ideas using current trends, insights, and audience interests.</p>
           </TabsTrigger>
           <TabsTrigger
             value="create"
-            className="gap-2"
+            className="gap-2 whitespace-normal p-4 flex flex-col items-start  h-26  bg-[#18181b] border data-[state=active]:border-[#222225] border-[#222225] data-[state=active]:!bg-[#222225] rounded-xl text-md"
           >
-            <MessageSquare className="h-4 w-4" />
-            Create Content
+            <div className="flex items-center gap-2">
+              <span className="h-8 w-8 flex items-center justify-center bg-white/20 rounded-[8px]">📝</span> Create Content
+            </div>
+            <p className="text-sm opacity-60 text-start font-normal">Generate personalized content for your target persona with precision and relevance.</p>
           </TabsTrigger>
           <TabsTrigger
             value="enhance"
-            className="gap-2"
+            className="gap-2 whitespace-normal p-4 flex flex-col items-start  h-26  bg-[#18181b] border data-[state=active]:border-[#222225] border-[#222225] data-[state=active]:!bg-[#222225] rounded-xl text-md"
           >
-            <Wand2 className="h-4 w-4" />
-            Enhance Content
+            <div className="flex items-center gap-2">
+              <span className="h-8 w-8 flex items-center justify-center bg-yellow-200/20 rounded-[8px]">📜</span> Enhance Content
+            </div>
+            <p className="text-sm opacity-60 text-start font-normal">Enhance your existing or past content intelligently using powerful AI assistance.</p>
           </TabsTrigger>
         </TabsList>
 
@@ -248,82 +259,99 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="topic">Topic or Theme (Optional)</Label>
-                <Input
+                {/* <Input
                   id="topic"
                   placeholder="e.g., leadership, productivity, industry trends"
                   value={promptDetails.topic}
                   onChange={(e) => setPromptDetails({ ...promptDetails, topic: e.target.value })}
+                /> */}
+                <div className="flex my-4 mt-0 cursor-default text-sm">
+                  <div
+                    onClick={() => setOpen(!open)}
+                    className="w-max gap-2 h-9 z-10 p-1.5 pr-3 flex items-center justify-between rounded-full bg-zinc-800"
+                  >
+                    <div className="border w-6 h-6 rounded-full bg-white/80" />
+                    Plateform
+                  </div>
+                  {open === true ? (
+                    <div className="pl-6 -ml-4 w-max gap-2 h-9 border border-l-[0px] p-1 pr-3 flex items-center justify-between rounded-r-full">
+                      <RadioGroup
+                        defaultValue="all"
+                        className="flex space-x-4"
+                        value={promptDetails.platform}
+                        onValueChange={(value) => setPromptDetails({ ...promptDetails, platform: value })}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem
+                            value="all"
+                            id="p1"
+                          />
+                          <Label htmlFor="p1">All</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem
+                            value="linkedin"
+                            id="p2"
+                          />
+                          <Label htmlFor="p2">LinkedIn</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem
+                            value="twitter"
+                            id="p3"
+                          />
+                          <Label htmlFor="p3">Twitter</Label>
+                        </div>
+                      </RadioGroup>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <div className="space-x-2 ml-3 flex items-center ">
+                    <Label>Number of Ideas</Label>
+                    <RadioGroup
+                      defaultValue="10"
+                      className="flex space-x-2"
+                      value={promptDetails.numberOfIdeas}
+                      onValueChange={(value) => setPromptDetails({ ...promptDetails, numberOfIdeas: value })}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="3"
+                          id="r1"
+                        />
+                        <Label htmlFor="r1">3</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="5"
+                          id="r1"
+                        />
+                        <Label htmlFor="r1">5</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="10"
+                          id="r2"
+                        />
+                        <Label htmlFor="r2">10</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value="20"
+                          id="r3"
+                        />
+                        <Label htmlFor="r3">20</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+                <AIinput
+                  id="topic"
+                  placeholder="e.g., leadership, productivity, industry trends"
+                  value={promptDetails.topic}
+                  onChange={(e:any) => setPromptDetails({ ...promptDetails, topic: e.target.value })}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label>Number of Ideas</Label>
-                <RadioGroup
-                  defaultValue="10"
-                  className="flex space-x-4"
-                  value={promptDetails.numberOfIdeas}
-                  onValueChange={(value) => setPromptDetails({ ...promptDetails, numberOfIdeas: value })}
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="3"
-                      id="r1"
-                    />
-                    <Label htmlFor="r1">3</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="5"
-                      id="r1"
-                    />
-                    <Label htmlFor="r1">5</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="10"
-                      id="r2"
-                    />
-                    <Label htmlFor="r2">10</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="20"
-                      id="r3"
-                    />
-                    <Label htmlFor="r3">20</Label>
-                  </div>
-                </RadioGroup>
-              </div>
-              <div className="space-y-2">
-                <Label>Platform</Label>
-                <RadioGroup
-                  defaultValue="all"
-                  className="flex space-x-4"
-                  value={promptDetails.platform}
-                  onValueChange={(value) => setPromptDetails({ ...promptDetails, platform: value })}
-                >
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="all"
-                      id="p1"
-                    />
-                    <Label htmlFor="p1">All</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="linkedin"
-                      id="p2"
-                    />
-                    <Label htmlFor="p2">LinkedIn</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="twitter"
-                      id="p3"
-                    />
-                    <Label htmlFor="p3">Twitter</Label>
-                  </div>
-                </RadioGroup>
               </div>
             </CardContent>
             <CardFooter>

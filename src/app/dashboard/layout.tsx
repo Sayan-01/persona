@@ -12,14 +12,13 @@ import Search from "@/components/global/search";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-screen bg-[#111111]">
-      <aside className="hidden w-[250px] flex-col lg:flex  p-3">
+    <div className="flex h-screen bg-[#111111] p-3">
+      <aside className="hidden w-[250px] flex-col lg:flex  pr-3">
         <Sidebar />
       </aside>
-      <div className="flex flex-col flex-1  relative overflow-auto">
-        <header className="h-[112px] sticky top-0 z-30 w-full p-6 py-4 ">
-          <div className="container flex h-16 items-center justify-between gap-4 py-4">
-            <Search />
+      <div className="flex flex-col flex-1 relative overflow-auto rounded-3xl border">
+        <header className=" sticky top-0 z-30 w-full p-7 py-0 border-b">
+          <div className="container flex h-16 items-center justify-end gap-4 py-4">
             <div className="flex items-center gap-4">
               <ButtonLayout icon>
                 <Bell className="h-4 w-4" />
@@ -66,7 +65,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </div>
           </div>
         </header>
-        <main className="box h-[calc(100vh-112px)] overflow-y-auto px-7">
+        <main className="box h-[calc(100vh-76px)] overflow-y-auto flex  px-7 ">
           <div className="mx-auto w-full">{children}</div>
         </main>
       </div>

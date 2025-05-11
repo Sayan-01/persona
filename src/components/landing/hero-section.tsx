@@ -5,8 +5,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { Paytone_One } from "next/font/google";
 
-const payto = Paytone_One({ subsets: ["latin"], weight: "400" });
-
+const payyy = Paytone_One({ subsets: ["latin"], weight: "400" });
 
 const HeroSection = () => {
   const fadeInUp = {
@@ -43,7 +42,7 @@ const HeroSection = () => {
 
           <motion.h1
             variants={fadeInUp}
-            className={`mt-8 max-w-4xl text-center text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl md:text-7xl ${payto.className}`}
+            className={`mt-8 max-w-4xl text-center text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl md:text-7xl ${payyy.className}`}
           >
             Your Personal AI <span className="bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent">Content Assistant</span> SaaS
           </motion.h1>
@@ -57,7 +56,7 @@ const HeroSection = () => {
 
           <motion.div
             variants={fadeInUp}
-            className="mt-10 flex flex-col gap-4 sm:flex-row sm:gap-6"
+            className="mt-10 z-10 flex flex-col gap-4 sm:flex-row sm:gap-6"
           >
             <Link href="/signup">
               <Button
@@ -69,14 +68,12 @@ const HeroSection = () => {
               </Button>
             </Link>
             <Link href="#features">
-              <button
-                className="h-12 rounded-full border text-zinc-900 hover:text-zinc-500 bg-white/50 px-5 hover:bg-blue-50 border-blue-400  transition-all duration-300"
-              >
-                See how it works
-              </button>
+              <button className="h-12 rounded-full border text-zinc-900 hover:text-zinc-500 bg-white/50 px-5 hover:bg-blue-50 border-violet-400  transition-all duration-300">See how it works</button>
             </Link>
           </motion.div>
-
+          <div className="bg-violet-500 w-[1000px] h-[500px] mt-10 opacity-80 rounded-full flex items-center justify-center absolute -z-0 blur-3xl">
+            <div className="bg-violet-900 w-[500px] h-[300px] rounded-full"></div>
+          </div>
           <motion.div
             variants={fadeInUp}
             className="mt-16 w-full max-w-6xl rounded-3xl border border-blue-100/50 bg-white/80 p-4 shadow-2xl shadow-blue-500/10 backdrop-blur-sm  md:p-8"

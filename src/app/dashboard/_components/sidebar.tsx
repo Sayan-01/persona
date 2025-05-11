@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button";
 import { LayoutDashboard, Calendar, Settings, HelpCircle, LogOut, Sparkles, FileText, PlusCircle, Instagram } from "lucide-react";
 import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
 import ButtonLayout from "@/components/buttons/button-layout";
+import { Paytone_One } from "next/font/google";
+
+const payt = Paytone_One({ subsets: ["latin"], weight: "400" });
 
 
 interface NavItem {
@@ -55,10 +58,10 @@ export function Sidebar() {
   ];
 
   return (
-      <div className=" border flex flex-col justify-between h-full w-full gap-y-5 p-3 bg-[#171717] opacity-90 bg-clip-border backdrop-blur-3xl backdrop-filter rounded-3xl">
+      <div className=" border flex flex-col justify-between h-full w-full gap-y-5 p-3 bg-[#18181b] opacity-90 bg-clip-border backdrop-blur-3xl backdrop-filter rounded-3xl">
         <Link
           href="/"
-          className="flex items-center gap-2 p-2 pt-4 pb-0 justify-center"
+          className={`flex items-center gap-2 p-2 pt-5 pb-3 justify-center ${payt.className}`}
         >
           {/* <Sparkles className="h-6 w-6 text-purple-600" strokeWidth={2.4}/> */}
           <span className="text-3xl font-extrabold text-[#879fff]  ">PersonaAI</span>
