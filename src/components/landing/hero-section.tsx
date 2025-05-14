@@ -3,9 +3,9 @@ import { motion } from "motion/react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { Paytone_One } from "next/font/google";
+import { Inter, Noto_Sans_Mahajani, Paytone_One, Poppins, Sansita } from "next/font/google";
 
-const payyy = Paytone_One({ subsets: ["latin"], weight: "400" });
+const payyy = Inter({ subsets: ["latin"], weight: "400" });
 
 const HeroSection = () => {
   const fadeInUp = {
@@ -39,21 +39,19 @@ const HeroSection = () => {
             AI-Powered Content Generation
             <ChevronRight className="ml-1 h-4 w-4" />
           </motion.div>
-
           <motion.h1
             variants={fadeInUp}
-            className={`mt-8 max-w-4xl text-center text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl md:text-7xl ${payyy.className}`}
+            className={`my-5 max-w-7xl text-center text-5xl tracking-tight text-gray-900 sm:text-6xl md:text-[85px] `}
           >
-            Your Personal AI <span className="bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent">Content Assistant</span> SaaS
+            Create Content
+            <br /><span className="bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent">That Sounds Like You</span>
           </motion.h1>
-
           <motion.p
             variants={fadeInUp}
-            className="mt-6 max-w-[680px] text-center text-lg text-gray-700 "
+            className=" max-w-[670px] text-center text-lg text-gray-700 "
           >
             Effortlessly create, enhance, and manage your content with AI. From the social media posts to marketing copy, PersonaAI helps you maintain a consistent brand voice across all platforms.
           </motion.p>
-
           <motion.div
             variants={fadeInUp}
             className="mt-10 z-10 flex flex-col gap-4 sm:flex-row sm:gap-6"

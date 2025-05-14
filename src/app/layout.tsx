@@ -1,11 +1,11 @@
 import type React from "react";
 import type { Metadata } from "next";
-import {  DM_Sans, Inter, Mona_Sans } from "next/font/google";
+import {  DM_Sans, Inter, Mona_Sans, Nunito, Raleway, Roboto } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
-const monaa = Inter({ subsets: ["latin"]});
+const monaa = Nunito({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "PersonaAI - AI-Powered Content Creation",
