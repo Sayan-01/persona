@@ -12,11 +12,11 @@ import Search from "@/components/global/search";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-screen bg-[#111111] p-3">
-      <aside className="hidden w-[250px] flex-col lg:flex  pr-3">
+    <div className="flex h-screen bg-background">
+      <aside className="hidden w-[226px] flex-col lg:flex">
         <Sidebar />
       </aside>
-      <div className="flex flex-col flex-1 relative overflow-auto rounded-3xl border">
+      <div className="flex flex-col flex-1 relative overflow-auto ">
         <header className=" sticky top-0 z-30 w-full p-7 py-0 border-b">
           <div className="container flex h-16 items-center justify-end gap-4 py-4">
             <div className="flex items-center gap-4">

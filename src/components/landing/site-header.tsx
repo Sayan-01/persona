@@ -10,42 +10,46 @@ export function SiteHeader({ session }: { session: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-white/60 rounded-full backdrop-blur-md max-w-7xl mx-auto border border-blue-100/50 ">
+    <header className="w-full bg-card rounded-xl backdrop-blur-md max-w-7xl mx-auto border card_border card_shadow ">
       <div className="container flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-6">
+        <Link
+          href="/"
+          className="flex items-center space-x-2 ml-5"
+        >
+          <span className="bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent text-2xl font-bold">PersonaAI</span>
+        </Link>
+        <nav className="hidden md:flex gap-6  text-foreground/60">
           <Link
-            href="/"
-            className="flex items-center space-x-2 ml-5"
+            href="#features"
+            className="text-sm font-medium transition-colors hover:text-blue-600 "
           >
-            <span className="bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent text-2xl font-bold">PersonaAI</span>
+            Features
           </Link>
-          <nav className="hidden md:flex gap-6">
-            <Link
-              href="#features"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
-            >
-              Features
-            </Link>
-            <Link
-              href="#pricing"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
-            >
-              Pricing
-            </Link>
-            <Link
-              href="#testimonials"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
-            >
-              Testimonials
-            </Link>
-            <Link
-              href="#faq"
-              className="text-sm font-medium text-gray-800 transition-colors hover:text-blue-600 "
-            >
-              FAQ
-            </Link>
-          </nav>
-        </div>
+          <Link
+            href="#features"
+            className="text-sm font-medium transition-colors hover:text-blue-600 "
+          >
+            How It Works
+          </Link>
+          <Link
+            href="#pricing"
+            className="text-sm font-medium transition-colors hover:text-blue-600 "
+          >
+            Pricing
+          </Link>
+          <Link
+            href="#testimonials"
+            className="text-sm font-medium transition-colors hover:text-blue-600 "
+          >
+            Testimonials
+          </Link>
+          <Link
+            href="#faq"
+            className="text-sm font-medium transition-colors hover:text-blue-600 "
+          >
+            FAQ
+          </Link>
+        </nav>
         <div className="hidden md:flex items-center gap-4">
           <ModeToggle />
           {session?.user ? (

@@ -11,7 +11,7 @@ import { auth } from "../../../auth";
 export default async function Home() {
   const session = await auth()
   return (
-    <div className="flex min-h-screen flex-col ">
+    <div className="flex min-h-screen flex-col bg-[#02031c]">
       <div className="fixed top-6 z-50 w-full ">
         <SiteHeader session={session}/>
       </div>

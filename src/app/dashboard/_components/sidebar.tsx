@@ -6,18 +6,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Calendar, Settings, HelpCircle, LogOut, Sparkles, FileText, PlusCircle, Instagram } from "lucide-react";
+import { LayoutDashboard, Calendar, Settings, HelpCircle, LogOut, Sparkles, FileText, PlusCircle, Instagram, Brain, HomeIcon } from "lucide-react";
 import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
 import ButtonLayout from "@/components/buttons/button-layout";
-import { Paytone_One } from "next/font/google";
+import { Paytone_One, Poppins } from "next/font/google";
 
-const payt = Paytone_One({ subsets: ["latin"], weight: "400" });
-
+const payt = Poppins({ subsets: ["latin"], weight: "800" });
 
 interface NavItem {
   title: string;
   href: string;
-  icon: React.ReactNode;
+  icon: any;
 }
 
 export function Sidebar() {
@@ -27,82 +26,84 @@ export function Sidebar() {
     {
       title: "Dashboard",
       href: "/dashboard",
-      icon: <LayoutDashboard className="mr-2 h-4 w-4" />,
+      icon: HomeIcon,
     },
     {
       title: "Integration",
       href: "/dashboard/integration",
-      icon: <Instagram className="mr-2 h-4 w-4" />,
+      icon: Instagram,
     },
     {
       title: "Content Brain",
       href: "/dashboard/content-brain",
-      icon: <Sparkles className="mr-2 h-4 w-4" />,
+      icon: Sparkles,
     },
     {
       title: "My Content",
       href: "/dashboard/content",
-      icon: <FileText className="mr-2 h-4 w-4" />,
+      icon: FileText,
     },
     {
       title: "Calendar",
       href: "/dashboard/calendar",
-      icon: <Calendar className="mr-2 h-4 w-4" />,
+      icon: Calendar,
     },
-
     {
       title: "Settings",
       href: "/dashboard/settings",
-      icon: <Settings className="mr-2 h-4 w-4" />,
+      icon: Settings,
     },
   ];
 
   return (
-      <div className=" border flex flex-col justify-between h-full w-full gap-y-5 p-3 bg-[#18181b] opacity-90 bg-clip-border backdrop-blur-3xl backdrop-filter rounded-3xl">
-        <Link
-          href="/"
-          className={`flex items-center gap-2 p-2 pt-5 pb-3 justify-center ${payt.className}`}
-        >
-          {/* <Sparkles className="h-6 w-6 text-purple-600" strokeWidth={2.4}/> */}
-          <span className="text-3xl font-extrabold text-[#879fff]  ">PersonaAI</span>
-        </Link>
-        <div className="flex flex-col gap-2 h-full">
+    <div className="border-r flex flex-col justify-between h-full w-full gap-y-5 p-3 dark:bg-[#1B1B1D] bg-[#ffffff]">
+      <Link
+        href="/"
+        className={`flex items-center gap-2 pt-2 -mb-2.5 justify-start px-2 ${payt.className}`}
+      >
+        <span className="text-3xl px-3 font-extrabold text-[#6180fc]">PersonaAI</span>
+      </Link>
+      <nav className="px-2 h-full">
+        <ul className="space-y-1">
           {navItems.map((item, index) => (
-            <Link
-              key={index}
-              href={item.href}
-            >
-              <Button
-                variant={pathname === item.href ? "secondary" : "ghost"}
-                className={cn("w-full justify-start", pathname === item.href && "bg-muted font-medium")}
+            <li key={index}>
+              <Link
+                href={item.href}
+                className={cn("flex items-center px-[10px] py-[10px] text-sm rounded-md", pathname === item.href ? "bg-indigo-50 dark:bg-[#27272A] text-indigo-600 dark:text-indigo-50" : "hover:bg-gray-100 dark:hover:bg-[#27272A]")}
               >
-                {item.icon}
+                <item.icon
+                  strokeWidth={2.2}
+                  className={cn("h-[18px] w-[18px] mr-3", pathname === item.href ? "text-indigo-600 dark:text-indigo-50" : "text-gray-500")}
+                />
                 {item.title}
-              </Button>
-            </Link>
+              </Link>
+            </li>
           ))}
-        </div>
-        <div className="mt-2 border-t pt-6">
-          <Link href="/help">
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-            >
-              <HelpCircle className="mr-2 h-4 w-4" />
-              Help & Support
-            </Button>
-          </Link>
-          <Link href="/logout">
-            <Button
-              variant="ghost"
-              className="w-full justify-start text-muted-foreground"
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
-            </Button>
-          </Link>
-          <UpgradeCard />
-        </div>
+        </ul>
+      </nav>
+      <div className="mt-2 pt-6">
+        <UpgradeCard />
+        <Link
+          href="/help"
+          className={cn("flex mx-2 items-center px-[10px] py-[10px] text-sm rounded-md hover:bg-gray-100 text-gray-500")}
+        >
+          <HelpCircle
+            strokeWidth={2.2}
+            className="mr-3 h-[18px] w-[18px]"
+          />
+          Help & Support
+        </Link>
+        <Link
+          href="/logout"
+          className={cn("flex mx-2 items-center px-[10px] py-[10px] text-sm rounded-md hover:bg-gray-100 text-gray-500")}
+        >
+          <LogOut
+            strokeWidth={2.2}
+            className="mr-3 h-[18px] w-[18px]"
+          />
+          Logout
+        </Link>
       </div>
+    </div>
   );
 }

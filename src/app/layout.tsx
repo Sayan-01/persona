@@ -5,7 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
-const monaa = Nunito({ subsets: ["latin"]});
+const monaa = Inter({ subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "PersonaAI - AI-Powered Content Creation",
