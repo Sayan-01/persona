@@ -11,7 +11,7 @@ import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
 import ButtonLayout from "@/components/buttons/button-layout";
 import { Paytone_One, Poppins } from "next/font/google";
 
-const payt = Poppins({ subsets: ["latin"], weight: "800" });
+const popp = Poppins({ subsets: ["latin"], weight: "800" });
 
 interface NavItem {
   title: string;
@@ -56,20 +56,26 @@ export function Sidebar() {
   ];
 
   return (
-    <div className="border-r flex flex-col justify-between h-full w-full gap-y-5 p-3 dark:bg-[#1B1B1D] bg-[#ffffff]">
+    <div className="w-[240px] border-r flex flex-col justify-between h-full gap-y-5 p-4 py-3 dark:bg-[#1B1B1D] bg-[#ffffff]">
       <Link
         href="/"
-        className={`flex items-center gap-2 pt-2 -mb-2.5 justify-start px-2 ${payt.className}`}
+        className={`flex items-center pt-1 -mb-2.5 justify-start ${popp.className}`}
       >
-        <span className="text-3xl px-3 font-extrabold text-[#6180fc]">PersonaAI</span>
+        <div className="p-1.5 rounded-lg bg-[#6180fc]">
+          <Brain color="#ffffff" size={24}/>
+        </div>
+        <span className="text-2xl px-3 font-extrabold text-[#6180fc]">PersonaAI.</span>
       </Link>
-      <nav className="px-2 h-full">
+      <nav className=" h-full">
         <ul className="space-y-1">
           {navItems.map((item, index) => (
             <li key={index}>
               <Link
                 href={item.href}
-                className={cn("flex items-center px-[10px] py-[10px] text-sm rounded-md", pathname === item.href ? "bg-indigo-50 dark:bg-[#27272A] text-indigo-600 dark:text-indigo-50" : "hover:bg-gray-100 dark:hover:bg-[#27272A]")}
+                className={cn(
+                  "flex items-center px-[10px] py-[10px] text-sm rounded-md",
+                  pathname === item.href ? "bg-indigo-50 dark:bg-[#27272A] text-indigo-600 dark:text-indigo-50" : "hover:bg-gray-100 dark:hover:bg-[#27272A]"
+                )}
               >
                 <item.icon
                   strokeWidth={2.2}
@@ -85,7 +91,7 @@ export function Sidebar() {
         <UpgradeCard />
         <Link
           href="/help"
-          className={cn("flex mx-2 items-center px-[10px] py-[10px] text-sm rounded-md hover:bg-gray-100 text-gray-500")}
+          className={cn("flex  items-center px-[10px] py-[10px] text-sm rounded-md hover:bg-gray-100 text-gray-500")}
         >
           <HelpCircle
             strokeWidth={2.2}
@@ -95,7 +101,7 @@ export function Sidebar() {
         </Link>
         <Link
           href="/logout"
-          className={cn("flex mx-2 items-center px-[10px] py-[10px] text-sm rounded-md hover:bg-gray-100 text-gray-500")}
+          className={cn("flex  items-center px-[10px] py-[10px] text-sm rounded-md hover:bg-gray-100 text-gray-500")}
         >
           <LogOut
             strokeWidth={2.2}

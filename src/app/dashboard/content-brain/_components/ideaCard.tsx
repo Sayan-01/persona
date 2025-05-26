@@ -8,9 +8,9 @@ type Props = { title: string; description: string; keyPoints: string[]; hashtags
 const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent: (idea: Props, platform: string) => void; platform: string }) => {
   return (
     <Card className="border-2 border-purple-200 dark:border-purple-900">
-      <CardHeader className="pb-2">
+      <CardHeader className="">
         <div className="flex items-center justify-between">
-          <div className="text-sm font-medium text-purple-600">{platform}</div>
+          <div className="text-sm font-medium px-3 py-1 rounded-full bg-blue-100/60 text-blue-600">{platform}</div>
           <Button
             variant="ghost"
             size="icon"
@@ -19,10 +19,10 @@ const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent:
             <ThumbsUp className="h-4 w-4" />
           </Button>
         </div>
-        <CardTitle className="text-base">{idea.title}</CardTitle>
       </CardHeader>
       <CardContent className="text-sm text-gray-500 dark:text-gray-400">
-        {idea.description}
+        <h1 className="text-base font-bold text-black/80">{idea.title}</h1>
+        <p>{idea.description}</p>
         <div className="mt-4">
           {idea.keyPoints.map((keyPoint: string, index: number) => (
             <div
@@ -34,7 +34,7 @@ const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent:
             </div>
           ))}
         </div>
-        <div className="mt-4 flex gap-2">
+        <div className="mt-4 gap-2 flex flex-wrap">
           {idea.hashtags.map((hashtag: string, index: number) => (
             <div
               key={index}

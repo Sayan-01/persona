@@ -3,7 +3,7 @@ import { UserPersona, UserProfile } from "../types";
 type IdeaGenerateProps = {
   topic: string;
   numberOfIdeas: string;
-  platform: string;
+  platform: string[];
   userProfile: UserProfile;
   aiPersona: UserPersona;
 };
@@ -12,7 +12,7 @@ export const IdeaGenerateProps = ({ topic, numberOfIdeas, platform, userProfile,
   console.log("first", topic, numberOfIdeas, platform, userProfile, aiPersona);
 
   return dedent`
-    As an a pro AI content strategist, generate ${numberOfIdeas} creative and engaging content ideas (that means ${numberOfIdeas} objects are present in the array) for ${topic} specifically tailored for ${platform}.
+    As an a pro AI content strategist, generate ${numberOfIdeas} creative and engaging content ideas (that means ${numberOfIdeas} objects are present in the array) for ${topic} specifically tailored for ${platform.join(", ")}.
 
     Consider the following context:
     User Profile:

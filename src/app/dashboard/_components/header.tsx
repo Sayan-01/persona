@@ -1,0 +1,81 @@
+import React from "react";
+import { Home as HomeIcon, Search, PlusSquare, ChevronLeft, ChevronRight, Settings, LogOut } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+const Header = () => {
+  return (
+    <div className="bg-white border-gray-200">
+      <div className="flex items-center h-16 px-4 border-b">
+        {/* Breadcrumb */}
+        <div className="flex items-center space-x-2 text-sm">
+          <HomeIcon className="h-4 w-4 text-gray-500" />
+          <span className="text-gray-500">/</span>
+          <span className="text-gray-500">Cover Letters</span>
+          <span className="text-gray-500">/</span>
+          <span>Untitled 007</span>
+        </div>
+
+        {/* Search */}
+        <div className="ml-auto flex items-center">
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 text-gray-400" />
+            </div>
+            <input
+              type="text"
+              placeholder="Search"
+              className="block w-full pl-10 pr-3 py-1.5 border border-gray-300 rounded-lg text-sm"
+            />
+          </div>
+
+          {/* New Project Button */}
+          <button className="mx-3 bg-indigo-900 text-white px-3 py-1.5 rounded-lg flex items-center text-sm">
+            <PlusSquare className="h-4 w-4 mr-1.5" />
+            New Project
+          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="relative h-[33.4px] w-[33.4px] rounded-full"
+              >
+                <Avatar className="h-[33.4px] w-[33.4px]">
+                  <AvatarImage
+                    src="/user.jpg"
+                    alt="User"
+                  />
+                  <AvatarFallback>JD</AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-56"
+              align="end"
+              forceMount
+            >
+              <DropdownMenuLabel className="font-normal">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">John Doe</p>
+                  <p className="text-xs leading-none text-muted-foreground">john@example.com</p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Header;
