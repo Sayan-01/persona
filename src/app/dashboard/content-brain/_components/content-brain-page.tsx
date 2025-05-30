@@ -21,28 +21,12 @@ import ButtonLayout from "@/components/buttons/button-layout";
 import { toast } from "sonner";
 import { saveAsDraft } from "../../../../../server/post";
 import AIinput from "@/components/global/ai-input";
-import DashboardHeading from "../../_components/dashboard-heading";
-import Link from "next/link";
-import AItextarea from "@/components/global/ai-textarea";
 import InputWrapper from "@/components/global/input-wrapper";
 import { ContentLengths, Platforms } from "@/constants";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
-  const [contentType, setContentType] = useState("LinkedIn Post");
-  const [contentLength, setContentLength] = useState<"short" | "medium" | "long">("medium");
-  const [showEnhanced, setShowEnhanced] = useState(false);
-  const [showDraft, setShowDraft] = useState(false);
-  const [contentDraft, setContentDraft] = useState("");
-  const [contentStatus, setContentStatus] = useState("draft"); // draft, scheduled, published
-  const [selectedIdea, setSelectedIdea] = useState<{ title: string; description: string; keyPoints: string[]; hashtags: string[]; platform: string } | null>(null);
-  const [editorContent, setEditorContent] = useState("");
-  const [generating, setGenerating] = useState(false);
-  const [showIdeas, setShowIdeas] = useState(false);
-  const [result, setResult] = useState<any>([]);
-  const [contentForEnhance, setContentForEnhance] = useState("");
-  const [enhanceType, setEnhanceType] = useState("rewrite");
-  const [promptDetails, setPromptDetails] = useState<{
+  const [ideaGeneratePromptDetails, setIdeaGeneratePromptDetails] = useState<{
     topic: string;
     numberOfIdeas: string;
     platform: string[];
@@ -51,6 +35,31 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     numberOfIdeas: "3",
     platform: [],
   });
+  const [contentGeneratePromptDetails, setContentGeneratePromptDetails] = useState<{
+    topic: string;
+    contentType: string;
+    hashtags: string[];
+    keyPoints: string[];
+    contentLength: "short" | "medium" | "long";
+  }>({
+    topic: "",
+    contentType: "LinkedIn Post",
+    hashtags: [],
+    keyPoints: [],
+    contentLength: "medium",
+  });
+  const [contentEnhancePromptDetails, setContentEnhancePromptDetails] = useState<{ plateform: string }>();
+  const [selectedIdea, setSelectedIdea] = useState<{ title: string; description: string; keyPoints: string[]; hashtags: string[]; platform: string } | null>(null);
+  const [showEnhanced, setShowEnhanced] = useState(false);
+  const [showDraft, setShowDraft] = useState(false);
+  const [contentDraft, setContentDraft] = useState("");
+  const [contentStatus, setContentStatus] = useState("draft"); // draft, scheduled, published
+  const [editorContent, setEditorContent] = useState("");
+  const [generating, setGenerating] = useState(false);
+  const [showIdeas, setShowIdeas] = useState(false);
+  const [result, setResult] = useState<any>([]);
+  const [contentForEnhance, setContentForEnhance] = useState("");
+  const [enhanceType, setEnhanceType] = useState("rewrite");
   const [enhanceContent, setEnhanceContent] = useState("");
   const [userProfile, setUserProfile] = useState<any>(null);
 
@@ -65,9 +74,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   }, [user]);
 
   const removePlatform = (name: string) => {
-    setPromptDetails({
-      ...promptDetails,
-      platform: promptDetails.platform.filter((item) => item !== name),
+    setIdeaGeneratePromptDetails({
+      ...ideaGeneratePromptDetails,
+      platform: ideaGeneratePromptDetails.platform.filter((item) => item !== name),
     });
   };
 
@@ -75,9 +84,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     switch (type) {
       case "idea generate":
         const ideaPrompt = IdeaGenerateProps({
-          topic: promptDetails.topic,
-          numberOfIdeas: promptDetails.numberOfIdeas,
-          platform: promptDetails.platform,
+          topic: ideaGeneratePromptDetails.topic,
+          numberOfIdeas: ideaGeneratePromptDetails.numberOfIdeas,
+          platform: ideaGeneratePromptDetails.platform,
           userProfile: userProfile.profile,
           aiPersona: userProfile.aiPersona,
         });
@@ -117,11 +126,11 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
         setGenerating(true);
         try {
           const contentPrompt = generateContentPrompt({
-            platform: contentType,
-            topic: promptDetails.topic,
-            keyPoints: selectedIdea?.keyPoints || [],
-            hashtags: selectedIdea?.hashtags || [],
-            contentLength: contentLength,
+            platform: contentGeneratePromptDetails.contentType,
+            topic: ideaGeneratePromptDetails.topic || contentGeneratePromptDetails.topic,
+            keyPoints: selectedIdea?.keyPoints || contentGeneratePromptDetails.keyPoints,
+            hashtags: selectedIdea?.hashtags || contentGeneratePromptDetails.hashtags,
+            contentLength: contentGeneratePromptDetails.contentLength,
             userProfile: userProfile.profile,
             userPersona: userProfile.aiPersona,
           });
@@ -153,11 +162,12 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           setGenerating(false);
         }
         break;
+
       case "content enhance":
         setGenerating(true);
         try {
           const contentPrompt = enhanceContentPrompt({
-            platform: contentType,
+            platform: contentGeneratePromptDetails.contentType,
             content: contentForEnhance,
             enhanceType: enhanceType,
             userProfile: userProfile.profile,
@@ -198,7 +208,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const handleUseIdea = (idea: { title: string; description: string; keyPoints: string[]; hashtags: string[] }, platform: string) => {
     setSelectedIdea({ ...idea, platform });
     setActiveTab("create");
-    setContentType(platform.toLowerCase().includes("linkedin") ? "linkedin" : "twitter");
+    // setGContentType(platform.toLowerCase().includes("linkedin") ? "linkedin" : "twitter");
   };
 
   const handleContentAction = async (contentStatus: string) => {
@@ -213,11 +223,11 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     }
   };
 
-  const handleContentSave = (content: string) => {
-    setEditorContent(content);
-    setContentDraft(content);
-    setShowDraft(true);
-  };
+  // const handleContentSave = (content: string) => {
+  //   setEditorContent(content);
+  //   setContentDraft(content);
+  //   setShowDraft(true);
+  // };
 
   const handleEnhanceContent = () => {
     setShowEnhanced(true);
@@ -231,8 +241,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
         onValueChange={setActiveTab}
         className="w-full flex flex-row gap-0 h-full"
       >
-        <div className="flex-1 border-r h-full bg-red-800">
-          
+        <div className="flex-1 border-r h-full">
           <nav className="flex border-b px-3 justify-between h-12">
             <div className="flex items-center py-2">
               <button className="p-1.5 hover:bg-gray-100 rounded">
@@ -276,7 +285,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     <AlertCircle className="h-5 w-5" />
                   </div>
                   <div className="ml-3 flex-1">
-                    <p className="text-sm text-indigo-800 font-medium">💡 Click here to check out our tips for using Cover Letter AI</p>
+                    <p className="text-sm text-indigo-800 font-medium">💡 Click here to check out our tips for using Persona AI</p>
                   </div>
                   <button className="text-indigo-400 hover:text-indigo-600 transition-colors">
                     <X className="h-5 w-5" />
@@ -301,10 +310,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                           Paste the content description below <span className="text-pink-500">*</span>
                         </Label>
                         <textarea
-                          value={promptDetails.topic}
-                          onChange={(e) => setPromptDetails({ ...promptDetails, topic: e.target.value })}
+                          value={ideaGeneratePromptDetails.topic}
+                          onChange={(e) => setIdeaGeneratePromptDetails({ ...ideaGeneratePromptDetails, topic: e.target.value })}
                           className="w-full border-2 border-dashed border-indigo-300 bg-white rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 transition-all"
-                          placeholder="Paste the job description here..."
+                          placeholder="Paste the content description here..."
                         />
                         <div className="flex justify-between items-center mt-2">
                           <div className="text-xs text-gray-500">482/1000 characters</div>
@@ -321,15 +330,15 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
 
                   {/* Enhanced Skills Section */}
                   <div className="bg-gray-100 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">🎯 Skills Focus</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">🎇 Platform</h3>
                     <div className="space-y-4">
                       <Label className="text-sm font-medium text-gray-700">
-                        Which skills should be the focus? <span className="text-pink-500">*</span>
+                        Which platform should be the focus? <span className="text-pink-500">*</span>
                       </Label>
 
                       {/* Skills Tags Display */}
                       <div className="flex flex-wrap gap-2 min-h-[60px] p-3 border-2 border-dashed border-indigo-300 rounded-lg bg-white">
-                        {promptDetails.platform.map((skill, index) => (
+                        {ideaGeneratePromptDetails.platform.map((skill, index) => (
                           <div
                             key={index}
                             className="bg-indigo-100 border border-indigo-200 rounded-lg py-2 px-3 text-sm flex items-center gap-2 hover:bg-indigo-200 transition-colors"
@@ -343,7 +352,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                             </button>
                           </div>
                         ))}
-                        {promptDetails.platform.length === 0 && <div className="text-gray-500 text-sm italic">Add skills that should be highlighted in your cover letter</div>}
+                        {ideaGeneratePromptDetails.platform.length === 0 && <div className="text-gray-500 text-sm italic">Select the platform you want to generate content for</div>}
                       </div>
 
                       {/* Suggested Skills */}
@@ -353,12 +362,12 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                           <button
                             key={suggestion}
                             onClick={() => {
-                              if (!promptDetails.platform.includes(suggestion)) {
-                                setPromptDetails({ ...promptDetails, platform: [...promptDetails.platform, suggestion] });
+                              if (!ideaGeneratePromptDetails.platform.includes(suggestion)) {
+                                setIdeaGeneratePromptDetails({ ...ideaGeneratePromptDetails, platform: [...ideaGeneratePromptDetails.platform, suggestion] });
                               }
                             }}
                             className="text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1 rounded-md transition-colors"
-                            disabled={promptDetails.platform.includes(suggestion)}
+                            disabled={ideaGeneratePromptDetails.platform.includes(suggestion)}
                           >
                             + {suggestion}
                           </button>
@@ -370,16 +379,16 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   {/* Enhanced Creativity Level */}
                   <div className="bg-gray-100 rounded-xl p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900 flex items-center">🎨 Creativity Level</h3>
+                      <h3 className="text-lg font-semibold text-gray-900 flex items-center">🎯 Number of Ideas</h3>
                       <Info className="h-4 w-4 text-gray-400" />
                     </div>
                     <div className="space-y-3">
-                      <Label className="text-sm font-medium text-gray-700">How creative should the output be?</Label>
+                      <Label className="text-sm font-medium text-gray-700">How many ideas should be generated?</Label>
                       <div className="relative">
                         <AIinput
                           type="text"
-                          value={promptDetails.numberOfIdeas}
-                          onChange={(e: any) => setPromptDetails({ ...promptDetails, numberOfIdeas: e.target.value })}
+                          value={ideaGeneratePromptDetails.numberOfIdeas}
+                          onChange={(e: any) => setIdeaGeneratePromptDetails({ ...ideaGeneratePromptDetails, numberOfIdeas: e.target.value })}
                           className="focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 h-10 bg-white mt-0"
                           placeholder="0.8"
                         />
@@ -419,49 +428,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 </div>
 
                 <div className="space-y-8">
-                  <div className="bg-gray-100 rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900 flex items-center">🎨 Platform Selection</h3>
-                      <Info className="h-4 w-4 text-gray-400" />
-                    </div>
-                    <div className="space-y-3">
-                      <Label className="text-sm font-medium text-gray-700">Choose where you'll publish your content</Label>
-                      <div className="relative">
-                        <Select
-                          value={contentType}
-                          onValueChange={setContentType}
-                        >
-                          <SelectTrigger className="!h-14 w-full border-dashed border-2 border-indigo-300 bg-white hover:border-indigo-400 transition-colors p-2 shadow-none rounded-xl">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="border-slate-200">
-                            {Platforms.map((p) => (
-                              <SelectItem
-                                key={p.value}
-                                value={p.value}
-                                className="py-3"
-                              >
-                                <div className="flex items-center gap-3">
-                                  <div className={`w-8 h-8 rounded-lg ${p.color} flex items-center justify-center text-sm`}>{p.label.split(" ")[0]}</div>
-                                  <div className="text-left">
-                                    <div className="font-medium text-sm -ml-0.5">{p.label}</div>
-                                    <div className="text-xs text-slate-500">{p.desc}</div>
-                                  </div>
-                                </div>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </div>
                   <InputWrapper
                     heading={"🔥 Topic or Idea"}
-                    label={"balerina assasino of the year Get AI-powered content ideas"}
+                    label={"Paste your content idea here to get AI-powered content"}
                   >
                     <AIinput
                       id="topic"
-                      placeholder="e.g., AI in customer service, leadership tips, industry news"
+                      placeholder="e.g., 🤔 Stop Wasting Time! Automate Your Business with AI."
                       value={selectedIdea?.title || ""}
                       onChange={(e: any) => setSelectedIdea((prev) => (prev ? { ...prev, title: e.target.value } : null))}
                     />
@@ -493,6 +466,42 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       </div>
                     </div>
                   </div>
+                  <div className="bg-gray-100 rounded-xl p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold text-gray-900 flex items-center">🎨 Platform Selection</h3>
+                      <Info className="h-4 w-4 text-gray-400" />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-sm font-medium text-gray-700">Choose where you'll publish your content</Label>
+                      <div className="relative">
+                        <Select
+                          value={contentGeneratePromptDetails.contentType}
+                          onValueChange={(e) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, contentType: e })}
+                        >
+                          <SelectTrigger className="!h-14 w-full border-dashed border-2 border-indigo-300 bg-white hover:border-indigo-400 transition-colors p-2 shadow-none rounded-xl">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="border-slate-200">
+                            {Platforms.map((p) => (
+                              <SelectItem
+                                key={p.value}
+                                value={p.value}
+                                className="py-3"
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className={`w-8 h-8 rounded-lg ${p.color} flex items-center justify-center text-sm`}>{p.label.split(" ")[0]}</div>
+                                  <div className="text-left">
+                                    <div className="font-medium text-sm -ml-0.5">{p.label}</div>
+                                    <div className="text-xs text-slate-500">{p.desc}</div>
+                                  </div>
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
                   {/* Content length */}
                   <Card className="border-indigo-200 border-2 border-dashed mb-8">
                     <CardHeader className="">
@@ -504,13 +513,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     </CardHeader>
                     <CardContent>
                       <RadioGroup
-                        value={contentLength}
-                        onValueChange={(value) => setContentLength(value as "short" | "medium" | "long")}
+                        value={contentGeneratePromptDetails.contentLength}
+                        onValueChange={(value) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, contentLength: value as "short" | "medium" | "long" })}
                         className="grid grid-cols-1 md:grid-cols-3 gap-4"
                       >
                         {ContentLengths.map((length) => {
                           const Icon = length.icon;
-                          const isSelected = contentLength === length.value;
+                          const isSelected = contentGeneratePromptDetails.contentLength === length.value;
                           return (
                             <div
                               key={length.value}
@@ -550,7 +559,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   <Button
                     onClick={() => handleGenerate("content generate")}
                     disabled={generating}
-                    className="w-full gap-2"
+                    className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
                   >
                     {generating ? (
                       <>
@@ -558,10 +567,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                         Generating Contents...
                       </>
                     ) : (
-                      <>
-                        <Sparkles className="h-4 w-4" />
-                        Generate Contents
-                      </>
+                      <>✨ Generate Contents</>
                     )}
                   </Button>
                 </div>
@@ -669,8 +675,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       <Label className="text-sm font-medium text-gray-700">Choose where you'll publish your content</Label>
                       <div className="relative">
                         <Select
-                          value={contentType}
-                          onValueChange={setContentType}
+                          value={contentGeneratePromptDetails.contentType}
+                          onValueChange={(e) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, contentType: e })}
                         >
                           <SelectTrigger className="!h-14 w-full border-dashed border-2 border-indigo-300 bg-white hover:border-indigo-400 transition-colors p-2 shadow-none rounded-xl">
                             <SelectValue />
@@ -697,18 +703,18 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     </div>
                   </div>
                   <div className="bg-gray-100 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">🔥 Content</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">🔥 Previous Content</h3>
                     <div className="space-y-4">
                       <div>
                         <Label className="text-sm font-medium text-gray-700 mb-2 block">
-                          Paste the content description below <span className="text-pink-500">*</span>
+                          Paste the old content which you try to enhance <span className="text-pink-500">*</span>
                         </Label>
                         <textarea
                           value={contentForEnhance}
                           onChange={(e) => setContentForEnhance(e.target.value)}
                           id="existing-content"
                           className="w-full border-2 border-dashed border-indigo-300 bg-white rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 transition-all"
-                          placeholder="Paste the job description here..."
+                          placeholder="Paste tyour content here..."
                         />
                         <div className="flex justify-between items-center mt-2">
                           <div className="text-xs text-gray-500">482/1000 characters</div>
@@ -798,28 +804,18 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 <Button
                   onClick={() => handleGenerate("content enhance")}
                   disabled={generating}
-                  className="w-full gap-2"
+                  className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
                 >
                   {generating ? (
                     <>
                       <RefreshCw className="h-4 w-4 animate-spin" />
-                      Enhancing Content...
+                      Enhancing...
                     </>
                   ) : (
-                    <>
-                      <Wand2 className="h-4 w-4" />
-                      Enhance Content
-                    </>
+                    <>✨ Enhance Content</>
                   )}
                 </Button>
               </div>
-              <Card>
-                
-                <ContentEditor
-                  initialContent={enhanceContent}
-                  onSave={() => {}}
-                />
-              </Card>
 
               {!showEnhanced && (
                 <div className="mt-8 space-y-4">
@@ -936,8 +932,11 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               </button>
             </div>
           </nav>
-          <div className="h-[calc(100%-48px)] overflow-y-auto p-5 ">
-            <div className=" h-full rounded-xl">
+          <div className="h-[calc(100%-48px)] overflow-y-auto p-5">
+            <TabsContent
+              value="ideas"
+              className=" h-full rounded-xl"
+            >
               {showIdeas ? (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between pt-5 px-6">
@@ -951,21 +950,42 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       Regenerate
                     </Button>
                   </div>
-                  <div className="grid gap-4 md:grid-cols-1">
+                  <div className="grid gap-4 md:grid-cols-1 pb-12">
                     {result?.map((idea: { title: string; description: string; keyPoints: string[]; hashtags: string[] }, index: number) => (
                       <IdeaCard
                         idea={idea}
-                        platform={promptDetails.platform.join(" ,")}
-                        key={index}
                         onClickEvent={handleUseIdea}
+                        platform={ideaGeneratePromptDetails.platform.join(" ,")}
+                        key={index}
                       />
                     ))}
                   </div>
                 </div>
               ) : (
-                <div></div>
+                <div className="h-full w-full flex items-center flex-col justify-center">
+                  <div className="text-[70px] -mt-10">🔥</div>
+                  <h1 className="font-bold text-lg">Answer The Prompt</h1>
+                  <p className="text-sm text-zinc-600 text-center">
+                    Get the pest output result by filling
+                    <br /> proper information
+                  </p>
+                </div>
               )}
-            </div>
+            </TabsContent>
+            <TabsContent
+              value="create"
+              className=" h-full rounded-xl"
+            >
+            </TabsContent>
+            <TabsContent
+              value="enhance"
+              className=" h-full rounded-xl"
+            >
+              <ContentEditor
+                initialContent={enhanceContent}
+                onSave={() => {}}
+              />
+            </TabsContent>
           </div>
         </div>
       </Tabs>

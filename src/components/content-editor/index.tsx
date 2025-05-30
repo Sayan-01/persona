@@ -28,7 +28,7 @@ export function ContentEditor({ initialContent, onSave, onEnhance }: ContentEdit
   }, [initialContent]);
 
   return (
-    <Card className="p-4">
+    <>
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Edit className="h-4 w-4" />
@@ -36,12 +36,21 @@ export function ContentEditor({ initialContent, onSave, onEnhance }: ContentEdit
         </div>
         <div className="flex gap-2">
           {onEnhance && (
-            <Button variant="outline" size="sm" onClick={onEnhance} className="gap-1.5">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onEnhance}
+              className="gap-1.5"
+            >
               <Wand2 className="h-4 w-4" />
               Enhance
             </Button>
           )}
-          <Button size="sm" onClick={() => onSave(content)} className="gap-1.5">
+          <Button
+            size="sm"
+            onClick={() => onSave(content)}
+            className="gap-1.5"
+          >
             Save Changes
           </Button>
         </div>
@@ -49,10 +58,10 @@ export function ContentEditor({ initialContent, onSave, onEnhance }: ContentEdit
       <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="min-h-[500px] font-mono text-sm"
+        className="min-h-[500px] font-mono text-sm border-2 border-dashed border-indigo-300 hover:border-indigo-400"
         placeholder="Write or edit your content here..."
-        style={{ whiteSpace: 'pre-wrap', lineHeight: '1.5' }}
+        style={{ whiteSpace: "pre-wrap", lineHeight: "1.5" }}
       />
-    </Card>
-  )
+    </>
+  );
 }
