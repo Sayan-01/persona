@@ -15,25 +15,24 @@ export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtag
   
   const lengthGuide = {
     short: {
-      linkedin: "2-3 paragraphs",
-      "linkedin-article": "500-800 words",
+      linkedin: "1-2 paragraphs",
       twitter: "240-280 characters",
-      instagram: "150-200 words",
-      facebook: "1-2 paragraphs",
+      instagram: "50-100 words",
+      facebook: "1 paragraphs",
       blog: "300-500 words",
     },
     medium: {
-      linkedin: "4-6 paragraphs",
+      linkedin: "2-4 paragraphs",
       twitter: "1-2 threaded tweets",
-      instagram: "200-300 words",
-      facebook: "3-4 paragraphs",
+      instagram: "150-300 words",
+      facebook: "2-3 paragraphs",
       blog: "500-800 words",
     },
     long: {
-      linkedin: "7-10 paragraphs",
+      linkedin: "4-8 paragraphs",
       twitter: "3-5 threaded tweets",
       instagram: "300-400 words",
-      facebook: "5-7 paragraphs",
+      facebook: "4-6 paragraphs",
       blog: "800-1500 words",
     },
   };

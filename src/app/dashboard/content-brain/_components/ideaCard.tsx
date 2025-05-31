@@ -37,7 +37,7 @@ const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent:
         </div>
 
         {/* Enhanced Content */}
-        <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors duration-300">{idea.title}</h3>
+        <h3 className="text-xl font-bold tracking-wide text-gray-900 mb-4 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors duration-300">{idea.title}</h3>
         <p className="text-gray-600 text-sm mb-6 line-clamp-3 leading-relaxed">{idea.description}</p>
         {/* keyPoints */}
         <div className="my-6">
@@ -56,7 +56,7 @@ const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent:
           {idea.hashtags.slice(0, 4).map((tag, index) => (
             <span
               key={index}
-              className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-xl font-semibold transition-colors duration-200 cursor-pointer"
+              className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs rounded-xl transition-colors duration-200 cursor-pointer"
             >
               {tag}
             </span>
@@ -72,7 +72,7 @@ const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent:
             <Button
               variant="ghost"
               size="sm"
-              className="text-blue-600 hover:text-blue-600 bg-blue-100 rounded-xl"
+              className="text-blue-600 hover:text-blue-600 bg-blue-100 rounded-xl text-sm"
             >
               <Heart className="w-4 h-4 mr-2" />
               Save
@@ -80,7 +80,7 @@ const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent:
             <Button
               variant="ghost"
               size="sm"
-              className="text-green-600 hover:text-green-600 bg-green-100 rounded-xl"
+              className="text-green-600 hover:text-green-600 bg-green-100 rounded-xl text-sm"
             >
               <Share className="w-4 h-4 mr-2" />
               Share
@@ -90,7 +90,7 @@ const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent:
           <Button
             size="sm"
             onClick={() => onClickEvent(idea, platform)}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white opacity-80 group-hover:opacity-100 transition-all duration-300 rounded-xl"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white opacity-80 group-hover:opacity-100 transition-all duration-300 rounded-xl text-sm"
           >
             Use This Idea
             <ExternalLink className="w-3 h-3 ml-2" />

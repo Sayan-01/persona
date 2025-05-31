@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sparkles, RefreshCw, ThumbsUp, Copy, MessageSquare, ArrowRight, CheckCircle2, LightbulbIcon, Wand2, Clock, Send, ChevronLeft, ChevronRight, AlertCircle, X, Info, Plus } from "lucide-react";
+import { Sparkles, RefreshCw, ThumbsUp, Copy, MessageSquare, ArrowRight, CheckCircle2, LightbulbIcon, Wand2, Clock, Send, ChevronLeft, ChevronRight, AlertCircle, X, Info, Plus, Edit } from "lucide-react";
 import { ContentEditor } from "@/components/content-editor";
 import { IdeaGenerateProps } from "../../../../../AI/IdeaGeneratePrompt";
 import generateContentPrompt from "../../../../../AI/ContentGeneratePrompt";
@@ -22,7 +22,8 @@ import { toast } from "sonner";
 import { saveAsDraft } from "../../../../../server/post";
 import AIinput from "@/components/global/ai-input";
 import InputWrapper from "@/components/global/input-wrapper";
-import { ContentLengths, Platforms } from "@/constants";
+import { ContentLengths, Platforms, socialPlatforms } from "@/constants";
+import { cn } from "@/lib/utils";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
@@ -133,7 +134,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             contentLength: contentGeneratePromptDetails.contentLength,
             userProfile: userProfile.profile,
             userPersona: userProfile.aiPersona,
-          });
+          });          
 
           const res = await fetch("/api/generate-content-idea", {
             method: "POST",
@@ -571,7 +572,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     )}
                   </Button>
                 </div>
-                {contentStatus === "scheduled" && (
+                {contentStatus == "scheduled" && (
                   <div className="space-y-2">
                     <Label htmlFor="schedule-date">Schedule Date & Time</Label>
                     <Input
@@ -580,12 +581,12 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     />
                   </div>
                 )}
-                <SocialShareButtons
+                {/* <SocialShareButtons
                   content={contentDraft}
                   postId={undefined}
-                />
+                /> */}
 
-                <Card>
+                {/* <Card>
                   <CardHeader>
                     <CardTitle>Content Draft</CardTitle>
                     <CardDescription>Review and publish your content</CardDescription>
@@ -621,7 +622,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                         </div>
                       </RadioGroup>
                     </div>
-                    <div className="whitespace-pre-wrap rounded-md border p-4">{contentDraft}</div>
                   </CardContent>
                   <CardFooter className="flex justify-between">
                     <Button
@@ -654,7 +654,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       )}
                     </ButtonLayout>
                   </CardFooter>
-                </Card>
+                </Card> */}
               </div>
             </TabsContent>
             <TabsContent value="enhance">
@@ -932,7 +932,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               </button>
             </div>
           </nav>
-          <div className="h-[calc(100%-48px)] overflow-y-auto p-5">
+          <div className="h-[calc(100%-48px)] overflow-y-auto p-5 ">
             <TabsContent
               value="ideas"
               className=" h-full rounded-xl"
@@ -976,6 +976,71 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               value="create"
               className=" h-full rounded-xl"
             >
+              {contentDraft ? (
+                <>
+                  <div className="whitespace-pre-wrap rounded-md border h-fit bg-amber-200 p-4 pb-5">{contentDraft}</div>
+                  <div className="h-5" />
+                  <div className="space-y-5">
+                    {/* Share Your Content Section */}
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                      <h4 className="font-semibold text-gray-900 mb-2 text-sm">Share Your Content</h4>
+
+                      <div className="grid grid-cols-5 gap-1.5 mb-2">
+                        {socialPlatforms.map((platform) => (
+                          <button
+                            key={platform.name}
+                            className={cn(
+                              "flex items-center justify-center p-2 rounded-md font-medium transition-all duration-200 transform hover:scale-105 shadow-sm hover:shadow-md",
+                              platform.color,
+                              platform.textColor
+                            )}
+                            title={platform.name}
+                          >
+                            <platform.icon className="w-3.5 h-3.5" />
+                          </button>
+                        ))}
+                      </div>
+
+                      <button className="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white py-2 px-3 rounded-md font-medium hover:from-gray-900 hover:to-black transition-all duration-200 transform hover:scale-[1.02] shadow-sm hover:shadow-md text-xs">
+                        Share to All Platforms
+                      </button>
+                    </div>
+
+                    {/* Content Status Section */}
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                      <h4 className="font-semibold text-gray-900 mb-2 text-sm">Content Status</h4>
+
+                      <div className="space-y-1.5">
+                        <div className="grid grid-cols-3 gap-1.5">
+                          <button className="flex items-center justify-center space-x-1 p-2 rounded-md border border-violet-200 bg-violet-50 text-violet-700 hover:bg-violet-100 transition-colors duration-200">
+                            <Edit className="w-3.5 h-3.5" />
+                            <span className="font-medium text-xs">Save Draft</span>
+                          </button>
+                          <button className="flex items-center justify-center space-x-1 p-2 rounded-md border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors duration-200">
+                            <Clock className="w-3.5 h-3.5" />
+                            <span className="font-medium text-xs">Schedule</span>
+                          </button>
+
+                          <button className="flex items-center justify-center space-x-1 p-2 rounded-md border border-green-200 bg-green-50 text-green-700 hover:bg-green-100 transition-colors duration-200">
+                            <Send className="w-3.5 h-3.5" />
+                            <span className="font-medium text-xs">Publish</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="h-5"></div>
+                </>
+              ) : (
+                <div className="h-full w-full flex items-center flex-col justify-center">
+                  <div className="text-[70px] -mt-10">🧠</div>
+                  <h1 className="font-bold text-lg">Answer The Prompt</h1>
+                  <p className="text-sm text-zinc-600 text-center">
+                    Get the pest output result by filling
+                    <br /> proper information
+                  </p>
+                </div>
+              )}
             </TabsContent>
             <TabsContent
               value="enhance"
