@@ -55,13 +55,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   });
   const [contentGeneratePromptDetails, setContentGeneratePromptDetails] = useState<ContentGeneratePromptDetails>({
     topic: "",
-    contentType: "LinkedIn Post",
+    contentType: "linkedIn",
     hashtags: [],
     keyPoints: [],
     contentLength: "medium",
   });
   const [contentEnhancePromptDetails, setContentEnhancePromptDetails] = useState<ContentEnhancePromptDetails>({
-    contentType: "LinkedIn Post",
+    contentType: "linkedIn",
     previousContent: "",
     enhanceType: "rewrite"
   });

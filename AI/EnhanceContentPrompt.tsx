@@ -27,6 +27,9 @@ const enhanceContentPrompt = ({ platform, previousContent, enhanceType, userProf
 
     ENHANCEMENT PARAMETERS:
     Enhancement Type: ${enhanceType}
+  ${
+    enhanceType === "adjust" &&
+    `
     Industry Context: ${userProfile.industry}
     Target Audience: ${userProfile.targetAudience}
     Content Goals: ${userProfile.contentGoals.join(", ")}
@@ -35,7 +38,8 @@ const enhanceContentPrompt = ({ platform, previousContent, enhanceType, userProf
     Tone: ${userPersona.tone.join(", ")}
     Writing Style: ${userPersona.style.join(", ")}
     Language Level: ${userPersona.preferences.language.level}
-
+`
+  }
     CONTENT PREFERENCES:
     Length Range: ${userPersona.preferences.content.minLength}-${userPersona.preferences.content.maxLength} characters
     Emoji Usage: ${userPersona.preferences.content.useEmojis ? "Yes" : "Minimal"}
@@ -50,14 +54,18 @@ const enhanceContentPrompt = ({ platform, previousContent, enhanceType, userProf
     """
 
     ENHANCEMENT INSTRUCTIONS:
-    1. Maintain the core message and key points of the original content
-    2. Adapt the tone to match ${userPersona.tone.join(" and ")} style
-    3. Optimize structure and flow for ${platform} platform
-    4. Incorporate industry-specific terminology for ${userProfile.industry}
-    5. Ensure content resonates with ${userProfile.targetAudience}
-    6. Focus on ${enhanceType} improvements while preserving authenticity
-    7. Follow formatting preferences and language level guidelines
-    8. Use emojis ${userPersona.preferences.content.useEmojis ? "strategically for engagement" : "minimally and professionally"}
+    - Maintain the core message and key points of the original content
+    - If enhance type is adjust then rewrite according to tone and style, if enhance type is expand then expand the content, if enhance type is condense then condense the content and if enhance type is rewrite then rewrite the content but maintain the core message and key points of the original content
+    ${enhanceType === "adjust" &&
+    `
+    - Adapt the tone to match ${userPersona.tone.join(" and ")} style if and only if enhance type is adjust
+    - Incorporate industry-specific terminology for ${userProfile.industry}
+    - Ensure content resonates with ${userProfile.targetAudience}
+    `}
+    - Optimize structure and flow for ${platform} platform
+    - Focus on ${enhanceType} improvements while preserving authenticity
+    - Follow formatting preferences and language level guidelines
+    - Use emojis ${userPersona.preferences.content.useEmojis ? "strategically for engagement" : "minimally and professionally"}
 
     ENGAGEMENT OPTIMIZATION:
     - Also add emojis for better engagement
