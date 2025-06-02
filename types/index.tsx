@@ -39,3 +39,26 @@ export type UserPersona = {
   style: string[];
   preferences: AIPreferences;
 }
+
+//sate types for prompting
+
+export type IdeaGeneratePromptDetails = {
+  topic: string;
+  numberOfIdeas: string;
+  platform: string[];
+}
+
+
+export type ContentGeneratePromptDetails = {
+  topic: string;
+  contentType: string;
+  hashtags: string[];
+  keyPoints: string[];
+  contentLength: "short" | "medium" | "long";
+}
+
+export type ContentEnhancePromptDetails = {
+  contentType: string;
+  previousContent: string;
+  enhanceType: string;
+};

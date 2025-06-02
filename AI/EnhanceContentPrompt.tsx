@@ -3,13 +3,13 @@ import { UserPersona, UserProfile } from "../types";
 
 interface ContentGenerateProps {
   platform: string;
-  content: string;
+  previousContent: string;
   enhanceType: string;
   userProfile: UserProfile;
   userPersona: UserPersona;
 }
 
-const enhanceContentPrompt = ({ platform, content, enhanceType, userProfile, userPersona }: ContentGenerateProps) => {
+const enhanceContentPrompt = ({ platform, previousContent, enhanceType, userProfile, userPersona }: ContentGenerateProps) => {
   const platformGuide = {
     linkedin: "Professional network focused on B2B content, industry insights, and career development",
     twitter: "Fast-paced, concise updates with high engagement through hashtags and mentions",
@@ -46,7 +46,7 @@ const enhanceContentPrompt = ({ platform, content, enhanceType, userProfile, use
 
     ORIGINAL CONTENT:
     """
-    ${content}
+    ${previousContent}
     """
 
     ENHANCEMENT INSTRUCTIONS:

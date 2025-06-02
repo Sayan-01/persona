@@ -1,11 +1,12 @@
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Target, Users, Zap } from "lucide-react";
 
 export const Platforms = [
-  { value: "LinkedIn Post", label: "💼 LinkedIn Post", desc: "Professional networking content", color: "bg-blue-50 border-blue-200" },
-  { value: "Twitter Thread", label: "🐦 Twitter Thread", desc: "Engaging thread format", color: "bg-sky-50 border-sky-200" },
-  { value: "Instagram Caption", label: "📸 Instagram Caption", desc: "Visual storytelling", color: "bg-pink-50 border-pink-200" },
-  { value: "Blog Article", label: "📰 Blog Article", desc: "Long-form content", color: "bg-purple-50 border-purple-200" },
-  { value: "YouTube Script", label: "🎬 YouTube Script", desc: "Video content script", color: "bg-red-50 border-red-200" },
+  { value: "linkedIn", label: "💼 LinkedIn Post", desc: "Professional networking content", color: "bg-blue-50 border-blue-200" },
+  { value: "twitter", label: "🐦 Twitter Thread", desc: "Engaging thread format", color: "bg-sky-50 border-sky-200" },
+  { value: "instagram", label: "📸 Instagram Caption", desc: "Visual storytelling", color: "bg-pink-50 border-pink-200" },
+  { value: "facebook", label: "🤩 Facebook Caption", desc: "Engaging fb post format", color: "bg-pink-50 border-pink-200"},
+  { value: "blog", label: "📰 Blog Article", desc: "Long-form content", color: "bg-purple-50 border-purple-200" },
+  { value: "youtube", label: "🎬 YouTube Script", desc: "Video content script", color: "bg-red-50 border-red-200" },
 ];
 
 export const ContentLengths = [

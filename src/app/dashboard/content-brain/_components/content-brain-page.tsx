@@ -9,12 +9,31 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sparkles, RefreshCw, ThumbsUp, Copy, MessageSquare, ArrowRight, CheckCircle2, LightbulbIcon, Wand2, Clock, Send, ChevronLeft, ChevronRight, AlertCircle, X, Info, Plus, Edit } from "lucide-react";
+import {
+  Sparkles,
+  RefreshCw,
+  ThumbsUp,
+  Copy,
+  MessageSquare,
+  ArrowRight,
+  CheckCircle2,
+  LightbulbIcon,
+  Wand2,
+  Clock,
+  Send,
+  ChevronLeft,
+  ChevronRight,
+  AlertCircle,
+  X,
+  Info,
+  Plus,
+  Edit,
+} from "lucide-react";
 import { ContentEditor } from "@/components/content-editor";
 import { IdeaGenerateProps } from "../../../../../AI/IdeaGeneratePrompt";
 import generateContentPrompt from "../../../../../AI/ContentGeneratePrompt";
 import { getUserAIPersona, getUserProfile } from "../../../../../server/user-profile";
-import IdeaCard from "./ideaCard";
+import IdeaCard from "./idea-card";
 import enhanceContentPrompt from "../../../../../AI/EnhanceContentPrompt";
 import SocialShareButtons from "@/components/buttons/SocialShareButtons";
 import ButtonLayout from "@/components/buttons/button-layout";
@@ -24,32 +43,28 @@ import AIinput from "@/components/global/ai-input";
 import InputWrapper from "@/components/global/input-wrapper";
 import { ContentLengths, Platforms, socialPlatforms } from "@/constants";
 import { cn } from "@/lib/utils";
+import EnhancetypeSelector from "./enhancetype-selector";
+import { ContentEnhancePromptDetails, ContentGeneratePromptDetails, IdeaGeneratePromptDetails } from "../../../../../types";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
-  const [ideaGeneratePromptDetails, setIdeaGeneratePromptDetails] = useState<{
-    topic: string;
-    numberOfIdeas: string;
-    platform: string[];
-  }>({
+  const [ideaGeneratePromptDetails, setIdeaGeneratePromptDetails] = useState<IdeaGeneratePromptDetails>({
     topic: "",
     numberOfIdeas: "3",
     platform: [],
   });
-  const [contentGeneratePromptDetails, setContentGeneratePromptDetails] = useState<{
-    topic: string;
-    contentType: string;
-    hashtags: string[];
-    keyPoints: string[];
-    contentLength: "short" | "medium" | "long";
-  }>({
+  const [contentGeneratePromptDetails, setContentGeneratePromptDetails] = useState<ContentGeneratePromptDetails>({
     topic: "",
     contentType: "LinkedIn Post",
     hashtags: [],
     keyPoints: [],
     contentLength: "medium",
   });
-  const [contentEnhancePromptDetails, setContentEnhancePromptDetails] = useState<{ plateform: string }>();
+  const [contentEnhancePromptDetails, setContentEnhancePromptDetails] = useState<ContentEnhancePromptDetails>({
+    contentType: "LinkedIn Post",
+    previousContent: "",
+    enhanceType: "rewrite"
+  });
   const [selectedIdea, setSelectedIdea] = useState<{ title: string; description: string; keyPoints: string[]; hashtags: string[]; platform: string } | null>(null);
   const [showEnhanced, setShowEnhanced] = useState(false);
   const [showDraft, setShowDraft] = useState(false);
@@ -134,7 +149,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             contentLength: contentGeneratePromptDetails.contentLength,
             userProfile: userProfile.profile,
             userPersona: userProfile.aiPersona,
-          });          
+          });
 
           const res = await fetch("/api/generate-content-idea", {
             method: "POST",
@@ -168,12 +183,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
         setGenerating(true);
         try {
           const contentPrompt = enhanceContentPrompt({
-            platform: contentGeneratePromptDetails.contentType,
-            content: contentForEnhance,
-            enhanceType: enhanceType,
+            platform: contentEnhancePromptDetails.contentType,
+            previousContent: contentEnhancePromptDetails.previousContent,
+            enhanceType: contentEnhancePromptDetails.enhanceType,
             userProfile: userProfile.profile,
             userPersona: userProfile.aiPersona,
           });
+          console.log(contentEnhancePromptDetails);
 
           const res = await fetch("/api/generate-content-idea", {
             method: "POST",
@@ -242,6 +258,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
         onValueChange={setActiveTab}
         className="w-full flex flex-row gap-0 h-full"
       >
+        {/* Input section */}
         <div className="flex-1 border-r h-full">
           <nav className="flex border-b px-3 justify-between h-12">
             <div className="flex items-center py-2">
@@ -419,6 +436,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 </div>
               </div>
             </TabsContent>
+
+            {/* Create Tab */}
             <TabsContent value="create">
               <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white min-h-screen">
                 <div className="flex justify-between items-center mb-8">
@@ -675,8 +694,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       <Label className="text-sm font-medium text-gray-700">Choose where you'll publish your content</Label>
                       <div className="relative">
                         <Select
-                          value={contentGeneratePromptDetails.contentType}
-                          onValueChange={(e) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, contentType: e })}
+                          value={contentEnhancePromptDetails.contentType}
+                          onValueChange={(e) => setContentEnhancePromptDetails({ ...contentEnhancePromptDetails, contentType: e })}
                         >
                           <SelectTrigger className="!h-14 w-full border-dashed border-2 border-indigo-300 bg-white hover:border-indigo-400 transition-colors p-2 shadow-none rounded-xl">
                             <SelectValue />
@@ -710,8 +729,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                           Paste the old content which you try to enhance <span className="text-pink-500">*</span>
                         </Label>
                         <textarea
-                          value={contentForEnhance}
-                          onChange={(e) => setContentForEnhance(e.target.value)}
+                          value={contentEnhancePromptDetails.previousContent}
+                          onChange={(e) => setContentEnhancePromptDetails({ ...contentEnhancePromptDetails, previousContent: e.target.value })}
                           id="existing-content"
                           className="w-full border-2 border-dashed border-indigo-300 bg-white rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 transition-all"
                           placeholder="Paste tyour content here..."
@@ -728,78 +747,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       </div>
                     </div>
                   </div>
-                  <Card className="border-indigo-200 border-2 border-dashed mb-8">
-                    <CardHeader className="">
-                      <CardTitle className="text-lg font-medium text-slate-900 flex items-center gap-2">
-                        <div className="h-2 w-2 rounded-full bg-orange-500"></div>
-                        Enhancement Type
-                      </CardTitle>
-                      <p className="text-sm text-slate-500">Choose which type enhancement best for your content</p>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
-                        <RadioGroup
-                          defaultValue="rewrite"
-                          className="grid grid-cols-2 gap-4"
-                          value={enhanceType}
-                          onValueChange={(value) => setEnhanceType(value)}
-                        >
-                          <div className="flex items-center space-x-2 rounded-md border p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <RadioGroupItem
-                              value="rewrite"
-                              id="e1"
-                            />
-                            <Label
-                              htmlFor="e1"
-                              className="flex-1 cursor-pointer"
-                            >
-                              <div className="font-medium">Rewrite</div>
-                              <div className="text-xs text-gray-500 dark:text-gray-400">Completely rewrite while keeping the message</div>
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2 rounded-md border p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <RadioGroupItem
-                              value="tone"
-                              id="e2"
-                            />
-                            <Label
-                              htmlFor="e2"
-                              className="flex-1 cursor-pointer"
-                            >
-                              <div className="font-medium">Adjust Tone</div>
-                              <div className="text-xs text-gray-500 dark:text-gray-400">Make more professional, casual, or friendly</div>
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2 rounded-md border p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <RadioGroupItem
-                              value="expand"
-                              id="e3"
-                            />
-                            <Label
-                              htmlFor="e3"
-                              className="flex-1 cursor-pointer"
-                            >
-                              <div className="font-medium">Expand</div>
-                              <div className="text-xs text-gray-500 dark:text-gray-400">Add more details and examples</div>
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2 rounded-md border p-3 hover:bg-gray-50 dark:hover:bg-gray-800">
-                            <RadioGroupItem
-                              value="shorten"
-                              id="e4"
-                            />
-                            <Label
-                              htmlFor="e4"
-                              className="flex-1 cursor-pointer"
-                            >
-                              <div className="font-medium">Condense</div>
-                              <div className="text-xs text-gray-500 dark:text-gray-400">Make more concise and to the point</div>
-                            </Label>
-                          </div>
-                        </RadioGroup>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <EnhancetypeSelector
+                    contentEnhancePromptDetails={contentEnhancePromptDetails}
+                    setContentEnhancePromptDetails={setContentEnhancePromptDetails}
+                  />
                 </div>
                 <Button
                   onClick={() => handleGenerate("content enhance")}
