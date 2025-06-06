@@ -59,7 +59,7 @@ export function Sidebar() {
     <div className="w-[240px] border-r flex flex-col justify-between h-full gap-y-5 p-4 py-3 dark:bg-[#1B1B1D] bg-[#ffffff]">
       <Link
         href="/"
-        className={`flex items-center pt-1 -mb-2.5 justify-start ${popp.className}`}
+        className={`flex items-center pt-1 -mb-2.5 justify-start ${popp.className} pb-4`}
       >
         <div className="p-1.5 rounded-lg bg-[#6180fc]">
           <Brain color="#ffffff" size={24}/>

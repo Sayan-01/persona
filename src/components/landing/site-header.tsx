@@ -12,9 +12,9 @@ export function SiteHeader({ session }: { session: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full absolute z-10  px-3 rounded-xl border-b">
-      <div className="bg-whie">
-        <div className="container flex h-20 items-center justify-between px-4 max-w-7xl mx-auto">
+    <header className="w-full absolute z-10  px-3 border-b">
+      <div className="bg-white">
+        <div className="container flex h-[70px] items-center justify-between max-w-[1400px] mx-auto">
           <Logo />
           <nav className="hidden md:flex gap-6  text-foreground/60">
             <Link
@@ -51,7 +51,7 @@ export function SiteHeader({ session }: { session: any }) {
           <div className="hidden md:flex items-center gap-4">
             {session?.user ? (
               <Link href="/dashboard">
-                <BlackButton className="">Dashboard</BlackButton>
+                <Button size="lg" className="rounded-full">Dashboard</Button>
               </Link>
             ) : (
               <>

@@ -28,6 +28,7 @@ import {
   Info,
   Plus,
   Edit,
+  MoveLeft,
 } from "lucide-react";
 import { ContentEditor } from "@/components/content-editor";
 import { IdeaGenerateProps } from "../../../../../AI/IdeaGeneratePrompt";
@@ -45,6 +46,7 @@ import { ContentLengths, Platforms, socialPlatforms } from "@/constants";
 import { cn } from "@/lib/utils";
 import EnhancetypeSelector from "./enhancetype-selector";
 import { ContentEnhancePromptDetails, ContentGeneratePromptDetails, IdeaGeneratePromptDetails } from "../../../../../types";
+import Link from "next/link";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
@@ -305,9 +307,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   <div className="ml-3 flex-1">
                     <p className="text-sm text-indigo-800 font-medium">💡 Click here to check out our tips for using Persona AI</p>
                   </div>
-                  <button className="text-indigo-400 hover:text-indigo-600 transition-colors">
-                    <X className="h-5 w-5" />
-                  </button>
+                  <Link href="/blog/know-more" className="text-indigo-400 hover:text-indigo-600 transition-colors">
+                    <ChevronRight className="h-5 w-5" />
+                  </Link>
                 </div>
 
                 {/* Enhanced Title with Progress */}
