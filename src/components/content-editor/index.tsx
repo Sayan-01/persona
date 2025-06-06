@@ -58,7 +58,7 @@ export function ContentEditor({ initialContent, onSave, onEnhance }: ContentEdit
       <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="min-h-[500px] font-mono text-sm border-2 border-dashed border-indigo-300 hover:border-indigo-400"
+        className="min-h-[500px] h-full font-mono text-sm border-2 border-dashed border-indigo-300 hover:border-indigo-400"
         placeholder="Write or edit your content here..."
         style={{ whiteSpace: "pre-wrap", lineHeight: "1.5" }}
       />

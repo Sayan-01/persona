@@ -3,6 +3,10 @@ import { motion } from "motion/react";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import BlackButton from "./button";
+import Image from "next/image";
+import { Aclonica, Comfortaa, Comforter, Inter, Outfit } from "next/font/google";
+const outfit = Aclonica({ subsets: ["latin"], weight: ["400"] });
 
 const HeroSection = () => {
   const fadeInUp = {
@@ -18,10 +22,11 @@ const HeroSection = () => {
       },
     },
   };
+
   return (
-    <section className="relative min-h-[90vh] w-full overflow-hidden ">
-      <div className="w-full max-w-7xl mx-auto mt-20">
-        <div className="absolute inset-0 bg-grid-black/[0.02] rounded-xl" />
+    <section className="relative min-h-[90vh] w-full overflow-hidden bg-white">
+      <div className="w-full max-w-7xl mx-auto py-20 pt-36 flex flex-col items-center">
+        <div className="absolute w-full h-[400px] top-52 opacity-70 bg-gradient-to-br from-[#fc5eea] via-[#ffffff] to-[#7a8cfa] rounded-[100%] blur-[100px]" />
         <motion.div
           initial="initial"
           animate="animate"
@@ -30,50 +35,51 @@ const HeroSection = () => {
         >
           <motion.div
             variants={fadeInUp}
-            className="inline-flex items-center rounded-full border border-blue-200/50 bg-white/80 px-4 py-1.5 text-sm font-medium text-blue-900 backdrop-blur-sm "
+            className="inline-flex items-center rounded-full border border-purple-300 bg-white/30 px-2 py-1 text-zinc-600 backdrop-blur-sm text-sm"
           >
-            <span className="mr-2">✨</span>
+            <span className="mr-1">✨</span>
             AI-Powered Content Generation
-            <ChevronRight className="ml-1 h-4 w-4" />
           </motion.div>
           <motion.h1
             variants={fadeInUp}
-            className={`my-5 max-w-7xl text-center font-light tracking-tight text-5xl text-foreground sm:text-6xl md:text-[85px] `}
+            className={`my-4 mt-7 max-w-7xl text-center font-extrabold tracking-tight leading-[1.1] text-6xl text-foreground sm:text-6xl md:text-[58px] ${outfit.className}`}
           >
-            Create Content
-            <br /><span className="bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 bg-clip-text text-transparent">That Sounds Like You</span>
+            Grow your brand and<br />create lasting engagement
           </motion.h1>
           <motion.p
             variants={fadeInUp}
-            className=" max-w-[670px] text-center text-foreground/70 "
+            className=" max-w-[1000px] text-center text-zinc-600 text-lg "
           >
-            Effortlessly create, enhance, and manage your content with AI. From the social media posts to marketing copy, PersonaAI helps you maintain a consistent brand voice across all platforms.
+            Hey there, I'm a Product Designer based in Poland. I'm all about that minimalistic <br />
+            vibe, with a passion for low-code and interactions.🔥
           </motion.p>
           <motion.div
             variants={fadeInUp}
-            className="mt-10 z-10 flex flex-col gap-4 sm:flex-row sm:gap-6"
+            className="mt-6 z-10 flex flex-col gap-2 sm:flex-row sm:gap-6"
           >
             <Link href="/signup">
               <Button
                 size="lg"
-                className="group h-12 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-8 text-white hover:shadow-lg hover:shadow-blue-500/25  transition-all duration-300"
+                className="group w-44 rounded-full h-12"
               >
-                Start Creating
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                Let's Start Creating
               </Button>
             </Link>
             <Link href="#features">
-              <button className="h-12 rounded-full border text-zinc-900 hover:text-zinc-500 bg-white/50 px-5 hover:bg-blue-50 border-violet-400  transition-all duration-300">See how it works</button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-32 rounded-full h-12 bg-zinc-300"
+              >
+                Learn more
+              </Button>
             </Link>
           </motion.div>
-          <div className="bg-violet-500 w-[1000px] h-[500px] mt-10 opacity-80 rounded-full flex items-center justify-center absolute -z-0 blur-3xl">
-            <div className="bg-violet-900 w-[500px] h-[300px] rounded-full"></div>
-          </div>
           <motion.div
             variants={fadeInUp}
-            className="mt-16 w-full max-w-6xl rounded-3xl border border-blue-100/50 bg-white/80 p-4 shadow-2xl shadow-blue-500/10 backdrop-blur-sm  md:p-8"
+            className="mt-20 w-full max-w rounded-3xl border-4 border-white bg-[#f1f1f1] p-5 backdrop-blur-sm"
           >
-            <div className="aspect-[16/9] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-blue-100 to-violet-100 ">
+            <div className="aspect-[16/9] w-full overflow-hidden rounded-2xl bg-[#fafafa] ">
               <div className="flex h-full items-center justify-center">
                 <div className="px-8 py-12 text-center">
                   <div className="mx-auto mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-600 to-violet-600">

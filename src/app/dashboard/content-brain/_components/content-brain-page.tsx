@@ -767,70 +767,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   )}
                 </Button>
               </div>
-
-              {!showEnhanced && (
-                <div className="mt-8 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold">Enhanced Content</h2>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="gap-1.5"
-                    >
-                      <RefreshCw className="h-4 w-4" />
-                      Regenerate
-                    </Button>
-                  </div>
-                  <Card className="border-2 border-purple-200 dark:border-purple-900">
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <CardTitle className="text-lg">Enhanced Version</CardTitle>
-                        <div className="flex items-center gap-1 rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
-                          <CheckCircle2 className="h-3 w-3" />
-                          Improved
-                        </div>
-                      </div>
-                      <CardDescription>The content has been rewritten to be more engaging</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="rounded-lg border bg-gray-50 p-4 dark:bg-gray-900">
-                        <p className="text-sm">
-                          The future of AI isn't just about automation, but augmentation. As we enter 2025, the most successful organizations will be those that leverage AI to enhance human
-                          capabilities, not replace them.
-                        </p>
-                        <p className="mt-2 text-sm">
-                          While many focus on cost-cutting through AI, the real competitive advantage comes from elevating human creativity and strategic thinking by offloading routine tasks.
-                        </p>
-                        <p className="mt-2 text-sm">What's your strategy for human-AI collaboration? Are you merely automating, or truly augmenting your team's capabilities?</p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          <span className="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-medium text-purple-800 dark:bg-purple-900 dark:text-purple-200">
-                            #ArtificialIntelligence
-                          </span>
-                          <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-200">#FutureOfWork</span>
-                          <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
-                            #BusinessStrategy
-                          </span>
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <div className="flex w-full justify-end gap-2">
-                        <Button
-                          variant="outline"
-                          className="gap-1.5"
-                        >
-                          <Copy className="h-4 w-4" />
-                          Copy
-                        </Button>
-                        <Button className="gap-1.5">
-                          Save to Drafts
-                          <ArrowRight className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </CardFooter>
-                  </Card>
-                </div>
-              )}
             </TabsContent>
           </section>
         </div>
@@ -995,7 +931,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             </TabsContent>
             <TabsContent
               value="enhance"
-              className=" h-full rounded-xl"
+              className=" h-[calc(100%-48px)] rounded-xl"
             >
               <ContentEditor
                 initialContent={enhanceContent}
