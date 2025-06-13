@@ -47,6 +47,7 @@ import { cn } from "@/lib/utils";
 import EnhancetypeSelector from "./enhancetype-selector";
 import { ContentEnhancePromptDetails, ContentGeneratePromptDetails, IdeaGeneratePromptDetails } from "../../../../../types";
 import Link from "next/link";
+import { addInHistory } from "../../../../../server/actions";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
@@ -65,7 +66,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const [contentEnhancePromptDetails, setContentEnhancePromptDetails] = useState<ContentEnhancePromptDetails>({
     contentType: "linkedIn",
     previousContent: "",
-    enhanceType: "rewrite"
+    enhanceType: "rewrite",
   });
   const [selectedIdea, setSelectedIdea] = useState<{ title: string; description: string; keyPoints: string[]; hashtags: string[]; platform: string } | null>(null);
   const [showEnhanced, setShowEnhanced] = useState(false);
@@ -133,7 +134,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               setShowEnhanced(true);
             }
           }
+
           setGenerating(false);
+
         } catch (error) {
           console.log("Error in idea generation", error);
           setGenerating(false);
@@ -171,6 +174,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           if (data) {
             const dataObj = JSON.parse(data);
             setContentDraft(dataObj.content);
+            //Add Content in history
+            console.log("sayan",dataObj);
+            
+            // await addInHistory(user.id, dataObj);
             setShowDraft(true);
           }
 
@@ -191,7 +198,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             userProfile: userProfile.profile,
             userPersona: userProfile.aiPersona,
           });
-          console.log(contentEnhancePromptDetails);
 
           const res = await fetch("/api/generate-content-idea", {
             method: "POST",
@@ -307,7 +313,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   <div className="ml-3 flex-1">
                     <p className="text-sm text-indigo-800 font-medium">💡 Click here to check out our tips for using Persona AI</p>
                   </div>
-                  <Link href="/blog/know-more" className="text-indigo-400 hover:text-indigo-600 transition-colors">
+                  <Link
+                    href="/blog/know-more"
+                    className="text-indigo-400 hover:text-indigo-600 transition-colors"
+                  >
                     <ChevronRight className="h-5 w-5" />
                   </Link>
                 </div>
@@ -457,7 +466,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     <AIinput
                       id="topic"
                       placeholder="e.g., 🤔 Stop Wasting Time! Automate Your Business with AI."
-                      value={selectedIdea?.title || ""}
+                      value={selectedIdea?.title}
                       onChange={(e: any) => setSelectedIdea((prev) => (prev ? { ...prev, title: e.target.value } : null))}
                     />
                   </InputWrapper>

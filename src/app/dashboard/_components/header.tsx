@@ -1,18 +1,22 @@
+'use client'
 import React from "react";
 import { Home as HomeIcon, Search, PlusSquare, ChevronLeft, ChevronRight, Settings, LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathname = usePathname()
+  console.log(pathname);
+  
   return (
     <div className="bg-white border-gray-200">
       <div className="flex items-center h-16 px-4 border-b">
         {/* Breadcrumb */}
         <div className="flex items-center space-x-2 text-sm">
           <HomeIcon className="h-4 w-4 text-gray-500" />
-          <span className="text-gray-500">/</span>
-          <span className="text-gray-500">Cover Letters</span>
+          <span className="text-gray-500">{pathname}</span>
           <span className="text-gray-500">/</span>
           <span>Untitled 007</span>
         </div>

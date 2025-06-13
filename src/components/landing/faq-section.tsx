@@ -35,20 +35,31 @@ export function FAQSection() {
   ]
 
   return (
-    <section id="faq" className="py-20">
+    <section
+      id="faq"
+      className="py-20 bg-[#F0F0F0]"
+    >
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Frequently Asked Questions</h2>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-              Everything you need to know about PersonaAI
-            </p>
+          <div className="space-y-5">
+            <h2 className="text-3xl font-bold sm:text-4xl md:text-4xl">Frequently Asked Questions</h2>
+            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-base">Everything you need to know about PersonaAI dghf dskjfshf fhfsfhsjkf sddfkhfjhf fjh nddb djjjkd dhskj s hfjknmssddmnbd djksdj s jfjkh sdbdnb h </p>
           </div>
           <div className="mx-auto w-full max-w-3xl mt-8">
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+            >
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                >
+                  <AccordionTrigger className="text-left text-base bg-white p-6 rounded-xl mb-4">
+                    {index + 1}.
+                    {" "}{faq.question}
+                  </AccordionTrigger>
                   <AccordionContent>{faq.answer}</AccordionContent>
                 </AccordionItem>
               ))}
@@ -57,5 +68,5 @@ export function FAQSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

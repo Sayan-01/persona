@@ -69,7 +69,7 @@ const LoginForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 my-4"
+          className="space-y-2 my-4"
           noValidate
         >
           <FormField
@@ -80,7 +80,7 @@ const LoginForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-700 border-[1.7px]"
+                      className="rounded-xl h-[42px] border-zinc-300 border-[1.7px]"
                       placeholder="youremail@gmail.com"
                       {...field}
                     />
@@ -95,10 +95,10 @@ const LoginForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <LabelInputContainer className={"mb-6"}>
+                <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-700 border-[1.7px] tracking-[6px]"
+                      className="rounded-xl h-[42px] border-zinc-300 border-[1.7px] tracking-[6px]"
                       type="password"
                       placeholder="@@@@@@"
                       {...field}
@@ -109,16 +109,16 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <div className={`mb-4 ${error ? "text-red-500 text-[0.8rem] font-medium" : " text-emerald-500 text-[0.8rem] font-medium"} `}>{error ? error : success}</div>
+          <div className={`mb-2 ${error ? "text-red-500 text-[0.8rem] font-medium" : " text-emerald-500 text-[0.8rem] font-medium"} `}>{error ? error : success}</div>
           <SubmitButton
-            className="bg-[#bebebe] border-x relative group/btn block w-full text-black rounded-[8px] h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] py-0 text-base"
-            disable_className="bg-[#bebebe]  border-x w-full text-black rounded-[8px] h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] text-base"
+            className="bg-blue-500 border-x relative group/btn block w-full text-white rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] py-0 text-base"
+            disable_className="opacity-60  border-x w-full text-black rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] text-base"
             loading={loading}
           >
             Login &rarr;
             <BottomGradient />
           </SubmitButton>
-          <h4 className="text-blue-100/80 mt-4 text-center">
+          <h4 className="text-zinc-700 mt-4 text-center">
             Don't have an acoount?{" "}
             <span className=" text-blue-600 underline">
               <Link href={`/auth/register`}>Register</Link>
@@ -126,7 +126,7 @@ const LoginForm = () => {
           </h4>
         </form>
       </Form>
-      <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
+      <div className="bg-gradient-to-r from-transparent via-neutral-600 to-transparent my-8 h-[1px] w-full" />
       <Socials />
     </div>
   );

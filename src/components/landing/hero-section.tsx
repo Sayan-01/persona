@@ -80,7 +80,7 @@ const HeroSection = () => {
             </motion.div>
             <motion.div
               variants={fadeInUp}
-              className="mt-20 w-full max-w rounded-3xl border-4 border-white bg-[#f1f1f1] p-5 backdrop-blur-sm"
+              className="mt-28 w-full max-w rounded-3xl border-4 border-white bg-[#f1f1f1] p-5 backdrop-blur-sm"
             >
               <div className=" w-full overflow-hidden rounded-2xl bg-[#fafafa] ">
                 <div className="flex h-full items-center justify-center">

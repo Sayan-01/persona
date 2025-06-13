@@ -58,13 +58,13 @@ export function SiteHeader({ session }: { session: any }) {
                 <Link href="/auth/login">
                   <Button
                     variant="ghost"
-                    className="text-gray-800 hover:text-blue-700 hover:bg-blue-50/50 "
+                    className="text-gray-800 hover:text-blue-700 hover:bg-blue-50/50 h-10"
                   >
                     Login
                   </Button>
                 </Link>
                 <Link href="/auth/register">
-                  <Button className="rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:shadow-md hover:shadow-blue-500/25 ">Get Started</Button>
+                  <Button className="rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:shadow-md hover:shadow-blue-500/25 h-10">Get Started</Button>
                 </Link>
               </>
             )}

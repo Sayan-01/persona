@@ -100,7 +100,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="z-20 sm:w-[310px] w-[300px] ">
+    <div className="z-20 sm:w-[420px] w-[300px] bg-white p-6 rounded-2xl">
       <div className="flex items-center justify-center">
         <Link href={`/`}>
           <h2 className={` text-[38px] text-neutral-800 dark:text-neutral-200 ${pay.className}`}>
@@ -112,7 +112,7 @@ const RegisterForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 my-4"
+          className="space-y-2 my-4"
           noValidate
         >
           <FormField
@@ -123,7 +123,7 @@ const RegisterForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-700 border-[1.7px]"
+                      className="rounded-xl h-[42px] border-zinc-300 border-[1px]"
                       placeholder="Your name"
                       {...field}
                     />
@@ -141,7 +141,7 @@ const RegisterForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-700 border-[1.7px]"
+                      className="rounded-xl h-[42px] border-zinc-300 border-[1px]"
                       placeholder="youremail@gmail.com"
                       {...field}
                     />
@@ -156,10 +156,10 @@ const RegisterForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <LabelInputContainer className={"mb-6"}>
+                <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-700 border-[1.7px] tracking-[6px]"
+                      className="rounded-xl h-[42px] border-zinc-300 border-[1px] tracking-[6px]"
                       type="password"
                       placeholder="@@@@@@"
                       {...field}
@@ -170,15 +170,15 @@ const RegisterForm = () => {
               </FormItem>
             )}
           />
-          <div className="flex items-start gap-4 !-mt-1">
+          <div className="flex items-start gap-4">
             <FormField
               control={form.control}
               name="otp"
               render={({ field }) => (
-                <FormItem className="">
+                <FormItem className="w-full">
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-700 border-[1.7px] tracking-[6px] !overflow-hidden"
+                      className="rounded-xl w-full h-[42px] border-zinc-300 border-[1px] tracking-[6px] !overflow-hidden"
                       type="text "
                       maxLength={6}
                       placeholder="######"
@@ -191,18 +191,18 @@ const RegisterForm = () => {
             />
             <div
               onClick={code ? undefined : getCode}
-              className={` cursor-pointer h-[42px] border-[1.7px] border-zinc-700 text-white/60 rounded-xl text-sm inline-flex items-center justify-center whitespace-nowrap px-2 font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-zinc-800 ${
-                code ? "opacity-30 hover:!bg-zinc-700" : "border-zinc-700 "
+              className={` cursor-pointer h-[42px] border-[1px] border-zinc-300 text-black/60 rounded-xl text-sm inline-flex items-center justify-center whitespace-nowrap px-2 font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:opacity-80 ${
+                code ? "opacity-30 hover:!bg-zinc-700" : "border-zinc-300 "
               }`}
             >
               Send code
             </div>
           </div>
-          <div className="flex gap-2 items-start">
+          <div className="flex gap-2 items-start mt-4">
             <RadioGroup defaultValue="comfortable">
               <div className="flex items-center space-x-2 mt-[5px] ">
                 <RadioGroupItem
-                  className=" rounded-sm border-zinc-700 border-[1.7px]"
+                  className=" rounded-sm border-zinc-700 border-[1px]"
                   value="default"
                   id="r1"
                 />
@@ -234,14 +234,14 @@ const RegisterForm = () => {
           <div className={`mb-4 ${error ? "text-red-500 text-[0.8rem] font-medium" : " text-emerald-500 text-[0.8rem] font-medium"} `}>{error ? error : success}</div>
 
           <SubmitButton
-            className="bg-[#bebebe] border-x relative group/btn block w-full text-black rounded-[8px] h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] py-0 text-base"
-            disable_className="bg-[#bebebe]  border-x w-full text-black rounded-[8px] h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] text-base"
+            className="bg-blue-500 border-x relative group/btn block w-full text-white rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] py-0 text-base"
+            disable_className="opacity-60 border-x w-full text-white rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] text-base"
             loading={loading}
           >
             Sign up &rarr;
             <BottomGradient />
           </SubmitButton>
-          <h4 className="text-blue-100/80 mt-4 text-center text-sm">
+          <h4 className="text-zinc-700 mt-4 text-center text-sm">
             Already have an acoount?{" "}
             <span className=" text-blue-600">
               <Link href={`/auth/login`}>Login</Link>
@@ -249,7 +249,7 @@ const RegisterForm = () => {
           </h4>
         </form>
       </Form>
-      <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-6 h-[1.5px] w-full" />
+      <div className="bg-gradient-to-r from-transparent via-neutral-600 to-transparent my-6 h-[1px] w-full" />
       <Socials />
     </div>
   );
