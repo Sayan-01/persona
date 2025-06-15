@@ -20,7 +20,7 @@ export function SubmitButton({ className, variant, size, loading, children, disa
       {loading ? (
         <Button
           disabled
-          className={cn("w-fit flex items-center", disable_className)}
+          className={cn("w-fit flex items-center hover:bg-blue-600 bg-blue-500", disable_className)}
           variant={variant}
           size={size}
         >
@@ -28,7 +28,7 @@ export function SubmitButton({ className, variant, size, loading, children, disa
         </Button>
       ) : (
         <Button
-          className={cn("w-fit", className)}
+          className={cn("w-fit hover:bg-blue-600", className)}
           variant={variant}
           size={size}
           type="submit"

@@ -5,21 +5,54 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { usePathname } from "next/navigation";
+import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import Link from "next/link";
 
 const Header = () => {
-  const pathname = usePathname()
-  console.log(pathname);
+  const pathname = usePathname();
+  const segments = pathname.split("/").filter(Boolean);
+  console.log("segments",segments);
+  const current = segments[segments.length - 1] || "Home";
+  console.log("current",current);
+
+  // Optional: format to Capitalize first letter
+  const formattedCurrent = current.charAt(0).toUpperCase() + current.slice(1).replace(/-/g, " ");
   
   return (
     <div className="bg-white border-gray-200">
       <div className="flex items-center h-16 px-4 border-b">
         {/* Breadcrumb */}
-        <div className="flex items-center space-x-2 text-sm">
-          <HomeIcon className="h-4 w-4 text-gray-500" />
-          <span className="text-gray-500">{pathname}</span>
-          <span className="text-gray-500">/</span>
-          <span>Untitled 007</span>
-        </div>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1">
+                  <BreadcrumbEllipsis className="size-4" />
+                  <span className="sr-only">Toggle menu</span>
+                </DropdownMenuTrigger>
+                
+              </DropdownMenu>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/dashboard">{segments[0].charAt(0).toUpperCase() + segments[0].slice(1).replace(/-/g, " ")}</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            {segments.length > 1 && (
+              <BreadcrumbSeparator />
+            )}
+            <BreadcrumbItem>
+              <BreadcrumbPage>{segments[1]?(segments[1].charAt(0).toUpperCase() + segments[1].slice(1).replace(/-/g, " ")):""}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
 
         {/* Search */}
         <div className="ml-auto flex items-center">

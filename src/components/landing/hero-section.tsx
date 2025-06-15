@@ -43,7 +43,7 @@ const HeroSection = () => {
             </motion.div>
             <motion.h1
               variants={fadeInUp}
-              className={`my-4 mt-7 max-w-7xl text-center font-extrabold tracking-tight leading-[1.1] text-6xl text-foreground sm:text-6xl md:text-[58px] ${outfit.className}`}
+              className={`my-4 mt-7 max-w-7xl text-center font-extrabold tracking-tight leading-[1.1] text-6xl text-[#000000] sm:text-6xl md:text-[58px] ${outfit.className}`}
             >
               Grow your brand and
               <br />

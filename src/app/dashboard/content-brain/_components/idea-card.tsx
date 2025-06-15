@@ -47,7 +47,7 @@ const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent:
               className="flex items-start gap-2 py-2"
             >
               <div className="text-sm text-purple-600 font-semibold">{index + 1}.</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">{keyPoint}</div>
+              <div className="text-sm text-gray-500 ">{keyPoint}</div>
             </div>
           ))}
         </div>

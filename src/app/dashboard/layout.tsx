@@ -11,7 +11,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       </aside>
       <div className="flex flex-col flex-1 relative overflow-auto ">
         <Header/>
-        <main className="box h-[calc(100vh-64px)] overflow-y-auto flex">
+        <main className="box h-[calc(100vh-64px)] overflow-y-auto flex box">
           <div className="mx-auto w-full">{children}</div>
         </main>
       </div>

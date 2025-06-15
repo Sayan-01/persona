@@ -1,11 +1,10 @@
 import type React from "react";
 import type { Metadata } from "next";
-import {  DM_Sans, Geist, } from "next/font/google";
+import { DM_Sans, Geist } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
-const monaa = Geist({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800", "900"]});
+const monaa = Geist({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800", "900"] });
 
 export const metadata: Metadata = {
   title: "PersonaAI - AI-Powered Content Creation",
@@ -25,17 +24,10 @@ export default function RootLayout({
     >
       <body
         cz-shortcut-listen="true"
-        className={`font-sans ${monaa.className} box`}
+        className={`font-sans ${monaa.className} box `}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        {children}
+        <Toaster />
       </body>
     </html>
   );

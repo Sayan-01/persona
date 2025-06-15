@@ -76,9 +76,9 @@ export default function OnboardingComponent({ user }: { user: any }) {
         <div className="mb-8 flex justify-between">
           <div className="space-y-1">
             <h1 className="text-2xl font-bold">Create Your AI Persona</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Let's set up your AI content assistant to match your brand voice</p>
+            <p className="text-sm text-gray-500">Let's set up your AI content assistant to match your brand voice</p>
           </div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">Step {step} of 5</div>
+          <div className="text-sm text-gray-500">Step {step} of 5</div>
         </div>
 
         {/* Step 1: Writing Tone */}
@@ -95,7 +95,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                   onValueChange={(value) => setPersona({ ...persona, tone: value })}
                   className="space-y-4"
                 >
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
                     <RadioGroupItem
                       value="professional"
                       id="professional"
@@ -105,11 +105,11 @@ export default function OnboardingComponent({ user }: { user: any }) {
                       className="flex-1 cursor-pointer"
                     >
                       <div className="font-medium">Professional & Authoritative</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Formal, expert tone with industry-specific terminology</div>
+                      <div className="text-sm text-gray-500">Formal, expert tone with industry-specific terminology</div>
                     </Label>
                   </div>
 
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
                     <RadioGroupItem
                       value="conversational"
                       id="conversational"
@@ -119,11 +119,11 @@ export default function OnboardingComponent({ user }: { user: any }) {
                       className="flex-1 cursor-pointer"
                     >
                       <div className="font-medium">Conversational & Engaging</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Natural, friendly tone that connects with readers</div>
+                      <div className="text-sm text-gray-500">Natural, friendly tone that connects with readers</div>
                     </Label>
                   </div>
 
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
                     <RadioGroupItem
                       value="educational"
                       id="educational"
@@ -133,11 +133,11 @@ export default function OnboardingComponent({ user }: { user: any }) {
                       className="flex-1 cursor-pointer"
                     >
                       <div className="font-medium">Educational & Informative</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Clear, instructional tone that explains complex topics simply</div>
+                      <div className="text-sm text-gray-500">Clear, instructional tone that explains complex topics simply</div>
                     </Label>
                   </div>
 
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
                     <RadioGroupItem
                       value="persuasive"
                       id="persuasive"
@@ -147,11 +147,11 @@ export default function OnboardingComponent({ user }: { user: any }) {
                       className="flex-1 cursor-pointer"
                     >
                       <div className="font-medium">Persuasive & Compelling</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Convincing tone that drives action and engagement</div>
+                      <div className="text-sm text-gray-500">Convincing tone that drives action and engagement</div>
                     </Label>
                   </div>
 
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
                     <RadioGroupItem
                       value="empathetic"
                       id="empathetic"
@@ -161,7 +161,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                       className="flex-1 cursor-pointer"
                     >
                       <div className="font-medium">Empathetic & Supportive</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Understanding and compassionate tone that builds trust</div>
+                      <div className="text-sm text-gray-500">Understanding and compassionate tone that builds trust</div>
                     </Label>
                   </div>
                 </RadioGroup>
@@ -323,7 +323,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                   ].map((goal) => (
                     <div
                       key={goal.id}
-                      className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 dark:hover:bg-gray-800"
+                      className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 "
                     >
                       <input
                         type="checkbox"
@@ -340,7 +340,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                         className="flex-1 cursor-pointer"
                       >
                         <div className="font-medium">{goal.label}</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">{goal.description}</div>
+                        <div className="text-sm text-gray-500">{goal.description}</div>
                       </Label>
                     </div>
                   ))}
@@ -379,7 +379,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                     value={persona.sampleContent}
                     onChange={(e) => setPersona({ ...persona, sampleContent: e.target.value })}
                   />
-                  <p className="text-xs text-gray-500 dark:text-gray-400">The more examples you provide, the better your AI will match your voice and style</p>
+                  <p className="text-xs text-gray-500">The more examples you provide, the better your AI will match your voice and style</p>
                 </div>
               </div>
             </CardContent>

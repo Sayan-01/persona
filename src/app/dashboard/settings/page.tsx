@@ -19,7 +19,7 @@ export default function SettingsPage() {
     <div className="container py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-gray-500 dark:text-gray-400">Manage your account and preferences</p>
+        <p className="text-gray-500 ">Manage your account and preferences</p>
       </div>
 
       <div className="flex flex-col gap-8 lg:flex-row">
@@ -92,28 +92,28 @@ export default function SettingsPage() {
                       <RadioGroupItem value="professional" id="p-professional" />
                       <Label htmlFor="p-professional" className="flex-1 cursor-pointer">
                         <div className="font-medium">Professional</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">Formal, authoritative tone</div>
+                        <div className="text-sm text-gray-500 ">Formal, authoritative tone</div>
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2 rounded-md border p-3">
                       <RadioGroupItem value="casual" id="p-casual" />
                       <Label htmlFor="p-casual" className="flex-1 cursor-pointer">
                         <div className="font-medium">Casual</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">Relaxed, conversational tone</div>
+                        <div className="text-sm text-gray-500 ">Relaxed, conversational tone</div>
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2 rounded-md border p-3">
                       <RadioGroupItem value="friendly" id="p-friendly" />
                       <Label htmlFor="p-friendly" className="flex-1 cursor-pointer">
                         <div className="font-medium">Friendly</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">Warm, personable tone</div>
+                        <div className="text-sm text-gray-500 ">Warm, personable tone</div>
                       </Label>
                     </div>
                     <div className="flex items-center space-x-2 rounded-md border p-3">
                       <RadioGroupItem value="inspirational" id="p-inspirational" />
                       <Label htmlFor="p-inspirational" className="flex-1 cursor-pointer">
                         <div className="font-medium">Inspirational</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">Motivational, energetic tone</div>
+                        <div className="text-sm text-gray-500 ">Motivational, energetic tone</div>
                       </Label>
                     </div>
                   </RadioGroup>
@@ -162,7 +162,7 @@ export default function SettingsPage() {
                     placeholder="Add examples of your existing content to help train your AI"
                     className="min-h-[120px]"
                   />
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-500 ">
                     Providing more examples will help your AI better match your unique voice
                   </p>
                 </div>
@@ -172,7 +172,7 @@ export default function SettingsPage() {
                     <Label htmlFor="hashtags">Automatically add hashtags</Label>
                     <Switch id="hashtags" />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-500 ">
                     Add relevant hashtags to your content automatically
                   </p>
                 </div>
@@ -182,7 +182,7 @@ export default function SettingsPage() {
                     <Label htmlFor="emojis">Use emojis</Label>
                     <Switch id="emojis" />
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-gray-500 ">
                     Include appropriate emojis in generated content
                   </p>
                 </div>
@@ -264,7 +264,7 @@ export default function SettingsPage() {
                         <Label htmlFor="content-ready" className="text-base">
                           Content Ready
                         </Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 ">
                           Notify when scheduled content is ready to post
                         </p>
                       </div>
@@ -275,7 +275,7 @@ export default function SettingsPage() {
                         <Label htmlFor="content-posted" className="text-base">
                           Content Posted
                         </Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 ">
                           Notify when content has been posted to platforms
                         </p>
                       </div>
@@ -286,7 +286,7 @@ export default function SettingsPage() {
                         <Label htmlFor="weekly-summary" className="text-base">
                           Weekly Summary
                         </Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 ">
                           Receive weekly summary of content performance
                         </p>
                       </div>
@@ -297,7 +297,7 @@ export default function SettingsPage() {
                         <Label htmlFor="product-updates" className="text-base">
                           Product Updates
                         </Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 ">
                           Notify about new features and improvements
                         </p>
                       </div>
@@ -314,7 +314,7 @@ export default function SettingsPage() {
                         <Label htmlFor="app-content-ready" className="text-base">
                           Content Ready
                         </Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 ">
                           Show notification when content is ready to review
                         </p>
                       </div>
@@ -325,7 +325,7 @@ export default function SettingsPage() {
                         <Label htmlFor="app-reminders" className="text-base">
                           Content Reminders
                         </Label>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 ">
                           Remind about upcoming scheduled content
                         </p>
                       </div>
@@ -368,7 +368,7 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between rounded-lg border p-4">
                     <div>
                       <p className="font-medium">Protect your account with 2FA</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500 ">
                         Add an extra layer of security to your account
                       </p>
                     </div>
@@ -380,7 +380,7 @@ export default function SettingsPage() {
                   <h3 className="mb-4 font-medium">Session Management</h3>
                   <div className="rounded-lg border p-4">
                     <p className="font-medium">Active Sessions</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">You are currently logged in on 2 devices</p>
+                    <p className="text-sm text-gray-500 ">You are currently logged in on 2 devices</p>
                     <Button variant="outline" className="mt-2">
                       Manage Sessions
                     </Button>
@@ -407,7 +407,7 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-medium">Current Plan: Free Trial</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Your trial ends in 10 days</p>
+                      <p className="text-sm text-gray-500 ">Your trial ends in 10 days</p>
                     </div>
                     <Button>Upgrade Plan</Button>
                   </div>
@@ -443,14 +443,14 @@ export default function SettingsPage() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-lg border p-4">
                     <h3 className="mb-2 font-medium">Documentation</h3>
-                    <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
+                    <p className="mb-4 text-sm text-gray-500 ">
                       Access guides and tutorials for using PersonaAI
                     </p>
                     <Button variant="outline">View Documentation</Button>
                   </div>
                   <div className="rounded-lg border p-4">
                     <h3 className="mb-2 font-medium">Contact Support</h3>
-                    <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">Get help from our support team</p>
+                    <p className="mb-4 text-sm text-gray-500 ">Get help from our support team</p>
                     <Button variant="outline">Contact Support</Button>
                   </div>
                 </div>
@@ -460,27 +460,26 @@ export default function SettingsPage() {
                   <div className="space-y-4 rounded-lg border p-4">
                     <div>
                       <h4 className="font-medium">How do I create my first content piece?</h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500 ">
                         Go to the Content Brain section and click on "Create Content" to get started.
                       </p>
                     </div>
                     <div>
                       <h4 className="font-medium">Can I edit AI-generated content?</h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500 ">
                         Yes, you can edit any content before posting or scheduling it.
                       </p>
                     </div>
                     <div>
                       <h4 className="font-medium">How do I connect my social media accounts?</h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Go to Settings > Integrations to connect your social media profiles.
+                      <p className="text-sm text-gray-500 ">
+                        Go to Settings Integrations to connect your social media profiles.
                       </p>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            rd>
           </TabsContent>
         </div>
       </div>

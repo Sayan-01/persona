@@ -106,7 +106,7 @@ export default function CalendarPage() {
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Content Calendar</h1>
-          <p className="text-gray-500 dark:text-gray-400">Schedule and manage your content across platforms</p>
+          <p className="text-gray-500 ">Schedule and manage your content across platforms</p>
         </div>
         <Button className="gap-1.5">
           <Plus className="h-4 w-4" />
@@ -146,12 +146,12 @@ export default function CalendarPage() {
 
       <div className="rounded-lg border">
         {/* Calendar Header */}
-        <div className="grid grid-cols-7 border-b bg-gray-50 dark:bg-gray-900">
+        <div className="grid grid-cols-7 border-b bg-gray-50 0">
           {weekdays.map((day, index) => (
             <div
               key={day}
               className={`px-2 py-3 text-center text-sm font-medium ${
-                index === 0 || index === 6 ? "text-gray-500 dark:text-gray-400" : ""
+                index === 0 || index === 6 ? "text-gray-500 " : ""
               }`}
             >
               {day}
@@ -165,8 +165,8 @@ export default function CalendarPage() {
             <div
               key={index}
               className={`min-h-[100px] border-b border-r p-1 ${
-                !day.isCurrentMonth ? "bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-600" : ""
-              } ${day.date.toDateString() === new Date().toDateString() ? "bg-blue-50 dark:bg-blue-900/20" : ""}`}
+                !day.isCurrentMonth ? "bg-gray-50 text-gray-400 0" : ""
+              } ${day.date.toDateString() === new Date().toDateString() ? "bg-blue-50 " : ""}`}
             >
               <div className="flex justify-between p-1">
                 <span
@@ -189,8 +189,8 @@ export default function CalendarPage() {
                       key={content.id}
                       className={`rounded px-2 py-1 text-xs ${
                         content.platform === "linkedin"
-                          ? "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200"
-                          : "bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200"
+                          ? "bg-blue-100 text-blue-800 "
+                          : "bg-sky-100 text-sky-800 "
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -235,8 +235,8 @@ export default function CalendarPage() {
                     <div
                       className={`rounded-full p-2 ${
                         content.platform === "linkedin"
-                          ? "bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300"
-                          : "bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300"
+                          ? "bg-blue-100 text-blue-600 "
+                          : "bg-sky-100 text-sky-600 "
                       }`}
                     >
                       <CalendarIcon className="h-4 w-4" />
@@ -244,7 +244,7 @@ export default function CalendarPage() {
                     <div>
                       <h4 className="font-medium">{content.title}</h4>
                       <div className="flex items-center gap-2">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 ">
                           {new Date(`${content.date} ${content.time}`).toLocaleString("default", {
                             month: "short",
                             day: "numeric",

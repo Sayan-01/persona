@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Calendar, Settings, HelpCircle, LogOut, Sparkles, FileText, PlusCircle, Instagram, Brain, HomeIcon } from "lucide-react";
+import { LayoutDashboard, Calendar, Settings, HelpCircle, LogOut, Sparkles, FileText, PlusCircle, Instagram, Brain, HomeIcon, Package, ChartPie } from "lucide-react";
 import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
 import ButtonLayout from "@/components/buttons/button-layout";
 import { Paytone_One, Poppins } from "next/font/google";
@@ -26,7 +26,7 @@ export function Sidebar() {
     {
       title: "Dashboard",
       href: "/dashboard",
-      icon: HomeIcon,
+      icon: ChartPie,
     },
     {
       title: "Integration",
@@ -56,30 +56,35 @@ export function Sidebar() {
   ];
 
   return (
-    <div className="w-[240px] border-r flex flex-col justify-between h-full gap-y-5 p-4 py-3 dark:bg-[#1B1B1D] bg-[#ffffff]">
+    <div className="w-[240px] border-r flex flex-col justify-between h-full p-3 py-3 bg-[#ffffff]">
       <Link
         href="/"
-        className={`flex items-center pt-1 -mb-2.5 justify-start ${popp.className} pb-4`}
+        className={`flex items-center p-2 justify-start rounded-xl`}
       >
-        <div className="p-1.5 rounded-lg bg-[#6180fc]">
-          <Brain color="#ffffff" size={24}/>
+        <div className="p-1.5 rounded-lg bg-black">
+          <Brain
+            color="#ffffff"
+            size={22}
+          />
         </div>
-        <span className="text-2xl px-3 font-extrabold text-[#6180fc]">PersonaAI.</span>
+        <div>
+          <h1 className="px-3 text-black font-medium">PersonaAI.</h1>
+          <p className="px-3 text-black text-xs">AI content generation</p>
+        </div>
       </Link>
-      <nav className=" h-full">
+      <nav className=" h-max">
+        <p className="text-xs pl-2 py-2 font-medium text-neutral-500 mt-2">Menu</p>
+
         <ul className="space-y-1">
           {navItems.map((item, index) => (
             <li key={index}>
               <Link
                 href={item.href}
-                className={cn(
-                  "flex items-center px-[10px] py-[10px] text-sm rounded-md",
-                  pathname === item.href ? "bg-indigo-50 dark:bg-[#27272A] text-indigo-600 dark:text-indigo-50" : "hover:bg-gray-100 dark:hover:bg-[#27272A]"
-                )}
+                className={cn("flex items-center px-[8px] py-[8px] text-sm rounded-md", pathname === item.href ? "bg-zinc-100 text-zinc-800" : "hover:bg-gray-100 ")}
               >
                 <item.icon
-                  strokeWidth={2.2}
-                  className={cn("h-[18px] w-[18px] mr-3", pathname === item.href ? "text-indigo-600 dark:text-indigo-50" : "text-gray-500")}
+                  strokeWidth={2}
+                  className={cn("h-[18px] w-[18px] mr-2", pathname === item.href ? "text-indigo-600 " : "text-zinc-700")}
                 />
                 {item.title}
               </Link>
@@ -87,6 +92,12 @@ export function Sidebar() {
           ))}
         </ul>
       </nav>
+      <section className="h-40 mt-2">
+        <p className="text-xs pl-2 py-2 font-medium text-neutral-500">History</p>
+        <ul className="h-full flex items-center justify-center">
+          <p className="text-xs pl-2 py-2 font-medium text-neutral-500 italic">Empty History</p>
+        </ul>
+      </section>
       <div className="mt-2 pt-6">
         <UpgradeCard />
         <Link
