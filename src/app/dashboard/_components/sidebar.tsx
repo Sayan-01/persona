@@ -1,17 +1,12 @@
 "use client";
 
-import type React from "react";
-
+import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
+import { cn } from "@/lib/utils";
+import { Brain, Calendar, ChartPie, FileText, FolderClock, HelpCircle, Instagram, LogOut, Settings, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Calendar, Settings, HelpCircle, LogOut, Sparkles, FileText, PlusCircle, Instagram, Brain, HomeIcon, Package, ChartPie } from "lucide-react";
-import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
-import ButtonLayout from "@/components/buttons/button-layout";
-import { Paytone_One, Poppins } from "next/font/google";
-
-const popp = Poppins({ subsets: ["latin"], weight: "800" });
+import { useEffect, useState } from "react";
+import { getAllHistory } from "../../../../server/actions";
 
 interface NavItem {
   title: string;
@@ -19,8 +14,19 @@ interface NavItem {
   icon: any;
 }
 
-export function Sidebar() {
+export function Sidebar({ userId }: { userId: string | undefined }) {
   const pathname = usePathname();
+  const [history, setHistory] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      if (!userId) return;
+      const history = await getAllHistory(userId);
+      setHistory(history);
+      console.log("sayan:", history);
+    };
+    fetchHistory();
+  }, [userId])  
 
   const navItems: NavItem[] = [
     {
@@ -72,8 +78,8 @@ export function Sidebar() {
           <p className="px-3 text-black text-xs">AI content generation</p>
         </div>
       </Link>
-      <nav className=" h-max">
-        <p className="text-xs pl-2 py-2 font-medium text-neutral-500 mt-2">Menu</p>
+      <nav className=" h-max px-0.5">
+        <p className="text-xs pl-2 py-2 font-medium text-neutral-500 mt-3">Menu</p>
 
         <ul className="space-y-1">
           {navItems.map((item, index) => (
@@ -92,10 +98,22 @@ export function Sidebar() {
           ))}
         </ul>
       </nav>
-      <section className="h-40 mt-2">
+      <section className="h-40 mt-2 px-0.5">
         <p className="text-xs pl-2 py-2 font-medium text-neutral-500">History</p>
-        <ul className="h-full flex items-center justify-center">
-          <p className="text-xs pl-2 py-2 font-medium text-neutral-500 italic">Empty History</p>
+        <ul className="h-full flex items-center justify-center mt-1">
+          {history.length > 0 ? (
+            <div className="h-full w-full flex items-start justify-start flex-col">
+              {history.map((item: any, index: number) => (
+                <li key={index} className="w-full">
+                  <Link href={`/dashboard/content-brain/${item.id}`} className={cn("flex w-full items-center px-[8px] py-[4px] text-sm rounded-md gap-1", pathname === item.href ? "bg-zinc-100 text-zinc-800" : "hover:bg-gray-100 ")}>
+                    <p className="one_liner">{item.contentTitle}</p>
+                  </Link>
+                </li>
+              ))}
+            </div>
+          ) : (
+            <p className="text-xs pl-2 py-2 font-medium text-neutral-500 italic">Empty History</p>
+          )}
         </ul>
       </section>
       <div className="mt-2 pt-6">

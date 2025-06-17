@@ -1,13 +1,15 @@
 import type { ReactNode } from "react";
 import Header from "./_components/header";
 import { Sidebar } from "./_components/sidebar";
+import { auth } from "../../../auth";
 
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
+export default async function DashboardLayout({ children }: { children: ReactNode }) {
+  const session = await auth();
   return (
     <div className="flex h-screen bg-background">
       <aside className="hidden flex-col lg:flex">
-        <Sidebar />
+        <Sidebar userId={session?.user?.id || undefined}/>
       </aside>
       <div className="flex flex-col flex-1 relative overflow-auto ">
         <Header/>
@@ -16,5 +18,5 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </main>
       </div>
     </div>
-  );
+  );  
 }

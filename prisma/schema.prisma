@@ -14,6 +14,7 @@ enum ContentStatus {
   Scheduled
   Published
   Archived
+  
 }
 
 enum ContentType {
@@ -127,14 +128,14 @@ model AIPersona {
 
 // Content Management
 model Content {
-  id          String        @id @default(uuid())
+  id          String         @id @default(uuid())
   title       String
   body        String
-  status      ContentStatus // draft, published, scheduled
+  status      ContentStatus? // draft, published, scheduled
   platform    String // facebook, twitter, etc
   type        ContentType?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
   publishedAt DateTime?
   scheduledAt DateTime?
 
@@ -236,4 +237,5 @@ model GeneratedContentHistory {
   user           User    @relation(fields: [userId], references: [id])
   contentId      String
   contentHistory Content @relation(fields: [contentId], references: [id])
+  contentTitle   String
 }

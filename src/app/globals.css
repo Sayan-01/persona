@@ -127,6 +127,15 @@
 .card_shadow {
   box-shadow: inset 0px 12px 32px 0px #cecefb0d;
 }
+
 .card_border {
   border-color: #cecefb0d;
+}
+
+.one_liner {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

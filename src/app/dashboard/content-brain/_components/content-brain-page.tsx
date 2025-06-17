@@ -39,7 +39,7 @@ import enhanceContentPrompt from "../../../../../AI/EnhanceContentPrompt";
 import SocialShareButtons from "@/components/buttons/SocialShareButtons";
 import ButtonLayout from "@/components/buttons/button-layout";
 import { toast } from "sonner";
-import { saveAsDraft } from "../../../../../server/post";
+import { saveAsDraft, savePost } from "../../../../../server/post";
 import AIinput from "@/components/global/ai-input";
 import InputWrapper from "@/components/global/input-wrapper";
 import { ContentLengths, Platforms, socialPlatforms } from "@/constants";
@@ -48,6 +48,7 @@ import EnhancetypeSelector from "./enhancetype-selector";
 import { ContentEnhancePromptDetails, ContentGeneratePromptDetails, IdeaGeneratePromptDetails } from "../../../../../types";
 import Link from "next/link";
 import { addInHistory } from "../../../../../server/actions";
+import { v4 } from "uuid";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const [activeTab, setActiveTab] = useState("ideas");
@@ -174,10 +175,17 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           if (data) {
             const dataObj = JSON.parse(data);
             setContentDraft(dataObj.content);
-            //Add Content in history
-            console.log("sayan",dataObj);
-            
-            // await addInHistory(user.id, dataObj);
+            //Save Content
+            const id = v4()
+            await savePost({
+              id,
+              title: selectedIdea?.title || contentGeneratePromptDetails.topic,
+              platform: contentGeneratePromptDetails.contentType,
+              length: contentGeneratePromptDetails.contentLength,
+              body: dataObj.content,
+            });
+            //Add Content in history            
+            await addInHistory(user.id, id, selectedIdea?.title || contentGeneratePromptDetails.topic);
             setShowDraft(true);
           }
 
@@ -480,7 +488,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                         </Label>
                         <textarea
                           id="keywords"
-                          value={selectedIdea?.description || ""}
+                          value={selectedIdea?.description}
                           onChange={(e) => setSelectedIdea((prev) => (prev ? { ...prev, content: e.target.value } : null))}
                           className="w-full border-2 border-dashed border-indigo-300 bg-white rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 transition-all"
                           placeholder="• Include relevant statistics or data&#10;• Mention your personal experience&#10;• Add industry insights or trends&#10;• Specify your target audience"

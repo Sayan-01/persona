@@ -1,13 +1,33 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { platform } from "os";
 import { auth } from "../auth";
 import { revalidatePath } from "next/cache";
 import { postToFacebook } from "@/lib/facebook";
 import { postToTwitter } from "@/lib/twitter";
 
-export async function saveAsDraft(data: { title: string; body: string; platform: string }) {
+export const savePost = async (data: {id:string, title: string; platform: string; length: string; body: string }) => {
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    throw new Error("Unauthorized");
+  }
+
+  console.log(data);
+
+  await db.content.create({
+    data: {
+      id: data.id,
+      title: data.title,
+      body: data.body,
+      platform: data.platform,
+      userId: session.user.id,
+    },
+  });
+
+};
+
+export const saveAsDraft = async (data: { title: string; body: string; platform: string }) => {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -23,10 +43,10 @@ export async function saveAsDraft(data: { title: string; body: string; platform:
       userId: session.user.id,
     },
   });
-  
+
   revalidatePath("/dashboard");
   return true;
-}
+};
 
 export async function publishPost(postId: string, platform: "facebook" | "twitter") {
   const session = await auth();

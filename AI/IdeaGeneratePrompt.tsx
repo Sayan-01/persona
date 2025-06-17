@@ -38,7 +38,7 @@ export const IdeaGenerateProps = ({ topic, numberOfIdeas, platform, userProfile,
     4. Suggested "hashtags" (if applicable)
     - object format should be like this:
     {
-      "title": "Title",
+      "title": "Title (do not include : this charactor in title and title should be in 10 to 14 words)",
       "description": "Description",
       "keyPoints": ["Key Point 1", "Key Point 2"],
       "hashtags": ["Hashtag 1", "Hashtag 2"]
