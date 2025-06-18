@@ -5,7 +5,6 @@ import { db } from "@/lib/db";
 export const POST = async (req: Request) => {
   
   const { username, email, password, otp, expires } = await req.json();
-  console.log(username, email, password, otp, expires);
   
   let hashPass = await bcrypt.hash(password, 10);
   const newUser = await db.user.create({

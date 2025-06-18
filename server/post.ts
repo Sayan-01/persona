@@ -13,8 +13,6 @@ export const savePost = async (data: {id:string, title: string; platform: string
     throw new Error("Unauthorized");
   }
 
-  console.log(data);
-
   await db.content.create({
     data: {
       id: data.id,
@@ -149,4 +147,14 @@ export async function deleteDraft(postId: string) {
   });
 
   revalidatePath("/dashboard");
+}
+
+export const getPostById = async (id: string) => {
+  const session = await auth();
+
+  const post = await db.content.findUnique({
+    where: { id, userId: session?.user?.id },
+  });
+
+  return post;
 }

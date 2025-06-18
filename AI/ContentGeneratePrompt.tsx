@@ -77,8 +77,8 @@ export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtag
     Length Range: ${userPersona.preferences.content.minLength}-${userPersona.preferences.content.maxLength} characters
     Emoji Usage: ${userPersona.preferences.content.useEmojis ? "Yes" : "Minimal"}
     Formatting:
-    - Use Bullet Points: ${userPersona.preferences.content.formatting.useBulletPoints ? "Yes" : "When appropriate"}
-    - Include Statistics: ${userPersona.preferences.content.formatting.useStatistics ? "Yes" : "When relevant"}
+    - Use Bullet Points When appropriate"}
+    - Include Statistics When relevant"}
     - Citation Style: ${userPersona.preferences.content.formatting.citationStyle}
 
     ${keyPoints.length > 0 ? `KEY POINTS TO INCLUDE:\n${keyPoints.map((point, index) => `${index + 1}. ${point}`).join("\n")}` : ""}
@@ -102,9 +102,40 @@ export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtag
     - Consider your audience's pain points and goals
     - Keep content length between ${userPersona.preferences.content.minLength}-${userPersona.preferences.content.maxLength} characters
 
-    CONTENT FORMAT: JSON object {"content": "Full engaging post with follow all the above points"}
+    CONTENT FORMAT: 
+    - JSON object {"content": "Full engaging post with follow all the above points"}
     
-    Generate content that is engaging, authentic, and provides value to the audience. Focus on creating a natural flow while maintaining the specified tone and length guidelines. The content should position you as a thought leader in your field while remaining approachable and relatable, also add emojis for better engagement.
+    GENERATE CONTENT GUIDLINE OR FORMAT:
+    - Use <br/> for next line instate of *. 
+    - Engaging, authentic, and provides value to the audience. 
+    - Focus on creating a natural flow while maintaining the specified tone and length guidelines. 
+    - The content should position you as a thought leader in your field while remaining approachable and relatable, also add emojis for better engagement.
+    - Generated contain must be made with 4 section 1. Introduction part, 2. Containt main body (which contain bullet point, links if needed), 3. Conclution or footer 4. Hashtag section
+    - Do not use any text formatting like bold itlic etc. Write simple html text only contain <br/> for next line and <br/><br/> for 2 next line.
+    - Example post format-> 
+      🚀 Boost Your Brand's Online Presence with Azeorex! 🚀
+
+      <br/><br/>Looking for a website that stands out and grows with your business? Look no further! Azeorex is your trusted Web Development & Design Agency committed to delivering powerful, scalable, and modern web solutions tailored to your needs.
+
+      <br/><br/>✨ Why Choose Azeorex?
+
+      <br/>🖌 Stunning Website Design - Unique, eye-catching designs to elevate your brand.
+      <br/>🔧 Custom Backend Solutions - Built to support your growth with robust infrastructure.
+      <br/>🌐 Professional WordPress Websites - Fully optimized and responsive.
+      <br/>💻 Custom Coded Websites - Tailored from scratch to meet your specific needs.
+      <br/>🚀 Scalable & Future-Ready - Websites designed to evolve with your business.
+      <br/>📱 Responsive Across Devices - Ensuring a seamless experience on mobile, tablet, and desktop.
+      <br/>💥 Modern Tech Stack - Leveraging the latest tools and technologies for best results.
+      <br/>💸 Affordable Pricing - Quality web solutions within your budget!
+      <br/>Let's turn your vision into reality with Azeorex! 🌟
+
+      <br/><br/>📧 Contact Us:
+
+      <br/>Email: xxxxxxxxx@gmail.com
+      <br/>Phone: xxxxx xxxxx (WP only)
+      <br/>Website: xyz.com 
+
+      <br/><br/>#azeorex #webdesign #webdevelopment #customwebsites #moderndesign #responsivedesign #affordablewebsites #scalablesolutions #wordpressexperts #latesttechstack #highqualitydesign #userexperience #creativeagency 
 `;
 };
 

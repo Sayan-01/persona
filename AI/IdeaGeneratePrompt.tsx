@@ -9,8 +9,6 @@ type IdeaGenerateProps = {
 };
 
 export const IdeaGenerateProps = ({ topic, numberOfIdeas, platform, userProfile, aiPersona }: IdeaGenerateProps):string => {
-  console.log("first", topic, numberOfIdeas, platform, userProfile, aiPersona);
-
   return dedent`
     As an a pro AI content strategist, generate ${numberOfIdeas} creative and engaging content ideas (that means ${numberOfIdeas} objects are present in the array) for ${topic} specifically tailored for ${platform.join(", ")}.
 

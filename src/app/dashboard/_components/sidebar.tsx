@@ -2,10 +2,11 @@
 
 import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
 import { cn } from "@/lib/utils";
-import { Brain, Calendar, ChartPie, FileText, FolderClock, HelpCircle, Instagram, LogOut, Settings, Sparkles } from "lucide-react";
+import { Brain, Calendar, ChartPie, FileText, HelpCircle, Instagram, LogOut, Settings, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
+import { HistoryContext } from "../../../../provider/historyProvider";
 import { getAllHistory } from "../../../../server/actions";
 
 interface NavItem {
@@ -14,19 +15,25 @@ interface NavItem {
   icon: any;
 }
 
+export interface History {
+  id?: string;
+  contentId: string;
+  contentTitle: string;
+  userId?: string;
+}
+
 export function Sidebar({ userId }: { userId: string | undefined }) {
   const pathname = usePathname();
-  const [history, setHistory] = useState<any>([]);
+  const { history, setHistory } = useContext(HistoryContext);
 
   useEffect(() => {
     const fetchHistory = async () => {
       if (!userId) return;
-      const history = await getAllHistory(userId);
-      setHistory(history);
-      console.log("sayan:", history);
+      const newHistory = await getAllHistory(userId);
+      setHistory((history : History[]) => [...history, ...newHistory]);
     };
     fetchHistory();
-  }, [userId])  
+  }, [])  
 
   const navItems: NavItem[] = [
     {
@@ -78,7 +85,7 @@ export function Sidebar({ userId }: { userId: string | undefined }) {
           <p className="px-3 text-black text-xs">AI content generation</p>
         </div>
       </Link>
-      <nav className=" h-max px-0.5">
+      <nav className=" h-[280px] px-0.5">
         <p className="text-xs pl-2 py-2 font-medium text-neutral-500 mt-3">Menu</p>
 
         <ul className="space-y-1">
@@ -98,25 +105,25 @@ export function Sidebar({ userId }: { userId: string | undefined }) {
           ))}
         </ul>
       </nav>
-      <section className="h-40 mt-2 px-0.5">
+      <section className="h-full mt-2 px-0.5 overflow-hidden">
         <p className="text-xs pl-2 py-2 font-medium text-neutral-500">History</p>
-        <ul className="h-full flex items-center justify-center mt-1">
+        <ul className="h-[calc(100%-32px)] overflow-x-scroll box flex items-center justify-center mt-1">
           {history.length > 0 ? (
-            <div className="h-full w-full flex items-start justify-start flex-col">
+            <div className="h-full w-full flex items-start justify-start flex-col text-zinc-500">
               {history.map((item: any, index: number) => (
                 <li key={index} className="w-full">
-                  <Link href={`/dashboard/content-brain/${item.id}`} className={cn("flex w-full items-center px-[8px] py-[4px] text-sm rounded-md gap-1", pathname === item.href ? "bg-zinc-100 text-zinc-800" : "hover:bg-gray-100 ")}>
-                    <p className="one_liner">{item.contentTitle}</p>
+                  <Link href={`/dashboard/content-brain/${item.contentId}`} className={cn("flex w-full items-center px-[8px] py-[4px] text-sm rounded-md gap-1", pathname === item.href ? "bg-zinc-100 text-zinc-800" : "hover:bg-gray-100 ")}>
+                   <p className="one_liner">{item.contentTitle}</p>
                   </Link>
                 </li>
               ))}
             </div>
           ) : (
-            <p className="text-xs pl-2 py-2 font-medium text-neutral-500 italic">Empty History</p>
+            <p className="text-xs pl-2 pb-8 font-medium text-neutral-500 italic">Empty History</p>
           )}
         </ul>
       </section>
-      <div className="mt-2 pt-6">
+      <div className="mt-2 pt-1">
         <UpgradeCard />
         <Link
           href="/help"

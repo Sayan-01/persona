@@ -43,7 +43,6 @@ const RegisterForm = () => {
     const email = form.getValues("email"); // Get the email value
     const username = form.getValues("username"); // Get the username value
     const checkUserEmailExist = await IsUserEmailExist(email);
-    console.log("first", checkUserEmailExist);
     
     if (checkUserEmailExist) {
       setCode(false);

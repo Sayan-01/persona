@@ -49,8 +49,12 @@ import { ContentEnhancePromptDetails, ContentGeneratePromptDetails, IdeaGenerate
 import Link from "next/link";
 import { addInHistory } from "../../../../../server/actions";
 import { v4 } from "uuid";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { HistoryContext } from "../../../../../provider/historyProvider";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("ideas");
   const [ideaGeneratePromptDetails, setIdeaGeneratePromptDetails] = useState<IdeaGeneratePromptDetails>({
     topic: "",
@@ -82,6 +86,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const [enhanceType, setEnhanceType] = useState("rewrite");
   const [enhanceContent, setEnhanceContent] = useState("");
   const [userProfile, setUserProfile] = useState<any>(null);
+  const { history, setHistory } = useContext(HistoryContext);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -174,9 +179,11 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           const data = await res.json();
           if (data) {
             const dataObj = JSON.parse(data);
-            setContentDraft(dataObj.content);
+            const content = dataObj.content;
+                        
+            setContentDraft(content);
             //Save Content
-            const id = v4()
+            const id = v4();
             await savePost({
               id,
               title: selectedIdea?.title || contentGeneratePromptDetails.topic,
@@ -184,8 +191,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               length: contentGeneratePromptDetails.contentLength,
               body: dataObj.content,
             });
-            //Add Content in history            
+            //Add Content in history
             await addInHistory(user.id, id, selectedIdea?.title || contentGeneratePromptDetails.topic);
+            setHistory([...history, { contentId: id, contentTitle: selectedIdea?.title || contentGeneratePromptDetails.topic }]);
             setShowDraft(true);
           }
 
@@ -884,7 +892,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             >
               {contentDraft ? (
                 <>
-                  <div className="whitespace-pre-wrap rounded-md border h-fit bg-amber-200 p-4 pb-5">{contentDraft}</div>
+                  <p
+                    dangerouslySetInnerHTML={{ __html: contentDraft }}
+                    className="whitespace-pre-wrap rounded-md border h-fit bg-amber-200 p-4 pb-5"
+                  />
                   <div className="h-5" />
                   <div className="space-y-5">
                     {/* Share Your Content Section */}

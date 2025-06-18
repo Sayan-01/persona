@@ -11,9 +11,7 @@ import Link from "next/link";
 const Header = () => {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
-  console.log("segments",segments);
   const current = segments[segments.length - 1] || "Home";
-  console.log("current",current);
 
   // Optional: format to Capitalize first letter
   const formattedCurrent = current.charAt(0).toUpperCase() + current.slice(1).replace(/-/g, " ");
@@ -68,7 +66,7 @@ const Header = () => {
           </div>
 
           {/* New Project Button */}
-          <button className="mx-3 bg-indigo-900 text-white px-3 py-1.5 rounded-lg flex items-center text-sm">
+          <button className="mx-3 bg-zinc-900 text-white px-3 py-1.5 rounded-lg flex items-center text-sm">
             <PlusSquare className="h-4 w-4 mr-1.5" />
             New Project
           </button>
