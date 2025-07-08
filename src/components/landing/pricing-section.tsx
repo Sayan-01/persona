@@ -102,6 +102,7 @@ export function PricingSection() {
                 </div>
               </motion.div>
             ))}
+            
           </motion.div>
         </motion.div>
       </div>

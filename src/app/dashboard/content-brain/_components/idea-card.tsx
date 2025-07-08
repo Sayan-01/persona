@@ -12,7 +12,7 @@ interface Props {
 
 const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent: (idea: Props, platform: string) => void; platform: string }) => {
   return (
-    <div className="bg-white rounded-3xl border-2 border-dashed border-indigo-300 p-8 transition-all duration-200 group relative overflow-hidden cursor-pointer ">
+    <div className="bg-white rounded-2xl border-2 border-dashed border-indigo-300 p-6 transition-all duration-200 group relative overflow-hidden cursor-pointer ">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-3xl"></div>
 

@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { postToFacebook } from "@/lib/facebook";
 import { postToTwitter } from "@/lib/twitter";
 
-export const savePost = async (data: {id:string, title: string; platform: string; length: string; body: string }) => {
+export const savePost = async (data: { id: string; title: string; platform: string; length: string; body: string }) => {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -22,23 +22,21 @@ export const savePost = async (data: {id:string, title: string; platform: string
       userId: session.user.id,
     },
   });
-
 };
 
-export const saveAsDraft = async (data: { title: string; body: string; platform: string }) => {
+export const saveAsDraft = async (data: { id: string }) => {
   const session = await auth();
 
   if (!session?.user?.id) {
     throw new Error("Unauthorized");
   }
 
-  await db.content.create({
+  await db.content.update({
+    where: {
+      id: data.id,
+    },
     data: {
-      title: data.title,
-      body: data.body,
       status: "Draft",
-      platform: data.platform,
-      userId: session.user.id,
     },
   });
 
@@ -157,4 +155,4 @@ export const getPostById = async (id: string) => {
   });
 
   return post;
-}
+};

@@ -7,7 +7,10 @@ import { FileText, Zap, Calendar, Sparkles, PlusCircle, ArrowRight, TrendingUp, 
 export default function DashboardPage() {
   return (
     <div className="p-4 h-full box">
-
+      <div className="mb-10 mt-6">
+        <h1 className="text-3xl font-black">Welcome to Persona AI</h1>
+        <p className="text-sm text-zinc-500">This is a content generation and management software operate using AI </p>
+      </div>
       {/* Quick Actions */}
       <div className="mb-8 ">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

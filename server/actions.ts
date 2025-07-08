@@ -27,6 +27,9 @@ export const getAllHistory = async (userId:string) => {
   const history = await db.generatedContentHistory.findMany({
     where:{
       userId
+    },
+    orderBy :{
+      createdAt:"desc"
     }
   })
   return history;

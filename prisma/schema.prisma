@@ -238,4 +238,5 @@ model GeneratedContentHistory {
   contentId      String
   contentHistory Content @relation(fields: [contentId], references: [id])
   contentTitle   String
+  createdAt      DateTime @default(now())
 }

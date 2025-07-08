@@ -9,7 +9,6 @@ const monaa = Geist({ subsets: ["latin"], weight: ["400", "500", "600", "700", "
 export const metadata: Metadata = {
   title: "PersonaAI - AI-Powered Content Creation",
   description: "Create personalized content for multiple platforms with AI",
-  generator: "v0.dev",
 };
 
 export default function RootLayout({
@@ -19,6 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
+      className="dark"
       lang="en"
       suppressHydrationWarning
     >

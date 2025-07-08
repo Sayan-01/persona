@@ -52,6 +52,7 @@ import { v4 } from "uuid";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { HistoryContext } from "../../../../../provider/historyProvider";
+import ContentStatus from "./content-status";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const router = useRouter();
@@ -76,7 +77,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const [selectedIdea, setSelectedIdea] = useState<{ title: string; description: string; keyPoints: string[]; hashtags: string[]; platform: string } | null>(null);
   const [showEnhanced, setShowEnhanced] = useState(false);
   const [showDraft, setShowDraft] = useState(false);
-  const [contentDraft, setContentDraft] = useState("");
+  const [contentDraft, setContentDraft] = useState<{ id: string; content: string }>();
   const [contentStatus, setContentStatus] = useState("draft"); // draft, scheduled, published
   const [editorContent, setEditorContent] = useState("");
   const [generating, setGenerating] = useState(false);
@@ -142,7 +143,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           }
 
           setGenerating(false);
-
         } catch (error) {
           console.log("Error in idea generation", error);
           setGenerating(false);
@@ -180,10 +180,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           if (data) {
             const dataObj = JSON.parse(data);
             const content = dataObj.content;
-                        
-            setContentDraft(content);
+
             //Save Content
             const id = v4();
+            setContentDraft({ id, content });
             await savePost({
               id,
               title: selectedIdea?.title || contentGeneratePromptDetails.topic,
@@ -193,7 +193,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             });
             //Add Content in history
             await addInHistory(user.id, id, selectedIdea?.title || contentGeneratePromptDetails.topic);
-            setHistory([...history, { contentId: id, contentTitle: selectedIdea?.title || contentGeneratePromptDetails.topic }]);
+            setHistory([{ contentId: id, contentTitle: selectedIdea?.title || contentGeneratePromptDetails.topic }, ...history]);
             setShowDraft(true);
           }
 
@@ -259,8 +259,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     }
     switch (contentStatus) {
       case "draft":
-        const res = await saveAsDraft({ title: selectedIdea?.title, body: contentDraft, platform: selectedIdea.platform });
+        if (!contentDraft?.id) {
+          toast("No content is present");
+          return;
+        }
+        const res = await saveAsDraft({ id: contentDraft?.id });
         if (res) toast("🟢 Draft saved successfully");
+        break;
     }
   };
 
@@ -632,7 +637,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   postId={undefined}
                 /> */}
 
-                {/* <Card>
+                <Card>
                   <CardHeader>
                     <CardTitle>Content Draft</CardTitle>
                     <CardDescription>Review and publish your content</CardDescription>
@@ -700,7 +705,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       )}
                     </ButtonLayout>
                   </CardFooter>
-                </Card> */}
+                </Card>
               </div>
             </TabsContent>
             <TabsContent value="enhance">
@@ -893,7 +898,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               {contentDraft ? (
                 <>
                   <p
-                    dangerouslySetInnerHTML={{ __html: contentDraft }}
+                    dangerouslySetInnerHTML={{ __html: contentDraft.content }}
                     className="whitespace-pre-wrap rounded-md border h-fit bg-amber-200 p-4 pb-5"
                   />
                   <div className="h-5" />
@@ -921,29 +926,11 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       <button className="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white py-2 px-3 rounded-md font-medium hover:from-gray-900 hover:to-black transition-all duration-200 transform hover:scale-[1.02] shadow-sm hover:shadow-md text-xs">
                         Share to All Platforms
                       </button>
-                    </div>
-
-                    {/* Content Status Section */}
-                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-                      <h4 className="font-semibold text-gray-900 mb-2 text-sm">Content Status</h4>
-
-                      <div className="space-y-1.5">
-                        <div className="grid grid-cols-3 gap-1.5">
-                          <button className="flex items-center justify-center space-x-1 p-2 rounded-md border border-violet-200 bg-violet-50 text-violet-700 hover:bg-violet-100 transition-colors duration-200">
-                            <Edit className="w-3.5 h-3.5" />
-                            <span className="font-medium text-xs">Save Draft</span>
-                          </button>
-                          <button className="flex items-center justify-center space-x-1 p-2 rounded-md border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors duration-200">
-                            <Clock className="w-3.5 h-3.5" />
-                            <span className="font-medium text-xs">Schedule</span>
-                          </button>
-
-                          <button className="flex items-center justify-center space-x-1 p-2 rounded-md border border-green-200 bg-green-50 text-green-700 hover:bg-green-100 transition-colors duration-200">
-                            <Send className="w-3.5 h-3.5" />
-                            <span className="font-medium text-xs">Publish</span>
-                          </button>
-                        </div>
-                      </div>
+                      <ContentStatus
+                        contentStatus={contentStatus}
+                        setContentStatus={setContentStatus}
+                        handleContentAction={handleContentAction}
+                      />
                     </div>
                   </div>
                   <div className="h-5"></div>

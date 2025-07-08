@@ -42,8 +42,10 @@ export function FAQSection() {
       <div className="container px-4 md:px-6 max-w-7xl mx-auto">
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="space-y-5">
-            <h2 className="text-3xl font-bold sm:text-4xl md:text-4xl">Frequently Asked Questions</h2>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-base">Everything you need to know about PersonaAI dghf dskjfshf fhfsfhsjkf sddfkhfjhf fjh nddb djjjkd dhskj s hfjknmssddmnbd djksdj s jfjkh sdbdnb h </p>
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
+              Frequently Asked <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">Questions</span>
+            </h2>
+            <p className="mt-4 text-lg text-gray-600 ">Everything you need to know about PersonaAI </p>
           </div>
           <div className="mx-auto w-full max-w-3xl mt-8">
             <Accordion
@@ -53,12 +55,12 @@ export function FAQSection() {
             >
               {faqs.map((faq, index) => (
                 <AccordionItem
+                  className="border-b-0"
                   key={index}
                   value={`item-${index}`}
                 >
                   <AccordionTrigger className="text-left text-base bg-white p-6 rounded-xl mb-4">
-                    {index + 1}.
-                    {" "}{faq.question}
+                    {index + 1}. {faq.question}
                   </AccordionTrigger>
                   <AccordionContent>{faq.answer}</AccordionContent>
                 </AccordionItem>

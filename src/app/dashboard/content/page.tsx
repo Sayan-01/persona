@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PlusCircle, FileText, Calendar, Edit, ArrowUpRight, Trash2, Filter, Search, MoreHorizontal, CheckCircle2, Clock } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { deleteDraft, getDrafts, getPostedContent, getScheduledContent } from "../../../../server/post";
+import { cn } from "@/lib/utils";
 
 export default function ContentPage() {
   const [activeTab, setActiveTab] = useState("all");
@@ -37,7 +38,7 @@ export default function ContentPage() {
   }, []);
 
   return (
-    <div className="container py-8 ">
+    <div className="container py-8 p-6">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">My Content</h1>
@@ -98,168 +99,16 @@ export default function ContentPage() {
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div className="w-full flex flex-col gap-5">
               {drafts.map((draft: any) => (
-                <Card
-                  key={draft.id}
-                  className="overflow-hidden"
-                >
-                  <div className="bg-purple-50 px-4 py-2 ">
-                    <div className="flex items-center justify-between">
-                      <Badge
-                        variant="outline"
-                        className="border-purple-200 bg-purple-100 text-purple-700 "
-                      >
-                        Draft
-                      </Badge>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8"
-                            >
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>
-                              <Calendar className="mr-2 h-4 w-4" />
-                              <span>Schedule</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <FileText className="mr-2 h-4 w-4" />
-                              <span>Duplicate</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-red-600 ">
-                              <div
-                                className="flex gap-4"
-                                onClick={() => deleteDraft(draft.id)}
-                              >
-                                <Trash2 className="h-4 w-4" />
-                                <span>Delete</span>
-                              </div>
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </div>
-                  </div>
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center gap-2">
-                      <Avatar className="h-6 w-6">
-                        <AvatarImage
-                          src="/placeholder.svg"
-                          alt="LinkedIn"
-                        />
-                        <AvatarFallback className="bg-blue-600 text-[10px]">LI</AvatarFallback>
-                      </Avatar>
-                      <p className="text-sm font-medium">{draft.platform}</p>
-                    </div>
-                    <CardTitle className="mt-2 line-clamp-2 text-base">{draft.title}</CardTitle>
-                    <CardDescription className="line-clamp-2">Created 2 days ago • Professional Tone</CardDescription>
-                  </CardHeader>
-                  <CardContent className="pb-4">
-                    <p className="line-clamp-3 text-sm text-gray-500 ">{draft.body}</p>
-                  </CardContent>
-                  <CardFooter className="flex justify-end border-t pt-4">
-                    <Button
-                      variant="outline"
-                      className="gap-1.5"
-                    >
-                      Edit Draft
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <ContentCard content={draft} type="Draft"/>
               ))}
             </div>
             <div>
               {scheduledContent.map((scheduled: any) => (
-                <Card className="overflow-hidden">
-                  <div className="bg-amber-50 px-4 py-2 ">
-                    <div className="flex items-center justify-between">
-                      <Badge
-                        variant="outline"
-                        className="border-amber-200 bg-amber-100 text-amber-700 "
-                      >
-                        <Clock className="mr-1 h-3 w-3" />
-                        Scheduled
-                      </Badge>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8"
-                            >
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>
-                              <Calendar className="mr-2 h-4 w-4" />
-                              <span>Reschedule</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                              <FileText className="mr-2 h-4 w-4" />
-                              <span>Duplicate</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-red-600 ">
-                              <Trash2 className="mr-2 h-4 w-4" />
-                              <span>Cancel Scheduling</span>
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </div>
-                  </div>
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center gap-2">
-                      <Avatar className="h-6 w-6">
-                        <AvatarImage
-                          src="/placeholder.svg"
-                          alt="Twitter"
-                        />
-                        <AvatarFallback className="bg-sky-500 text-[10px]">TW</AvatarFallback>
-                      </Avatar>
-                      <p className="text-sm font-medium">{scheduled.platform}</p>
-                    </div>
-                    <CardTitle className="mt-2 line-clamp-2 text-base">{scheduled.title}</CardTitle>
-                    <CardDescription className="line-clamp-2">Scheduled for May 25, 2025 at 10:00 AM</CardDescription>
-                  </CardHeader>
-                  <CardContent className="pb-4">
-                    <p className="line-clamp-3 text-sm text-gray-500 ">{scheduled.body} </p>
-                  </CardContent>
-                  <CardFooter className="flex justify-end border-t pt-4">
-                    <Button
-                      variant="outline"
-                      className="gap-1.5"
-                    >
-                      <Calendar className="h-4 w-4" />
-                      Reschedule
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <ContentCard content={scheduled} type="Scheduled" />
               ))}
             </div>
             <div>
-              {postedContent.map((post: any) => (
+              {[1].map((post: any) => (
                 <Card className="overflow-hidden">
                   <div className="bg-green-50 px-4 py-2 ">
                     <div className="flex items-center justify-between">
@@ -341,86 +190,7 @@ export default function ContentPage() {
         <TabsContent value="drafts">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {drafts.map((draft: any) => (
-              <Card
-                key={draft.id}
-                className="overflow-hidden"
-              >
-                <div className="bg-purple-50 px-4 py-2 ">
-                  <div className="flex items-center justify-between">
-                    <Badge
-                      variant="outline"
-                      className="border-purple-200 bg-purple-100 text-purple-700 "
-                    >
-                      Draft
-                    </Badge>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <Calendar className="mr-2 h-4 w-4" />
-                            <span>Schedule</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <FileText className="mr-2 h-4 w-4" />
-                            <span>Duplicate</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-red-600 ">
-                            <div
-                              className="flex gap-4"
-                              onClick={() => deleteDraft(draft.id)}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                              <span>Delete</span>
-                            </div>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-                  </div>
-                </div>
-                <CardHeader className="pb-2">
-                  <div className="flex items-center gap-2">
-                    <Avatar className="h-6 w-6">
-                      <AvatarImage
-                        src="/placeholder.svg"
-                        alt="LinkedIn"
-                      />
-                      <AvatarFallback className="bg-blue-600 text-[10px]">LI</AvatarFallback>
-                    </Avatar>
-                    <p className="text-sm font-medium">{draft.platform}</p>
-                  </div>
-                  <CardTitle className="mt-2 line-clamp-2 text-base">{draft.title}</CardTitle>
-                  <CardDescription className="line-clamp-2">Created 2 days ago • Professional Tone</CardDescription>
-                </CardHeader>
-                <CardContent className="pb-4">
-                  <p className="line-clamp-3 text-sm text-gray-500  ">{draft.body}</p>
-                </CardContent>
-                <CardFooter className="flex justify-end border-t pt-4">
-                  <Button
-                    variant="outline"
-                    className="gap-1.5"
-                  >
-                    Edit Draft
-                  </Button>
-                </CardFooter>
-              </Card>
+              <ContentCard type="Draft" content={draft}/>
             ))}
           </div>
         </TabsContent>
@@ -514,3 +284,99 @@ export default function ContentPage() {
     </div>
   );
 }
+
+const ContentCard = ({ content , type}: { content: any , type: string}) => {
+  return (
+    <Card
+      key={content.id}
+      className="overflow-hidden"
+    >
+      <div className={cn("px-4 py-2 ", {
+        "bg-green-50": type === "Posted",
+        "bg-purple-50": type === "Draft",
+        "bg-amber-50": type === "Scheduled",
+      })}>
+        <div className="flex items-center justify-between">
+          <Badge
+            variant="outline"
+            className={cn("", {
+              "border-green-200 bg-green-100 text-green-700 ": type === "Posted",
+              "border-purple-200 bg-purple-100 text-purple-700 ": type === "Draft",
+              "border-amber-200 bg-amber-100 text-amber-700 ": type === "Scheduled",
+            })}
+          >
+            {type}
+          </Badge>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+            >
+              <Edit className="h-4 w-4" />
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8"
+                >
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>
+                  <Calendar className="mr-2 h-4 w-4" />
+                  <span>Schedule</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <FileText className="mr-2 h-4 w-4" />
+                  <span>Duplicate</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-red-600 ">
+                  <div
+                    className="flex gap-4"
+                    onClick={() => deleteDraft(content.id)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    <span>Delete</span>
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </div>
+      <CardHeader className="pb-2">
+        <div className="flex items-center gap-2">
+          <Avatar className="h-6 w-6">
+            <AvatarImage
+              src="/placeholder.svg"
+              alt="LinkedIn"
+            />
+            <AvatarFallback className="bg-blue-600 text-[10px]">LI</AvatarFallback>
+          </Avatar>
+          <p className="text-sm font-medium">{content.platform}</p>
+        </div>
+        <CardTitle className="mt-2 line-clamp-2 text-base">{content.title}</CardTitle>
+        <CardDescription className="line-clamp-2">Created 2 days ago • Professional Tone</CardDescription>
+      </CardHeader>
+      <CardContent className="pb-4">
+        <p
+          className="line-clamp-3 text-sm text-gray-500 "
+          dangerouslySetInnerHTML={{ __html: content.body }}
+        />
+      </CardContent>
+      <CardFooter className="flex justify-end border-t pt-4">
+        <Button
+          variant="outline"
+          className="gap-1.5"
+        >
+          Edit Draft
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};

@@ -51,7 +51,8 @@ export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtag
       * Relevant to the topic and industry
       * Currently active in your platform
       * Mix of broad and specific terms
-      * Properly formatted (camelCase for multi-word tags)`;
+      * Properly formatted (camelCase for multi-word tags)
+      * Start from a new line allways`;
   };
 
   return dedent`
@@ -93,6 +94,7 @@ export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtag
     5. Follow the specified formatting preferences and language level
     6. Use emojis ${userPersona.preferences.content.useEmojis ? "strategically for engagement" : "minimally and professionally"}
 
+
     ENGAGEMENT OPTIMIZATION:
     - Also add emojis for better engagement
     - Include conversation starters or questions
@@ -106,12 +108,17 @@ export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtag
     - JSON object {"content": "Full engaging post with follow all the above points"}
     
     GENERATE CONTENT GUIDLINE OR FORMAT:
-    - Use <br/> for next line instate of *. 
-    - Engaging, authentic, and provides value to the audience. 
-    - Focus on creating a natural flow while maintaining the specified tone and length guidelines. 
-    - The content should position you as a thought leader in your field while remaining approachable and relatable, also add emojis for better engagement.
-    - Generated contain must be made with 4 section 1. Introduction part, 2. Containt main body (which contain bullet point, links if needed), 3. Conclution or footer 4. Hashtag section
-    - Do not use any text formatting like bold itlic etc. Write simple html text only contain <br/> for next line and <br/><br/> for 2 next line.
+    - Use <br/> for line breaks and <br/><br/> for double line breaks.
+    - The content should be engaging, authentic, and provide value to the audience.
+    - Focus on creating a natural flow.
+    - Position the content to establish me as a thought leader in my field while remaining approachable and relatable.
+    - Incorporate emojis for better engagement.
+    - Structure the content into four distinct sections:
+        1. Introduction part
+        2. Content main body (which can contain bullet points or - or links if needed)
+        3. Conclusion or footer
+        4. Hashtag section
+    - **Crucially, do not use any text formatting like bolding, italics, or any other special character formatting. Write simple HTML text only containing <br/> for line breaks.**
     - Example post format-> 
       🚀 Boost Your Brand's Online Presence with Azeorex! 🚀
 
