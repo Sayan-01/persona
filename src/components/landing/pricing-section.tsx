@@ -46,7 +46,7 @@ const plans = [
 
 export function PricingSection() {
   return (
-    <section className="relative overflow-hidden bg-white py-20 dark:bg-gray-950 sm:py-28">
+    <section className="relative overflow-hidden bg-[#f0f0f0] py-20 dark:bg-gray-950 sm:py-28">
       <div className="w-full max-w-7xl mx-auto ">
         <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
         <motion.div
@@ -54,7 +54,7 @@ export function PricingSection() {
           whileInView="animate"
           viewport={{ once: true }}
           variants={stagger}
-          className="container px-4 md:px-6"
+          className="container px-4 md:px-6 mx-auto"
         >
           <motion.div
             variants={fadeInUp}
@@ -102,6 +102,32 @@ export function PricingSection() {
                 </div>
               </motion.div>
             ))}
+            <div className="flex flex-col items-center gap-4  text-white bg-gradient-to-r from-blue-600 to-violet-600 rounded-3xl p-8"> 
+               <div className="flex flex-col  gap-4  text-white">
+                <h1 className="text-2xl font-semibold">
+                  {plans[0].name}
+                </h1>
+                <p className="-mt-1 text-gray-600 dark:text-gray-300">
+                  {plans[0].description}
+                </p>
+                <div className="mt-6">
+                  <span className="text-4xl font-bold text-gray-900 dark:text-white">{plans[0].price}</span>
+                  <span className="text-gray-600 dark:text-gray-300">/month</span>
+                </div>
+                <ul className="mt-8 space-y-4">
+                  {plans[0].features.map((feature, featureIndex) => (
+                    <li
+                      key={featureIndex}
+                      className="flex items-center text-gray-600 dark:text-gray-300"
+                    >
+                      <Check className="mr-3 h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <Button className={`mt-8 w-full rounded-full bg-gradient-to-r from-blue-600 to-violet-600 text-white hover:shadow-lg hover:shadow-blue-500/25`}>Get Started</Button>
+              </div>
+            </div>
             
           </motion.div>
         </motion.div>

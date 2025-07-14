@@ -65,7 +65,7 @@ export function FeaturesSection() {
           whileInView="animate"
           viewport={{ once: true }}
           variants={stagger}
-          className="container px-4 md:px-6"
+          className="container px-4 md:px-6 mx-auto"
         >
           <motion.div
             variants={fadeInUp}
@@ -79,7 +79,7 @@ export function FeaturesSection() {
 
           <motion.div
             variants={fadeInUp}
-            className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+            className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 mx-auto"
           >
             {features.map((feature, index) => (
               <motion.div
