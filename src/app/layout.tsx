@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { DM_Sans, Geist } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
 const monaa = Geist({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800", "900"] });
 
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      className="dark"
+    className="dark"
       lang="en"
       suppressHydrationWarning
     >
@@ -26,9 +27,17 @@ export default function RootLayout({
         cz-shortcut-listen="true"
         className={`font-sans ${monaa.className} box `}
       >
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
         {children}
+        </ThemeProvider>
         <Toaster />
       </body>
     </html>
+
   );
 }

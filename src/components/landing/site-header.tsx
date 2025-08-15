@@ -7,58 +7,44 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Menu, X } from "lucide-react";
 import BlackButton from "./button";
 import Logo from "../global/logo";
+import { LandingPageNav } from "@/constants";
 
 export function SiteHeader({ session }: { session: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full absolute z-10  px-3 border-b">
-      <div className="bg-white">
+    <header className="w-full absolute z-10  px-3 border-b  dark:bg-zinc-900 bg-white">
+      <div className="">
         <div className="container flex h-[70px] items-center justify-between max-w-[1400px] mx-auto">
           <Logo />
-          <nav className="hidden md:flex gap-6  text-foreground/60">
-            <Link
-              href="#features"
-              className=" font-medium transition-colors hover:text-blue-600 "
-            >
-              Features
-            </Link>
-            <Link
-              href="#features"
-              className=" font-medium transition-colors hover:text-blue-600 "
-            >
-              How It Works
-            </Link>
-            <Link
-              href="#pricing"
-              className=" font-medium transition-colors hover:text-blue-600 "
-            >
-              Pricing
-            </Link>
-            <Link
-              href="#testimonials"
-              className=" font-medium transition-colors hover:text-blue-600 "
-            >
-              Testimonials
-            </Link>
-            <Link
-              href="#faq"
-              className=" font-medium transition-colors hover:text-blue-600 "
-            >
-              FAQ
-            </Link>
+          <nav className="hidden md:flex gap-6 ">
+            {LandingPageNav.map((item) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className=" font-medium transition-colors hover:text-blue-600 "
+              >
+                {item.title}
+              </Link>
+            ))}
           </nav>
           <div className="hidden md:flex items-center gap-4">
+            <ModeToggle />
             {session?.user ? (
               <Link href="/dashboard">
-                <Button size="lg" className="rounded-full">Dashboard</Button>
+                <Button
+                  size="lg"
+                  className="rounded-full"
+                >
+                  Dashboard
+                </Button>
               </Link>
             ) : (
               <>
                 <Link href="/auth/login">
                   <Button
                     variant="ghost"
-                    className="text-gray-800 hover:text-blue-700 hover:bg-blue-50/50 h-10"
+                    className="hover:text-blue-700 hover:bg-blue-50/50 h-10"
                   >
                     Login
                   </Button>
@@ -70,12 +56,11 @@ export function SiteHeader({ session }: { session: any }) {
             )}
           </div>
           <div className="flex md:hidden items-center gap-4">
-            <ModeToggle />
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-800 hover:text-blue-700 "
+              className="hover:text-blue-700 "
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -87,28 +72,28 @@ export function SiteHeader({ session }: { session: any }) {
           <nav className="flex flex-col gap-4">
             <Link
               href="#features"
-              className=" font-medium text-gray-800 transition-colors hover:text-blue-600 "
+              className=" font-medium transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >
               Features
             </Link>
             <Link
               href="#pricing"
-              className=" font-medium text-gray-800 transition-colors hover:text-blue-600 "
+              className=" font-medium transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >
               Pricing
             </Link>
             <Link
               href="#testimonials"
-              className=" font-medium text-gray-800 transition-colors hover:text-blue-600 "
+              className=" font-medium transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >
               Testimonials
             </Link>
             <Link
               href="#faq"
-              className=" font-medium text-gray-800 transition-colors hover:text-blue-600 "
+              className=" font-medium transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >
               FAQ

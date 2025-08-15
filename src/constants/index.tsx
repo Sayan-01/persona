@@ -47,3 +47,10 @@ export const socialPlatforms = [
     textColor: "text-white",
   },
 ];
+export const LandingPageNav = [
+  {title: "Feature", href: "#features"},
+  {title: "How It Works", href: "#how-it-works"},
+  {title: "Pricing", href: "#pricing"},
+  {title: "Testimonials", href: "#testimonials"},
+  {title: "FAQ", href: "#faq"},
+]

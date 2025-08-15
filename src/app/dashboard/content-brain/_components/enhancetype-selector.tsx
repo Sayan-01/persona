@@ -27,7 +27,7 @@ const enhancements: Enhancement[] = [
     id: "rewrite",
     title: "Rewrite",
     description: "Transform your content with AI-powered rewriting while preserving the essence and core message",
-    icon: <RefreshCw className="w-5 h-5" />,
+    icon: <RefreshCw className="w-5 h-5"/>,
   },
   {
     id: "adjust",

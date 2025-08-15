@@ -102,7 +102,7 @@ export default function CalendarPage() {
   }
 
   return (
-    <div className="container py-8">
+    <div className="container p-6 py-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Content Calendar</h1>

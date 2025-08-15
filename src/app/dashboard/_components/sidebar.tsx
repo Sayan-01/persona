@@ -74,11 +74,8 @@ export function Sidebar({ userId }: { userId: string | undefined }) {
         href="/"
         className={`flex items-center p-2 justify-start rounded-xl`}
       >
-        <div className="p-1.5 rounded-lg bg-black">
-          <Brain
-            color="#ffffff"
-            size={22}
-          />
+        <div className="p-[6px] rounded-lg border border-orange-600/60 text-lg bg-amber-600/20">
+          🏀
         </div>
         <div>
           <h1 className="px-3 text-black font-medium">PersonaAI.</h1>

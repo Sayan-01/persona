@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { Home as HomeIcon, Search, PlusSquare, ChevronLeft, ChevronRight, Settings, LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { usePathname } from "next/navigation";
 import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import Link from "next/link";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const Header = () => {
   const pathname = usePathname();
@@ -15,7 +16,7 @@ const Header = () => {
 
   // Optional: format to Capitalize first letter
   const formattedCurrent = current.charAt(0).toUpperCase() + current.slice(1).replace(/-/g, " ");
-  
+
   return (
     <div className="bg-white border-gray-200">
       <div className="flex items-center h-16 px-4 border-b">
@@ -34,7 +35,6 @@ const Header = () => {
                   <BreadcrumbEllipsis className="size-4" />
                   <span className="sr-only">Toggle menu</span>
                 </DropdownMenuTrigger>
-                
               </DropdownMenu>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -43,18 +43,17 @@ const Header = () => {
                 <Link href="/dashboard">{segments[0].charAt(0).toUpperCase() + segments[0].slice(1).replace(/-/g, " ")}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            {segments.length > 1 && (
-              <BreadcrumbSeparator />
-            )}
+            {segments.length > 1 && <BreadcrumbSeparator />}
             <BreadcrumbItem>
-              <BreadcrumbPage>{segments[1]?(segments[1].charAt(0).toUpperCase() + segments[1].slice(1).replace(/-/g, " ")):""}</BreadcrumbPage>
+              <BreadcrumbPage>{segments[1] ? segments[1].charAt(0).toUpperCase() + segments[1].slice(1).replace(/-/g, " ") : ""}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
 
         {/* Search */}
         <div className="ml-auto flex items-center">
-          <div className="relative">
+          <ModeToggle/>
+          <div className="relative ml-3">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-4 w-4 text-gray-400" />
             </div>
