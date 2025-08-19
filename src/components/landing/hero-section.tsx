@@ -22,10 +22,11 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[90vh] w-full overflow-hidden dark:bg-zinc-900 bg-white px-[70px] ">
+    <section className="relative min-h-[90vh] w-full overflow-hidden dark:bg-zinc-900 bg-white px-[70px] border-b">
       <div className="border-x">
         <div className="w-full max-w-7xl mx-auto py-16 pt-[120px] flex flex-col items-center">
-          <div className="absolute w-full h-[400px] top-52 opacity-70 bg-gradient-to-br from-[#fc5eea] via-[#ffffff] to-[#7a8cfa] dark:from-[#000] dark:via-[#000000] dark:to-[#000] rounded-[100%] blur-[100px]" />{" "}
+          <div className="absolute w-full h-[400px] top-52 opacity-70 bg-gradient-to-br from-[#fc5eea] via-[#ffffff] to-[#7a8cfa] dark:from-[#00000000] dark:via-[#00000000] dark:to-[#00000000] rounded-[100%] blur-[100px]" />{" "}
+          <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
           <motion.div
             initial="initial"
             animate="animate"
@@ -49,7 +50,7 @@ const HeroSection = () => {
             </motion.h1>
             <motion.p
               variants={fadeInUp}
-              className=" max-w-[1000px] text-center text-zinc-600 dark:text-purple-100 text-lg "
+              className=" max-w-[1000px] text-center text-zinc-600 dark:text-purple-200/80 text-lg "
             >
               Hey there, I'm a Product Designer based in Poland. I'm all about that minimalistic <br />
               vibe, with a passion for low-code and interactions.🔥
@@ -70,7 +71,7 @@ const HeroSection = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-32 rounded-full h-12 bg-zinc-300 dark:bg-blue-600/0 dark:text-white"
+                  className="w-32 rounded-full h-12 bg-zinc-300 dark:bg-zinc-800 dark:text-white"
                 >
                   Learn more
                 </Button>
@@ -78,12 +79,12 @@ const HeroSection = () => {
             </motion.div>
             <motion.div
               variants={fadeInUp}
-              className="mt-28 w-full max-w rounded-3xl border-4 border-white bg-[#f1f1f1] p-5 backdrop-blur-sm"
+              className="mt-28 w-full max-w rounded-3xl border-4 border-white dark:border-black/70 bg-[#f1f1f1] dark:bg-zinc-800 p-5 backdrop-blur-sm"
             >
-              <div className=" w-full overflow-hidden rounded-2xl bg-[#fafafa] ">
+              <div className=" w-full overflow-hidden rounded-2xl bg-[#212121] ">
                 <div className="flex h-full items-center justify-center">
                   <Image
-                    src="/dark.png"
+                    src="/dashboard-dark.png"
                     alt="dashboard"
                     width={5000}
                     height={5000}

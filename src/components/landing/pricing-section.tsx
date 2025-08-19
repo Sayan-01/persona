@@ -1,7 +1,9 @@
 "use client";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Heading from "./heading";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -21,88 +23,119 @@ const plans = [
   {
     name: "Starter",
     price: "$29",
-    description: "Perfect for individuals and small teams getting started.",
+    description: "Perfect for individuals and small teams",
     features: ["Up to 5 team members", "Basic analytics dashboard", "24/7 email support", "1,000 AI content generations", "5 custom workflows"],
-    color: "from-blue-600 to-cyan-600",
+    buttonText: "Get Started",
     popular: false,
+    color: "from-blue-500 to-cyan-500",
   },
   {
     name: "Professional",
     price: "$49",
-    description: "Best for growing businesses and professional teams.",
+    description: "Best for growing businesses",
     features: ["Up to 20 team members", "Advanced analytics & reports", "Priority 24/7 support", "Unlimited AI generations", "Custom integrations", "Team collaboration tools", "Advanced automation"],
-    color: "from-violet-600 to-purple-600",
+    buttonText: "Get Started",
     popular: true,
+    color: "from-violet-500 to-purple-500",
   },
   {
     name: "Enterprise",
     price: "$79",
-    description: "Advanced features for large organizations.",
+    description: "Advanced features for large organizations",
     features: ["Unlimited team members", "Custom analytics solutions", "Dedicated support manager", "Custom AI model training", "Advanced security features", "API access", "White-label options"],
-    color: "from-orange-600 to-red-600",
+    buttonText: "Contact Sales",
     popular: false,
+    color: "from-orange-500 to-rose-500",
   },
 ];
 
 export function PricingSection() {
   return (
-    <section className="relative overflow-hidden bg-[#f0f0f0] py-20 dark:bg-gray-950 sm:py-28">
-      <div className="w-full max-w-7xl mx-auto ">
+    <section className="relative overflow-hidden bg-[#f0f0f0] py-20 dark:bg-zinc-900 sm:py-28 border-b">
+      <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
+
+      <div className="w-full max-w-7xl mx-auto px-4">
         <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
         <motion.div
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={stagger}
-          className="container px-4 md:px-6 mx-auto"
+          className="max-w-4xl mx-auto text-center"
         >
-          <motion.div
-            variants={fadeInUp}
-            className="text-center"
-          >
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">
-              Flexible pricing <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">options</span>
-            </h2>
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Choose the perfect plan for your needs. No hidden fees.</p>
-          </motion.div>
+          <Heading
+            title="Simple, transparent pricing"
+            description="Choose the perfect plan for your needs. No hidden fees, no surprises."
+          />
+        </motion.div>
 
-          <motion.div
-            variants={fadeInUp}
-            className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {plans.map((plan, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                whileHover={{ scale: 1.02 }}
-                className={`relative overflow-hidden rounded-3xl bg-white p-8 shadow-lg shadow-gray-900/5 ring-1 ring-gray-900/5 transition-shadow hover:shadow-xl dark:bg-gray-800 dark:ring-gray-800 ${
-                  plan.popular ? "before:absolute before:inset-0 before:bg-gradient-to-br before:from-blue-600/20 before:to-violet-600/20 before:opacity-10" : ""
-                }`}
-              >
-                {plan.popular && <div className="absolute right-6 top-6 rounded-full bg-gradient-to-r from-blue-600 to-violet-600 px-3 py-1 text-sm font-medium text-white">Popular</div>}
-                <div className="relative z-10">
-                  <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">{plan.name}</h3>
-                  <p className="mt-2 text-gray-600 dark:text-gray-300">{plan.description}</p>
-                  <div className="mt-6">
-                    <span className="text-4xl font-bold text-gray-900 dark:text-white">{plan.price}</span>
-                    <span className="text-gray-600 dark:text-gray-300">/month</span>
-                  </div>
-                  <ul className="mt-8 space-y-4">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li
-                        key={featureIndex}
-                        className="flex items-center text-gray-600 dark:text-gray-300"
-                      >
-                        <Check className="mr-3 h-5 w-5 text-blue-600 dark:text-blue-400" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button className={`mt-8 w-full rounded-full bg-gradient-to-r ${plan.color} text-white hover:shadow-lg hover:shadow-blue-500/25`}>Get Started</Button>
+        <motion.div
+          variants={fadeInUp}
+          className="grid gap-8 mt-16 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {plans.map((plan, index) => (
+            <motion.div
+              key={index}
+              variants={fadeInUp}
+              whileHover={{ y: -5 }}
+              className={cn(
+                "relative flex flex-col p-8 rounded-2xl bg-white dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 transition-all duration-300",
+                plan.popular && "ring-2 ring-offset-2 ring-violet-500 dark:ring-offset-gray-900"
+              )}
+            >
+              {plan.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-500 to-purple-500 text-white text-xs font-medium px-4 py-1 rounded-full">Most Popular</div>
+              )}
+
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{plan.name}</h3>
+                <p className="mt-2 text-gray-500 dark:text-gray-400">{plan.description}</p>
+
+                <div className="mt-6">
+                  <span className="text-4xl font-bold text-gray-900 dark:text-white">{plan.price}</span>
+                  <span className="text-gray-500 dark:text-gray-400">/month</span>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
+
+                <ul className="mt-8 space-y-3">
+                  {plan.features.map((feature, featureIndex) => (
+                    <li
+                      key={featureIndex}
+                      className="flex items-center text-gray-700 dark:text-gray-300"
+                    >
+                      <Check className="w-5 h-5 mr-3 text-green-500" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <Button
+                className={cn(
+                  "mt-8 w-full py-6 text-base font-medium rounded-xl transition-all duration-300",
+                  plan.popular
+                    ? "bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-600 hover:to-purple-600 text-white"
+                    : "bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white"
+                )}
+              >
+                {plan.buttonText}
+              </Button>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.div
+          variants={fadeInUp}
+          className="mt-12 text-center"
+        >
+          <p className="text-gray-500 dark:text-gray-400">
+            Need a custom solution?{" "}
+            <a
+              href="#"
+              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              Contact our sales team
+            </a>
+          </p>
         </motion.div>
       </div>
     </section>

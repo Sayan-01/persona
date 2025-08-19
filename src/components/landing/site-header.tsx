@@ -13,7 +13,7 @@ export function SiteHeader({ session }: { session: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full absolute z-10  px-3 border-b  dark:bg-zinc-900 bg-white">
+    <header className="w-full absolute z-10  px-3 border-b backdrop-blur-lg">
       <div className="">
         <div className="container flex h-[70px] items-center justify-between max-w-[1400px] mx-auto">
           <Logo />

@@ -14,7 +14,7 @@ const Logo = () => {
         width={32}
         height={32}
       />
-      <span className="text-zinc-900 text-2xl font-semibold">PersonaAI</span>
+      <span className="text-zinc-900 dark:text-white text-2xl font-semibold">PersonaAI</span>
     </Link>
   );
 };

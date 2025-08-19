@@ -281,7 +281,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full bg-zinc-50 dark:bg-zinc-900">
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
@@ -326,17 +326,17 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               value="ideas"
               className=""
             >
-              <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white min-h-screen">
-                <div className="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200 rounded-xl p-4 mb-8 flex items-start">
+              <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
+                <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/10 dark:to-blue-900/10 border border-indigo-200 dark:border-zinc-700 rounded-xl p-4 mb-8 flex items-start">
                   <div className="flex-shrink-0 text-indigo-600 mt-0.5">
                     <AlertCircle className="h-5 w-5" />
                   </div>
                   <div className="ml-3 flex-1">
-                    <p className="text-sm text-indigo-800 font-medium">💡 Click here to check out our tips for using Persona AI</p>
+                    <p className="text-sm text-indigo-800 dark:text-indigo-400 font-medium">💡 Click here to check out our tips for using Persona AI</p>
                   </div>
                   <Link
                     href="/blog/know-more"
-                    className="text-indigo-400 hover:text-indigo-600 transition-colors"
+                    className="text-indigo-400 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-600 transition-colors"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </Link>
@@ -352,24 +352,24 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
 
                 <div className="space-y-8">
                   {/* Enhanced Content Section */}
-                  <div className="bg-gray-100 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">🔥 Content</h3>
+                  <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">🔥 Content</h3>
                     <div className="space-y-4">
                       <div>
-                        <Label className="text-sm font-medium text-gray-700 mb-2 block">
+                        <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
                           Paste the content description below <span className="text-pink-500">*</span>
                         </Label>
                         <textarea
                           value={ideaGeneratePromptDetails.topic}
                           onChange={(e) => setIdeaGeneratePromptDetails({ ...ideaGeneratePromptDetails, topic: e.target.value })}
-                          className="w-full border-2 border-dashed border-indigo-300 bg-white rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 transition-all"
+                          className="w-full border-2 border-dashed border-indigo-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 dark:hover:border-zinc-600 transition-all"
                           placeholder="Paste the content description here..."
                         />
                         <div className="flex justify-between items-center mt-2">
-                          <div className="text-xs text-gray-500">482/1000 characters</div>
-                          <div className="w-24 bg-gray-200 rounded-full h-1">
+                          <div className="text-xs text-gray-500 dark:text-gray-400">482/1000 characters</div>
+                          <div className="w-24 bg-gray-200 dark:bg-zinc-700 rounded-full h-1">
                             <div
-                              className="bg-indigo-500 h-1 rounded-full"
+                              className="bg-indigo-500 dark:bg-zinc-500 h-1 rounded-full"
                               style={{ width: "48%" }}
                             ></div>
                           </div>
@@ -379,35 +379,35 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   </div>
 
                   {/* Enhanced Skills Section */}
-                  <div className="bg-gray-100 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">🎇 Platform</h3>
+                  <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">🎇 Platform</h3>
                     <div className="space-y-4">
-                      <Label className="text-sm font-medium text-gray-700">
+                      <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">
                         Which platform should be the focus? <span className="text-pink-500">*</span>
                       </Label>
 
                       {/* Skills Tags Display */}
-                      <div className="flex flex-wrap gap-2 min-h-[60px] p-3 border-2 border-dashed border-indigo-300 rounded-lg bg-white">
+                      <div className="flex flex-wrap gap-2 min-h-[60px] p-3 border-2 border-dashed border-indigo-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800">
                         {ideaGeneratePromptDetails.platform.map((skill, index) => (
                           <div
                             key={index}
-                            className="bg-indigo-100 border border-indigo-200 rounded-lg py-2 px-3 text-sm flex items-center gap-2 hover:bg-indigo-200 transition-colors"
+                            className="bg-indigo-100 dark:bg-zinc-700 border border-indigo-200 dark:border-zinc-600 rounded-lg py-2 px-3 text-sm flex items-center gap-2 hover:bg-indigo-200 dark:hover:bg-zinc-600 transition-colors"
                           >
-                            <span className="text-indigo-800 font-medium">{skill}</span>
+                            <span className="text-indigo-800 dark:text-white font-medium">{skill}</span>
                             <button
                               onClick={() => removePlatform(skill)}
-                              className="text-indigo-600 hover:text-indigo-800 hover:bg-indigo-300 rounded-full w-4 h-4 flex items-center justify-center transition-colors"
+                              className="text-indigo-600 dark:text-white hover:text-indigo-800 dark:hover:text-zinc-200 hover:bg-indigo-300 dark:hover:bg-zinc-700 rounded-full w-4 h-4 flex items-center justify-center transition-colors"
                             >
                               <X className="h-3 w-3" />
                             </button>
                           </div>
                         ))}
-                        {ideaGeneratePromptDetails.platform.length === 0 && <div className="text-gray-500 text-sm italic">Select the platform you want to generate content for</div>}
+                        {ideaGeneratePromptDetails.platform.length === 0 && <div className="text-gray-500 dark:text-gray-400 text-sm italic">Select the platform you want to generate content for</div>}
                       </div>
 
                       {/* Suggested Skills */}
                       <div className="flex flex-wrap gap-2 items-center">
-                        <span className="text-xs text-gray-600 font-medium">Suggestions:</span>
+                        <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">Suggestions:</span>
                         {["LinkedIn", "Facebook", "Instagram", "Twitter"].map((suggestion) => (
                           <button
                             key={suggestion}
@@ -416,7 +416,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                                 setIdeaGeneratePromptDetails({ ...ideaGeneratePromptDetails, platform: [...ideaGeneratePromptDetails.platform, suggestion] });
                               }
                             }}
-                            className="text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 px-2 py-1 rounded-md transition-colors"
+                            className="text-xs bg-gray-200 dark:bg-zinc-700 hover:bg-gray-300 dark:hover:bg-zinc-600 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-md transition-colors"
                             disabled={ideaGeneratePromptDetails.platform.includes(suggestion)}
                           >
                             + {suggestion}
@@ -427,22 +427,22 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   </div>
 
                   {/* Enhanced Creativity Level */}
-                  <div className="bg-gray-100 rounded-xl p-6">
+                  <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900 flex items-center">🎯 Number of Ideas</h3>
-                      <Info className="h-4 w-4 text-gray-400" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">🎯 Number of Ideas</h3>
+                      <Info className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                     </div>
                     <div className="space-y-3">
-                      <Label className="text-sm font-medium text-gray-700">How many ideas should be generated?</Label>
+                      <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">How many ideas should be generated?</Label>
                       <div className="relative">
                         <AIinput
                           type="text"
                           value={ideaGeneratePromptDetails.numberOfIdeas}
                           onChange={(e: any) => setIdeaGeneratePromptDetails({ ...ideaGeneratePromptDetails, numberOfIdeas: e.target.value })}
-                          className="focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 h-10 bg-white mt-0"
+                          className=" dark:focus:ring-zinc-500 h-10 bg-white dark:bg-zinc-800 mt-0"
                           placeholder="0.8"
                         />
-                        <div className="mt-2 flex justify-between text-xs text-gray-500">
+                        <div className="mt-2 flex justify-between text-xs text-gray-500 dark:text-gray-400">
                           <span>Conservative (0.0)</span>
                           <span>Balanced (0.5)</span>
                           <span>Creative (1.0)</span>
@@ -454,7 +454,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   <Button
                     onClick={() => handleGenerate("idea generate")}
                     disabled={generating}
-                    className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                    className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700 dark:hover:to-zinc-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
                   >
                     {generating ? (
                       <>
@@ -471,11 +471,11 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
 
             {/* Create Tab */}
             <TabsContent value="create">
-              <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white min-h-screen">
+              <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
                 <div className="flex justify-between items-center mb-8">
                   <div>
-                    <h1 className="leading-none font-semibold text-2xl opacity-80">Generate Your Content</h1>
-                    <p className="text-muted-foreground text-sm mt-1 opacity-80">Get AI-powered content ideas based on your persona and industry trends</p>
+                    <h1 className="leading-none font-semibold text-2xl opacity-80 dark:text-white dark:opacity-90">Generate Your Content</h1>
+                    <p className="text-muted-foreground text-sm mt-1 opacity-80 dark:text-gray-400">Get AI-powered content ideas based on your persona and industry trends</p>
                   </div>
                 </div>
 
@@ -489,28 +489,29 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       placeholder="e.g., 🤔 Stop Wasting Time! Automate Your Business with AI."
                       value={selectedIdea?.title}
                       onChange={(e: any) => setSelectedIdea((prev) => (prev ? { ...prev, title: e.target.value } : null))}
+                      className="dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-gray-500"
                     />
                   </InputWrapper>
                   {/* Key points */}
-                  <div className="bg-gray-100 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">🤖 Key Points (Optional)</h3>
+                  <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">🤖 Key Points (Optional)</h3>
                     <div className="space-y-4">
                       <div>
-                        <Label className="text-sm font-medium text-gray-700 mb-2 block">
+                        <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
                           Paste the content description below <span className="text-pink-500">*</span>
                         </Label>
                         <textarea
                           id="keywords"
                           value={selectedIdea?.description}
                           onChange={(e) => setSelectedIdea((prev) => (prev ? { ...prev, content: e.target.value } : null))}
-                          className="w-full border-2 border-dashed border-indigo-300 bg-white rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 transition-all"
+                          className="w-full border-2 border-dashed border-indigo-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 dark:hover:border-zinc-600 transition-all"
                           placeholder="• Include relevant statistics or data&#10;• Mention your personal experience&#10;• Add industry insights or trends&#10;• Specify your target audience"
                         />
                         <div className="flex justify-between items-center mt-2">
-                          <div className="text-xs text-gray-500">482/1000 characters</div>
-                          <div className="w-24 bg-gray-200 rounded-full h-1">
+                          <div className="text-xs text-gray-500 dark:text-gray-400">482/1000 characters</div>
+                          <div className="w-24 bg-gray-200 dark:bg-zinc-700 rounded-full h-1">
                             <div
-                              className="bg-indigo-500 h-1 rounded-full"
+                              className="bg-indigo-500 dark:bg-zinc-500 h-1 rounded-full"
                               style={{ width: "48%" }}
                             ></div>
                           </div>
@@ -518,22 +519,22 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       </div>
                     </div>
                   </div>
-                  <div className="bg-gray-100 rounded-xl p-6">
+                  <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900 flex items-center">🎨 Platform Selection</h3>
-                      <Info className="h-4 w-4 text-gray-400" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">🎨 Platform Selection</h3>
+                      <Info className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                     </div>
                     <div className="space-y-3">
-                      <Label className="text-sm font-medium text-gray-700">Choose where you'll publish your content</Label>
+                      <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">Choose where you'll publish your content</Label>
                       <div className="relative">
                         <Select
                           value={contentGeneratePromptDetails.contentType}
                           onValueChange={(e) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, contentType: e })}
                         >
-                          <SelectTrigger className="!h-14 w-full border-dashed border-2 border-indigo-300 bg-white hover:border-indigo-400 transition-colors p-2 shadow-none rounded-xl">
+                          <SelectTrigger className="!h-14 w-full border-dashed border-2 border-indigo-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-indigo-400 dark:hover:border-zinc-600 transition-colors p-2 shadow-none rounded-xl">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="border-slate-200">
+                          <SelectContent className="border-slate-200 dark:border-zinc-700">
                             {Platforms.map((p) => (
                               <SelectItem
                                 key={p.value}
@@ -555,13 +556,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     </div>
                   </div>
                   {/* Content length */}
-                  <Card className="border-indigo-200 border-2 border-dashed mb-8">
+                  <Card className="border-indigo-200 dark:border-zinc-700 border-2 border-dashed mb-8">
                     <CardHeader className="">
-                      <CardTitle className="text-lg font-medium text-slate-900 flex items-center gap-2">
+                      <CardTitle className="text-lg font-medium text-slate-900 dark:text-white flex items-center gap-2">
                         <div className="h-2 w-2 rounded-full bg-orange-500"></div>
                         Content Length
                       </CardTitle>
-                      <p className="text-sm text-slate-500">Choose the ideal length for your content</p>
+                      <p className="text-sm text-slate-500 dark:text-gray-400">Choose the ideal length for your content</p>
                     </CardHeader>
                     <CardContent>
                       <RadioGroup
@@ -578,8 +579,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                               className="flex items-center space-x-2"
                             >
                               <div
-                                className={`relative flex-1 rounded-xl border-2 p-4 cursor-pointer transition-all hover:border-indigo-200 ${
-                                  isSelected ? `${length.border} ${length.bg} ` : "border-slate-200 bg-white hover:border-indigo-300"
+                                className={`relative flex-1 rounded-xl border-2 p-4 cursor-pointer transition-all hover:border-indigo-200 dark:hover:border-zinc-600 ${
+                                  isSelected ? `${length.border} ${length.bg} ` : "border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-indigo-300 dark:hover:border-zinc-600"
                                 }`}
                               >
                                 <RadioGroupItem
@@ -592,10 +593,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                                   className="cursor-pointer flex justify-center items-center"
                                 >
                                   <div className="flex flex-col items-center text-center gap-3">
-                                    <Icon className={`h-6 w-6 ${isSelected ? length.color : "text-slate-400"}`} />
+                                    <Icon className={`h-6 w-6 ${isSelected ? length.color : "text-slate-400 dark:text-gray-500"}`} />
                                     <div>
-                                      <div className={`font-medium ${isSelected ? length.color : "text-slate-700"}`}>{length.label}</div>
-                                      <div className="text-xs text-slate-500 mt-1">{length.desc}</div>
+                                      <div className={`font-medium ${isSelected ? length.color : "text-slate-700 dark:text-gray-300"}`}>{length.label}</div>
+                                      <div className="text-xs text-slate-500 dark:text-gray-400 mt-1">{length.desc}</div>
                                     </div>
                                   </div>
                                 </Label>
@@ -611,7 +612,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   <Button
                     onClick={() => handleGenerate("content generate")}
                     disabled={generating}
-                    className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                    className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700 dark:hover:to-zinc-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
                   >
                     {generating ? (
                       <>
@@ -709,30 +710,30 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               </div>
             </TabsContent>
             <TabsContent value="enhance">
-              <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white min-h-screen">
+              <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
                 <div className="flex justify-between items-center mb-8">
                   <div>
-                    <h1 className="leading-none font-semibold text-2xl opacity-80">Enhance Existing Content</h1>
-                    <p className="text-muted-foreground text-sm mt-1 opacity-80">Improve, rewrite, or optimize your content with AI</p>
+                    <h1 className="leading-none font-semibold text-2xl opacity-80 dark:text-white dark:opacity-90">Enhance Existing Content</h1>
+                    <p className="text-muted-foreground text-sm mt-1 opacity-80 dark:text-gray-400">Improve, rewrite, or optimize your content with AI</p>
                   </div>
                 </div>
                 <div className="space-y-8">
-                  <div className="bg-gray-100 rounded-xl p-6">
+                  <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900 flex items-center">🎨 Platform Selection</h3>
-                      <Info className="h-4 w-4 text-gray-400" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center">🎨 Platform Selection</h3>
+                      <Info className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                     </div>
                     <div className="space-y-3">
-                      <Label className="text-sm font-medium text-gray-700">Choose where you'll publish your content</Label>
+                      <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">Choose where you'll publish your content</Label>
                       <div className="relative">
                         <Select
                           value={contentEnhancePromptDetails.contentType}
                           onValueChange={(e) => setContentEnhancePromptDetails({ ...contentEnhancePromptDetails, contentType: e })}
                         >
-                          <SelectTrigger className="!h-14 w-full border-dashed border-2 border-indigo-300 bg-white hover:border-indigo-400 transition-colors p-2 shadow-none rounded-xl">
+                          <SelectTrigger className="!h-14 w-full border-dashed border-2 border-indigo-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-indigo-400 dark:hover:border-zinc-600 transition-colors p-2 shadow-none rounded-xl">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="border-slate-200">
+                          <SelectContent className="border-slate-200 dark:border-zinc-700">
                             {Platforms.map((p) => (
                               <SelectItem
                                 key={p.value}
@@ -753,25 +754,25 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       </div>
                     </div>
                   </div>
-                  <div className="bg-gray-100 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">🔥 Previous Content</h3>
+                  <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">🔥 Previous Content</h3>
                     <div className="space-y-4">
                       <div>
-                        <Label className="text-sm font-medium text-gray-700 mb-2 block">
+                        <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
                           Paste the old content which you try to enhance <span className="text-pink-500">*</span>
                         </Label>
                         <textarea
                           value={contentEnhancePromptDetails.previousContent}
                           onChange={(e) => setContentEnhancePromptDetails({ ...contentEnhancePromptDetails, previousContent: e.target.value })}
                           id="existing-content"
-                          className="w-full border-2 border-dashed border-indigo-300 bg-white rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 transition-all"
+                          className="w-full border-2 border-dashed border-indigo-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 dark:hover:border-zinc-600 transition-all"
                           placeholder="Paste tyour content here..."
                         />
                         <div className="flex justify-between items-center mt-2">
-                          <div className="text-xs text-gray-500">482/1000 characters</div>
-                          <div className="w-24 bg-gray-200 rounded-full h-1">
+                          <div className="text-xs text-gray-500 dark:text-gray-400">482/1000 characters</div>
+                          <div className="w-24 bg-gray-200 dark:bg-zinc-700 rounded-full h-1">
                             <div
-                              className="bg-indigo-500 h-1 rounded-full"
+                              className="bg-indigo-500 dark:bg-zinc-500 h-1 rounded-full"
                               style={{ width: "48%" }}
                             ></div>
                           </div>
@@ -787,7 +788,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 <Button
                   onClick={() => handleGenerate("content enhance")}
                   disabled={generating}
-                  className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                  className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700 dark:hover:to-zinc-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
                 >
                   {generating ? (
                     <>
@@ -807,8 +808,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           {/* Auto Save Badge */}
           <nav className="flex items-center px-4 h-12 border-b justify-between ">
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
-              <span className="text-sm text-gray-500">auto saved</span>
+              <div className="w-2 h-2 bg-indigo-500 dark:bg-zinc-500 rounded-full"></div>
+              <span className="text-sm text-gray-500 dark:text-gray-400">auto saved</span>
             </div>
 
             <div className="flex ml-4 space-x-3">
@@ -884,7 +885,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 <div className="h-full w-full flex items-center flex-col justify-center">
                   <div className="text-[70px] -mt-10">🔥</div>
                   <h1 className="font-bold text-lg">Answer The Prompt</h1>
-                  <p className="text-sm text-zinc-600 text-center">
+                  <p className="text-sm text-zinc-600 dark:text-gray-400 text-center">
                     Get the pest output result by filling
                     <br /> proper information
                   </p>
@@ -899,13 +900,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 <>
                   <p
                     dangerouslySetInnerHTML={{ __html: contentDraft.content }}
-                    className="whitespace-pre-wrap rounded-md border h-fit bg-amber-200 p-4 pb-5"
+                    className="whitespace-pre-wrap rounded-md border h-fit bg-amber-200 dark:bg-zinc-700 p-4 pb-5"
                   />
                   <div className="h-5" />
                   <div className="space-y-5">
                     {/* Share Your Content Section */}
-                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-                      <h4 className="font-semibold text-gray-900 mb-2 text-sm">Share Your Content</h4>
+                    <div className="bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-3">
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2 text-sm">Share Your Content</h4>
 
                       <div className="grid grid-cols-5 gap-1.5 mb-2">
                         {socialPlatforms.map((platform) => (
@@ -923,7 +924,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                         ))}
                       </div>
 
-                      <button className="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white py-2 px-3 rounded-md font-medium hover:from-gray-900 hover:to-black transition-all duration-200 transform hover:scale-[1.02] shadow-sm hover:shadow-md text-xs">
+                      <button className="w-full bg-gradient-to-r from-gray-800 to-gray-900 dark:from-zinc-800 dark:to-zinc-900 text-white py-2 px-3 rounded-md font-medium hover:from-gray-900 hover:to-black dark:hover:from-zinc-700 dark:hover:to-zinc-800 transition-all duration-200 transform hover:scale-[1.02] shadow-sm hover:shadow-md text-xs">
                         Share to All Platforms
                       </button>
                       <ContentStatus
@@ -939,7 +940,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 <div className="h-full w-full flex items-center flex-col justify-center">
                   <div className="text-[70px] -mt-10">🧠</div>
                   <h1 className="font-bold text-lg">Answer The Prompt</h1>
-                  <p className="text-sm text-zinc-600 text-center">
+                  <p className="text-sm text-zinc-600 dark:text-gray-400 text-center">
                     Get the pest output result by filling
                     <br /> proper information
                   </p>

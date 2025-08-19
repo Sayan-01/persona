@@ -7,11 +7,14 @@ import { SiteHeader } from "@/components/landing/site-header";
 import { SiteFooter } from "@/components/landing/site-footer";
 import HeroSection from "@/components/landing/hero-section";
 import { auth } from "../../../auth";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800", "900"], variable: "--font-poppins" });
 
 export default async function Home() {
   const session = await auth();
   return (
-    <div className="flex min-h-screen flex-col bg-zinc-900">
+    <div className={`flex min-h-screen flex-col bg-zinc-900 ${poppins.className}`}>
       <SiteHeader session={session} />
       <main className="flex-1">
         <HeroSection />

@@ -18,7 +18,7 @@ const Header = () => {
   const formattedCurrent = current.charAt(0).toUpperCase() + current.slice(1).replace(/-/g, " ");
 
   return (
-    <div className="bg-white border-gray-200">
+    <div className="bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800">
       <div className="flex items-center h-16 px-4 border-b">
         {/* Breadcrumb */}
         <Breadcrumb>
@@ -52,20 +52,20 @@ const Header = () => {
 
         {/* Search */}
         <div className="ml-auto flex items-center">
-          <ModeToggle/>
+          <ModeToggle />
           <div className="relative ml-3">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 text-gray-400" />
+              <Search className="h-4 w-4 text-gray-400 dark:text-zinc-500" />
             </div>
             <input
               type="text"
               placeholder="Search"
-              className="block w-full pl-10 pr-3 py-1.5 border border-gray-300 rounded-lg text-sm"
+              className="block w-full pl-10 pr-3 py-1.5 border border-gray-300 dark:border-zinc-700 rounded-lg text-sm dark:bg-zinc-800 dark:text-zinc-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
 
           {/* New Project Button */}
-          <button className="mx-3 bg-zinc-900 text-white px-3 py-1.5 rounded-lg flex items-center text-sm">
+          <button className="mx-3 bg-zinc-900 dark:bg-zinc-700 hover:bg-zinc-800 dark:hover:bg-zinc-600 text-white px-3 py-1.5 rounded-lg flex items-center text-sm transition-colors">
             <PlusSquare className="h-4 w-4 mr-1.5" />
             New Project
           </button>
@@ -85,24 +85,24 @@ const Header = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-56"
+              className="w-56 dark:bg-zinc-800 dark:border-zinc-700"
               align="end"
               forceMount
             >
-              <DropdownMenuLabel className="font-normal">
+              <DropdownMenuLabel className="font-normal dark:bg-zinc-800">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">John Doe</p>
-                  <p className="text-xs leading-none text-muted-foreground">john@example.com</p>
+                  <p className="text-sm font-medium leading-none dark:text-zinc-200">John Doe</p>
+                  <p className="text-xs leading-none text-muted-foreground dark:text-zinc-400">john@example.com</p>
                 </div>
               </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuSeparator className="dark:bg-zinc-700" />
+              <DropdownMenuItem className="dark:hover:bg-zinc-700 dark:text-zinc-200">
                 <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
+                Settings
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="dark:hover:bg-zinc-700 dark:text-zinc-200">
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
+                Log out
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

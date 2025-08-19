@@ -27,7 +27,7 @@ const enhancements: Enhancement[] = [
     id: "rewrite",
     title: "Rewrite",
     description: "Transform your content with AI-powered rewriting while preserving the essence and core message",
-    icon: <RefreshCw className="w-5 h-5"/>,
+    icon: <RefreshCw className="w-5 h-5" />,
   },
   {
     id: "adjust",
@@ -110,17 +110,19 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({ title, description, i
     <div
       onClick={onClick}
       className={cn(
-        "group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-500  transform",
-        "backdrop-blur-xl border-2 border-dashed border-white/30 shadow-2xl",
-        isSelected ? "bg-gradient-to-br from-violet-500/20 via-purple-500/20 to-fuchsia-500/20 " : "bg-white/10 hover:bg-white/20 hover:border-white/40"
+        "group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-500 transform",
+        "backdrop-blur-xl border-2 border-dashed shadow-2xl",
+        isSelected
+          ? "bg-gradient-to-br from-violet-500/20 via-purple-500/20 to-fuchsia-500/20 border-white/50 dark:border-white/50"
+          : "bg-white/10 hover:bg-white/20 hover:border-white/40 border-white/30 dark:border-gray-700 dark:bg-gray-800/50 dark:hover:bg-gray-700/60 dark:hover:border-gray-600"
       )}
     >
       {/* Animated background gradient */}
       <div
         className={cn(
-          "absolute inset-0 opacity-0 transition-opacity duration-500",
+          "absolute inset-0 transition-opacity duration-500",
           "bg-gradient-to-br from-violet-600/10 via-purple-600/10 to-fuchsia-600/10",
-          isSelected ? "opacity-100" : "group-hover:opacity-50"
+          isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-50 dark:group-hover:opacity-30"
         )}
       />
 
@@ -131,16 +133,18 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({ title, description, i
           <div
             className={cn(
               "p-2 rounded-lg transition-all duration-300",
-              isSelected ? "bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25" : "bg-white/20 group-hover:bg-white/30"
+              isSelected ? "bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25" : "bg-white/20 group-hover:bg-white/30 dark:bg-gray-700/50 dark:group-hover:bg-gray-600/50"
             )}
           >
-            {icon || <Zap className={cn("w-5 h-5 transition-colors duration-300", isSelected ? "text-white" : "text-gray-300 group-hover:text-white")} />}
+            {icon || (
+              <Zap className={cn("w-5 h-5 transition-colors duration-300", isSelected ? "text-white" : "text-gray-300 group-hover:text-white dark:text-gray-400 dark:group-hover:text-gray-200")} />
+            )}
           </div>
 
           <div
             className={cn(
               "w-6 h-6 rounded-full transition-all duration-300 flex items-center justify-center",
-              isSelected ? "bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg" : "bg-white/20 group-hover:bg-white/30"
+              isSelected ? "bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg" : "bg-white/20 group-hover:bg-white/30 dark:bg-gray-700/50 dark:group-hover:bg-gray-600/50"
             )}
           >
             {isSelected && <div className="w-2 h-2 bg-white rounded-full" />}
@@ -148,10 +152,14 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({ title, description, i
         </div>
 
         {/* Title */}
-        <h3 className={cn("text-normal mb-1 transition-colors duration-300", isSelected ? "text-white" : "text-gray-200 group-hover:text-white")}>{title}</h3>
+        <h3 className={cn("text-normal mb-1 transition-colors duration-300", isSelected ? "text-white" : "text-gray-200 group-hover:text-white dark:text-gray-300 dark:group-hover:text-gray-100")}>
+          {title}
+        </h3>
 
         {/* Description */}
-        <p className={cn("text-xs  flex-1 transition-colors duration-300", isSelected ? "text-gray-100" : "text-gray-300 group-hover:text-gray-100")}>{description}</p>
+        <p className={cn("text-xs flex-1 transition-colors duration-300", isSelected ? "text-gray-100" : "text-gray-300 group-hover:text-gray-100 dark:text-gray-400 dark:group-hover:text-gray-300")}>
+          {description}
+        </p>
       </div>
 
       {/* Glow effect */}
@@ -159,7 +167,7 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({ title, description, i
         className={cn(
           "absolute inset-0 rounded-xl transition-opacity duration-500 pointer-events-none",
           "bg-gradient-to-r from-violet-500/20 via-purple-500/20 to-fuchsia-500/20",
-          isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-30"
+          isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-30 dark:group-hover:opacity-20"
         )}
       />
     </div>

@@ -8,7 +8,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   const session = await auth();
   return (
     <HistoryProvider>
-      <div className="flex h-screen bg-background">
+      <div className="flex h-screen bg-background dark:bg-zinc-900">
         <aside className="hidden flex-col lg:flex">
           <Sidebar userId={session?.user?.id || undefined} />
         </aside>
