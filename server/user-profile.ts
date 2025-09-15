@@ -3,17 +3,7 @@ import { db } from "@/lib/db";
 import { determineStyleFromTone, generateAIPreferences } from "@/utils/helper";
 import { v4 } from "uuid";
 import { auth } from "../auth";
-
-interface OnboardingData {
-  userId: string;
-  tone: string;
-  industry: string;
-  specialization: string;
-  targetAudience: string;
-  usp: string;
-  contentGoals: string[];
-  sampleContent: string;
-}
+import { Persona } from "../types";
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
@@ -36,41 +26,23 @@ interface AIPersonaPreferences {
   industryTerms?: any;
 }
 
-export const upsertOnboardingProfile = async (data: OnboardingData) => {
-  const { userId, tone, industry, specialization, targetAudience, usp, contentGoals, sampleContent } = data;  
+export const upsertOnboardingAiPersona = async (data: Persona & { userId: string }) => {
+  
+  const { userId, tone, industry, brandDetails, targetAudience, usp, contentGoals, sampleContent } = data;
 
   try {
-    const profile = await (db as any).profile.create({
-     
+    const aiPersona = await db.aIPersona.create({
       data: {
         id: v4(),
         userId: userId,
-        industry: industry || null,
-        specialization: specialization || null,
-        targetAudience: targetAudience || null,
-        usp: usp || null,
-        contentGoals: contentGoals || [],
-        sampleContent: sampleContent || null,
-      },
-    });
-
-    const preferences = generateAIPreferences(tone, industry);
-
-    const aiPersona = await (db as any).AIPersona.upsert({
-      where: {
-        userId: userId,
-      },
-      update: {
-        tone: [tone],
-        style: determineStyleFromTone(tone),
-        preferences: preferences as unknown,
-      },
-      create: {
-        id: v4(),
-        userId: userId,
-        tone: [tone],
-        style: determineStyleFromTone(tone),
-        preferences: preferences as unknown,
+        tone: tone,
+        industry: industry,
+        brandDetails: brandDetails,
+        targetAudience: targetAudience || undefined,
+        usp: usp,
+        contentGoals: contentGoals,
+        sampleContent: sampleContent,
+        style: []
       },
     });
 
@@ -84,10 +56,10 @@ export const upsertOnboardingProfile = async (data: OnboardingData) => {
       },
     });
 
-    return { profile, aiPersona };
+    return { aiPersona };
   } catch (error) {
-    console.error("Error in updateOnboardingProfile:", error);
-    throw new Error("Failed to update profile and AI persona");
+    console.error("Error in upsertOnboardingAiPersona:", error);
+    throw new Error("Failed to create / update your AI persona");
   }
 };
 
@@ -174,8 +146,8 @@ export const getUserInfo = async () => {
         name: true,
         createdAt: true,
         updatedAt: true,
-        accounts: true
-      }
+        accounts: true,
+      },
     });
 
     if (!userProfile) {

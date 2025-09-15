@@ -11,18 +11,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { upsertOnboardingProfile } from "../../../../server/user-profile";
+import { contentGoals, industry, toneOptions } from "../onboarding-constants";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Persona } from "../../../../types";
+import { upsertOnboardingAiPersona } from "../../../../server/user-profile";
 
 export default function OnboardingComponent({ user }: { user: any }) {
   const router = useRouter();
   const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [persona, setPersona] = useState({
-    tone: "",
+  const [persona, setPersona] = useState<Persona>({
+    tone: [],
     industry: "",
-    specialization: "",
-    targetAudience: "" as string,
+    brandDetails: "",
+    targetAudience: "",
     usp: "",
     contentGoals: [] as string[],
     sampleContent: "",
@@ -43,7 +46,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
 
       setIsSubmitting(true);
       try {
-        await upsertOnboardingProfile({
+        const res = await upsertOnboardingAiPersona({
           userId: user.id,
           ...persona,
         });
@@ -51,7 +54,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
           title: "Success!",
           description: "Your AI persona has been configured.",
         });
-        router.push("/dashboard");
+        router.push("/auth/login");
       } catch (error) {
         toast({
           title: "Error",
@@ -70,6 +73,17 @@ export default function OnboardingComponent({ user }: { user: any }) {
     }
   };
 
+  function toggleTone(value:string) {
+    setPersona((prev) => {
+      const current = prev.tone;
+      return {
+        ...prev,
+        tone: current.includes(value) ? current.filter((v) => v !== value) : [...current, value],
+      };
+    });
+  }
+
+
   return (
     <main className="flex-1 py-24 p-5">
       <div className="container max-w-3xl mx-auto">
@@ -85,86 +99,30 @@ export default function OnboardingComponent({ user }: { user: any }) {
         {step === 1 && (
           <Card>
             <CardHeader>
-              <CardTitle>Define Your Writing Tone</CardTitle>
+              <CardTitle>Define Your Main Writing Tone</CardTitle>
               <CardDescription>How do you want your AI-generated content to sound?</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <RadioGroup
-                  value={persona.tone}
-                  onValueChange={(value) => setPersona({ ...persona, tone: value })}
-                  className="space-y-4"
-                >
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
-                    <RadioGroupItem
-                      value="professional"
-                      id="professional"
+                {toneOptions.map((tone) => (
+                  <div
+                    key={tone.value}
+                    className="flex items-center space-x-2 rounded-md border p-4 hover:border-zinc-600 duration-200"
+                  >
+                    <Checkbox
+                      id={tone.value}
+                      checked={persona?.tone?.includes(tone?.value)}
+                      onCheckedChange={() => toggleTone(tone?.value)}
                     />
                     <Label
-                      htmlFor="professional"
+                      htmlFor={tone.value}
                       className="flex-1 cursor-pointer"
                     >
-                      <div className="font-medium">Professional & Authoritative</div>
-                      <div className="text-sm text-gray-500">Formal, expert tone with industry-specific terminology</div>
+                      <div className="font-medium">{tone.title}</div>
+                      <div className="text-sm text-gray-500">{tone.desc}</div>
                     </Label>
                   </div>
-
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
-                    <RadioGroupItem
-                      value="conversational"
-                      id="conversational"
-                    />
-                    <Label
-                      htmlFor="conversational"
-                      className="flex-1 cursor-pointer"
-                    >
-                      <div className="font-medium">Conversational & Engaging</div>
-                      <div className="text-sm text-gray-500">Natural, friendly tone that connects with readers</div>
-                    </Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
-                    <RadioGroupItem
-                      value="educational"
-                      id="educational"
-                    />
-                    <Label
-                      htmlFor="educational"
-                      className="flex-1 cursor-pointer"
-                    >
-                      <div className="font-medium">Educational & Informative</div>
-                      <div className="text-sm text-gray-500">Clear, instructional tone that explains complex topics simply</div>
-                    </Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
-                    <RadioGroupItem
-                      value="persuasive"
-                      id="persuasive"
-                    />
-                    <Label
-                      htmlFor="persuasive"
-                      className="flex-1 cursor-pointer"
-                    >
-                      <div className="font-medium">Persuasive & Compelling</div>
-                      <div className="text-sm text-gray-500">Convincing tone that drives action and engagement</div>
-                    </Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 ">
-                    <RadioGroupItem
-                      value="empathetic"
-                      id="empathetic"
-                    />
-                    <Label
-                      htmlFor="empathetic"
-                      className="flex-1 cursor-pointer"
-                    >
-                      <div className="font-medium">Empathetic & Supportive</div>
-                      <div className="text-sm text-gray-500">Understanding and compassionate tone that builds trust</div>
-                    </Label>
-                  </div>
-                </RadioGroup>
+                ))}
               </div>
             </CardContent>
             <CardFooter className="flex justify-between">
@@ -177,7 +135,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
               </Button>
               <Button
                 onClick={handleNext}
-                disabled={!persona.tone}
+                disabled={persona.tone.length === 0}
               >
                 Next <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -189,7 +147,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
         {step === 2 && (
           <Card>
             <CardHeader>
-              <CardTitle>Select Your Industry</CardTitle>
+              <CardTitle>Beest describes your brand or personal identity</CardTitle>
               <CardDescription>This helps tailor content ideas and terminology for your field</CardDescription>
             </CardHeader>
             <CardContent>
@@ -203,27 +161,25 @@ export default function OnboardingComponent({ user }: { user: any }) {
                     <SelectTrigger id="industry">
                       <SelectValue placeholder="Select your industry" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="technology">Technology & SaaS</SelectItem>
-                      <SelectItem value="marketing">Marketing & Advertising</SelectItem>
-                      <SelectItem value="finance">Finance & Fintech</SelectItem>
-                      <SelectItem value="healthcare">Healthcare & Wellness</SelectItem>
-                      <SelectItem value="education">Education & E-learning</SelectItem>
-                      <SelectItem value="ecommerce">E-commerce & Retail</SelectItem>
-                      <SelectItem value="consulting">Business Consulting</SelectItem>
-                      <SelectItem value="creative">Creative & Design</SelectItem>
-                      <SelectItem value="real-estate">Real Estate</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
+                    <SelectContent className="max-h-[316px]">
+                      {industry.map((industry) => (
+                        <SelectItem
+                          key={industry.id}
+                          value={industry.value}
+                        >
+                          {industry.title}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="space-y-4">
-                  <Label htmlFor="specialization">Specialization</Label>
+                  <Label htmlFor="brandDetails">Describe your brand or content type, in detail</Label>
                   <Input
-                    value={persona.specialization}
-                    onChange={(e) => setPersona({ ...persona, specialization: e.target.value })}
-                    id="specialization"
+                    value={persona.brandDetails}
+                    onChange={(e) => setPersona({ ...persona, brandDetails: e.target.value })}
+                    id="brandDetails"
                     placeholder="e.g., AI Development, Content Marketing, etc."
                   />
                 </div>
@@ -238,7 +194,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
               </Button>
               <Button
                 onClick={handleNext}
-                disabled={!persona.industry || !persona.specialization}
+                disabled={!persona.industry || !persona.brandDetails}
               >
                 Next <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -251,30 +207,32 @@ export default function OnboardingComponent({ user }: { user: any }) {
           <Card>
             <CardHeader>
               <CardTitle>Explane Your company unique selling points</CardTitle>
-              <CardDescription>What makes your company stand out from the competition?</CardDescription>
+              <CardDescription>What makes your work stand out from the competition?</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="space-y-4">
-                  <Label htmlFor="role">Primary Audience Role</Label>
+                  <Label htmlFor="targetAudience">Age Group of your target audience</Label>
                   <Select
                     value={persona.targetAudience}
                     onValueChange={(value) => setPersona({ ...persona, targetAudience: value })}
                   >
-                    <SelectTrigger id="role">
-                      <SelectValue placeholder="Select primary role" />
+                    <SelectTrigger id="targetAudience">
+                      <SelectValue placeholder="Select age group of your target audience" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="executives">Executives (C-suite, Directors)</SelectItem>
-                      <SelectItem value="managers">Managers & Team Leads</SelectItem>
-                      <SelectItem value="professionals">Professionals & Individual Contributors</SelectItem>
-                      <SelectItem value="small-business">Small Business Owners</SelectItem>
-                      <SelectItem value="entrepreneurs">Entrepreneurs & Startups</SelectItem>
-                      <SelectItem value="consumers">General Consumers</SelectItem>
-                      <SelectItem value="students">Students & Academics</SelectItem>
+                      <SelectItem value="6-10">6 to 10</SelectItem>
+                      <SelectItem value="13-17">13 to 17</SelectItem>
+                      <SelectItem value="18-24">18 to 24</SelectItem>
+                      <SelectItem value="25-34">25 to 34</SelectItem>
+                      <SelectItem value="35-44">35 to 44</SelectItem>
+                      <SelectItem value="45-54">45 to 54</SelectItem>
+                      <SelectItem value="55-64">55 to 64</SelectItem>
+                      <SelectItem value="65+">65+</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
+                <Label htmlFor="usp">Describe what makes your brand or content unique</Label>
                 <div className="space-y-2">
                   <Textarea
                     value={persona.usp}
@@ -295,7 +253,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
               </Button>
               <Button
                 onClick={handleNext}
-                disabled={!persona.usp}
+                disabled={!persona.usp }
               >
                 Next <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -313,22 +271,15 @@ export default function OnboardingComponent({ user }: { user: any }) {
             <CardContent>
               <div className="space-y-4">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {[
-                    { id: "educate", label: "Educate", description: "Share knowledge & expertise" },
-                    { id: "inspire", label: "Inspire", description: "Motivate & encourage action" },
-                    { id: "engage", label: "Engage", description: "Start conversations & build community" },
-                    { id: "sell", label: "Convert", description: "Generate leads & drive sales" },
-                    { id: "authority", label: "Build Authority", description: "Establish thought leadership" },
-                    { id: "entertain", label: "Entertain", description: "Delight & provide value" },
-                  ].map((goal) => (
+                  {contentGoals.map((goal) => (
                     <div
                       key={goal.id}
-                      className="flex items-center space-x-2 rounded-md border p-4 hover:bg-gray-50 "
+                      className="flex items-center space-x-4 rounded-md border p-4 hover:border-zinc-600 duration-200 "
                     >
                       <input
                         type="checkbox"
                         id={goal.id}
-                        className="h-4 w-4 rounded border-gray-300"
+                        className="h-4 w-4 rounded border-gray-300 mb-7"
                         checked={persona.contentGoals.includes(goal.id)}
                         onChange={(e) => {
                           const goals = e.target.checked ? [...persona.contentGoals, goal.id] : persona.contentGoals.filter((g) => g !== goal.id);
@@ -337,10 +288,10 @@ export default function OnboardingComponent({ user }: { user: any }) {
                       />
                       <Label
                         htmlFor={goal.id}
-                        className="flex-1 cursor-pointer"
+                        className="flex-1 cursor-pointer flex flex-col items-start"
                       >
-                        <div className="font-medium">{goal.label}</div>
-                        <div className="text-sm text-gray-500">{goal.description}</div>
+                        <div className="font-medium w-max">{goal.label}</div>
+                        <div className="text-sm text-gray-500 w-max overflow-x-auto">{goal.description}</div>
                       </Label>
                     </div>
                   ))}
@@ -354,7 +305,10 @@ export default function OnboardingComponent({ user }: { user: any }) {
               >
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back
               </Button>
-              <Button onClick={handleNext} disabled={!persona.contentGoals.length}>
+              <Button
+                onClick={handleNext}
+                disabled={!persona.contentGoals.length}
+              >
                 Next <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </CardFooter>

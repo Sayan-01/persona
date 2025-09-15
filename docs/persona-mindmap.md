@@ -2,8 +2,7 @@
 
 ## User Entry Points
 - New User
-  - Signs Up → Registration
-  - Registration → Onboarding Process
+  - Signs Up → Registration → Onboarding Process
     1. Define Writing Tone
     2. Select Industry/Niche
     3. Define Target Audience
@@ -26,17 +25,21 @@
   - Posted Content
 
 ## Content Workflow
-- Generate Ideas → Create Content
-- Content Creation Process
-  1. Generate Draft
-  2. Edit in Content Editor
-  3. Options:
-     - Save to Drafts
-     - Schedule Post
-     - Publish Immediately
-- Content Enhancement
-  - Improve existing content
-  - Edit in Content Editor
+  ### Content For Youtube (Youtebe Brain)
+
+  ### Content For Social Media (Content Brain)
+    - Generate Ideas
+      1. 
+    - Creation Content
+      1. Generate Draft
+      2. Edit in Content Editor
+      3. Options:
+        - Save to Drafts
+        - Schedule Post
+        - Publish Immediately
+    - Enhance Content
+      - Improve existing content
+      - Edit in Content Editor
 
 ## Content Management
 - View All Content

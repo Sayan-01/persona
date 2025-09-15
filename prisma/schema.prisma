@@ -12,7 +12,6 @@ enum ContentStatus {
   Scheduled
   Published
   Archived
-  
 }
 
 enum ContentType {
@@ -64,7 +63,6 @@ model User {
   updatedAt           DateTime  @updatedAt
 
   // Profile and Settings
-  profile       Profile?
   aiPersona     AIPersona?
   notifications NotificationSettings?
   security      SecuritySettings?
@@ -99,27 +97,18 @@ model Account {
   @@map("accounts")
 }
 
-model Profile {
+model AIPersona {
   id             String   @id @default(uuid())
   userId         String   @unique
+  tone           String[]
   industry       String
-  specialization String
-  targetAudience String
+  brandDetails   String
+  targetAudience String?
   usp            String
   contentGoals   String[]
   sampleContent  String?
+  style          String[]
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("profiles")
-}
-
-model AIPersona {
-  id          String   @id @default(uuid())
-  userId      String   @unique
-  tone        String[]
-  style       String[]
-  preferences Json?
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("ai_personas")
 }
@@ -230,11 +219,11 @@ model Subscription {
 }
 
 model GeneratedContentHistory {
-  id             String  @id @default(uuid())
+  id             String   @id @default(uuid())
   userId         String
-  user           User    @relation(fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
   contentId      String
-  contentHistory Content @relation(fields: [contentId], references: [id])
+  contentHistory Content  @relation(fields: [contentId], references: [id])
   contentTitle   String
   createdAt      DateTime @default(now())
 }

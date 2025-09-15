@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { registerSchema } from "../../../validators/auth-validator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
@@ -27,6 +27,7 @@ const RegisterForm = () => {
   const [preOtp, setPreOtp] = useState("");
   const [expires, setExpires] = useState<Date | null>();
   const [code, setCode] = useState(false);
+  const router = useRouter();
 
   const form = useForm({
     resolver: zodResolver(registerSchema),
@@ -86,7 +87,7 @@ const RegisterForm = () => {
         if (res.ok) {
           setSuccess(data.message);
           setLoading(false); // Set loading to false
-          redirect("/auth/login");
+          router.push("/auth/login");
         } else if (!res.ok) {
           setLoading(false); // Set loading to false
           setError(data.message);
@@ -99,7 +100,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="z-20 sm:w-[420px] w-[300px] bg-white p-6 rounded-2xl">
+    <div className="z-20 sm:w-[420px] w-[300px] bg-zinc-900 p-6 rounded-2xl">
       <div className="flex items-center justify-center">
         <Link href={`/`}>
           <h2 className={` text-[38px] text-neutral-800 dark:text-neutral-200 ${pay.className}`}>
@@ -122,7 +123,7 @@ const RegisterForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-300 border-[1px]"
+                      className="rounded-lg h-[42px]"
                       placeholder="Your name"
                       {...field}
                     />
@@ -140,7 +141,7 @@ const RegisterForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-300 border-[1px]"
+                      className="rounded-lg h-[42px] border-[1px]"
                       placeholder="youremail@gmail.com"
                       {...field}
                     />
@@ -158,7 +159,7 @@ const RegisterForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-300 border-[1px] tracking-[6px]"
+                      className="rounded-lg h-[42px] border-[1px] tracking-[6px]"
                       type="password"
                       placeholder="@@@@@@"
                       {...field}
@@ -177,7 +178,7 @@ const RegisterForm = () => {
                 <FormItem className="w-full">
                   <FormControl>
                     <Input
-                      className="rounded-xl w-full h-[42px] border-zinc-300 border-[1px] tracking-[6px] !overflow-hidden"
+                      className="rounded-lg w-full h-[42px] border-[1px] tracking-[6px] !overflow-hidden"
                       type="text "
                       maxLength={6}
                       placeholder="######"
@@ -190,8 +191,8 @@ const RegisterForm = () => {
             />
             <div
               onClick={code ? undefined : getCode}
-              className={` cursor-pointer h-[42px] border-[1px] border-zinc-300 text-black/60 rounded-xl text-sm inline-flex items-center justify-center whitespace-nowrap px-2 font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:opacity-80 ${
-                code ? "opacity-30 hover:!bg-zinc-700" : "border-zinc-300 "
+              className={` cursor-pointer h-[42px] bg-input/40 text-zinc-400 border-[1px] rounded-lg text-sm inline-flex items-center justify-center whitespace-nowrap px-2 font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:opacity-80 ${
+                code ? "opacity-30 hover:!bg-zinc-700" : " "
               }`}
             >
               Send code
@@ -233,7 +234,7 @@ const RegisterForm = () => {
           <div className={`mb-4 ${error ? "text-red-500 text-[0.8rem] font-medium" : " text-emerald-500 text-[0.8rem] font-medium"} `}>{error ? error : success}</div>
 
           <SubmitButton
-            className="bg-blue-500 border-x relative group/btn block w-full text-white rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] py-0 text-base"
+            className="bg-blue-500 border-x relative group/btn block w-full text-white rounded-lg h-10 border border-blue-600 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] py-0 text-base"
             disable_className="opacity-80 border-x w-full text-white rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset] text-base"
             loading={loading}
           >

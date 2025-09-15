@@ -62,3 +62,13 @@ export type ContentEnhancePromptDetails = {
   previousContent: string;
   enhanceType: string;
 };
+
+export type Persona = {
+  tone: string[];
+  industry: string;
+  brandDetails: string;
+  targetAudience: string | undefined;
+  usp: string;
+  contentGoals: string[];
+  sampleContent: string;
+}

@@ -22,7 +22,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-[90vh] w-full overflow-hidden dark:bg-zinc-900 bg-white px-[70px] border-b">
+    <section className="relative w-full overflow-hidden dark:bg-zinc-900 bg-white px-[70px] border-b">
       <div className="border-x">
         <div className="w-full max-w-7xl mx-auto py-16 pt-[120px] flex flex-col items-center">
           <div className="absolute w-full h-[400px] top-52 opacity-70 bg-gradient-to-br from-[#fc5eea] via-[#ffffff] to-[#7a8cfa] dark:from-[#00000000] dark:via-[#00000000] dark:to-[#00000000] rounded-[100%] blur-[100px]" />{" "}
@@ -50,7 +50,7 @@ const HeroSection = () => {
             </motion.h1>
             <motion.p
               variants={fadeInUp}
-              className=" max-w-[1000px] text-center text-zinc-600 dark:text-purple-200/80 text-lg "
+              className=" max-w-[1000px] text-center text-zinc-600 dark:text-zinc-200/80 text-lg "
             >
               Hey there, I'm a Product Designer based in Poland. I'm all about that minimalistic <br />
               vibe, with a passion for low-code and interactions.🔥

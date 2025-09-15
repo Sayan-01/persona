@@ -118,7 +118,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
         });
         setGenerating(true);
         try {
-          const res = await fetch("/api/generate-content-idea", {
+          const res = await fetch("/api/social-media-content-api", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -162,7 +162,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             userPersona: userProfile.aiPersona,
           });
 
-          const res = await fetch("/api/generate-content-idea", {
+          const res = await fetch("/api/social-media-content-api", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -215,7 +215,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             userPersona: userProfile.aiPersona,
           });
 
-          const res = await fetch("/api/generate-content-idea", {
+          const res = await fetch("/api/social-media-content-api", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -66,7 +66,7 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section className="relative overflow-hidden py-20 sm:py-28 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950 border-b">
+    <section className="relative overflow-hidden py-20 sm:py-28 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-900 border-b">
       <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
       <div className="container relative px-4 w-full max-w-7xl mx-auto ">
         <motion.div

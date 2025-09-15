@@ -120,36 +120,6 @@ export function FAQSection() {
             />
           ))}
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-16 text-center"
-        >
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">Still have questions? We're here to help!</p>
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-500/20 dark:shadow-violet-500/10"
-          >
-            Contact our team
-            <svg
-              className="w-4 h-4 ml-2 -mr-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </a>
-        </motion.div>
       </div>
     </section>
   );

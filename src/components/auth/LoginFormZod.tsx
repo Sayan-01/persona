@@ -43,7 +43,7 @@ const LoginForm = () => {
         });
         let data = await res.json();
         if (res.ok) {
-          router.refresh();
+          router.push("/onboarding");
           setSuccess(data.message);
           setLoading(false); // Set loading to false
         } else {
@@ -57,7 +57,7 @@ const LoginForm = () => {
     }
   };
   return (
-    <div className="z-20 sm:w-[420px] w-[300px] bg-white p-6 rounded-2xl">
+    <div className="z-20 sm:w-[420px] w-[300px] bg-zinc-900 p-6 rounded-2xl">
       <div className="flex items-center justify-center">
         <Link href={`/`}>
           <h2 className={` text-[38px] text-neutral-800 ${pay.className}`}>
@@ -80,7 +80,7 @@ const LoginForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-300 border-[1px]"
+                      className="rounded-lg h-[42px] border-[1px]"
                       placeholder="youremail@gmail.com"
                       {...field}
                     />
@@ -98,7 +98,7 @@ const LoginForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-xl h-[42px] border-zinc-300 border-[1px] tracking-[6px]"
+                      className="rounded-lg h-[42px] border-[1px] tracking-[6px]"
                       type="password"
                       placeholder="@@@@@@"
                       {...field}
@@ -111,7 +111,7 @@ const LoginForm = () => {
           />
           <div className={`mb-2 ${error ? "text-red-500 text-[0.8rem] font-medium" : " text-emerald-500 text-[0.8rem] font-medium"} `}>{error ? error : success}</div>
           <SubmitButton
-            className="bg-blue-500 border-x relative group/btn block w-full text-white rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] py-0 text-base"
+            className="bg-blue-500 border-x relative group/btn block w-full text-white rounded-lg h-10 border border-blue-600 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] py-0 text-base"
             disable_className="opacity-80  border-x w-full text-black rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] text-base"
             loading={loading}
           >

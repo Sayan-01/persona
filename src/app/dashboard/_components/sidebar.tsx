@@ -85,10 +85,10 @@ export function Sidebar({ userId }: { userId: string | undefined }) {
         href="/"
         className={`flex items-center p-2 justify-start rounded-xl`}
       >
-        <div className="w-10 h-10 flex items-center justify-center rounded-lg border border-orange-600/60 text-lg bg-amber-600/20"> 🏀 </div>
+        <div className="w-10 h-10 flex items-center justify-center rounded-lg border-2 border-orange-600/60 text-lg bg-amber-600/20"> 🏀 </div>
         <div>
           <h1 className={`px-3 text-black dark:text-white font-semibold ${poppins.className}`}>PersonaAI.</h1>
-          <p className="px-3 text-black dark:text-zinc-400 text-xs">AI content generation</p>
+          <p className="px-3 text-black dark:text-zinc-400 text-xs">AI content tool</p>
         </div>
       </Link>
       <nav className="h-[320px] px-0.5">
