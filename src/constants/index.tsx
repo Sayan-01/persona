@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Linkedin, Youtube, Target, Users, Zap, Sparkle } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Youtube, Target, Users, Zap, Sparkle, AudioLines } from "lucide-react";
 
 export const Platforms = [
   { value: "linkedIn", label: "💼 LinkedIn Post", desc: "Professional networking content", color: "bg-blue-50 border-blue-200" },
@@ -10,9 +10,9 @@ export const Platforms = [
 ];
 
 export const ContentLengths = [
-  { value: "short", label: "Short", desc: "50-150 words", icon: Zap, color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-500", border: "border-emerald-200 dark:border-emerald-600" },
-  { value: "medium", label: "Medium", desc: "150-400 words", icon: Users, color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-500", border: "border-blue-200 dark:border-blue-600" },
-  { value: "long", label: "Long", desc: "400+ words", icon: Target, color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-500", border: "border-purple-200 dark:border-purple-600" },
+  { value: "short", label: "Short", desc: "50-150 words", icon: Zap, color: "text-emerald-600 dark:text-emerald-600", bg: "bg-emerald-50 dark:bg-emerald-500/10", border: "border-emerald-200 dark:border-emerald-700" },
+  { value: "medium", label: "Medium", desc: "150-400 words", icon: AudioLines, color: "text-blue-600 dark:text-blue-600", bg: "bg-blue-50 dark:bg-blue-500/10", border: "border-blue-200 dark:border-blue-700" },
+  { value: "long", label: "Long", desc: "400+ words", icon: Target, color: "text-purple-600 dark:text-purple-600", bg: "bg-purple-50 dark:bg-purple-500/10", border: "border-purple-200 dark:border-purple-700" },
 ];
 
 export const socialPlatforms = [

@@ -63,7 +63,7 @@ model User {
   updatedAt           DateTime  @updatedAt
 
   // Profile and Settings
-  aiPersona     AIPersona?
+  aiPersona     UserPersona?
   notifications NotificationSettings?
   security      SecuritySettings?
   subscription  Subscription?
@@ -97,7 +97,7 @@ model Account {
   @@map("accounts")
 }
 
-model AIPersona {
+model UserPersona {
   id             String   @id @default(uuid())
   userId         String   @unique
   tone           String[]
@@ -110,7 +110,7 @@ model AIPersona {
   style          String[]
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("ai_personas")
+  @@map("user_personas")
 }
 
 // Content Management

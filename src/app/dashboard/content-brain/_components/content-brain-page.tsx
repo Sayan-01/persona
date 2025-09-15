@@ -33,11 +33,9 @@ import {
 import { ContentEditor } from "@/components/content-editor";
 import { IdeaGenerateProps } from "../../../../../AI/IdeaGeneratePrompt";
 import generateContentPrompt from "../../../../../AI/ContentGeneratePrompt";
-import { getUserAIPersona, getUserProfile } from "../../../../../server/user-profile";
 import IdeaCard from "./idea-card";
 import enhanceContentPrompt from "../../../../../AI/EnhanceContentPrompt";
 import SocialShareButtons from "@/components/buttons/SocialShareButtons";
-import ButtonLayout from "@/components/buttons/button-layout";
 import { toast } from "sonner";
 import { saveAsDraft, savePost } from "../../../../../server/post";
 import AIinput from "@/components/global/ai-input";
@@ -53,6 +51,7 @@ import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { HistoryContext } from "../../../../../provider/historyProvider";
 import ContentStatus from "./content-status";
+import { getUserPersona } from "../../../../../server/user-profile";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const router = useRouter();
@@ -86,17 +85,17 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const [contentForEnhance, setContentForEnhance] = useState("");
   const [enhanceType, setEnhanceType] = useState("rewrite");
   const [enhanceContent, setEnhanceContent] = useState("");
-  const [userProfile, setUserProfile] = useState<any>(null);
+  const [userPersona, setUserPersona] = useState<any>(null);
   const { history, setHistory } = useContext(HistoryContext);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchUserPersona = async () => {
       if (user) {
-        const userProfileDetails = await getUserProfile(user.id);
-        setUserProfile(userProfileDetails);
+        const userPersonaDetails = await getUserPersona(user.id);
+        setUserPersona(userPersonaDetails);
       }
     };
-    fetchProfile();
+    fetchUserPersona();
   }, [user]);
 
   const removePlatform = (name: string) => {
@@ -113,8 +112,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           topic: ideaGeneratePromptDetails.topic,
           numberOfIdeas: ideaGeneratePromptDetails.numberOfIdeas,
           platform: ideaGeneratePromptDetails.platform,
-          userProfile: userProfile.profile,
-          aiPersona: userProfile.aiPersona,
+          userPersona: userPersona,
         });
         setGenerating(true);
         try {
@@ -134,7 +132,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           const data = await res.json();
           if (data) {
             const dataObj = JSON.parse(data);
-            setResult(dataObj.contentIdeas);
+            setResult(dataObj);
             if (activeTab === "ideas") {
               setShowIdeas(true);
             } else if (activeTab === "enhance") {
@@ -158,8 +156,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             keyPoints: selectedIdea?.keyPoints || contentGeneratePromptDetails.keyPoints,
             hashtags: selectedIdea?.hashtags || contentGeneratePromptDetails.hashtags,
             contentLength: contentGeneratePromptDetails.contentLength,
-            userProfile: userProfile.profile,
-            userPersona: userProfile.aiPersona,
+            userPersona: userPersona,
           });
 
           const res = await fetch("/api/social-media-content-api", {
@@ -289,8 +286,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
       >
         {/* Input section */}
         <div className="flex-1 border-r h-full">
-          <nav className="flex border-b px-3 justify-between h-12">
-            <div className="flex items-center py-2">
+          <nav className="flex border-b justify-between h-12">
+            <div className="flex items-center py-2 px-2">
               <button className="p-1.5 hover:bg-gray-100 rounded">
                 <ChevronLeft className="h-5 w-5 text-gray-500" />
               </button>
@@ -299,22 +296,22 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               </button>
             </div>
 
-            <TabsList className="grid p-0 gap-1 w-max grid-cols-3 h-12 bg-transparent px-0 ">
+            <TabsList className="p-0 flex h-12 bg-transparent px-0 ">
               <TabsTrigger
                 value="ideas"
-                className="p h-12 w-min border-0 border-b rounded-none border-transparent data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-600 text-gray-500 "
+                className=" h-12 w-min border-0 border-b rounded-none border-transparent data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-600 text-gray-500 px-4"
               >
                 💡Generate Ideas
               </TabsTrigger>
               <TabsTrigger
                 value="create"
-                className="p h-12 w-min border-0 border-b rounded-none border-transparent data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-600 text-gray-500 "
+                className=" h-12 w-min border-0 border-b rounded-none border-transparent data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-600 text-gray-500 px-4"
               >
                 📝 Create Content
               </TabsTrigger>
               <TabsTrigger
                 value="enhance"
-                className="p h-12 w-min border-0 border-b rounded-none border-transparent data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-600 text-gray-500 "
+                className=" h-12 w-min border-0 border-b rounded-none border-transparent data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-600 text-gray-500 px-4"
               >
                 📜 Enhance Content
               </TabsTrigger>
@@ -328,7 +325,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             >
               <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
                 <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/10 dark:to-blue-900/10 border border-indigo-200 dark:border-zinc-700 rounded-xl p-4 mb-8 flex items-start">
-                  <div className="flex-shrink-0 text-indigo-600 mt-0.5">
+                  <div className="flex-shrink-0 text-indigo-600 ">
                     <AlertCircle className="h-5 w-5" />
                   </div>
                   <div className="ml-3 flex-1">
@@ -408,7 +405,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       {/* Suggested Skills */}
                       <div className="flex flex-wrap gap-2 items-center">
                         <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">Suggestions:</span>
-                        {["LinkedIn", "Facebook", "Instagram", "Twitter"].map((suggestion) => (
+                        {["Facebook", "Instagram", "LinkedIn", "Twitter", "blog"].map((suggestion) => (
                           <button
                             key={suggestion}
                             onClick={() => {
@@ -454,7 +451,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   <Button
                     onClick={() => handleGenerate("idea generate")}
                     disabled={generating}
-                    className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700 dark:hover:to-zinc-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                    className="w-full hover:bg-gradient-to-r gap-2 h-10 rounded-lg border-none bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700/60 dark:hover:to-zinc-800/40 text-white shadow-lg  transition-all hover:duration-200 duration-200 "
                   >
                     {generating ? (
                       <>
@@ -579,8 +576,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                               className="flex items-center space-x-2"
                             >
                               <div
-                                className={`relative flex-1 rounded-xl border-2 p-4 cursor-pointer transition-all hover:border-indigo-200 dark:hover:border-zinc-600 ${
-                                  isSelected ? `${length.border} ${length.bg} ` : "border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-indigo-300 dark:hover:border-zinc-600"
+                                className={`relative flex-1 rounded-xl border-2 p-4 cursor-pointer transition-all  ${
+                                  isSelected ? `${length.border} ${length.bg} ` : "border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-indigo-200 dark:hover:border-zinc-600"
                                 }`}
                               >
                                 <RadioGroupItem
@@ -596,7 +593,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                                     <Icon className={`h-6 w-6 ${isSelected ? length.color : "text-slate-400 dark:text-gray-500"}`} />
                                     <div>
                                       <div className={`font-medium ${isSelected ? length.color : "text-slate-700 dark:text-gray-300"}`}>{length.label}</div>
-                                      <div className="text-xs text-slate-500 dark:text-gray-400 mt-1">{length.desc}</div>
+                                      <div className={`text-xs mt-1 ${isSelected ? `text-white/80 opacity-80` : "text-slate-500 dark:text-gray-400"}`}>{length.desc}</div>
                                     </div>
                                   </div>
                                 </Label>
@@ -612,7 +609,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   <Button
                     onClick={() => handleGenerate("content generate")}
                     disabled={generating}
-                    className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700 dark:hover:to-zinc-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+                    className="w-full hover:bg-gradient-to-r gap-2 h-10 rounded-lg border-none bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700/60 dark:hover:to-zinc-800/40 text-white shadow-lg  transition-all hover:duration-200 duration-200 "
                   >
                     {generating ? (
                       <>
@@ -625,7 +622,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   </Button>
                 </div>
                 {contentStatus == "scheduled" && (
-                  <div className="space-y-2">
+                  <div className="space-y-2 mt-8">
                     <Label htmlFor="schedule-date">Schedule Date & Time</Label>
                     <Input
                       type="datetime-local"
@@ -638,7 +635,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   postId={undefined}
                 /> */}
 
-                <Card>
+                <Card className="mt-8">
                   <CardHeader>
                     <CardTitle>Content Draft</CardTitle>
                     <CardDescription>Review and publish your content</CardDescription>
@@ -682,7 +679,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     >
                       Back to Editor
                     </Button>
-                    <ButtonLayout
+                    <Button
                       onClick={() => handleContentAction(contentStatus)}
                       className="gap-2"
                     >
@@ -704,7 +701,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                           Publish Now
                         </>
                       )}
-                    </ButtonLayout>
+                    </Button>
                   </CardFooter>
                 </Card>
               </div>
@@ -755,7 +752,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     </div>
                   </div>
                   <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">🔥 Previous Content</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">🔥 Existing Content</h3>
                     <div className="space-y-4">
                       <div>
                         <Label className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
@@ -900,12 +897,12 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 <>
                   <p
                     dangerouslySetInnerHTML={{ __html: contentDraft.content }}
-                    className="whitespace-pre-wrap rounded-md border h-fit bg-amber-200 dark:bg-zinc-700 p-4 pb-5"
+                    className="whitespace-pre-wrap rounded-md border h-fit bg-amber-200 dark:bg-zinc-800 p-4 pb-5"
                   />
                   <div className="h-5" />
                   <div className="space-y-5">
                     {/* Share Your Content Section */}
-                    <div className="bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-lg p-3">
+                    <div className="bg-gray-50 dark:bg-zinc-800  border border-gray-200 dark:border-zinc-700 rounded-lg p-3">
                       <h4 className="font-semibold text-gray-900 dark:text-white mb-2 text-sm">Share Your Content</h4>
 
                       <div className="grid grid-cols-5 gap-1.5 mb-2">

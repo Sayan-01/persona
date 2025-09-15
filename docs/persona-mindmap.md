@@ -28,20 +28,29 @@
   ### Content For Youtube (Youtebe Brain)
 
   ### Content For Social Media (Content Brain)
-    - Generate Ideas
-      1. 
+    - Generate Ideas Using AI
+      1. Content 
+      2. Plateform
+      3. Number of idea
     - Creation Content
-      1. Generate Draft
-      2. Edit in Content Editor
-      3. Options:
+      1. Topic
+      2. Key points
+      3. Plateform
+      4. Contente length
+      5. Options:
         - Save to Drafts
         - Schedule Post
-        - Publish Immediately
+        - Publish Now
     - Enhance Content
-      - Improve existing content
-      - Edit in Content Editor
+      - Plateform
+      - Existing content
+      - Enhance type
 
-## Content Management
+## Integrations
+
+
+
+## My Content
 - View All Content
   - Drafts Management
     - Edit existing drafts

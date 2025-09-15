@@ -3,16 +3,11 @@ import { PersonaList } from "@/components/dashboard/persona-list";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Zap, Calendar, Sparkles, PlusCircle, ArrowRight, TrendingUp, CheckCircle2 } from "lucide-react";
-import { Poppins, Inter } from "next/font/google";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 export default function DashboardPage() {
   return (
-    <div className={`p-4 h-full box bg-white dark:bg-zinc-900 ${inter.className}`}>
+    <div className={`p-4 h-full box bg-white dark:bg-zinc-900 `}>
       <div className="mb-10 mt-6">
         <h1 className="text-3xl font-black dark:text-white">Welcome to Persona AI</h1>
         <p className="text-sm text-zinc-500 dark:text-zinc-400">This is a content generation and management software operate using AI </p>

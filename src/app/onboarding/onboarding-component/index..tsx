@@ -13,15 +13,15 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { contentGoals, industry, toneOptions } from "../onboarding-constants";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Persona } from "../../../../types";
-import { upsertOnboardingAiPersona } from "../../../../server/user-profile";
+import { UserPersona } from "../../../../types";
+import { upsertOnboardingUserPersona } from "../../../../server/user-profile";
 
 export default function OnboardingComponent({ user }: { user: any }) {
   const router = useRouter();
   const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [persona, setPersona] = useState<Persona>({
+  const [persona, setPersona] = useState<UserPersona>({
     tone: [],
     industry: "",
     brandDetails: "",
@@ -46,7 +46,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
 
       setIsSubmitting(true);
       try {
-        const res = await upsertOnboardingAiPersona({
+        const res = await upsertOnboardingUserPersona({
           userId: user.id,
           ...persona,
         });
@@ -54,7 +54,8 @@ export default function OnboardingComponent({ user }: { user: any }) {
           title: "Success!",
           description: "Your AI persona has been configured.",
         });
-        router.push("/auth/login");
+        router.refresh();
+        router.push("/");
       } catch (error) {
         toast({
           title: "Error",

@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { determineStyleFromTone, generateAIPreferences } from "@/utils/helper";
 import { v4 } from "uuid";
 import { auth } from "../auth";
-import { Persona } from "../types";
+import { UserPersona } from "../types";
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
@@ -26,12 +26,12 @@ interface AIPersonaPreferences {
   industryTerms?: any;
 }
 
-export const upsertOnboardingAiPersona = async (data: Persona & { userId: string }) => {
+export const upsertOnboardingUserPersona = async (data: UserPersona & { userId: string }) => {
   
   const { userId, tone, industry, brandDetails, targetAudience, usp, contentGoals, sampleContent } = data;
 
   try {
-    const aiPersona = await db.aIPersona.create({
+    const userPersona = await db.userPersona.create({
       data: {
         id: v4(),
         userId: userId,
@@ -46,7 +46,6 @@ export const upsertOnboardingAiPersona = async (data: Persona & { userId: string
       },
     });
 
-    // Mark user as onboarded
     await db.user.update({
       where: {
         id: userId,
@@ -56,37 +55,19 @@ export const upsertOnboardingAiPersona = async (data: Persona & { userId: string
       },
     });
 
-    return { aiPersona };
+    return { userPersona };
   } catch (error) {
     console.error("Error in upsertOnboardingAiPersona:", error);
     throw new Error("Failed to create / update your AI persona");
   }
 };
 
-export const updateAIPersonaPreferences = async (userId: string, preferences: Partial<AIPersonaPreferences>) => {
+export const getUserPersona = async (userId: string) => {
   try {
-    const aiPersona = await (db as any).AIPersona.update({
-      where: {
-        userId: userId,
-      },
-      data: {
-        preferences: preferences as unknown,
-      },
-    });
-
-    return aiPersona;
-  } catch (error) {
-    console.error("Error in updateAIPersonaPreferences:", error);
-    throw new Error("Failed to update AI persona preferences");
-  }
-};
-
-export const getUserAIPersona = async (userId: string) => {
-  try {
-    const aiPersona = await (db as any).AIPersona.findUnique({
+    const userPersona = await db.userPersona.findUnique({
       where: { userId },
     });
-    return aiPersona;
+    return userPersona;
   } catch (error) {
     console.error("Error in getUserAIPersona:", error);
     throw new Error("Failed to fetch user AI persona");

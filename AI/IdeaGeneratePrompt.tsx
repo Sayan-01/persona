@@ -1,36 +1,29 @@
 import dedent from "dedent";
-import { UserPersona, UserProfile } from "../types";
+import { UserPersona } from "../types";
 type IdeaGenerateProps = {
   topic: string;
   numberOfIdeas: string;
   platform: string[];
-  userProfile: UserProfile;
-  aiPersona: UserPersona;
+  userPersona: UserPersona;
 };
 
-export const IdeaGenerateProps = ({ topic, numberOfIdeas, platform, userProfile, aiPersona }: IdeaGenerateProps):string => {
+export const IdeaGenerateProps = ({ topic, numberOfIdeas, platform, userPersona }: IdeaGenerateProps): string => {
   return dedent`
-    As an a pro AI content strategist, generate ${numberOfIdeas} creative and engaging content ideas (that means ${numberOfIdeas} objects are present in the array) for ${topic} specifically tailored for ${platform.join(", ")}.
-
+    You are a professional AI content strategist. Generate an array of objects which containing exactly ${numberOfIdeas} creative and engaging content ideas (that means ${numberOfIdeas} objects are present in the array). Based on the idea -> ${topic}. specifically tailored for ${platform.join(
+    ", "
+  )}.
     Consider the following context:
     User Profile:
-    - Industry: ${userProfile.industry}
-    - Target Audience: ${userProfile.targetAudience}
-    - Content Goals: ${userProfile.contentGoals}
+    - Industry or primary type of content: ${userPersona.industry}
+    - Target Audience age group: ${userPersona.targetAudience}
+    - Content Goals: ${userPersona.contentGoals.join(", ")}
+    - Writing tone: ${userPersona.tone.join(", ")}
 
-    Content Preferences:
-    - Tone: ${aiPersona.tone}
-    - Style: ${aiPersona.style}
-    - Sample Content: ${userProfile.sampleContent}
-    - Additional Preferences: ${JSON.stringify(aiPersona.preferences)}
-
-    AI Persona:
-    - Voice: ${aiPersona.tone}
-    - Style: ${aiPersona.style}
-    - Tone: ${aiPersona.tone}
+    Old example of content for replicate the writing style:
+    - Sample Content: ${userPersona.sampleContent}
 
     For each idea, provide:
-    1. A compelling "title"
+    1. A compelling "title" (must be SEO optimized)
     2. Brief content "description" (2-3 sentences)
     3. "Key points" to cover
     4. Suggested "hashtags" (if applicable)
@@ -45,7 +38,7 @@ export const IdeaGenerateProps = ({ topic, numberOfIdeas, platform, userProfile,
     Ensure all ideas:
     - Align with the platform's best practices
     - Match the industry requirements and standards
-    - Resonate with the target audience
+    - Resonate with the ${userPersona.contentGoals.join(",")}
     - Support the specified content goals
     - Maintain consistency with the preferred tone and style
     - Include a mix of educational, engaging, and value-driven content

@@ -43,9 +43,9 @@ const LoginForm = () => {
         });
         let data = await res.json();
         if (res.ok) {
-          router.push("/onboarding");
-          setSuccess(data.message);
           setLoading(false); // Set loading to false
+          setSuccess(data.message);
+          router.push("/onboarding");
         } else {
           setLoading(false); // Set loading to false
           setError(data.message);

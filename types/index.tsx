@@ -34,14 +34,6 @@ interface AIPreferences {
   content: AIPreferencesContent;
 }
 
-export type UserPersona = {
-  tone: string[];
-  style: string[];
-  preferences: AIPreferences;
-}
-
-//sate types for prompting
-
 export type IdeaGeneratePromptDetails = {
   topic: string;
   numberOfIdeas: string;
@@ -63,7 +55,7 @@ export type ContentEnhancePromptDetails = {
   enhanceType: string;
 };
 
-export type Persona = {
+export type UserPersona = {
   tone: string[];
   industry: string;
   brandDetails: string;

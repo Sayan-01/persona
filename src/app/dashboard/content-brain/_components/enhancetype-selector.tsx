@@ -113,8 +113,8 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({ title, description, i
         "group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-500 transform",
         "backdrop-blur-xl border-2 border-dashed shadow-2xl",
         isSelected
-          ? "bg-gradient-to-br from-violet-500/20 via-purple-500/20 to-fuchsia-500/20 border-white/50 dark:border-white/50"
-          : "bg-white/10 hover:bg-white/20 hover:border-white/40 border-white/30 dark:border-gray-700 dark:bg-gray-800/50 dark:hover:bg-gray-700/60 dark:hover:border-gray-600"
+          ? "bg-gradient-to-br from-violet-500/20 via-purple-500/20 to-fuchsia-500/20 border-white/50"
+          : "bg-white/5 hover:bg-white/10 hover:border-white/40 border-white/30"
       )}
     >
       {/* Animated background gradient */}
@@ -133,7 +133,7 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({ title, description, i
           <div
             className={cn(
               "p-2 rounded-lg transition-all duration-300",
-              isSelected ? "bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25" : "bg-white/20 group-hover:bg-white/30 dark:bg-gray-700/50 dark:group-hover:bg-gray-600/50"
+              isSelected ? "bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg shadow-violet-500/25" : "bg-white/20 group-hover:bg-white/30 "
             )}
           >
             {icon || (
@@ -144,7 +144,7 @@ const EnhancementCard: React.FC<EnhancementCardProps> = ({ title, description, i
           <div
             className={cn(
               "w-6 h-6 rounded-full transition-all duration-300 flex items-center justify-center",
-              isSelected ? "bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg" : "bg-white/20 group-hover:bg-white/30 dark:bg-gray-700/50 dark:group-hover:bg-gray-600/50"
+              isSelected ? "bg-gradient-to-r from-violet-500 to-purple-600 shadow-lg" : "bg-white/20 group-hover:bg-white/30"
             )}
           >
             {isSelected && <div className="w-2 h-2 bg-white rounded-full" />}

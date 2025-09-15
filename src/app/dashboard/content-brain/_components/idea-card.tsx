@@ -79,25 +79,18 @@ const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent:
             <Button
               variant="ghost"
               size="sm"
-              className="text-blue-600 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-400 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 rounded-xl text-sm"
+              className="text-blue-600 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-400 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 rounded-lg text-sm"
             >
               <Heart className="w-4 h-4 mr-2" />
               Save
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-green-600 hover:text-green-600 dark:text-green-400 dark:hover:text-green-400 bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50 rounded-xl text-sm"
-            >
-              <Share className="w-4 h-4 mr-2" />
-              Share
-            </Button>
+            
           </div>
 
           <Button
             size="sm"
             onClick={() => onClickEvent(idea, platform)}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 dark:from-blue-700 dark:to-purple-700 dark:hover:from-blue-600 dark:hover:to-purple-600 text-white opacity-80 group-hover:opacity-100 transition-all duration-300 rounded-xl text-sm"
+            className="text-green-600 hover:text-green-600 dark:text-green-400 dark:hover:text-green-400 bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50 rounded-lg text-sm"
           >
             Use This Idea
             <ExternalLink className="w-3 h-3 ml-2" />

@@ -1,5 +1,5 @@
 import dedent from "dedent";
-import { UserPersona, UserProfile } from "../types";
+import { UserPersona } from "../types";
 
 interface ContentGenerateProps {
   platform: string;
@@ -7,32 +7,31 @@ interface ContentGenerateProps {
   hashtags?: string[];
   keyPoints?: string[];
   contentLength: "short" | "medium" | "long";
-  userProfile: UserProfile;
   userPersona: UserPersona;
 }
 
-export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtags = [], contentLength, userProfile, userPersona }: ContentGenerateProps) => {
+export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtags = [], contentLength, userPersona }: ContentGenerateProps) => {
   
   const lengthGuide = {
     short: {
+      facebook: "1 paragraphs",
+      instagram: "50-100 words",
       linkedin: "1-2 paragraphs",
       twitter: "240-280 characters",
-      instagram: "50-100 words",
-      facebook: "1 paragraphs",
       blog: "300-500 words",
     },
     medium: {
+      facebook: "2-3 paragraphs",
+      instagram: "150-300 words",
       linkedin: "2-4 paragraphs",
       twitter: "1-2 threaded tweets",
-      instagram: "150-300 words",
-      facebook: "2-3 paragraphs",
       blog: "500-800 words",
     },
     long: {
+      facebook: "4-6 paragraphs",
+      instagram: "300-400 words",
       linkedin: "4-8 paragraphs",
       twitter: "3-5 threaded tweets",
-      instagram: "300-400 words",
-      facebook: "4-6 paragraphs",
       blog: "800-1500 words",
     },
   };
@@ -65,22 +64,16 @@ export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtag
     TARGET LENGTH: ${lengthGuide[contentLength][platform as keyof (typeof lengthGuide)[typeof contentLength]]}
 
     USER PROFILE:
-    Industry: ${userProfile.industry}
-    Target Audience: ${userProfile.targetAudience}
-    Content Goals: ${userProfile.contentGoals.join(", ")}
+    Industry: ${userPersona.industry}
+    Target Audience: ${userPersona.targetAudience}
+    Content Goals: ${userPersona.contentGoals.join(", ")}
 
     CONTENT STYLE:
     Tone: ${userPersona.tone.join(", ")}
-    Writing Style: ${userPersona.style.join(", ")}
-    Language Level: ${userPersona.preferences.language.level}
 
-    CONTENT PREFERENCES:
-    Length Range: ${userPersona.preferences.content.minLength}-${userPersona.preferences.content.maxLength} characters
-    Emoji Usage: ${userPersona.preferences.content.useEmojis ? "Yes" : "Minimal"}
     Formatting:
     - Use Bullet Points When appropriate"}
     - Include Statistics When relevant"}
-    - Citation Style: ${userPersona.preferences.content.formatting.citationStyle}
 
     ${keyPoints.length > 0 ? `KEY POINTS TO INCLUDE:\n${keyPoints.map((point, index) => `${index + 1}. ${point}`).join("\n")}` : ""}
 
@@ -88,21 +81,21 @@ export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtag
 
     ADDITIONAL INSTRUCTIONS:
     1. Maintain consistency with the user's sample content style
-    2. Incorporate industry-specific terminology appropriate for ${userProfile.targetAudience}
-    3. Focus on achieving the specified content goals: ${userProfile.contentGoals.join(", ")}
+    2. Incorporate industry-specific terminology appropriate for ${userPersona.targetAudience}
+    3. Focus on achieving the specified content goals: ${userPersona.contentGoals.join(", ")}
     4. Optimize for ${platform}'s best practices and algorithm preferences
     5. Follow the specified formatting preferences and language level
-    6. Use emojis ${userPersona.preferences.content.useEmojis ? "strategically for engagement" : "minimally and professionally"}
+    6. Also use emojis if needed.
+    7. Do not use any text formating like bolding, italics, or any other special character formatting. Write simple HTML text only containing <br/> for line breaks.
+    8. For points use bullet points or numbers or emojis.
 
 
     ENGAGEMENT OPTIMIZATION:
-    - Also add emojis for better engagement
     - Include conversation starters or questions
     - Use active voice and direct address
     - Add personal insights or experiences when relevant
     - Maintain authenticity while being informative
     - Consider your audience's pain points and goals
-    - Keep content length between ${userPersona.preferences.content.minLength}-${userPersona.preferences.content.maxLength} characters
 
     CONTENT FORMAT: 
     - JSON object {"content": "Full engaging post with follow all the above points"}
