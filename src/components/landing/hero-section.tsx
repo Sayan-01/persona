@@ -62,7 +62,7 @@ const HeroSection = () => {
               <Link href="/dashboard/content-brain">
                 <Button
                   size="lg"
-                  className="group w-44 rounded-full h-12 dark:bg-primary dark:text-black"
+                  className="group rounded-full h-12 dark:bg-primary dark:text-black"
                 >
                   Let's Start Creating
                 </Button>

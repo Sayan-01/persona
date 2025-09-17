@@ -87,6 +87,7 @@ const RegisterForm = () => {
         if (res.ok) {
           setSuccess(data.message);
           setLoading(false); // Set loading to false
+          router.refresh();
           router.push("/auth/login");
         } else if (!res.ok) {
           setLoading(false); // Set loading to false

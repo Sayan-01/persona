@@ -7,9 +7,9 @@ import { SiteHeader } from "@/components/landing/site-header";
 import { SiteFooter } from "@/components/landing/site-footer";
 import HeroSection from "@/components/landing/hero-section";
 import { auth } from "../../../auth";
-import { Poppins } from "next/font/google";
+import { Roboto_Mono } from "next/font/google";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800", "900"], variable: "--font-poppins" });
+const poppins = Roboto_Mono({ subsets: ["latin"]});
 
 export default async function Home() {
   const session = await auth();
@@ -19,7 +19,7 @@ export default async function Home() {
       <main className="flex-1">
         <HeroSection />
         <FeaturesSection />
-        <PricingSection />
+        <PricingSection session={session}/>
         {/* <TestimonialsSection /> */}
         <FAQSection />
         <CTASection />

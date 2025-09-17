@@ -1,23 +1,5 @@
-"use client";
-import { motion } from "framer-motion";
-import { Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Heading from "./heading";
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
-
-const stagger = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
+import { polar } from "@/lib/polar";
+import Link from "next/link";
 
 const plans = [
   {
@@ -49,31 +31,17 @@ const plans = [
   },
 ];
 
-export function PricingSection() {
+export async function PricingSection({ session }: { session: any }) {
+  const products = await polar.products.list({ isArchived: false });
   return (
     <section className="relative overflow-hidden bg-[#f0f0f0] py-20 dark:bg-zinc-900 sm:py-28 border-b">
       <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
 
       <div className="w-full max-w-7xl mx-auto px-4">
-        <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={stagger}
-          className="max-w-4xl mx-auto text-center"
-        >
-          <Heading
-            title="Simple, transparent pricing"
-            description="Choose the perfect plan for your needs. No hidden fees, no surprises."
-          />
-        </motion.div>
+        <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] z-0" />
 
-        <motion.div
-          variants={fadeInUp}
-          className="grid gap-8 mt-16 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {plans.map((plan, index) => (
+        <div className="grid gap-8 mt-16 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
+          {/* {plans.map((plan, index) => (
             <motion.div
               key={index}
               variants={fadeInUp}
@@ -120,13 +88,17 @@ export function PricingSection() {
                 {plan.buttonText}
               </Button>
             </motion.div>
-          ))}
-        </motion.div>
+          ))} */}
 
-        <motion.div
-          variants={fadeInUp}
-          className="mt-12 text-center"
-        >
+          {products.result.items.map((product) => (
+            <Link href={`/checkout?products=${product.id}&customerEmail=${session?.user?.email}`} key={product.id}>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-12 text-center">
           <p className="text-gray-500 dark:text-gray-400">
             Need a custom solution?{" "}
             <a
@@ -136,7 +108,7 @@ export function PricingSection() {
               Contact our sales team
             </a>
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

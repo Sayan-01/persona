@@ -3,6 +3,8 @@ import YtThumnailPrompt from "../../AI/YtThumnailPrompt";
 import { inngest } from "./client";
 import ImageKit from "imagekit";
 import { openai } from "../../AI/models/open-router-sdk";
+import { json } from "stream/consumers";
+import { db } from "@/lib/db";
 
 const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
@@ -73,4 +75,28 @@ export const GenerateThumbnail = inngest.createFunction({ id: "ai/generate-thumb
   //return thumbnail
 
   return generateThumbnailPrompt;
+});
+
+export const HandlePolarEvent = inngest.createFunction({ id: "polar/webhook.received" }, { event: "polar/webhook.received" }, async ({ event, step }) => {
+  console.log("polar webhook recived sayan");
+  
+  const type = event.data?.type;
+  console.log(type);
+  
+  
+  if (type === "subscription.created" || type === "subscription.renewed") {
+    const customerEmail = event.data?.data?.customer?.email;
+    console.log(customerEmail);
+
+    if (!customerEmail) return;
+
+    await step.run("add-credits", async () => {
+      await db.user.update({
+        where: { email: customerEmail as string },
+        data: {
+          credits: { increment: 1000 },
+        },
+      });
+    });
+  }
 });

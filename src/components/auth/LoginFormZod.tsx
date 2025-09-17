@@ -45,6 +45,7 @@ const LoginForm = () => {
         if (res.ok) {
           setLoading(false); // Set loading to false
           setSuccess(data.message);
+          router.refresh();
           router.push("/onboarding");
         } else {
           setLoading(false); // Set loading to false
