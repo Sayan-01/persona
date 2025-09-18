@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Header from "./_components/header";
 import { Sidebar } from "./_components/sidebar";
 import { auth } from "../../../auth";
-import { HistoryProvider } from "../../../provider/historyProvider";
+import { HistoryProvider } from "../../hooks/history-provider";
 import { Fira_Code, Roboto_Mono, Source_Code_Pro } from "next/font/google";
 const roboto_Mono = Roboto_Mono({ subsets: ["latin"] });
 

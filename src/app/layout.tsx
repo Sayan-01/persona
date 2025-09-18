@@ -4,6 +4,7 @@ import { DM_Sans, Geist, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { CreditProvider } from "@/hooks/credit-provider";
 
 const monaa = Roboto_Mono({ subsets: ["latin"]});
 
@@ -33,7 +34,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+        <CreditProvider>
         {children}
+        </CreditProvider>
         </ThemeProvider>
         <Toaster />
       </body>

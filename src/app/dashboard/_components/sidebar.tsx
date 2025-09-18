@@ -6,9 +6,10 @@ import { ArrowBigDown, Brain, Calendar, ChartPie, ChevronDown, ChevronLeftCircle
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect } from "react";
-import { HistoryContext } from "../../../../provider/historyProvider";
 import { getAllHistory } from "../../../../server/actions";
 import { Poppins } from "next/font/google";
+import { useHistory } from "@/hooks/history-provider";
+import { useCredits } from "@/hooks/credit-provider";
 
 interface NavItem {
   title: string;
@@ -23,14 +24,10 @@ export interface History {
   userId?: string;
 }
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
 export function Sidebar({ userId }: { userId: string | undefined }) {
   const pathname = usePathname();
-  const { history, setHistory } = useContext(HistoryContext);
+  const { history, setHistory } = useHistory();
+  const { credits } = useCredits();
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -80,14 +77,14 @@ export function Sidebar({ userId }: { userId: string | undefined }) {
   ];
 
   return (
-    <div className="w-[240px] border-r flex flex-col justify-between h-full p-3 py-3 bg-[#ffffff] dark:bg-zinc-900 dark:border-zinc-800 ">
+    <div className="w-[240px] border-r-2 border-dashed flex flex-col justify-between h-full p-4 bg-[#ffffff] dark:bg-zinc-900 dark:border-zinc-800 ">
       <Link
         href="/"
         className={`flex items-center p-2 justify-start rounded-xl`}
       >
         <div className="w-10 h-10 flex items-center justify-center rounded-lg border-2 border-orange-600/60 text-lg bg-amber-600/20"> 🏀 </div>
         <div>
-          <h1 className={`px-3 text-black dark:text-white font-semibold ${poppins.className}`}>PersonaAI.</h1>
+          <h1 className={`px-3 text-black dark:text-white font-semibold`}>PersonaAI.</h1>
           <p className="px-3 text-black dark:text-zinc-400 text-xs">AI content tool</p>
         </div>
       </Link>
@@ -143,7 +140,7 @@ export function Sidebar({ userId }: { userId: string | undefined }) {
         <div className="h-[58px] pointer-events-none flex items-end justify-center bg-gradient-to-b from-transparent via-white dark:via-zinc-900  to-white dark:to-zinc-900 w-full absolute -bottom-6"></div>
       </section>
       <div className="mt-0 pt-1">
-        <UpgradeCard />
+        <UpgradeCard credits={credits}/>
         <Link
           href="/help"
           className={cn("flex items-center px-[10px] py-[10px] text-sm rounded-md hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-500 dark:text-zinc-400")}

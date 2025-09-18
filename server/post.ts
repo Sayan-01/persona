@@ -70,9 +70,9 @@ export async function publishPost(postId: string, platform: "facebook" | "twitte
   try {
     // Post to social media
     if (platform === "facebook") {
-      await postToFacebook(post.body, session.user.accessToken);
+      // await postToFacebook(post.body, session.user.accessToken);
     } else {
-      await postToTwitter(post.body, session.user.accessToken);
+      // await postToTwitter(post.body, session.user.accessToken);
     }
 
     // Update post status

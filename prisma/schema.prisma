@@ -55,7 +55,7 @@ model User {
   password            String?
   isVarified          Boolean   @default(false)
   isAdmin             Boolean   @default(false)
-  varifiedToken       String
+  varifiedToken       String?
   varifiedTokenExpire DateTime?
   avatarUrl           String?   @db.Text
   email               String    @unique

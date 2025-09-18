@@ -82,7 +82,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.name = alreadyUser.name;
           token.isVarified = alreadyUser.isVarified;
           token.isAdmin = alreadyUser.isAdmin;
-          token.avatarUrl = alreadyUser.avatarUrl
+          token.avatarUrl = alreadyUser.avatarUrl;
+          token.credits = alreadyUser.credits;
         }
       }
       return token; // Return the updated token
@@ -94,13 +95,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // @ts-ignore: Ignore type error for role
         session.user.name = token.name;
         // @ts-ignore: Ignore type error for role
-        session.user.role = token.role;
-        // @ts-ignore: Ignore type error for role
         session.user.isVarified = token.isVarified;
         // @ts-ignore: Ignore type error for role
         session.user.isAdmin = token.isAdmin;
         // @ts-ignore: Ignore type error for role
         session.user.avatarUrl = token.avatarUrl;
+        // @ts-ignore: Ignore type error for role
+        session.user.credits = token.credits;
       }
       return session;
     },
@@ -123,7 +124,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 email,
                 name: name,
                 avatarUrl: image,
-                isVarified: true
+                isVarified: true,
+                varifiedToken: "",
               },
             });
           }

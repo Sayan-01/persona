@@ -8,8 +8,9 @@ import { FileText, Zap, Calendar, Sparkles, PlusCircle, ArrowRight, TrendingUp, 
 export default function DashboardPage() {
   return (
     <div className={`p-4 h-full box bg-white dark:bg-zinc-900 `}>
-      <div className="mb-10 mt-6">
-        <h1 className="text-3xl font-black dark:text-white">Welcome to Persona AI</h1>
+      
+      <div className="mb-10 ">
+        <h1 className="text-3xl font-black dark:text-white mb-1">Welcome to Persona AI</h1>
         <p className="text-sm text-zinc-500 dark:text-zinc-400">This is a content generation and management software operate using AI </p>
       </div>
       {/* Quick Actions */}

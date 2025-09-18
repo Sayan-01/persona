@@ -49,9 +49,9 @@ import { addInHistory } from "../../../../../server/actions";
 import { v4 } from "uuid";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { HistoryContext } from "../../../../../provider/historyProvider";
 import ContentStatus from "./content-status";
 import { getUserPersona } from "../../../../../server/user-profile";
+import { useHistory } from "@/hooks/history-provider";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const router = useRouter();
@@ -86,7 +86,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const [enhanceType, setEnhanceType] = useState("rewrite");
   const [enhanceContent, setEnhanceContent] = useState("");
   const [userPersona, setUserPersona] = useState<any>(null);
-  const { history, setHistory } = useContext(HistoryContext);
+  const { history, setHistory } = useHistory();
 
   useEffect(() => {
     const fetchUserPersona = async () => {
@@ -208,8 +208,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             platform: contentEnhancePromptDetails.contentType,
             previousContent: contentEnhancePromptDetails.previousContent,
             enhanceType: contentEnhancePromptDetails.enhanceType,
-            userProfile: userProfile.profile,
-            userPersona: userProfile.aiPersona,
+            userPersona: userPersona,
           });
 
           const res = await fetch("/api/social-media-content-api", {
@@ -323,7 +322,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               value="ideas"
               className=""
             >
-              <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
+              <div className="p-8 max-w-[750px] min-[1536px]:border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
                 <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/10 dark:to-blue-900/10 border border-indigo-200 dark:border-zinc-700 rounded-xl p-4 mb-8 flex items-start">
                   <div className="flex-shrink-0 text-indigo-600 ">
                     <AlertCircle className="h-5 w-5" />

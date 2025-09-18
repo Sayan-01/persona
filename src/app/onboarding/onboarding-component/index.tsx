@@ -10,15 +10,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
 import { contentGoals, industry, toneOptions } from "../onboarding-constants";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UserPersona } from "../../../../types";
 import { upsertOnboardingUserPersona } from "../../../../server/user-profile";
+import { toast } from "sonner";
 
 export default function OnboardingComponent({ user }: { user: any }) {
   const router = useRouter();
-  const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [persona, setPersona] = useState<UserPersona>({
@@ -36,10 +35,8 @@ export default function OnboardingComponent({ user }: { user: any }) {
       setStep(step + 1);
     } else {
       if (!user?.id) {
-        toast({
-          title: "Authentication required",
+        toast("Authentication required", {
           description: "Please sign in to save your persona settings.",
-          variant: "destructive",
         });
         return;
       }
@@ -50,17 +47,14 @@ export default function OnboardingComponent({ user }: { user: any }) {
           userId: user.id,
           ...persona,
         });
-        toast({
-          title: "Success!",
+        toast("Success!", {
           description: "Your AI persona has been configured.",
         });
         router.refresh();
         router.push("/");
       } catch (error) {
-        toast({
-          title: "Error",
+        toast("Error", {
           description: "Failed to save your persona settings. Please try again.",
-          variant: "destructive",
         });
       } finally {
         setIsSubmitting(false);
@@ -74,7 +68,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
     }
   };
 
-  function toggleTone(value:string) {
+  function toggleTone(value: string) {
     setPersona((prev) => {
       const current = prev.tone;
       return {
@@ -83,7 +77,6 @@ export default function OnboardingComponent({ user }: { user: any }) {
       };
     });
   }
-
 
   return (
     <main className="flex-1 py-24 p-5">
@@ -254,7 +247,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
               </Button>
               <Button
                 onClick={handleNext}
-                disabled={!persona.usp }
+                disabled={!persona.usp}
               >
                 Next <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

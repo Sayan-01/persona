@@ -5,11 +5,10 @@ interface ContentGenerateProps {
   platform: string;
   previousContent: string;
   enhanceType: string;
-  userProfile: UserProfile;
   userPersona: UserPersona;
 }
 
-const enhanceContentPrompt = ({ platform, previousContent, enhanceType, userProfile, userPersona }: ContentGenerateProps) => {
+const enhanceContentPrompt = ({ platform, previousContent, enhanceType, userPersona }: ContentGenerateProps) => {
   const platformGuide = {
     linkedin: "Professional network focused on B2B content, industry insights, and career development",
     twitter: "Fast-paced, concise updates with high engagement through hashtags and mentions",
@@ -30,23 +29,19 @@ const enhanceContentPrompt = ({ platform, previousContent, enhanceType, userProf
   ${
     enhanceType === "adjust" &&
     `
-    Industry Context: ${userProfile.industry}
-    Target Audience: ${userProfile.targetAudience}
-    Content Goals: ${userProfile.contentGoals.join(", ")}
+    Industry Context: ${userPersona.industry}
+    Target Audience: ${userPersona.targetAudience}
+    Content Goals: ${userPersona.contentGoals.join(", ")}
 
     CONTENT STYLE:
     Tone: ${userPersona.tone.join(", ")}
-    Writing Style: ${userPersona.style.join(", ")}
-    Language Level: ${userPersona.preferences.language.level}
+    Writing Style: ${userPersona.tone.join(", ")}
 `
   }
-    CONTENT PREFERENCES:
-    Length Range: ${userPersona.preferences.content.minLength}-${userPersona.preferences.content.maxLength} characters
-    Emoji Usage: ${userPersona.preferences.content.useEmojis ? "Yes" : "Minimal"}
     Formatting:
-    - Use Bullet Points: ${userPersona.preferences.content.formatting.useBulletPoints ? "Yes" : "When appropriate"}
-    - Include Statistics: ${userPersona.preferences.content.formatting.useStatistics ? "Yes" : "When relevant"}
-    - Citation Style: ${userPersona.preferences.content.formatting.citationStyle}
+    - Use Bullet Points:  if needed
+    - Include Statistics:  if needed
+    - Citation Style:  if needed
 
     ORIGINAL CONTENT:
     """
@@ -59,13 +54,13 @@ const enhanceContentPrompt = ({ platform, previousContent, enhanceType, userProf
     ${enhanceType === "adjust" &&
     `
     - Adapt the tone to match ${userPersona.tone.join(" and ")} style if and only if enhance type is adjust
-    - Incorporate industry-specific terminology for ${userProfile.industry}
-    - Ensure content resonates with ${userProfile.targetAudience}
+    - Incorporate industry-specific terminology for ${userPersona.industry}
+    - Ensure content resonates with ${userPersona.targetAudience}
     `}
     - Optimize structure and flow for ${platform} platform
     - Focus on ${enhanceType} improvements while preserving authenticity
     - Follow formatting preferences and language level guidelines
-    - Use emojis ${userPersona.preferences.content.useEmojis ? "strategically for engagement" : "minimally and professionally"}
+    - Use emojis strategically for engagement
 
     ENGAGEMENT OPTIMIZATION:
     - Also add emojis for better engagement
@@ -74,7 +69,7 @@ const enhanceContentPrompt = ({ platform, previousContent, enhanceType, userProf
     - Add personal insights or experiences when relevant
     - Maintain authenticity while being informative
     - Consider your audience's pain points and goals
-    - Keep content length between ${userPersona.preferences.content.minLength}-${userPersona.preferences.content.maxLength} characters
+    - Keep content length almost same
 
     CONTENT FORMAT: JSON object {"content": "Full engaging post with follow all the above points"}
     

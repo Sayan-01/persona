@@ -12,9 +12,9 @@ import { Button } from "@/components/ui/button";
 export default async function SettingsPage() {
   const session = await auth()
   return (
-    <div className="container py-8">
+    <div className="container py-8 p-4">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Settings</h1>
+        <h1 className="text-3xl font-bold mb-1">Settings</h1>
         <p className="text-gray-500">Manage your account and preferences</p>
         <p className="text-gray-500">{JSON.stringify(session?.user)}</p>
       </div>

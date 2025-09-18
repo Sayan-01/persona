@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
 import React from "react";
-import OnboardingComponent from "./onboarding-component/index.";
+import OnboardingComponent from "./onboarding-component";
 import { auth } from "../../../auth";
 import Link from "next/link";
 

@@ -78,17 +78,20 @@ export const GenerateThumbnail = inngest.createFunction({ id: "ai/generate-thumb
 });
 
 export const HandlePolarEvent = inngest.createFunction({ id: "polar/webhook.received" }, { event: "polar/webhook.received" }, async ({ event, step }) => {
-  console.log("polar webhook recived sayan");
-  
-  const type = event.data?.type;
-  console.log(type);
-  
-  
-  if (type === "subscription.created" || type === "subscription.renewed") {
-    const customerEmail = event.data?.data?.customer?.email;
-    console.log(customerEmail);
+   console.log("polar webhook received");
 
-    if (!customerEmail) return;
+   const type = event.data?.type;
+   const subscriptionId = event.data?.data?.id; // subscription ID
+   const customerEmail = event.data?.data?.customer?.email as string | undefined;
+
+  if (!customerEmail || !subscriptionId) return;
+  
+  if (type === "subscription.created" || type === "subscription.renewed" || type === "subscription.updated") {
+    const status = event.data?.data?.status;
+    if (status !== "active") {
+      console.log("Subscription is not active yet. Skipping credits.");
+      return;
+    }
 
     await step.run("add-credits", async () => {
       await db.user.update({

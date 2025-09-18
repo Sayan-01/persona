@@ -38,7 +38,7 @@ export default function ContentPage() {
   }, []);
 
   return (
-    <div className="container py-8 p-6">
+    <div className="container py-8 p-4">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">My Content</h1>
