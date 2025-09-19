@@ -4,14 +4,17 @@ import { Sidebar } from "./_components/sidebar";
 import { auth } from "../../../auth";
 import { HistoryProvider } from "../../hooks/history-provider";
 import { Fira_Code, Roboto_Mono, Source_Code_Pro } from "next/font/google";
+import Unauthorized from "@/components/unauthorized";
 const roboto_Mono = Roboto_Mono({ subsets: ["latin"] });
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
   const session = await auth();
+
+  if (!session?.user?.email) return <Unauthorized/>
   return (
     <HistoryProvider>
       <div className={`flex h-screen bg-background dark:bg-zinc-900 ${roboto_Mono.className}`}>
-        <aside className="hidden flex-col lg:flex">
+        <aside className="">
           <Sidebar userId={session?.user?.id || undefined} />
         </aside>
         <div className="flex flex-col flex-1 relative overflow-auto ">

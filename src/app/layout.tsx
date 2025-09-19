@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { CreditProvider } from "@/hooks/credit-provider";
+import { auth } from "../../auth";
 
 const monaa = Roboto_Mono({ subsets: ["latin"]});
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   description: "Create personalized content for multiple platforms with AI",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

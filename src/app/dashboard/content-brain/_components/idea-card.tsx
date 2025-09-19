@@ -13,9 +13,9 @@ interface Props {
 
 const IdeaCard = ({ idea, onClickEvent, platform }: { idea: Props; onClickEvent: (idea: Props, platform: string) => void; platform: string }) => {
   return (
-    <div className="bg-white dark:bg-zinc-800 rounded-2xl border-2 border-dashed border-indigo-300 dark:border-zinc-700 p-6 transition-all duration-200 group relative overflow-hidden cursor-pointer hover:shadow-lg dark:hover:shadow-zinc-900/30">
+    <div className="bg-white dark:bg-zinc-800/40 rounded-2xl border border-indigo-300 dark:border-zinc-700/30 p-6 transition-all duration-200 group relative overflow-hidden cursor-pointer hover:shadow-lg dark:hover:shadow-zinc-900/30">
       {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 dark:from-blue-900/10 dark:via-transparent dark:to-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 dark:from-blue-900/10 dark:via-transparent dark:to-purple-900/10 opacity-100 transition-opacity duration-200 rounded-3xl"></div>
 
       <div className="relative z-10">
         {/* Enhanced Platform Badge */}

@@ -11,12 +11,11 @@ const CreditContext = createContext<CreditContextType | undefined>(undefined);
 
 export const CreditProvider = ({ children }: { children: ReactNode }) => {
   const [credits, setCredits] = useState<number>(0);
-  const userId = "USER_ID_HERE"; // replace with auth userId
 
   useEffect(() => {
     const fetchCredits = async () => {
       try {
-        const res = await fetch("/api/user/credits", { headers: { "x-user-id": userId } });
+        const res = await fetch("/api/user/credits");
         const data = await res.json();
         setCredits(data.credits);
       } catch (err) {
@@ -30,12 +29,15 @@ export const CreditProvider = ({ children }: { children: ReactNode }) => {
     const prev = credits;
     setCredits(prev - amount); // optimistic update
     try {
-      const res = await fetch("/api/user/decrement-credits", {
+      const res = await fetch("/api/user/credits", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, amount }),
+        body: JSON.stringify({ amount }),
       });
+      
       const data = await res.json();
+      console.log("second: ", data.credits);
+      
       if (res.ok) setCredits(data.credits);
       else setCredits(prev); // rollback if error
     } catch (err) {

@@ -21,8 +21,11 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await auth();
+    const userId = session?.user?.id;
+    if (!userId) return NextResponse.json({ error: "No userId provided" }, { status: 400 });
     const body = await req.json();
-    const { userId, amount } = body;
+    const { amount } = body;
     if (!userId || !amount) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
     const user = await db.user.update({
@@ -31,6 +34,8 @@ export async function POST(req: NextRequest) {
         credits: { decrement: amount },
       },
     });
+
+    console.log("user: ", user.credits);
 
     return NextResponse.json({ credits: user.credits });
   } catch (err) {

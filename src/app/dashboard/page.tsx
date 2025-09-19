@@ -8,7 +8,6 @@ import { FileText, Zap, Calendar, Sparkles, PlusCircle, ArrowRight, TrendingUp, 
 export default function DashboardPage() {
   return (
     <div className={`p-4 h-full box bg-white dark:bg-zinc-900 `}>
-      
       <div className="mb-10 ">
         <h1 className="text-3xl font-black dark:text-white mb-1">Welcome to Persona AI</h1>
         <p className="text-sm text-zinc-500 dark:text-zinc-400">This is a content generation and management software operate using AI </p>
@@ -16,7 +15,7 @@ export default function DashboardPage() {
       {/* Quick Actions */}
       <div className="mb-8 ">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card >
+          <Card className="bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur-sm border border-zinc-100 dark:border-zinc-700/30">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex items-center gap-2 dark:text-white">
                 <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
@@ -33,7 +32,7 @@ export default function DashboardPage() {
               </Button>
             </CardContent>
           </Card>
-          <Card >
+          <Card className="bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur-sm border border-zinc-100 dark:border-zinc-700/30">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex items-center gap-2 dark:text-white">
                 <FileText className="h-5 w-5 text-purple-600 dark:text-purple-400" />
@@ -45,7 +44,7 @@ export default function DashboardPage() {
               <Button className="mt-4 w-full dark:bg-purple-600 dark:hover:bg-purple-700">New Content</Button>
             </CardContent>
           </Card>
-          <Card >
+          <Card className="bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur-sm border border-zinc-100 dark:border-zinc-700/30">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex items-center gap-2 dark:text-white">
                 <Zap className="h-5 w-5 text-purple-600 dark:text-purple-400" />
@@ -62,7 +61,7 @@ export default function DashboardPage() {
               </Button>
             </CardContent>
           </Card>
-          <Card >
+          <Card className="bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur-sm border border-zinc-100 dark:border-zinc-700/30">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex items-center gap-2 dark:text-white">
                 <Calendar className="h-5 w-5 text-purple-600 dark:text-purple-400" />
@@ -88,7 +87,7 @@ export default function DashboardPage() {
           <h2 className="text-xl font-semibold dark:text-white">Content Overview</h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card >
+          <Card className="bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur-sm border border-zinc-100 dark:border-zinc-700/30">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-lg dark:text-white">Brand Score</CardTitle>
               <TrendingUp className="h-4 w-4 text-green-500 dark:text-green-400" />
@@ -98,7 +97,7 @@ export default function DashboardPage() {
               <p className="text-xs text-gray-500 dark:text-zinc-400 ">+12 from last week</p>
             </CardContent>
           </Card>
-          <Card >
+          <Card className="bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur-sm border border-zinc-100 dark:border-zinc-700/30">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg dark:text-white">LinkedIn Posts</CardTitle>
             </CardHeader>
@@ -107,7 +106,7 @@ export default function DashboardPage() {
               <p className="text-xs text-gray-500 dark:text-zinc-400 ">This month</p>
             </CardContent>
           </Card>
-          <Card >
+          <Card className="bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur-sm border border-zinc-100 dark:border-zinc-700/30">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg dark:text-white">Twitter Posts</CardTitle>
             </CardHeader>
@@ -116,7 +115,7 @@ export default function DashboardPage() {
               <p className="text-xs text-gray-500 dark:text-zinc-400 ">This month</p>
             </CardContent>
           </Card>
-          <Card >
+          <Card className="bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur-sm border border-zinc-100 dark:border-zinc-700/30">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg dark:text-white">Scheduled</CardTitle>
             </CardHeader>
@@ -131,7 +130,7 @@ export default function DashboardPage() {
       {/* Recent Content and Trending Topics */}
       <div className="grid gap-4 md:grid-cols-2">
         {/* Recent Content */}
-        <Card >
+        <Card>
           <CardHeader>
             <CardTitle className="dark:text-white">Recent Content</CardTitle>
             <CardDescription className="dark:text-zinc-400">Your latest content drafts and posts</CardDescription>
@@ -203,7 +202,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* Trending Topics */}
-        <Card >
+        <Card>
           <CardHeader>
             <CardTitle className="dark:text-white">Trending in Your Industry</CardTitle>
             <CardDescription className="dark:text-zinc-400">Popular topics to create content about</CardDescription>

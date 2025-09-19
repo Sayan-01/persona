@@ -1,5 +1,5 @@
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Target, Users, Zap, Sparkle, AudioLines } from "lucide-react";
-import { Image as ImageIcon, Search, FileText, List, Wand2, Rocket } from "lucide-react";
+import { Type, BarChart3, FileText, List, Tags, Rocket } from "lucide-react";
 export const Platforms = [
   { value: "linkedIn", label: "💼 LinkedIn Post", desc: "Professional networking content", color: "bg-blue-50 border-blue-200" },
   { value: "twitter", label: "🐦 Twitter Thread", desc: "Engaging thread format", color: "bg-sky-50 border-sky-200" },
@@ -55,53 +55,54 @@ export const LandingPageNav = [
   {title: "FAQ", href: "#faq"},
 ]
 
+
 export const YT_Features = [
   {
     id: 1,
-    title: "AI Thumbnail Generator",
-    icon: ImageIcon,
-    path: "ai-thumbnail-generator",
-    desc: "Automatically create eye-catching AI thumbnails to boost your YouTube video's visual appeal and engagement.",
+    title: "Title & Desc Optimizer",
+    icon: Type, // ✍️ for writing text
+    path: "title-desc-optimizer",
+    desc: "Generate catchy, SEO-friendly titles and descriptions to increase visibility and clicks on videos.",
     border: "border-blue-200 dark:border-blue-600",
   },
   {
     id: 2,
-    title: "AI Thumbnail Search",
-    icon: Search,
-    path: "ai-thumbnail-search",
-    desc: "Quickly search through a curated library of AI-generated thumbnails for your YouTube content needs.",
+    title: "Find SEO Score",
+    icon: BarChart3, // 📊 for scoring and analytics
+    path: "seo-score-checker",
+    desc: "Analyze your video's metadata to calculate SEO score and suggest improvements for better ranking.",
     border: "border-purple-200 dark:border-purple-600",
   },
   {
     id: 3,
     title: "Content Generator",
-    icon: FileText,
+    icon: FileText, // 📝 for writing full scripts
     path: "content-generator",
-    desc: "Generate high-quality, AI-driven content ideas and full scripts to enhance your YouTube video production.",
+    desc: "Generate complete AI-powered video scripts or content ideas to speed up your production process.",
     border: "border-green-200 dark:border-green-600",
   },
   {
     id: 4,
-    title: "Outlier",
-    icon: List,
-    path: "outlier",
-    desc: "Easily generate structured AI outlines that help organize your YouTube video scripts and planning process.",
+    title: "Outline Generator",
+    icon: List, // 📋 for structured outlines
+    path: "outline-generator",
+    desc: "Create structured AI outlines to plan your video flow and organize topics effectively before scripting.",
     border: "border-orange-200 dark:border-orange-600",
   },
   {
     id: 5,
-    title: "AI Thumbnail Search",
-    icon: Search,
-    path: "ai-thumbnail-search",
-    desc: "Discover and select from various AI-generated thumbnails tailored for different YouTube video categories quickly.",
+    title: "Tags & Keyword Finder",
+    icon: Tags, // 🏷️ for tags and keywords
+    path: "tags-keyword-finder",
+    desc: "Find the most relevant keywords and tags to boost your video's discoverability and organic reach.",
     border: "border-purple-200 dark:border-purple-600",
   },
   {
     id: 6,
     title: "Optimize Script",
-    icon: Rocket,
+    icon: Rocket, // 🚀 for boosting performance
     path: "optimize-script",
-    desc: "Improve your YouTube scripts using AI optimization tools to increase viewer retention and overall performance.",
+    desc: "Enhance your script's clarity and pacing with AI to improve audience retention and watch time.",
     border: "border-red-200 dark:border-red-600",
   },
 ];

@@ -1,10 +1,13 @@
 import { polar } from "@/lib/polar";
+import { cn } from "@/lib/utils";
+import { Check } from "lucide-react";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 const plans = [
   {
     name: "Starter",
-    price: "$29",
+    price: "$0",
     description: "Perfect for individuals and small teams",
     features: ["Up to 5 team members", "Basic analytics dashboard", "24/7 email support", "1,000 AI content generations", "5 custom workflows"],
     buttonText: "Get Started",
@@ -13,7 +16,7 @@ const plans = [
   },
   {
     name: "Professional",
-    price: "$49",
+    price: "$50",
     description: "Best for growing businesses",
     features: ["Up to 20 team members", "Advanced analytics & reports", "Priority 24/7 support", "Unlimited AI generations", "Custom integrations", "Team collaboration tools", "Advanced automation"],
     buttonText: "Get Started",
@@ -22,7 +25,7 @@ const plans = [
   },
   {
     name: "Enterprise",
-    price: "$79",
+    price: "$100",
     description: "Advanced features for large organizations",
     features: ["Unlimited team members", "Custom analytics solutions", "Dedicated support manager", "Custom AI model training", "Advanced security features", "API access", "White-label options"],
     buttonText: "Contact Sales",
@@ -33,6 +36,10 @@ const plans = [
 
 export async function PricingSection({ session }: { session: any }) {
   const products = await polar.products.list({ isArchived: false });
+  const mergedPlans = plans.map((plan, index) => ({
+    ...plan,
+    product: products.result.items[index],
+  }));
   return (
     <section className="relative overflow-hidden bg-[#f0f0f0] py-20 dark:bg-zinc-900 sm:py-28 border-b">
       <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
@@ -41,11 +48,9 @@ export async function PricingSection({ session }: { session: any }) {
         <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] z-0" />
 
         <div className="grid gap-8 mt-16 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
-          {/* {plans.map((plan, index) => (
-            <motion.div
+          {mergedPlans.map((plan, index) => (
+            <div
               key={index}
-              variants={fadeInUp}
-              whileHover={{ y: -5 }}
               className={cn(
                 "relative flex flex-col p-8 rounded-2xl bg-white dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 transition-all duration-300",
                 plan.popular && "ring-2 ring-offset-2 ring-violet-500 dark:ring-offset-gray-900"
@@ -76,7 +81,10 @@ export async function PricingSection({ session }: { session: any }) {
                   ))}
                 </ul>
               </div>
-
+              <Link
+                href={`/checkout?products=${plan.product.id}&customerEmail=${session?.user?.email}`}
+                key={plan.product.id}
+              >
               <Button
                 className={cn(
                   "mt-8 w-full py-6 text-base font-medium rounded-xl transition-all duration-300",
@@ -87,15 +95,10 @@ export async function PricingSection({ session }: { session: any }) {
               >
                 {plan.buttonText}
               </Button>
-            </motion.div>
-          ))} */}
-
-          {products.result.items.map((product) => (
-            <Link href={`/checkout?products=${product.id}&customerEmail=${session?.user?.email}`} key={product.id}>
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-            </Link>
+              </Link>
+            </div>
           ))}
+          
         </div>
 
         <div className="mt-12 text-center">

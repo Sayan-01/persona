@@ -21,7 +21,7 @@ const Header = () => {
     <div className="bg-white dark:bg-zinc-900 border-b-2 border-dashed border-gray-200 dark:border-zinc-800">
       <div className="flex items-center h-16 px-4 ">
         {/* Breadcrumb */}
-        <Breadcrumb>
+        <Breadcrumb className="lg:flex hidden">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
@@ -65,9 +65,9 @@ const Header = () => {
           </div>
 
           {/* New Project Button */}
-          <button className="mx-3 bg-zinc-900 dark:bg-zinc-700 hover:bg-zinc-800 dark:hover:bg-zinc-600 text-white px-3 py-1.5 rounded-lg flex items-center text-sm transition-colors">
-            <PlusSquare className="h-4 w-4 mr-1.5" />
-            New Project
+          <button className="mx-3 bg-zinc-900 dark:bg-zinc-700 hover:bg-zinc-800 dark:hover:bg-zinc-600 text-white px-[10px] md:py-1.5 py-[10px] rounded-lg flex items-center text-sm transition-colors">
+            <PlusSquare className="h-4 w-4 md:mr-1.5" />
+            <span className="hidden md:block">New Project</span>
           </button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

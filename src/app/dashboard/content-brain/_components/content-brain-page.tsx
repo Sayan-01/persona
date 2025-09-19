@@ -52,8 +52,9 @@ import { useContext } from "react";
 import ContentStatus from "./content-status";
 import { getUserPersona } from "../../../../../server/user-profile";
 import { useHistory } from "@/hooks/history-provider";
+import { useCredits } from "@/hooks/credit-provider";
 
-export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
+export default function   ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("ideas");
   const [ideaGeneratePromptDetails, setIdeaGeneratePromptDetails] = useState<IdeaGeneratePromptDetails>({
@@ -87,6 +88,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const [enhanceContent, setEnhanceContent] = useState("");
   const [userPersona, setUserPersona] = useState<any>(null);
   const { history, setHistory } = useHistory();
+  const { decrementCredits } = useCredits();
 
   useEffect(() => {
     const fetchUserPersona = async () => {
@@ -131,6 +133,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           }
           const data = await res.json();
           if (data) {
+            decrementCredits(100);
             const dataObj = JSON.parse(data);
             setResult(dataObj);
             if (activeTab === "ideas") {
@@ -277,16 +280,17 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   };
 
   return (
+    //1150 & 1316
     <div className="w-full h-full bg-zinc-50 dark:bg-zinc-900">
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
-        className="w-full flex flex-row gap-0 h-full"
+        className="w-full flex min-[1150px]:flex-row flex-col gap-0"
       >
         {/* Input section */}
-        <div className="flex-1 border-r h-full">
-          <nav className="flex border-b justify-between h-12">
-            <div className="flex items-center py-2 px-2">
+        <div className="lex-1 border-r h-full">
+          <nav className="flex border-b min-[1316px]:justify-between justify-end h-12">
+            <div className="min-[1316px]:flex items-center py-2 px-2 hidden">
               <button className="p-1.5 hover:bg-gray-100 rounded">
                 <ChevronLeft className="h-5 w-5 text-gray-500" />
               </button>
@@ -300,23 +304,23 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 value="ideas"
                 className=" h-12 w-min border-0 border-b rounded-none border-transparent data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-600 text-gray-500 px-4"
               >
-                💡Generate Ideas
+                💡 <span className="hidden min-[535px]:block">Generate Ideas</span>
               </TabsTrigger>
               <TabsTrigger
                 value="create"
                 className=" h-12 w-min border-0 border-b rounded-none border-transparent data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-600 text-gray-500 px-4"
               >
-                📝 Create Content
+                📝 <span className="hidden min-[535px]:block">Create Content</span>
               </TabsTrigger>
               <TabsTrigger
                 value="enhance"
                 className=" h-12 w-min border-0 border-b rounded-none border-transparent data-[state=active]:border-indigo-500 data-[state=active]:text-indigo-600 text-gray-500 px-4"
               >
-                📜 Enhance Content
+                📜 <span className="hidden min-[535px]:block">Enhance Content</span>
               </TabsTrigger>
             </TabsList>
           </nav>
-          <section className="h-[calc(100%-48px)] overflow-scroll box">
+          <section className="min-[1150px]:h-[calc(100%-48px)] h-full overflow-scroll box">
             {/* Content Ideas Tab */}
             <TabsContent
               value="ideas"
@@ -800,7 +804,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           </section>
         </div>
         {/* Output box */}
-        <div className="w-[450px] h-full">
+        <div className=" min-[1150px]:w-[450px] w-full h-full min-h-[500px]">
           {/* Auto Save Badge */}
           <nav className="flex items-center px-4 h-12 border-b justify-between ">
             <div className="flex items-center space-x-2">
@@ -854,8 +858,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               className=" h-full rounded-xl"
             >
               {showIdeas ? (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between pt-5 px-6">
+                <div className="space-y-5">
+                  <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold">Generated Ideas</h2>
                     <Button
                       variant="outline"
@@ -866,7 +870,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       Regenerate
                     </Button>
                   </div>
-                  <div className="grid gap-4 md:grid-cols-1 pb-12">
+                  <div className="grid gap-4 md:grid-cols-1 pb-8">
                     {result?.map((idea: { title: string; description: string; keyPoints: string[]; hashtags: string[] }, index: number) => (
                       <IdeaCard
                         idea={idea}

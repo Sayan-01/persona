@@ -7,19 +7,19 @@ import { ArrowRight, Sparkles, Zap, Stars, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const FeatureCard = ({ feature }: { feature: (typeof YT_Features)[0] }) => (
-  <div className="relative overflow-hidden group  dark:bg-zinc-800/40 backdrop-blur-sm rounded-2xl">
-    <div className={`block h-full rounded-2xl border-2 border-zinc-100 dark:border-zinc-700/30 overflow-hidden`}>
+  <div className="relative overflow-hidden group bg-zinc-100/60 dark:bg-zinc-800/40 backdrop-blur-sm rounded-2xl">
+    <div className={`block h-full rounded-2xl border border-zinc-100 dark:border-zinc-700/30 overflow-hidden`}>
       <div className="relative z-10 flex flex-col h-full">
         <div className="p-5">
           <div className="flex items-center justify-between mb-5">
-            <div className={`p-3 rounded-xl bg-zinc-700 border backdrop-blur-sm`}>
-              <feature.icon className={`h-6 w-6 `} />
+            <div className={`p-2.5 rounded-xl dark:bg-zinc-700 bg-zinc-200 border backdrop-blur-sm`}>
+              <feature.icon className={`h-6 w-6 `} strokeWidth={1.2}/>
             </div>
           </div>
 
           <h3 className="text-xl font-bold bg-gradient-to-r from-zinc-800 to-zinc-600 dark:from-white dark:to-zinc-200 bg-clip-text text-transparent mb-3">{feature.title}</h3>
 
-          <p className="text-sm text-zinc-600 dark:text-zinc-300 flex-grow">{feature.desc}</p>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400/80 flex-grow">{feature.desc}</p>
         </div>
 
         <div className="mt-auto border-t border-zinc-100 dark:border-zinc-700/30 p-5">
