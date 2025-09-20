@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
 import Header from "./_components/header";
-import { Sidebar } from "./_components/sidebar";
 import { auth } from "../../../auth";
 import { HistoryProvider } from "../../hooks/history-provider";
 import { Fira_Code, Roboto_Mono, Source_Code_Pro } from "next/font/google";
 import Unauthorized from "@/components/unauthorized";
+import Sidebar from "./_components/sidebar";
+import MobilePrevent from "./_components/mobile-prevention";
 const roboto_Mono = Roboto_Mono({ subsets: ["latin"] });
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
@@ -12,10 +13,11 @@ export default async function DashboardLayout({ children }: { children: ReactNod
 
   if (!session?.user?.email) return <Unauthorized/>
   return (
-    <HistoryProvider>
+    <MobilePrevent>
+      <HistoryProvider>
       <div className={`flex h-screen bg-background dark:bg-zinc-900 ${roboto_Mono.className}`}>
-        <aside className="">
-          <Sidebar userId={session?.user?.id || undefined} />
+        <aside className="md:w-[240px]">
+          <Sidebar userId={session?.user?.id || ""} />
         </aside>
         <div className="flex flex-col flex-1 relative overflow-auto ">
           <Header />
@@ -25,5 +27,6 @@ export default async function DashboardLayout({ children }: { children: ReactNod
         </div>
       </div>
     </HistoryProvider>
+    </MobilePrevent>
   );
 }

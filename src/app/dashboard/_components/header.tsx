@@ -19,7 +19,7 @@ const Header = () => {
 
   return (
     <div className="bg-white dark:bg-zinc-900 border-b-2 border-dashed border-gray-200 dark:border-zinc-800">
-      <div className="flex items-center h-16 px-4 ">
+      <div className="flex items-center h-16 md:px-4 px-5">
         {/* Breadcrumb */}
         <Breadcrumb className="lg:flex hidden">
           <BreadcrumbList>
@@ -49,10 +49,11 @@ const Header = () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <div className="h-9 w-9 mr-2"></div>
 
         {/* Search */}
         <div className="ml-auto flex items-center">
-          <ModeToggle />
+          <ModeToggle className="sm:flex hidden" />
           <div className="relative ml-3">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-4 w-4 text-gray-400 dark:text-zinc-500" />

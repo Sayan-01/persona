@@ -54,7 +54,7 @@ import { getUserPersona } from "../../../../../server/user-profile";
 import { useHistory } from "@/hooks/history-provider";
 import { useCredits } from "@/hooks/credit-provider";
 
-export default function   ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
+export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("ideas");
   const [ideaGeneratePromptDetails, setIdeaGeneratePromptDetails] = useState<IdeaGeneratePromptDetails>({
@@ -285,10 +285,10 @@ export default function   ContentBrainPage({ user }: { user: { id: string; email
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
-        className="w-full flex min-[1150px]:flex-row flex-col gap-0"
+        className="w-full flex min-[1150px]:flex-row flex-col gap-0 min-[1150px]:h-full"
       >
         {/* Input section */}
-        <div className="lex-1 border-r h-full">
+        <div className="flex-1 border-r h-full">
           <nav className="flex border-b min-[1316px]:justify-between justify-end h-12">
             <div className="min-[1316px]:flex items-center py-2 px-2 hidden">
               <button className="p-1.5 hover:bg-gray-100 rounded">
@@ -326,7 +326,7 @@ export default function   ContentBrainPage({ user }: { user: { id: string; email
               value="ideas"
               className=""
             >
-              <div className="p-8 max-w-[750px] min-[1536px]:border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
+              <div className="md:p-8 p-5 max-w-[750px] min-[1536px]:border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
                 <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/10 dark:to-blue-900/10 border border-indigo-200 dark:border-zinc-700 rounded-xl p-4 mb-8 flex items-start">
                   <div className="flex-shrink-0 text-indigo-600 ">
                     <AlertCircle className="h-5 w-5" />
@@ -804,7 +804,7 @@ export default function   ContentBrainPage({ user }: { user: { id: string; email
           </section>
         </div>
         {/* Output box */}
-        <div className=" min-[1150px]:w-[450px] w-full h-full min-h-[500px]">
+        <div className=" min-[1150px]:w-[450px] w-full h-full min-h-[500px] ">
           {/* Auto Save Badge */}
           <nav className="flex items-center px-4 h-12 border-b justify-between ">
             <div className="flex items-center space-x-2">
@@ -852,7 +852,7 @@ export default function   ContentBrainPage({ user }: { user: { id: string; email
               </button>
             </div>
           </nav>
-          <div className="h-[calc(100%-48px)] overflow-y-auto p-5 ">
+          <div className="min-[1150px]:h-[calc(100%-48px)] h-full  overflow-y-auto p-5 ">
             <TabsContent
               value="ideas"
               className=" h-full rounded-xl"

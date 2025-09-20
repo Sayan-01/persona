@@ -2,14 +2,16 @@
 
 import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
 import { cn } from "@/lib/utils";
-import { ArrowBigDown, Brain, Calendar, ChartPie, ChevronDown, ChevronLeftCircleIcon, FileText, HelpCircle, Instagram, LogOut, Settings, Sparkles, TvMinimalPlay } from "lucide-react";
+import { ArrowBigDown, Brain, Calendar, ChartPie, ChevronDown, ChevronLeftCircleIcon, FileText, HelpCircle, Instagram, LogOut, Menu, Settings, Sparkles, TvMinimalPlay } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
-import { getAllHistory } from "../../../../server/actions";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Poppins } from "next/font/google";
 import { useHistory } from "@/hooks/history-provider";
 import { useCredits } from "@/hooks/credit-provider";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { getAllHistory } from "../../../../../server/actions";
+import { DialogTitle } from "@/components/ui/dialog";
 
 interface NavItem {
   title: string;
@@ -24,20 +26,34 @@ export interface History {
   userId?: string;
 }
 
-export function Sidebar({ userId }: { userId: string | undefined }) {
+export function SidebarComp({ userId, defaultOption = false }: { userId: string | undefined; defaultOption?: boolean }) {
   const pathname = usePathname();
   const { history, setHistory } = useHistory();
   const { credits } = useCredits();
-  const [openClass, setOpenClass] = useState("");
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  const openState = useMemo(() => (defaultOption ? { open: true } : {}), [defaultOption]);
+
+  // ✅ Mount fix
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // ✅ Stable fetch function
+  const fetchHistory = useCallback(async () => {
+    if (!userId) return;
+    const newHistory = await getAllHistory(userId);
+    setHistory(newHistory); // overwrite instead of appending duplicates
+  }, [userId, setHistory]);
 
   useEffect(() => {
-    const fetchHistory = async () => {
-      if (!userId) return;
-      const newHistory = await getAllHistory(userId);
-      setHistory((history: History[]) => [...history, ...newHistory]);
-    };
     fetchHistory();
-  }, []);
+  }, [fetchHistory]);
+
+  if (!isMounted) {
+    return null; // ✅ always return something
+  }
 
   const navItems: NavItem[] = [
     {
@@ -78,14 +94,23 @@ export function Sidebar({ userId }: { userId: string | undefined }) {
   ];
 
   return (
-    <div className="relative z-[100]">
-      <button
-        className="absolute top-4 -right-4"
-        onClick={() => setOpenClass(openClass === "" ? "open" : "")}
+    <Sheet
+      modal={!defaultOption}
+      {...openState}
+    >
+      <DialogTitle className="hidden">Sidebar Navigation</DialogTitle>
+      <SheetTrigger className="h-9 w-9 flex flex-col items-center justify-center rounded-lg border border-[#545454]/30 fixed z-[50] md:hidden left-5 top-[14px] outline-none bg-zinc-700">
+        <div className="h-[1px] bg-white/70 w-4 mb-[5px]" />
+        <div className="h-[1px] bg-white/70 w-4" />
+      </SheetTrigger>
+      <SheetContent
+        showX={!defaultOption}
+        side="left"
+        className={cn("w-[240px] gap-0 hidden flex-col min-[1150px]:flex border-r-2 border-dashed justify-between h-full p-4 bg-[#ffffff] dark:bg-zinc-900 dark:border-zinc-800 ", {
+          "hidden md:flex z-0 ": defaultOption,
+          "flex md:hidden z-[100] ": !defaultOption,
+        })}
       >
-        <ChevronLeftCircleIcon className="h-6 w-6" />
-      </button>
-      <div className="w-[240px] hidden flex-col min-[1150px]:flex border-r-2 border-dashed justify-between h-full p-4 bg-[#ffffff] dark:bg-zinc-900 dark:border-zinc-800 ">
         <Link
           href="/"
           className={`flex items-center p-2 justify-start rounded-xl`}
@@ -170,7 +195,7 @@ export function Sidebar({ userId }: { userId: string | undefined }) {
             Logout
           </Link>
         </div>
-      </div>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 }
