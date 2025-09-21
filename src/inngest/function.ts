@@ -5,6 +5,7 @@ import ImageKit from "imagekit";
 import { openai } from "../../AI/models/open-router-sdk";
 import { json } from "stream/consumers";
 import { db } from "@/lib/db";
+import { getUserPersona } from "../../server/user-profile";
 
 const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
@@ -103,3 +104,17 @@ export const HandlePolarEvent = inngest.createFunction({ id: "polar/webhook.rece
     });
   }
 });
+
+export const HandleGenerateContent = inngest.createFunction({id: "ai/generate-content"}, {event: "ai/generate-content"}, async ({event, step}) => {
+  const {userTitle, userDescripton, usrId} = await event.data;
+
+  const userPersonaDetails = await getUserPersona(usrId);
+
+  const generateAiContent = await step.run("GenerateAiContent", async () => {
+    
+  })
+
+  //To generate title, desc, tags
+
+
+})

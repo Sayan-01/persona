@@ -15,18 +15,18 @@ export default async function DashboardLayout({ children }: { children: ReactNod
   return (
     <MobilePrevent>
       <HistoryProvider>
-      <div className={`flex h-screen bg-background dark:bg-zinc-900 ${roboto_Mono.className}`}>
-        <aside className="md:w-[240px]">
-          <Sidebar userId={session?.user?.id || ""} />
-        </aside>
-        <div className="flex flex-col flex-1 relative overflow-auto ">
-          <Header />
-          <main className="box h-[calc(100vh-64px)] overflow-y-auto flex box">
-            <div className="mx-auto w-full">{children}</div>
-          </main>
+        <div className={`flex h-screen bg-background dark:bg-zinc-900 ${roboto_Mono.className}`}>
+          <aside className="md:w-[240px]">
+            <Sidebar userId={session?.user?.id || ""} />
+          </aside>
+          <div className="flex flex-col flex-1 relative overflow-auto border-l-2 border-dashed dark:border-zinc-800/90">
+            <Header />
+            <main className="box h-[calc(100vh-64px)] overflow-y-auto flex box">
+              <div className="mx-auto w-full">{children}</div>
+            </main>
+          </div>
         </div>
-      </div>
-    </HistoryProvider>
+      </HistoryProvider>
     </MobilePrevent>
   );
 }

@@ -106,7 +106,7 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
       <SheetContent
         showX={!defaultOption}
         side="left"
-        className={cn("w-[240px] gap-0 hidden flex-col min-[1150px]:flex border-r-2 border-dashed justify-between h-full p-4 bg-[#ffffff] dark:bg-zinc-900 dark:border-zinc-800 ", {
+        className={cn("w-[240px] gap-0 hidden flex-col min-[1150px]:flex justify-between h-full p-4 bg-[#ffffff] dark:bg-zinc-900  border-0", {
           "hidden md:flex z-0 ": defaultOption,
           "flex md:hidden z-[100] ": !defaultOption,
         })}
