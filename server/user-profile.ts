@@ -27,7 +27,6 @@ interface AIPersonaPreferences {
 }
 
 export const upsertOnboardingUserPersona = async (data: UserPersona & { userId: string }) => {
-  
   const { userId, tone, industry, brandDetails, targetAudience, usp, contentGoals, sampleContent } = data;
 
   try {
@@ -42,7 +41,7 @@ export const upsertOnboardingUserPersona = async (data: UserPersona & { userId: 
         usp: usp,
         contentGoals: contentGoals,
         sampleContent: sampleContent,
-        style: []
+        style: [],
       },
     });
 
@@ -67,6 +66,9 @@ export const getUserPersona = async (userId: string) => {
     const userPersona = await db.userPersona.findUnique({
       where: { userId },
     });
+    if (!userPersona) {
+      throw new Error("User not found");
+    }
     return userPersona;
   } catch (error) {
     console.error("Error in getUserAIPersona:", error);

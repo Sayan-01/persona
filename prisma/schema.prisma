@@ -75,6 +75,7 @@ model User {
   calendar                CalendarEntry[]
   accounts                Account[]
   GeneratedContentHistory GeneratedContentHistory[]
+  ytContent               YtContent[]
 
   @@map("users")
 }
@@ -107,7 +108,7 @@ model UserPersona {
   targetAudience String?
   usp            String
   contentGoals   String[]
-  sampleContent  String?
+  sampleContent  String
   style          String[]
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -227,4 +228,12 @@ model GeneratedContentHistory {
   contentHistory Content  @relation(fields: [contentId], references: [id])
   contentTitle   String
   createdAt      DateTime @default(now())
+}
+
+model YtContent {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  content   Json
 }

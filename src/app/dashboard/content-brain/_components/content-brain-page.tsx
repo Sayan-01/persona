@@ -32,7 +32,6 @@ import {
 } from "lucide-react";
 import { ContentEditor } from "@/components/content-editor";
 import { IdeaGenerateProps } from "../../../../../AI/IdeaGeneratePrompt";
-import generateContentPrompt from "../../../../../AI/ContentGeneratePrompt";
 import IdeaCard from "./idea-card";
 import enhanceContentPrompt from "../../../../../AI/EnhanceContentPrompt";
 import SocialShareButtons from "@/components/buttons/SocialShareButtons";
@@ -53,6 +52,7 @@ import ContentStatus from "./content-status";
 import { getUserPersona } from "../../../../../server/user-profile";
 import { useHistory } from "@/hooks/history-provider";
 import { useCredits } from "@/hooks/credit-provider";
+import generateContentPrompt from "../../../../../AI/ContentGeneratePrompt";
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const router = useRouter();
@@ -131,10 +131,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           if (!res.ok) {
             throw new Error("Failed to fetch AI template.");
           }
-          const data = await res.json();
+          const data = await res.json();//json
+
+          console.log(data);
+
           if (data) {
             decrementCredits(100);
-            const dataObj = JSON.parse(data);
+            const dataObj = JSON.parse(data);  //object
             setResult(dataObj);
             if (activeTab === "ideas") {
               setShowIdeas(true);

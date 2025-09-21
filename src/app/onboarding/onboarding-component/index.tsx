@@ -15,6 +15,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { UserPersona } from "../../../../types";
 import { upsertOnboardingUserPersona } from "../../../../server/user-profile";
 import { toast } from "sonner";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800", "900"] });
 
 export default function OnboardingComponent({ user }: { user: any }) {
   const router = useRouter();
@@ -79,7 +82,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
   }
 
   return (
-    <main className="flex-1 py-24 p-5">
+    <main className={`flex-1 py-24 p-5`}>
       <div className="container max-w-3xl mx-auto">
         <div className="mb-8 flex justify-between">
           <div className="space-y-1">
@@ -101,7 +104,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                 {toneOptions.map((tone) => (
                   <div
                     key={tone.value}
-                    className="flex items-center space-x-2 rounded-md border p-4 hover:border-zinc-600 duration-200"
+                    className="flex items-start space-x-3 rounded-md border p-4 hover:border-zinc-600 duration-200"
                   >
                     <Checkbox
                       id={tone.value}
@@ -110,7 +113,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                     />
                     <Label
                       htmlFor={tone.value}
-                      className="flex-1 cursor-pointer"
+                      className="flex-1 flex-col items-start flex cursor-pointer"
                     >
                       <div className="font-medium">{tone.title}</div>
                       <div className="text-sm text-gray-500">{tone.desc}</div>
@@ -146,7 +149,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="space-y-4">
+                <div className="space-y-2">
                   <Label htmlFor="industry ">Primary Industry</Label>
                   <Select
                     value={persona.industry}
@@ -168,7 +171,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                   </Select>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-2">
                   <Label htmlFor="brandDetails">Describe your brand or content type, in detail</Label>
                   <Input
                     value={persona.brandDetails}
@@ -205,7 +208,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="space-y-4">
+                <div className="space-y-2">
                   <Label htmlFor="targetAudience">Age Group of your target audience</Label>
                   <Select
                     value={persona.targetAudience}
@@ -226,8 +229,8 @@ export default function OnboardingComponent({ user }: { user: any }) {
                     </SelectContent>
                   </Select>
                 </div>
-                <Label htmlFor="usp">Describe what makes your brand or content unique</Label>
                 <div className="space-y-2">
+                  <Label htmlFor="usp">Describe what makes your brand or content unique</Label>
                   <Textarea
                     value={persona.usp}
                     onChange={(e) => setPersona({ ...persona, usp: e.target.value })}
@@ -285,7 +288,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                         className="flex-1 cursor-pointer flex flex-col items-start"
                       >
                         <div className="font-medium w-max">{goal.label}</div>
-                        <div className="text-sm text-gray-500 w-max overflow-x-auto">{goal.description}</div>
+                        <div className="text-sm text-gray-500 overflow-x-auto w-[285px]">{goal.description}</div>
                       </Label>
                     </div>
                   ))}

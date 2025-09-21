@@ -27,7 +27,7 @@ export const toneOptions = [
     id: 5,
     value: "bold",
     title: "Bold & Confident",
-    desc: "Strong, challenging and persuasive tone ideal for marketing, sales or news content",
+    desc: "Strong and challenging tone ideal for marketing, sales or news content",
   },
   {
     id: 6,
@@ -139,7 +139,7 @@ export const industry = [
 export const contentGoals = [
   { id: "educate", label: "Educate", description: "Share knowledge & expertise" },
   { id: "inspire", label: "Inspire", description: "Motivate & encourage action" },
-  { id: "engage", label: "Engage", description: "Start conversations & build community" },
+  { id: "engage", label: "Engage", description: "Conversations & build community" },
   { id: "sell", label: "Convert", description: "Generate leads & drive sales" },
   { id: "authority", label: "Build Authority", description: "Establish thought leadership" },
   { id: "entertain", label: "Entertain", description: "Delight & provide value" },

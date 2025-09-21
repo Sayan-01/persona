@@ -59,7 +59,7 @@ export type UserPersona = {
   tone: string[];
   industry: string;
   brandDetails: string;
-  targetAudience: string | undefined;
+  targetAudience: string | null;
   usp: string;
   contentGoals: string[];
   sampleContent: string;

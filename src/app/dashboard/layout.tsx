@@ -19,7 +19,7 @@ export default async function DashboardLayout({ children }: { children: ReactNod
           <aside className="md:w-[240px]">
             <Sidebar userId={session?.user?.id || ""} />
           </aside>
-          <div className="flex flex-col flex-1 relative overflow-auto border-l-2 border-dashed dark:border-zinc-800/90">
+          <div className="flex flex-col flex-1 relative overflow-auto border-l-2 border-dashed dark:border-zinc-800">
             <Header />
             <main className="box h-[calc(100vh-64px)] overflow-y-auto flex box">
               <div className="mx-auto w-full">{children}</div>

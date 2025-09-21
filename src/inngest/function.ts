@@ -1,11 +1,9 @@
-import { geminiModel } from "../../AI/models/gemini-model";
-import YtThumnailPrompt from "../../AI/YtThumnailPrompt";
-import { inngest } from "./client";
-import ImageKit from "imagekit";
-import { openai } from "../../AI/models/open-router-sdk";
-import { json } from "stream/consumers";
 import { db } from "@/lib/db";
-import { getUserPersona } from "../../server/user-profile";
+import ImageKit from "imagekit";
+import { geminiModel } from "../../AI/models/gemini-model";
+import { openai } from "../../AI/models/open-router-sdk";
+import { YtContentGeneratePrompt } from "../../AI/YtContentGeneratePrompt";
+import { inngest } from "./client";
 
 const imagekit = new ImageKit({
   publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
@@ -79,14 +77,14 @@ export const GenerateThumbnail = inngest.createFunction({ id: "ai/generate-thumb
 });
 
 export const HandlePolarEvent = inngest.createFunction({ id: "polar/webhook.received" }, { event: "polar/webhook.received" }, async ({ event, step }) => {
-   console.log("polar webhook received");
+  console.log("polar webhook received");
 
-   const type = event.data?.type;
-   const subscriptionId = event.data?.data?.id; // subscription ID
-   const customerEmail = event.data?.data?.customer?.email as string | undefined;
+  const type = event.data?.type;
+  const subscriptionId = event.data?.data?.id; // subscription ID
+  const customerEmail = event.data?.data?.customer?.email as string | undefined;
 
   if (!customerEmail || !subscriptionId) return;
-  
+
   if (type === "subscription.created" || type === "subscription.renewed" || type === "subscription.updated") {
     const status = event.data?.data?.status;
     if (status !== "active") {
@@ -105,16 +103,41 @@ export const HandlePolarEvent = inngest.createFunction({ id: "polar/webhook.rece
   }
 });
 
-export const HandleGenerateContent = inngest.createFunction({id: "ai/generate-content"}, {event: "ai/generate-content"}, async ({event, step}) => {
-  const {userTitle, userDescripton, usrId} = await event.data;
+export const HandleGenerateYtContent = inngest.createFunction({ id: "ai/generate-content" }, { event: "ai/generate-content" }, async ({ event, step }) => {
+  const { userTitle, userDesc, userId, userPersonaDetails } = await event.data;
 
-  const userPersonaDetails = await getUserPersona(usrId);
+  //generate ai content
+  // const generateAiContent = await step.run("GenerateAiContent", async () => {
+  //   const prompt = YtContentGeneratePrompt({
+  //     title: userTitle,
+  //     description: userDesc,
+  //     userPersona: userPersonaDetails,
+  //   });
+  //   const result = await geminiModel.sendMessage(prompt);
+  //   const aiRes = result.response.text(); //json
 
-  const generateAiContent = await step.run("GenerateAiContent", async () => {
-    
-  })
+  //   let parsedRes;
+  //   try {
+  //     parsedRes = JSON.parse(aiRes); //object
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   return parsedRes;
 
-  //To generate title, desc, tags
+  // });
 
+  // const saveContentOnDb = await step.run("SaveContentOnDb", async () => {
+  //   const result = await db.ytContent.create({
+  //     data: {
+  //       userId: userId,
+  //       content: generateAiContent,
+  //     }
+  //   })
+  //   return result;
+  // })
 
-})
+  // return saveContentOnDb;
+
+  await step.sleep("wait a moment", 5000);
+  return "sayan"
+});
