@@ -16,10 +16,12 @@ type Content = {
 type SubContent = {
   description: string;
   tags: string[];
-  titles: [{
-    seo_score: number;
-    title: string;
-  }];
+  titles: [
+    {
+      seo_score: number;
+      title: string;
+    }
+  ];
   image_prompts: string[];
 };
 
@@ -30,56 +32,36 @@ const page = () => {
   const [content, setContent] = useState<Content | null>(null);
 
   const onGenerate = async () => {
-      setLoading(true);
-      try {
-        const result = await fetch("/api/yt-content-api", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userTitle,
-            userDesc,
-          }),
-        });
+    setLoading(true);
+    const result = await fetch("/api/yt-content-api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userTitle,
+        userDesc,
+      }),
+    });
+    const data = await result.json();
+    console.log(data.runId);
 
-        if (!result.ok) {
-          const text = await result.text();
-          throw new Error(`API returned ${result.status}: ${text.slice(0, 200)}`);
-        }
-        const ct = result.headers.get("content-type") || "";
-        if (!ct.includes("application/json")) {
-          const text = await result.text();
-          throw new Error(`Expected JSON from /api/yt-content-api but received: ${ct}. First 200 chars: ${text.slice(0, 200)}`);
-        }
+    while (true) {
+      const runId = await data.runId; // 👈 use runId
 
-        const data = await result.json();
-        console.log(data.runId);
+      const runStatus = await RunStatus(runId);
 
-        const runId = data.runId;
-        if (!runId) {
-          throw new Error("No runId received from API");
-        }
-
-        // Poll for completion
-        while (true) {
-          const runStatus = await RunStatus(runId);
-
-          if (runStatus && runStatus.data && runStatus.data[0]?.status === "Completed") {
-            setContent(runStatus.data[0].data);
-            setLoading(false);
-            break;
-          } else if (runStatus && runStatus.data && runStatus.data[0]?.status === "Cancelled") {
-            setLoading(false);
-            break;
-          }
-          await new Promise((resolve) => setTimeout(resolve, 8000));
-        }
-      } catch (err) {
-        console.error("Content generation failed:", err);
+      if (runStatus && runStatus.data[0].status === "Completed") {
+        setContent(runStatus.data[0].data);
         setLoading(false);
+        break;
+      } else if (runStatus && runStatus.data[0].status === "Cancelled") {
+        setLoading(false);
+        break;
       }
-      
+      await new Promise((resolve) => setTimeout(resolve, 8000));
+    }
+    setLoading(false);
   };
 
   return (
@@ -131,8 +113,6 @@ const page = () => {
           </div>
         </div>
       )}
-
-      
 
       {/* Output */}
       <div className="w-full mt-6">
