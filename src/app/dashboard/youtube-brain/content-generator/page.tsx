@@ -1,10 +1,7 @@
 "use client";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import React, { useState } from "react";
-import { ArrowUp, CircleUser, ImagePlus as Imagee, X } from "lucide-react";
-import Image from "next/image";
-import { RunStatus } from "../../../../../sevices/GlobalApi";
+import { ArrowUp } from "lucide-react";
+import { useState } from "react";
+import { getRuns } from "../../../../../sevices/getRun";
 
 type Content = {
   id: number;
@@ -32,36 +29,36 @@ const page = () => {
   const [content, setContent] = useState<Content | null>(null);
 
   const onGenerate = async () => {
-    setLoading(true);
-    const result = await fetch("/api/yt-content-api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userTitle,
-        userDesc,
-      }),
-    });
-    const data = await result.json();
-    console.log(data.runId);
+    try {
+      const result = await fetch("/api/yt-content-api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userTitle,
+          userDesc,
+        }),
+      });
+      const data = await result.json();
+      console.log(data);
 
-    while (true) {
-      const runId = await data.runId; // 👈 use runId
+      while (true) {
+        const run = await getRuns(data.runId);
 
-      const runStatus = await RunStatus(runId);
+        if (run.status === "Completed") {
+          console.log("✅ Done:", run.output);
+          return run.output;
+        } else if (run.status === "Failed" || run.status === "Cancelled") {
+          console.log("❌ Failed:", run.error);
+          return null;
+        }
 
-      if (runStatus && runStatus.data[0].status === "Completed") {
-        setContent(runStatus.data[0].data);
-        setLoading(false);
-        break;
-      } else if (runStatus && runStatus.data[0].status === "Cancelled") {
-        setLoading(false);
-        break;
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
-      await new Promise((resolve) => setTimeout(resolve, 8000));
+    } catch (error) {
+      console.error(error);
     }
-    setLoading(false);
   };
 
   return (
