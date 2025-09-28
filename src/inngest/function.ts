@@ -138,6 +138,5 @@ export const HandleGenerateYtContent = inngest.createFunction({ id: "ai/generate
 
   // return saveContentOnDb;
 
-  await step.sleep("wait a moment", 5000);
   return "sayan"
 });
