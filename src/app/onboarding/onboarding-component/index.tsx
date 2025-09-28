@@ -211,7 +211,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
                 <div className="space-y-2">
                   <Label htmlFor="targetAudience">Age Group of your target audience</Label>
                   <Select
-                    value={persona.targetAudience}
+                    value={persona.targetAudience || ""}
                     onValueChange={(value) => setPersona({ ...persona, targetAudience: value })}
                   >
                     <SelectTrigger id="targetAudience">

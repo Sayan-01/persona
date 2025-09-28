@@ -27,6 +27,7 @@ export const POST = async (req: Request) => {
       title: userTitle,
       description: userDesc,
       userPersona: userPersonaDetails,
+      videoType: "shorts",
     });
 
     const result = await geminiModel.sendMessage(prompt);
