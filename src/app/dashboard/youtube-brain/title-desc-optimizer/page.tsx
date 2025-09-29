@@ -1,10 +1,10 @@
 import React from "react";
-import Page3 from "../_component/page3";
+import Page1 from "../_component/page1";
 
 const page = () => {
   return (
     <>
-      <Page3 />
+      <Page1 />
     </>
   );
 };
