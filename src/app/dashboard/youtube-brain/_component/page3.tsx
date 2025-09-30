@@ -75,7 +75,7 @@ const Page3 = () => {
               />
             </div>
           </div>
-          <div className="p-3 w-full rounded-2xl bg-[#ffffff08] mt-6">
+          <div className="p-3 w-full rounded-2xl bg-[#ffffff08] mt-4">
             <div className="flex gap-2 items-center w-full">
               <textarea
                 onChange={(e) => setUserDesc(e.target.value)}

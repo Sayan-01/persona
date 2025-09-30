@@ -195,7 +195,7 @@ const Page2 = () => {
         </div>
 
         {/* Score Card */}
-        <div className="w-full mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="w-full mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="p-4 rounded-xl bg-[#ffffff10] md:col-span-1 flex flex-col items-start">
             <p className="text-sm opacity-70">Overall Score</p>
             <div className={`text-5xl font-bold mt-2 ${scoreColor(result.score)}`}>{result.score}</div>
@@ -246,34 +246,33 @@ const Page2 = () => {
             </ul>
           </div>
         )}
-
-        {/* Prompt */}
-        <div className="p-4 rounded-xl bg-[#ffffff10] mt-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold mb-2">Enhanced Title</h3>
-            <button
-              className="text-xs px-2 py-1 rounded bg-zinc-700/60 hover:bg-zinc-700/80"
-              onClick={() => navigator.clipboard?.writeText(prompt)}
-            >
-              Copy
-            </button>
+        {optimizedTitles.length > 0 && (
+          <div className="p-4 rounded-xl bg-[#ffffff10] mt-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold mb-2">Enhanced Title</h3>
+              <button
+                className="text-xs px-2 py-1 rounded bg-zinc-700/60 hover:bg-zinc-700/80"
+                onClick={() => navigator.clipboard?.writeText(prompt)}
+              >
+                Copy
+              </button>
+            </div>
+            <div className="">
+              <ul className="list-disc list-inside text-sm opacity-90">
+                {optimizedTitles &&
+                  optimizedTitles.map((t, i) => (
+                    <li
+                      key={i}
+                      className="flex items-center justify-between text-sm"
+                    >
+                      <span className="opacity-90">{t.title}</span>
+                      <span className="opacity-70">{t.seo_score}</span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
           </div>
-          <div className="">
-            <ul className="list-disc list-inside text-sm opacity-90">
-              {optimizedTitles &&
-                optimizedTitles.map((t, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center justify-between text-sm"
-                  >
-                    <span className="opacity-90">{t.title}</span>
-                    <span className="opacity-70">{t.seo_score}</span>
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </div>
-
+        )}
         {/* Submit */}
         <div className="mt-4 flex items-center gap-3">
           <button
