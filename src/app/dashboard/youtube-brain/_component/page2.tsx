@@ -155,15 +155,35 @@ function scoreColor(score: number) {
 
 function buildPrompt(title: string) {
   return `You are an expert YouTube SEO strategist and copywriter.  
-Analyze the given video title ${title} and generate exactly 3 optimized alternative titles.  
+Analyze the given video title: "${title}". Generate exactly 3 optimized alternative titles **and score them using the same scoring rules below**.  
 
-Requirements:  
-- Return response strictly in JSON format:  
-  {"titles":[{"title":"...","seo_score":93},{"title":"...","seo_score":85},{"title":"...","seo_score":90}]}  
-- Each title must be between 45-60 characters.  
-- Apply best SEO practices: use numbers, brackets/parentheses where natural, emotional or power words, curiosity elements, and ensure uniqueness.  
-- Score each title (0-100) based on: keyword relevance, length, uniqueness, readability (Title Case), CTR potential, SEO-friendliness and use best powerfull words.  
-- Do not add explanations or extra text outside the JSON.`;
+### Strict Output Format
+Return JSON only, no explanation:  
+{"titles":[{"title":"...","seo_score":93},{"title":"...","seo_score":85},{"title":"...","seo_score":90}]}  
+
+### Scoring Rules (0-100)
+Distribute points as follows (must align with local scoring system):  
+- Length (25 pts):  
+  • 45-60 chars → 25 pts  
+  • 30-75 chars → 18 pts  
+  • Otherwise → 10 pts  
+- Contains Number (10 pts): add 10 if the title includes any digit.  
+- Contains Brackets (10 pts): add 10 if title includes [ ], ( ), or { }.  
+- Curiosity (10 pts):  
+  • Ends with “?” → 10 pts  
+  • Otherwise → 4 pts  
+- Power Words (20 pts): check against this list → ["ultimate","best","free","easy","simple","pro","secret","hack","tips","guide","new","fast","quick","insane","boost","master","complete","advanced","step-by-step"].  
+  • 7 pts per word found, max 20.  
+- Uniqueness (15 pts): count unique words (case-insensitive, alphanumeric).  
+  • Score = (uniqueWordCount / 8) * 15 (capped at 15).  
+- Readability (10 pts):  
+  • Title uses mixed case (Title Case-ish, not all caps or all lowercase) → 10 pts  
+  • Otherwise → 4 pts  
+
+### Requirements
+- Each title must score itself strictly according to the rules above.  
+- Each title must be 45-60 characters long, SEO-friendly, readable, unique, and clickworthy.  
+- Do not add explanations, reasoning, or any text outside the JSON.`;
 }
 
 const Page2 = () => {
@@ -241,7 +261,12 @@ const Page2 = () => {
             <h3 className="text-lg font-semibold mb-2">Suggestions</h3>
             <ul className="list-disc list-inside text-sm opacity-90">
               {result.suggestions.map((s, i) => (
-                <li key={i}>{s}</li>
+                <li
+                  key={i}
+                  className="relative pl-4 flex items-center justify-between text-sm mb-1 before:content-['•'] before:absolute before:left-0 before:text-white"
+                >
+                  {s}
+                </li>
               ))}
             </ul>
           </div>
@@ -250,25 +275,26 @@ const Page2 = () => {
           <div className="p-4 rounded-xl bg-[#ffffff10] mt-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold mb-2">Enhanced Title</h3>
-              <button
-                className="text-xs px-2 py-1 rounded bg-zinc-700/60 hover:bg-zinc-700/80"
-                onClick={() => navigator.clipboard?.writeText(prompt)}
-              >
-                Copy
-              </button>
             </div>
             <div className="">
               <ul className="list-disc list-inside text-sm opacity-90">
-                {optimizedTitles &&
-                  optimizedTitles.map((t, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center justify-between text-sm"
-                    >
-                      <span className="opacity-90">{t.title}</span>
-                      <span className="opacity-70">{t.seo_score}</span>
-                    </li>
-                  ))}
+                {optimizedTitles.map((t, i) => (
+                  <li
+                    key={i}
+                    className="relative pl-4 flex items-center justify-between text-sm mb-1 before:content-['•'] before:absolute before:left-0 before:text-white"
+                  >
+                    <span className="opacity-90">{t.title}</span>
+                    <div>
+                      <span className="opacity-80 mr-2">{computeSeoScore(t.title).score}</span>
+                      <button
+                        className="text-xs px-2 py-1 rounded bg-zinc-700/60 hover:bg-zinc-700/80"
+                        onClick={() => navigator.clipboard?.writeText(t.title)}
+                      >
+                        Copy
+                      </button>
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

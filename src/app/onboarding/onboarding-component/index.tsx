@@ -82,7 +82,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
   }
 
   return (
-    <main className={`flex-1 py-24 p-5`}>
+    <main className={`flex-1 py-24 p-5 h-full`}>
       <div className="container max-w-3xl mx-auto">
         <div className="mb-8 flex justify-between">
           <div className="space-y-1">

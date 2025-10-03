@@ -2,7 +2,7 @@
 
 import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
 import { cn } from "@/lib/utils";
-import { ArrowBigDown, Brain, Calendar, ChartPie, ChevronDown, ChevronLeftCircleIcon, FileText, HelpCircle, Instagram, LogOut, Menu, Settings, Sparkles, TvMinimalPlay } from "lucide-react";
+import { ArrowBigDown, Brain, Calendar, ChartPie, ChevronDown, ChevronLeftCircleIcon, FileText, Hash, HelpCircle, Instagram, LogOut, Menu, Settings, Sparkles, TvMinimalPlay } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
@@ -125,27 +125,64 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
           <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400 mt-3">Menu</p>
 
           <ul className="space-y-1">
-            {navItems.map((item, index) => (
-              <li key={index}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                    pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                  )}
-                >
-                  <item.icon
-                    strokeWidth={2}
-                    className={cn("h-[18px] w-[18px] mr-2", pathname === item.href ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-700 dark:text-zinc-400")}
-                  />
-                  {item.title}
-                </Link>
-              </li>
-            ))}
+            {navItems.map((item, index) =>
+              item.title === "Content Brain" || item.title === "Special Brain" ? (
+                <li key={index}>
+                  <Link
+                    href={item.href}
+                    className={cn("flex items-center px-[8px] py-[8px] text-sm rounded-md", "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300")}
+                  >
+                    <item.icon
+                      strokeWidth={2}
+                      className={cn("h-[18px] w-[18px] mr-2", "text-zinc-700 dark:text-zinc-400")}
+                    />
+                    {item.title}
+                  </Link>
+                  <div className={cn("ml-4 mt-1 space-y-1 border-l-2 pl-2", pathname === "/dashboard/content-brain" || pathname === "/dashboard/special-brain" ? "block" : "hidden")}>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "flex items-center px-[12px] py-[8px] text-sm rounded-md",
+                        pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                      )}
+                    >
+                      Social Brain
+                    </Link>
+                    <Link
+                      href="/dashboard/special-brain"
+                      className={cn(
+                        "flex items-center px-[12px] py-[8px] text-sm rounded-md",
+                        pathname === "/dashboard/special-brain"
+                          ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300"
+                          : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                      )}
+                    >
+                      Special Brain
+                    </Link>
+                  </div>
+                </li>
+              ) : (
+                <li key={index}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex items-center px-[8px] py-[8px] text-sm rounded-md",
+                      pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                    )}
+                  >
+                    <item.icon
+                      strokeWidth={2}
+                      className={cn("h-[18px] w-[18px] mr-2", pathname === item.href ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-700 dark:text-zinc-400")}
+                    />
+                    {item.title}
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
         </nav>
         <section className="h-full mt-2 px-0.5 overflow-hidden relative">
-          <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400">History</p>
+          {/* <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400">History</p>
           <ul className="h-[calc(100%-42px)] overflow-x-scroll box flex items-center justify-center mt-1">
             {history.length > 0 ? (
               <div className="h-full w-full flex items-start justify-start flex-col">
@@ -170,7 +207,7 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
               <p className="text-xs pl-2 pb-6 font-medium text-neutral-500 dark:text-zinc-500 italic">Empty History</p>
             )}
           </ul>
-          <div className="h-[58px] pointer-events-none flex items-end justify-center bg-gradient-to-b from-transparent via-white dark:via-zinc-900  to-white dark:to-zinc-900 w-full absolute -bottom-6"></div>
+          <div className="h-[58px] pointer-events-none flex items-end justify-center bg-gradient-to-b from-transparent via-white dark:via-zinc-900  to-white dark:to-zinc-900 w-full absolute -bottom-6"></div> */}
         </section>
         <div className="mt-0 pt-1">
           <UpgradeCard credits={credits} />

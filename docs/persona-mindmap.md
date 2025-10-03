@@ -26,6 +26,12 @@
 
 ## Content Workflow
   ### Content For Youtube (Youtebe Brain)
+    - Title & Desc Optimizer
+    - Find SEO Score
+    - Content Generator
+    - Outline Generator
+    - Tags & Keyword Finder
+    - Optimize Script
 
   ### Content For Social Media (Content Brain)
     - Generate Ideas Using AI

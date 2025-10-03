@@ -68,7 +68,7 @@ const Page1 = () => {
             <div className="flex gap-2 items-center w-full">
               <textarea
                 onChange={(e) => setUserDesc(e.target.value)}
-                className="outline-0 h-16 resize-none flex text-white/70 w-full rounded-md bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none  disabled:cursor-not-allowed disabled:opacity-50"
+                className="outline-0 h-16 box-1 resize-none flex text-white/70 w-full rounded-md bg-transparent text-sm placeholder:text-muted-foreground focus-visible:outline-none  disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="🏀 Describe your video context"
               />
             </div>

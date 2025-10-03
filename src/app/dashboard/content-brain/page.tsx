@@ -6,7 +6,7 @@ const page = async () => {
   const session = await auth();
   return (
     <>
-      <ContentBrainPage user={session?.user as { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean }} />;
+      <ContentBrainPage user={session?.user as { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean }} />
     </>
   );
 };

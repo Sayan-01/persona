@@ -8,13 +8,10 @@ const Logo = () => {
       href="/"
       className="flex items-center space-x-2"
     >
-      <Image
-        src="/icon.svg"
-        alt="logo"
-        width={32}
-        height={32}
-      />
-      <span className="text-zinc-900 dark:text-white text-2xl font-semibold">PersonaAI</span>
+      <div className="p-1 rounded-sm bg-white">
+        <div className="h-5 w-5  bg-zinc-800 rounded-full"></div>
+      </div>
+      <span className="text-zinc-900 dark:text-white text-2xl font-semibold">PersonaAi</span>
     </Link>
   );
 };

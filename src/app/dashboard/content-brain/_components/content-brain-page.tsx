@@ -963,5 +963,5 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
         </div>
       </Tabs>
     </div>
-  );
+  )
 }

@@ -5,7 +5,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { CreditProvider } from "@/hooks/credit-provider";
-import { auth } from "../../auth";
+import NextTopLoader from "nextjs-toploader";
 
 const monaa = Roboto_Mono({ subsets: ["latin"]});
 
@@ -21,7 +21,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html
-    className="dark"
+      className="dark"
       lang="en"
       suppressHydrationWarning
     >
@@ -30,18 +30,22 @@ export default async function RootLayout({
         className={`font-sans ${monaa.className} box `}
       >
         <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
-        <CreditProvider>
-        {children}
-        </CreditProvider>
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <CreditProvider>
+            <NextTopLoader
+              color="#ffffff"
+              height={2}
+              showSpinner={false}
+            />
+            {children}
+          </CreditProvider>
         </ThemeProvider>
         <Toaster />
       </body>
     </html>
-
   );
 }
