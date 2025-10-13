@@ -98,7 +98,7 @@ export function FAQSection() {
             whileInView="animate"
             viewport={{ once: true, margin: "-100px" }}
             className="max-w-4xl mx-auto text-center"
-          >
+          > 
             <motion.div className="text-center">
               <span className="inline-block px-4 py-2 mb-4 text-sm font-medium text-blue-600 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">Powerful Features</span>
 
