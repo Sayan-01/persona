@@ -1,6 +1,5 @@
 import { FeaturesSection } from "@/components/landing/features-section";
 import { PricingSection } from "@/components/landing/pricing-section";
-import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { FAQSection } from "@/components/landing/faq-section";
 import { CTASection } from "@/components/landing/cta-section";
 import { SiteHeader } from "@/components/landing/site-header";
@@ -20,9 +19,7 @@ export default async function Home() {
         <HeroSection />
         <FeaturesSection />
         <PricingSection session={session}/>
-        {/* <TestimonialsSection /> */}
         <FAQSection />
-        <CTASection />
       </main>
       <SiteFooter />
     </div>

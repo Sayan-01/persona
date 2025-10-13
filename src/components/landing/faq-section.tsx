@@ -89,37 +89,45 @@ export function FAQSection() {
   };
 
   return (
-    <section className="relative py-20 overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950">
-      <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
-      <div className="container relative px-4 mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto text-center"
-        >
-          <Heading title="Frequently Asked Questions" description="Everything you need to know about PersonaAI" />
-        </motion.div>
+    <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-900 px-[70px]">
+      <div className="border-x py-20 sm:py-20">
+        <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />{" "}
+        <div className="container relative px-4 mx-auto">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, margin: "-100px" }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <motion.div className="text-center">
+              <span className="inline-block px-4 py-2 mb-4 text-sm font-medium text-blue-600 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">Powerful Features</span>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-16 space-y-4 max-w-3xl mx-auto"
-        >
-          {faqs.map((faq, index) => (
-            <FAQItem
-              key={index}
-              index={index}
-              question={faq.question}
-              answer={faq.answer}
-              isOpen={openIndex === index}
-              onClick={() => toggleItem(index)}
-            />
-          ))}
-        </motion.div>
+              <Heading
+                title="Frequently Asked Questions"
+                description="Find answers to common questions and learn everything you need to know about using PersonaAI effectively!"
+              />
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-16 space-y-4 max-w-3xl mx-auto"
+          >
+            {faqs.map((faq, index) => (
+              <FAQItem
+                key={index}
+                index={index}
+                question={faq.question}
+                answer={faq.answer}
+                isOpen={openIndex === index}
+                onClick={() => toggleItem(index)}
+              />
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -138,26 +138,26 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
                     />
                     {item.title}
                   </Link>
-                  <div className={cn("ml-4 mt-1 space-y-1 border-l-2 pl-2", pathname === "/dashboard/content-brain" || pathname === "/dashboard/special-brain" ? "block" : "hidden")}>
+                  <div className={cn("ml-4 mt-1 space-y-1 border-l pl-4", pathname === "/dashboard/content-brain" || pathname === "/dashboard/special-brain" ? "block" : "hidden")}>
                     <Link
                       href={item.href}
                       className={cn(
-                        "flex items-center px-[12px] py-[8px] text-sm rounded-md",
+                        "flex items-center px-[8px] py-[8px] text-sm rounded-md",
                         pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
                       )}
                     >
-                      Social Brain
+                      🥎 Social Brain
                     </Link>
                     <Link
                       href="/dashboard/special-brain"
                       className={cn(
-                        "flex items-center px-[12px] py-[8px] text-sm rounded-md",
+                        "flex items-center px-[8px] py-[8px] text-sm rounded-md",
                         pathname === "/dashboard/special-brain"
                           ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300"
                           : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
                       )}
                     >
-                      Special Brain
+                      🥎 Special Brain
                     </Link>
                   </div>
                 </li>

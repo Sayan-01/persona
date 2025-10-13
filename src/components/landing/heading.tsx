@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { motion } from "framer-motion";
 
@@ -12,13 +13,13 @@ const Heading = ({title, description}: {title: string, description: string}) => 
     <>
       <motion.h2
         variants={fadeInUp}
-        className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl"
+        className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-[48px]"
       >
         {title}
       </motion.h2>
       <motion.p
         variants={fadeInUp}
-        className="mt-6 text-xl text-gray-600 dark:text-gray-300"
+        className="mt-6 text-lg text-gray-600 dark:text-gray-300"
       >
         {description}
       </motion.p>

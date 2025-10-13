@@ -22,9 +22,9 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative w-full overflow-hidden dark:bg-zinc-900 bg-white px-[70px] border-b">
+    <section className="relative w-full overflow-hidden dark:bg-zinc-900 bg-white md:px-[70px] md:border-b ">
       <div className="border-x">
-        <div className="w-full max-w-7xl mx-auto py-16 pt-[120px] flex flex-col items-center">
+        <div className="w-full max-w-7xl mx-auto py-10 pt-[120px] flex flex-col items-center">
           <div className="absolute w-full h-[400px] top-52 opacity-70 bg-gradient-to-br from-[#fc5eea] via-[#ffffff] to-[#7a8cfa] dark:from-[#00000000] dark:via-[#00000000] dark:to-[#00000000] rounded-[100%] blur-[100px]" />{" "}
           <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
           <motion.div

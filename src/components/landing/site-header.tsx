@@ -8,12 +8,13 @@ import { Menu, X } from "lucide-react";
 import BlackButton from "./button";
 import Logo from "../global/logo";
 import { LandingPageNav } from "@/constants";
+import { cn } from "@/lib/utils";
 
 export function SiteHeader({ session }: { session: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="w-full absolute z-10  px-3 border-b backdrop-blur-lg">
+    <header className={cn("w-full absolute z-10 px-6 border-b backdrop-blur-lg bg-zinc-900/90 max-sm:fixed max-sm:top-0 max-sm:z-50", isMenuOpen ? "h-full" : "")}>
       <div className="">
         <div className="container flex h-[70px] items-center justify-between max-w-[1400px] mx-auto">
           <Logo />
@@ -55,7 +56,7 @@ export function SiteHeader({ session }: { session: any }) {
               </>
             )}
           </div>
-          <div className="flex md:hidden items-center gap-4">
+          <div className="flex md:hidden items-center gap-4 border rounded-full">
             <Button
               variant="ghost"
               size="icon"
@@ -68,8 +69,15 @@ export function SiteHeader({ session }: { session: any }) {
         </div>
       </div>
       {isMenuOpen && (
-        <div className="container md:hidden py-4 pb-6">
+        <div className="container h-[calc(100vh-70px)] md:hidden py-4 pb-6 flex flex-col justify-between">
           <nav className="flex flex-col gap-4">
+            <Link
+              href="/"
+              className=" font-medium transition-colors hover:text-blue-600 "
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
             <Link
               href="#features"
               className=" font-medium transition-colors hover:text-blue-600 "
@@ -84,13 +92,7 @@ export function SiteHeader({ session }: { session: any }) {
             >
               Pricing
             </Link>
-            <Link
-              href="#testimonials"
-              className=" font-medium transition-colors hover:text-blue-600 "
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Testimonials
-            </Link>
+
             <Link
               href="#faq"
               className=" font-medium transition-colors hover:text-blue-600 "
@@ -98,20 +100,40 @@ export function SiteHeader({ session }: { session: any }) {
             >
               FAQ
             </Link>
-            <div className="flex flex-col gap-2 mt-2">
-              <Link href="/auth/login">
+            <Link
+              href="/dashboard/settings"
+              className=" font-medium transition-colors hover:text-blue-600 "
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Profile
+            </Link>
+          </nav>
+          <div className="flex flex-col gap-5 mt-2">
+            {session?.user ? (
+              <Link href="/dashboard">
                 <Button
                   variant="outline"
                   className="w-full border-blue-200 bg-white/50 text-blue-700 hover:bg-blue-50 hover:text-blue-800 "
                 >
-                  Login
+                  Dashboard
                 </Button>
               </Link>
-              <Link href="auth/register">
-                <Button className="w-full rounded-full bg-gradient-to-r from-blue-600 via-violet-600 to-indigo-600 text-white hover:shadow-md hover:shadow-blue-500/25 ">Get Started</Button>
-              </Link>
-            </div>
-          </nav>
+            ) : (
+              <>
+                <Link href="/auth/login">
+                  <Button
+                    variant="outline"
+                    className="w-full border-blue-200 bg-white/50 text-blue-700 hover:bg-blue-50 hover:text-blue-800 "
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link href="auth/register">
+                  <Button className="w-full">Register</Button>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       )}
     </header>

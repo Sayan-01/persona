@@ -66,11 +66,11 @@ const LoginForm = () => {
           </h2>
         </Link>
       </div>
-      <p className="mt-5 text-sm opacity-60 text-center">Only login via email, Google, or 86 plus phone number login is supported in your region.</p>
+      <p className="mt-2 text-sm opacity-60 text-center">Only login via Email or Google to access Persona AI all features.</p>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-2 my-4"
+          className="space-y-2 my-6"
           noValidate
         >
           <FormField
@@ -110,16 +110,16 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-          <div className={`mb-2 ${error ? "text-red-500 text-[0.8rem] font-medium" : " text-emerald-500 text-[0.8rem] font-medium"} `}>{error ? error : success}</div>
+          <div className={`-mt-2 ${error ? "text-red-500 text-end w-full text-[0.8rem] font-medium" : " text-emerald-500 text-end w-full text-[0.8rem] font-medium"} `}>{error ? error : success}</div>
           <SubmitButton
             className="bg-blue-500 border-x relative group/btn block w-full text-white rounded-lg h-10 border border-blue-600 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] py-0 text-base"
-            disable_className="opacity-80  border-x w-full text-black rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] text-base"
+            disable_className="opacity-80  border-x w-full text-white rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] text-base"
             loading={loading}
           >
             Login &rarr;
             <BottomGradient />
           </SubmitButton>
-          <h4 className="text-zinc-700 mt-4 text-center text-sm">
+          <h4 className="text-white/60 mt-4 text-center text-sm">
             Don't have an acoount?{" "}
             <span className=" text-blue-600 underline">
               <Link href={`/auth/register`}>Register</Link>

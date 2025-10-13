@@ -48,11 +48,11 @@ export const socialPlatforms = [
   },
 ];
 export const LandingPageNav = [
+  {title: "Home", href: "/"},
   {title: "Feature", href: "#features"},
-  {title: "How It Works", href: "#how-it-works"},
   {title: "Pricing", href: "#pricing"},
-  {title: "Testimonials", href: "#testimonials"},
   {title: "FAQ", href: "#faq"},
+  {title: "Profile", href: "/dashboard/settings"},
 ]
 
 

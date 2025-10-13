@@ -68,11 +68,11 @@ const RegisterForm = () => {
   };
 
   const onSubmit = async (values: { username: string; email: string; password: string; otp: string }) => {
-    setLoading(true); // Set loading to true
-    const username = await values.username;
-    const email = await values.email;
-    const password = await values.password;
-    const otp = await values.otp;
+    setLoading(true);
+    const username = values.username;
+    const email = values.email;
+    const password = values.password;
+    const otp = values.otp;
 
     if (!username || !email || !password || !otp) return setError("Filled all details");
     if (email !== preEmail) return setError("Email does not match");
@@ -86,16 +86,16 @@ const RegisterForm = () => {
         let data = await res.json();
         if (res.ok) {
           setSuccess(data.message);
-          setLoading(false); // Set loading to false
+          setLoading(false);
           router.refresh();
           router.push("/auth/login");
         } else if (!res.ok) {
-          setLoading(false); // Set loading to false
+          setLoading(false);
           setError(data.message);
         }
       } catch (error) {
         console.log("Error in sign up", error);
-        setLoading(false); // Set loading to false
+        setLoading(false);
       }
     }
   };
@@ -109,11 +109,11 @@ const RegisterForm = () => {
           </h2>
         </Link>
       </div>
-      <p className="mt-5 text-sm opacity-60 text-center">Only login via email, Google, or 86 plus phone number login is supported in your region.</p>
+      <p className="mt-2 text-sm opacity-60 text-center">Only register via Email or Google to access Persona AI all features.</p>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-2 my-4"
+          className="space-y-2 my-6"
           noValidate
         >
           <FormField
@@ -193,7 +193,7 @@ const RegisterForm = () => {
             <div
               onClick={code ? undefined : getCode}
               className={` cursor-pointer h-[42px] bg-input/40 text-zinc-400 border-[1px] rounded-lg text-sm inline-flex items-center justify-center whitespace-nowrap px-2 font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:opacity-80 ${
-                code ? "opacity-30 hover:!bg-zinc-700" : " "
+                code ? "opacity-30 hover:!opacity-30" : " "
               }`}
             >
               Send code
@@ -242,7 +242,7 @@ const RegisterForm = () => {
             Sign up &rarr;
             <BottomGradient />
           </SubmitButton>
-          <h4 className="text-zinc-700 mt-4 text-center text-sm">
+          <h4 className="text-white/60 mt-4 text-center text-sm">
             Already have an acoount?{" "}
             <span className=" text-blue-600">
               <Link href={`/auth/login`}>Login</Link>

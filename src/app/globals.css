@@ -121,6 +121,9 @@
   }
 }
 
+* {
+  scroll-behavior: smooth;
+}
 
 .box::-webkit-scrollbar {
   display: none !important;
