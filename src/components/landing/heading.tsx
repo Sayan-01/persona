@@ -19,7 +19,7 @@ const Heading = ({title, description}: {title: string, description: string}) => 
       </motion.h2>
       <motion.p
         variants={fadeInUp}
-        className="mt-6 text-lg text-gray-600 dark:text-gray-300"
+        className="sm:mt-6 mt-2 sm:text-lg text-base text-gray-600 dark:text-gray-300"
       >
         {description}
       </motion.p>

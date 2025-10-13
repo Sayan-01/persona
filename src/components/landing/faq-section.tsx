@@ -89,10 +89,10 @@ export function FAQSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-900 px-[70px]">
-      <div className="border-x py-20 sm:py-20">
+    <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-900 md:px-[70px]">
+      <div className="md:border-x py-16 sm:py-20">
         <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />{" "}
-        <div className="container relative px-4 mx-auto">
+        <div className="container relative px-6 mx-auto">
           <motion.div
             initial="initial"
             whileInView="animate"

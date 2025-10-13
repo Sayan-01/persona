@@ -46,8 +46,8 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t bg-zinc-900 backdrop-blur-sm">
-      <div className=" py-20 px-[70px] mx-auto max-w-7xl">
-        <div className="grid grid-cols-3 gap-10">
+      <div className=" sm:py-20 py-8 md:px-[70px] px-6 mx-auto max-w-7xl">
+        <div className="grid md:grid-cols-3 sm:grid-cols-2  gap-10">
           {/* Brand and social */}
           <div className="flex flex-col ">
             <Link
@@ -80,7 +80,7 @@ export function SiteFooter() {
           </div>
 
           {/* Navigation links */}
-          <div className="flex md:gap-10">
+          <div className="flex md:gap-10 gap-6">
             {footerLinks.map((section) => (
               <div
                 key={section.title}
@@ -107,7 +107,7 @@ export function SiteFooter() {
           <div className="fle flex-col">
             <h3 className="text-sm font-medium text-foreground/90">Subscribe to our newsletter</h3>
             <p className="mt-2 text-sm text-muted-foreground">Get the latest updates and news delivered to your inbox.</p>
-            <form className="mt-4 flex flex-col sm:flex-row gap-2">
+            <form className="mt-4 flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
                 <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
@@ -123,7 +123,7 @@ export function SiteFooter() {
                 Subscribe
               </Button>
             </form>
-            <p className="mt-2 text-xs text-muted-foreground">We respect your privacy. Unsubscribe at any time.</p>
+            <p className="mt-3 text-xs text-muted-foreground">We respect your privacy. Unsubscribe at any time.</p>
           </div>
         </div>
 

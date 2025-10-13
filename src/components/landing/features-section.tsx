@@ -4,6 +4,7 @@ import { ArrowRight, BrainCircuit, Calendar, FileText, Sparkles, Trophy } from "
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Heading from "./heading";
+import Link from "next/link";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -68,9 +69,9 @@ export function FeaturesSection() {
   return (
     <section
       id="features"
-      className="relative overflow-hidden  bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-900 border-b px-[70px]"
+      className="relative overflow-hidden  bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-900 border-b md:px-[70px]"
     >
-      <div className="border-x py-20 sm:py-20">
+      <div className="md:border-x py-16 sm:py-20">
         <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
         <div className="container relative px-4 w-full max-w-7xl mx-auto ">
           <motion.div
@@ -129,22 +130,22 @@ export function FeaturesSection() {
 
           <motion.div
             variants={fadeInUp}
-            className="mt-16 text-center"
+            className="sm:mt-16 mt-8 text-center"
           >
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">Ready to transform your content creation process?</p>
+            <p className="sm:text-lg text-base text-gray-600 dark:text-gray-400 mb-8">Ready to transform your content creation process?</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a
+              <Link
                 href="#pricing"
                 className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-500/20 dark:shadow-violet-500/10"
               >
                 Get Started Free
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#demo"
                 className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-gray-900 dark:text-white bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-300"
               >
                 Watch Demo
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>
