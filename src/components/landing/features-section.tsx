@@ -74,15 +74,10 @@ export function FeaturesSection() {
       <div className="md:border-x py-16 sm:py-20">
         <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
         <div className="container relative px-4 w-full max-w-7xl mx-auto ">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={stagger}
+          <div
             className="max-w-4xl mx-auto text-center"
           >
-            <motion.div
-              variants={fadeInUp}
+            <div
               className="text-center"
             >
               <span className="inline-block px-4 py-2 mb-4 text-sm font-medium text-blue-600 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">Powerful Features</span>
@@ -91,11 +86,10 @@ export function FeaturesSection() {
                 title="Your Ultimate AI Partner"
                 description="PersonaAI combines powerful AI with your unique voice to create content that resonates with your audience."
               />
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          <motion.div
-            variants={fadeInUp}
+          <div
             className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {features.map((feature, index) => (
@@ -126,7 +120,7 @@ export function FeaturesSection() {
                 <div className={cn("absolute -z-0 inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-5 transition-opacity duration-300", feature.color)} />
               </motion.div>
             ))}
-          </motion.div>
+          </div>
 
           <motion.div
             variants={fadeInUp}

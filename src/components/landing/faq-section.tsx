@@ -93,21 +93,18 @@ export function FAQSection() {
       <div className="md:border-x py-16 sm:py-20">
         <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />{" "}
         <div className="container relative px-6 mx-auto">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
+          <div
             className="max-w-4xl mx-auto text-center"
           > 
-            <motion.div className="text-center">
+            <div className="text-center">
               <span className="inline-block px-4 py-2 mb-4 text-sm font-medium text-blue-600 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 rounded-full">Powerful Features</span>
 
               <Heading
                 title="Frequently Asked Questions"
                 description="Find answers to common questions and learn everything you need to know about using PersonaAI effectively!"
               />
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
