@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { callAiApi, Field } from "../page";
+import { callAiApi} from "@/utils/helper";
+import { Field } from "./growth-content-component";
 import AIinput from "@/components/global/ai-input";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";

@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { callAiApi, Field, parseSimpleCSV } from "../page";
 import AIinput from "@/components/global/ai-input";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
+import { callAiApi, parseSimpleCSV } from "@/utils/helper";
+import { Field } from "./growth-content-component";
 
 function buildEcommercePrompt({
   name,

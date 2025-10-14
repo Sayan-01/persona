@@ -95,3 +95,42 @@ export const generateAIPreferences = (tone: string, industry?: string) => {
 
   return preferences;
 };
+
+
+export async function callAiApi(prompt: string, options?: { temperature?: number }) {
+  // TODO: Replace with your provider endpoint (/api/ai/generate) or direct OpenAI call from server.
+  // This placeholder demonstrates the expected shape and returns a mocked response when dev mode.
+  try {
+    const res = await fetch("/api/ai/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt, temperature: options?.temperature ?? 0.7 }),
+    });
+    if (!res.ok) throw new Error("AI API error: " + res.statusText);
+    return await res.json();
+  } catch (err) {
+    // Fallback mock for local dev (so the UI still demonstrates behavior)
+    console.warn("AI API call failed, using mock", err);
+    return {
+      title: "(mock) Generated title",
+      text: "(mock) Generated content for prompt: " + prompt.slice(0, 180) + "...",
+      variants: ["(mock) Variant A", "(mock) Variant B"],
+      meta: "(mock) meta description",
+    };
+  }
+}
+
+export function parseSimpleCSV(csv: string) {
+  const lines = csv.trim().split(/\r?\n/);
+  const header =
+    lines
+      .shift()
+      ?.split(",")
+      .map((h) => h.trim()) || [];
+  return lines.map((line) => {
+    const cols = line.split(",").map((c) => c.trim());
+    const obj: Record<string, string> = {};
+    header.forEach((h, i) => (obj[h] = cols[i] ?? ""));
+    return obj;
+  });
+}
