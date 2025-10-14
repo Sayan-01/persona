@@ -24,7 +24,7 @@ const HeroSection = () => {
   return (
     <section className="relative w-full overflow-hidden dark:bg-zinc-900 bg-white md:px-[70px] border-b ">
       <div className="md:border-x">
-        <div className="w-full max-w-7xl mx-auto py-16 sm:py-20 sm:pt-[120px] pt-[70px] flex flex-col items-center">
+        <div className="w-full max-w-7xl mx-auto py-16 sm:py-20 sm:pt-[200px] pt-[150px] flex flex-col items-center">
           <div className="absolute w-full h-[400px] top-52 opacity-70 bg-gradient-to-br from-[#fc5eea] via-[#ffffff] to-[#7a8cfa] dark:from-[#00000000] dark:via-[#00000000] dark:to-[#00000000] rounded-[100%] blur-[100px]" />{" "}
           <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
           <motion.div
@@ -63,7 +63,7 @@ const HeroSection = () => {
               <Link href="/dashboard/content-brain">
                 <Button
                   size="lg"
-                  className="group rounded-full dark:bg-primary dark:text-black"
+                  className="group rounded-full md:h-12 h-10 dark:bg-primary dark:text-black"
                 >
                   Let's Start Creating
                 </Button>
@@ -80,7 +80,7 @@ const HeroSection = () => {
             </motion.div>
             <motion.div
               variants={fadeInUp}
-              className="sm:mt-28 mt-12 sm:w-full w-[200%] relative sm:top-0 -right-[65%] sm:left-0  rounded-3xl border-4 border-white dark:border-black/70 bg-[#f1f1f1] dark:bg-zinc-800 p-5 backdrop-blur-sm"
+              className="sm:mt-24 mt-12 sm:w-full w-[200%] relative sm:top-0 -right-[65%] sm:left-0  rounded-3xl border-4 border-white dark:border-black/70 bg-[#f1f1f1] dark:bg-zinc-800 p-5 backdrop-blur-sm"
             >
               <div className=" w-full overflow-hidden rounded-2xl bg-[#212121] ">
                 <div className="flex h-full items-center justify-center">
