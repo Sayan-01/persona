@@ -29,12 +29,7 @@ export default async function RootLayout({
         cz-shortcut-listen="true"
         className={`font-sans ${monaa.className} box `}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
+        
           <CreditProvider>
             <NextTopLoader
               color="#ffffff"
@@ -43,7 +38,6 @@ export default async function RootLayout({
             />
             {children}
           </CreditProvider>
-        </ThemeProvider>
         <Toaster />
       </body>
     </html>
