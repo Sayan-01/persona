@@ -2,11 +2,10 @@ import { Facebook, Twitter, Instagram, Linkedin, Youtube, Target, Users, Zap, Sp
 import { Type, BarChart3, FileText, List, Tags, Rocket } from "lucide-react";
 export const Platforms = [
   { value: "linkedIn", label: "💼 LinkedIn Post", desc: "Professional networking content", color: "bg-blue-50 border-blue-200" },
-  { value: "twitter", label: "🐦 Twitter Thread", desc: "Engaging thread format", color: "bg-sky-50 border-sky-200" },
-  { value: "instagram", label: "📸 Instagram Caption", desc: "Visual storytelling", color: "bg-pink-50 border-pink-200" },
   { value: "facebook", label: "🤩 Facebook Caption", desc: "Engaging fb post format", color: "bg-pink-50 border-pink-200"},
+  { value: "instagram", label: "📸 Instagram Caption", desc: "Visual storytelling", color: "bg-pink-50 border-pink-200" },
+  { value: "twitter", label: "🐦 Twitter Thread", desc: "Engaging thread format", color: "bg-sky-50 border-sky-200" },
   { value: "blog", label: "📰 Blog Article", desc: "Long-form content", color: "bg-purple-50 border-purple-200" },
-  { value: "youtube", label: "🎬 YouTube Script", desc: "Video content script", color: "bg-red-50 border-red-200" },
 ];
 
 export const ContentLengths = [
@@ -53,6 +52,7 @@ export const LandingPageNav = [
   {title: "Pricing", href: "#pricing"},
   {title: "FAQ", href: "#faq"},
   {title: "Profile", href: "/dashboard/settings"},
+  {title: "Know_More", href: "/blog/know-more"},
 ]
 
 

@@ -131,13 +131,13 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           if (!res.ok) {
             throw new Error("Failed to fetch AI template.");
           }
-          const data = await res.json();//json
+          const data = await res.json(); //json
 
           console.log(data);
 
           if (data) {
             decrementCredits(100);
-            const dataObj = JSON.parse(data);  //object
+            const dataObj = JSON.parse(data); //object
             setResult(dataObj);
             if (activeTab === "ideas") {
               setShowIdeas(true);
@@ -323,6 +323,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               </TabsTrigger>
             </TabsList>
           </nav>
+          
           <section className="min-[1150px]:h-[calc(100%-48px)] h-full overflow-scroll box">
             {/* Content Ideas Tab */}
             <TabsContent
@@ -363,17 +364,18 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                           Paste the content description below <span className="text-pink-500">*</span>
                         </Label>
                         <textarea
+                          maxLength={1000}
                           value={ideaGeneratePromptDetails.topic}
                           onChange={(e) => setIdeaGeneratePromptDetails({ ...ideaGeneratePromptDetails, topic: e.target.value })}
                           className="w-full border-2 border-dashed border-indigo-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 dark:hover:border-zinc-600 transition-all"
                           placeholder="Paste the content description here..."
                         />
                         <div className="flex justify-between items-center mt-2">
-                          <div className="text-xs text-gray-500 dark:text-gray-400">482/1000 characters</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">{ideaGeneratePromptDetails.topic.length}/1000 characters</div>
                           <div className="w-24 bg-gray-200 dark:bg-zinc-700 rounded-full h-1">
                             <div
                               className="bg-indigo-500 dark:bg-zinc-500 h-1 rounded-full"
-                              style={{ width: "48%" }}
+                              style={{ width: `${(ideaGeneratePromptDetails.topic.length / 1000) * 100}%`, minWidth: "5px" }}
                             ></div>
                           </div>
                         </div>
@@ -411,7 +413,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       {/* Suggested Skills */}
                       <div className="flex flex-wrap gap-2 items-center">
                         <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">Suggestions:</span>
-                        {["Facebook", "Instagram", "LinkedIn", "Twitter", "blog"].map((suggestion) => (
+                        {["LinkedIn", "Facebook", "Instagram", "Twitter", "blog"].map((suggestion) => (
                           <button
                             key={suggestion}
                             onClick={() => {
@@ -439,11 +441,12 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       <Label className="text-sm font-medium text-gray-700 dark:text-gray-300">How many ideas should be generated?</Label>
                       <div className="relative">
                         <AIinput
+                          maxLength={1}
                           type="text"
                           value={ideaGeneratePromptDetails.numberOfIdeas}
                           onChange={(e: any) => setIdeaGeneratePromptDetails({ ...ideaGeneratePromptDetails, numberOfIdeas: e.target.value })}
                           className=" dark:focus:ring-zinc-500 h-10 bg-white dark:bg-zinc-800 mt-0"
-                          placeholder="0.8"
+                          placeholder="3"
                         />
                         <div className="mt-2 flex justify-between text-xs text-gray-500 dark:text-gray-400">
                           <span>Conservative (0.0)</span>
@@ -561,10 +564,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   {/* Content length */}
                   <Card className="border-indigo-200 dark:border-zinc-700 border-2 border-dashed mb-8">
                     <CardHeader className="">
-                      <CardTitle className="text-lg font-medium text-slate-900 dark:text-white flex items-center gap-2">
-                        <div className="h-2 w-2 rounded-full bg-orange-500"></div>
-                        Content Length
-                      </CardTitle>
+                      <CardTitle className="text-lg font-medium text-slate-900 dark:text-white flex items-center gap-2">👽 Content Length</CardTitle>
                       <p className="text-sm text-slate-500 dark:text-gray-400">Choose the ideal length for your content</p>
                     </CardHeader>
                     <CardContent>
@@ -963,5 +963,5 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
         </div>
       </Tabs>
     </div>
-  )
+  );
 }

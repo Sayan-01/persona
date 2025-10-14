@@ -12,6 +12,7 @@ import { useCredits } from "@/hooks/credit-provider";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { getAllHistory } from "../../../../../server/actions";
 import { DialogTitle } from "@/components/ui/dialog";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 interface NavItem {
   title: string;
@@ -128,38 +129,54 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
             {navItems.map((item, index) =>
               item.title === "Content Brain" || item.title === "Special Brain" ? (
                 <li key={index}>
-                  <Link
-                    href={item.href}
-                    className={cn("flex items-center px-[8px] py-[8px] text-sm rounded-md", "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300")}
+                  <Accordion
+                    type="single"
+                    collapsible
+                    defaultValue="item-1"
                   >
-                    <item.icon
-                      strokeWidth={2}
-                      className={cn("h-[18px] w-[18px] mr-2", "text-zinc-700 dark:text-zinc-400")}
-                    />
-                    {item.title}
-                  </Link>
-                  <div className={cn("ml-4 mt-1 space-y-1 border-l pl-4", pathname === "/dashboard/content-brain" || pathname === "/dashboard/special-brain" ? "block" : "hidden")}>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                        pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                      )}
-                    >
-                      🥎 Social Brain
-                    </Link>
-                    <Link
-                      href="/dashboard/special-brain"
-                      className={cn(
-                        "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                        pathname === "/dashboard/special-brain"
-                          ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300"
-                          : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                      )}
-                    >
-                      🥎 Special Brain
-                    </Link>
-                  </div>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger
+                        className={cn("flex items-center px-[8px] py-[8px] text-sm rounded-md", "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:no-underline")}
+                      >
+                        <div className="flex">
+                          <item.icon
+                            strokeWidth={2}
+                            className={cn("h-[18px] w-[18px] mr-2", "text-zinc-700 dark:text-zinc-400")}
+                          />
+                          {item.title}
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-0 ">
+                        <div className={cn("ml-4 mt-1 space-y-1 border-l border-zinc-700/50 pl-3 relative")}>
+                          <div className="absolute -left-[2px] -top-1 w-1 h-1 rounded-full bg-zinc-700" />
+                          <div className="absolute -left-[2px] -bottom-1 w-1 h-1 rounded-full bg-zinc-700" />
+
+                          <Link
+                            href={item.href}
+                            className={cn(
+                              "flex items-center px-[8px] py-[8px] text-sm rounded-md",
+                              pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                            )}
+                          >
+                            <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
+                            Social Content
+                          </Link>
+                          <Link
+                            href="/dashboard/growth-content"
+                            className={cn(
+                              "flex items-center px-[8px] py-[8px] text-sm rounded-md",
+                              pathname === "/dashboard/growth-content"
+                                ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300"
+                                : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                            )}
+                          >
+                            <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
+                            Growth Content
+                          </Link>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </li>
               ) : (
                 <li key={index}>

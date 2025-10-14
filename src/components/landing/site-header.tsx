@@ -69,7 +69,7 @@ export function SiteHeader({ session }: { session: any }) {
         </div>
       </div>
       {isMenuOpen && (
-        <div className="container h-[calc(100vh-70px)] md:hidden py-4 pb-6 flex flex-col justify-between">
+        <div className="container h-[calc(100vh-70px)] md:hidden py-4 pb-6 flex flex-col gap-5">
           <nav className="flex flex-col gap-4">
             <Link
               href="/"
@@ -106,6 +106,13 @@ export function SiteHeader({ session }: { session: any }) {
               onClick={() => setIsMenuOpen(false)}
             >
               Profile
+            </Link>
+            <Link
+              href="/blog/know-more"
+              className=" font-medium transition-colors hover:text-blue-600 "
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Know More
             </Link>
           </nav>
           <div className="flex flex-col gap-5 mt-2">
