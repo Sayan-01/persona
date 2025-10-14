@@ -148,7 +148,7 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
                       </AccordionTrigger>
                       <AccordionContent className="pb-0 ">
                         <div className={cn("ml-4 mt-1 space-y-1 border-l border-zinc-700/50 pl-3 relative")}>
-                          <div className="absolute -left-[2px] -top-1 w-1 h-1 rounded-full bg-zinc-700" />
+                          <div className="absolute -left-[2px] top-0 w-1 h-1 rounded-full bg-zinc-700" />
                           <div className="absolute -left-[2px] -bottom-1 w-1 h-1 rounded-full bg-zinc-700" />
 
                           <Link
