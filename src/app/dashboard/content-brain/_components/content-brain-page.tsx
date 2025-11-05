@@ -292,7 +292,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
       >
         {/* Input section */}
         <div className="flex-1 border-r h-full">
-          <nav className="flex border-b min-[1316px]:justify-between justify-end h-12">
+          <nav className="flex border-b-2 min-[1316px]:justify-between justify-end h-12">
             <div className="min-[1316px]:flex items-center py-2 px-2 hidden">
               <button className="p-1.5 hover:bg-gray-100 rounded">
                 <ChevronLeft className="h-5 w-5 text-gray-500" />
@@ -323,7 +323,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               </TabsTrigger>
             </TabsList>
           </nav>
-          
+
           <section className="min-[1150px]:h-[calc(100%-48px)] h-full overflow-scroll box">
             {/* Content Ideas Tab */}
             <TabsContent
@@ -477,7 +477,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
 
             {/* Create Tab */}
             <TabsContent value="create">
-              <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
+              <div className="p-8 max-w-[750px] min-[1536px]:border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
                 <div className="flex justify-between items-center mb-8">
                   <div>
                     <h1 className="leading-none font-semibold text-2xl opacity-80 dark:text-white dark:opacity-90">Generate Your Content</h1>
@@ -713,7 +713,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               </div>
             </TabsContent>
             <TabsContent value="enhance">
-              <div className="p-8 max-w-[750px] border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
+              <div className="p-8 max-w-[750px] min-[1536px]:border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
                 <div className="flex justify-between items-center mb-8">
                   <div>
                     <h1 className="leading-none font-semibold text-2xl opacity-80 dark:text-white dark:opacity-90">Enhance Existing Content</h1>
@@ -807,9 +807,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           </section>
         </div>
         {/* Output box */}
-        <div className=" min-[1150px]:w-[450px] w-full h-full min-h-[500px] ">
+        <div className=" min-[1150px]:w-[450px] w-full h-full min-h-[500px] md:border-0 border-t-2">
           {/* Auto Save Badge */}
-          <nav className="flex items-center px-4 h-12 border-b justify-between ">
+          <nav className="flex items-center px-4 h-12 border-b-2 justify-between ">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-indigo-500 dark:bg-zinc-500 rounded-full"></div>
               <span className="text-sm text-gray-500 dark:text-gray-400">auto saved</span>
@@ -886,8 +886,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 </div>
               ) : (
                 <div className="h-full w-full flex items-center flex-col justify-center">
-                  <div className="text-[70px] -mt-10">🔥</div>
-                  <h1 className="font-bold text-lg">Answer The Prompt</h1>
+                  <div className="text-[70px] md:-mt-10 mt-10">🔥</div>
+                  <h1 className="font-bold text-lg">Answer Of The Prompt</h1>
                   <p className="text-sm text-zinc-600 dark:text-gray-400 text-center">
                     Get the pest output result by filling
                     <br /> proper information
@@ -941,7 +941,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 </>
               ) : (
                 <div className="h-full w-full flex items-center flex-col justify-center">
-                  <div className="text-[70px] -mt-10">🧠</div>
+                  <div className="text-[70px] md:-mt-10 mt-10">🧠</div>
                   <h1 className="font-bold text-lg">Answer The Prompt</h1>
                   <p className="text-sm text-zinc-600 dark:text-gray-400 text-center">
                     Get the pest output result by filling

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,10 +14,10 @@ import { useState } from "react";
 import { updateUserInfo, updateUserPersona } from "../../../../server/user-profile";
 
 export default function SettingsPage() {
-  const { data: session, update} = useSession();
+  const { data: session, update } = useSession();
   const userId = session?.user?.id;
 
-  console.log(typeof(session?.user));
+  console.log(typeof session?.user);
 
   const [isPending, startTransition] = useTransition();
 
@@ -82,13 +82,12 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen p-4 bg-zinc-900">
-      <div className="max-w-7xl mx-auto">
+      <div className="">
         <div className="mb-10 ">
           <h1 className="text-3xl font-black dark:text-white mb-1">This is Your Settings Page</h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400">This is a content generation and management software operate using AI </p>
         </div>
       </div>
-      {JSON.stringify(session?.user)}
 
       <Tabs
         defaultValue="persona"
@@ -96,8 +95,8 @@ export default function SettingsPage() {
         className="flex flex-col gap-4 lg:flex-row"
       >
         {/* Sidebar Tabs */}
-        <div className="lg:w-1/6">
-          <TabsList className="flex w-full flex-col items-start justify-start bg-transparent p-0">
+        <div className="lg:w-1/6 min-w-[240px] relative">
+          <TabsList className="flex w-full h-max overflow-x-auto p-0 lg:pb-0 pb-1 box lg:flex-col flex-row items-start justify-start bg-transparent relative">
             <TabsTrigger
               value="persona"
               className="flex w-full items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
@@ -135,12 +134,13 @@ export default function SettingsPage() {
             </TabsTrigger>
             <TabsTrigger
               value="help"
-              className="flex w-full items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
+              className="flex w-full items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary mr-4"
             >
               <HelpCircle className="h-4 w-4" />
               <span>Help & Support</span>
             </TabsTrigger>
           </TabsList>
+          <div className="bg-gradient-to-r from-transparent to-zinc-900 absolute top-0 right-0 w-20 h-10 pointer-events-none" />
         </div>
 
         {/* Tab Contents */}
