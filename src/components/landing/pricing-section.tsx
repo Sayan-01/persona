@@ -7,13 +7,13 @@ import Heading from "./heading";
 
 const plans = [
   {
-    name: "Starter",
-    price: "$0",
-    description: "Perfect for individuals and small teams",
-    features: ["Up to 5 team members", "Basic analytics dashboard", "24/7 email support", "1,000 AI content generations", "5 custom workflows"],
-    buttonText: "Get Started",
+    name: "Enterprise",
+    price: "$100",
+    description: "Advanced features for large organizations",
+    features: ["Unlimited team members", "Custom analytics solutions", "Dedicated support manager", "Custom AI model training", "Advanced security features", "API access", "White-label options"],
+    buttonText: "Contact Sales",
     popular: false,
-    color: "from-blue-500 to-cyan-500",
+    color: "from-orange-500 to-rose-500",
   },
   {
     name: "Professional",
@@ -24,14 +24,15 @@ const plans = [
     popular: true,
     color: "from-violet-500 to-purple-500",
   },
+
   {
-    name: "Enterprise",
-    price: "$100",
-    description: "Advanced features for large organizations",
-    features: ["Unlimited team members", "Custom analytics solutions", "Dedicated support manager", "Custom AI model training", "Advanced security features", "API access", "White-label options"],
-    buttonText: "Contact Sales",
+    name: "Starter",
+    price: "$0",
+    description: "Perfect for individuals and small teams",
+    features: ["Up to 5 team members", "Basic analytics dashboard", "24/7 email support", "1,000 AI content generations", "5 custom workflows"],
+    buttonText: "Get Started",
     popular: false,
-    color: "from-orange-500 to-rose-500",
+    color: "from-blue-500 to-cyan-500",
   },
 ];
 
@@ -58,12 +59,12 @@ export async function PricingSection({ session }: { session: any }) {
             </div>
           </div>
 
-          <div className="grid gap-8 mt-16 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
+          <div className="gap-8 mt-16 flex flex-col-reverse md:flex-row-reverse  relative z-10">
             {mergedPlans.map((plan, index) => (
               <div
                 key={index}
                 className={cn(
-                  "relative flex flex-col p-8 rounded-2xl bg-white dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 transition-all duration-300",
+                  "relative flex flex-1 flex-col p-8 rounded-2xl bg-white dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200 dark:border-gray-700 transition-all duration-300",
                   plan.popular && "ring-2 ring-offset-2 ring-violet-500 dark:ring-offset-gray-900"
                 )}
               >
