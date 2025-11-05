@@ -19,12 +19,12 @@ const faqs = [
   {
     question: "Which social platforms are supported?",
     answer:
-      "PersonaAI currently supports LinkedIn and Twitter in the Free plan, with additional platforms available in the Pro and Business plans. Each platform has specialized formatting to ensure your content looks great and performs well.",
+      "PersonaAI currently supports Facebook and Instagram in the Free plan, with additional platforms available in the Pro and Business plans. Each platform has specialized formatting to ensure your content looks great and performs well.",
   },
   {
     question: "How many AI generations do I get?",
     answer:
-      "The Free plan includes 10 AI generations per month. The Pro plan includes 100 generations per month, and the Business plan includes unlimited generations. Each generation can be used for content ideas, writing posts, or enhancing existing content.",
+      "The Free plan includes 10,000 creadits per month. The Pro plan includes 100,000 generations per month, and the Business plan includes unlimited generations. Each generation can be used for content ideas, writing posts, or enhancing existing content.",
   },
   {
     question: "Can I try PersonaAI before subscribing?",
@@ -89,8 +89,8 @@ export function FAQSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-900 md:px-[70px]">
-      <div className="md:border-x py-16 sm:py-20">
+    <section id="faq" className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-900 md:px-[70px]">
+      <div className="md:border-x py-20">
         <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />{" "}
         <div className="container relative px-6 mx-auto">
           <div

@@ -103,9 +103,9 @@ const LoginForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-lg h-[42px] border-[1px] tracking-[6px]"
+                      className="rounded-lg h-[42px] border-[1px]"
                       type="password"
-                      placeholder="@@@@@@"
+                      placeholder="Password"
                       {...field}
                     />
                   </FormControl>

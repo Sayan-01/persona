@@ -17,7 +17,7 @@ export default async function Home() {
       <SiteHeader session={session} />
       <main className="flex-1">
         <HeroSection />
-        <FeaturesSection />
+        <FeaturesSection session={session}/>
         <PricingSection session={session}/>
         <FAQSection />
       </main>

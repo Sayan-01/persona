@@ -43,8 +43,8 @@ export async function PricingSection({ session }: { session: any }) {
     product: products.result.items[index],
   }));
   return (
-    <section className="relative overflow-hidden bg-[#f0f0f0]  dark:bg-zinc-900 border-b md:px-[70px]">
-      <div className="md:border-x py-16 sm:py-20">
+    <section id="pricing" className="relative overflow-hidden bg-[#f0f0f0]  dark:bg-zinc-900 border-b md:px-[70px]">
+      <div className="md:border-x py-20">
         <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
         <div className="w-full max-w-7xl mx-auto sm:px-4 px-6">
           <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] z-0" />
@@ -94,7 +94,7 @@ export async function PricingSection({ session }: { session: any }) {
                   </ul>
                 </div>
                 <Link
-                  href={`/checkout?products=${plan.product.id}&customerEmail=${session?.user?.email}`}
+                  href={session ? `/checkout?products=${plan.product.id}&customerEmail=${session?.user?.email}` : `/auth/login`}
                   key={plan.product.id}
                 >
                   <Button

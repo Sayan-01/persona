@@ -45,7 +45,7 @@ const HeroSection = () => {
               className={`my-4 mt-7 max-w-7xl text-center font-extrabold tracking-tight leading-[1.1] lg:text-6xl md:text-5xl text-[34px]  text-[#000000] dark:text-white sm:text-6xl md:text-[58px] ${outfit.className}`}
             >
               Grow your brand
-              <br className="sm:hidden" /> and
+              <br className="sm:hidden" /> and{" "}
               <br className="hidden sm:block" />
               create lasting engagement
             </motion.h1>

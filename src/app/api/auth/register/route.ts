@@ -10,7 +10,7 @@ export const POST = async (req: Request) => {
   const newUser = await db.user.create({
     data: {
       name: username,
-      email,
+      email: email.toLowerCase(),
       password: hashPass, // Assuming password hashing is done before this step
       varifiedToken: otp, // Ensure field names match Prisma schema
       varifiedTokenExpire: expires,

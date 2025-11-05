@@ -144,7 +144,7 @@ export default function OnboardingComponent({ user }: { user: any }) {
         {step === 2 && (
           <Card>
             <CardHeader>
-              <CardTitle>Beest describes your brand or personal identity</CardTitle>
+              <CardTitle>Best describe your brand or personal identity</CardTitle>
               <CardDescription>This helps tailor content ideas and terminology for your field</CardDescription>
             </CardHeader>
             <CardContent>

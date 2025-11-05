@@ -7,11 +7,11 @@ export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: Github, href: "https://github.com", label: "GitHub" },
+    { icon: Twitter, href: "https://x.com/SayanDas21670", label: "Twitter" },
+    { icon: Facebook, href: "https://www.facebook.com/sayan.das.427380", label: "Facebook" },
+    { icon: Instagram, href: "https://www.instagram.com/sayan_200462", label: "Instagram" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/sayandas-s1", label: "LinkedIn" },
+    { icon: Github, href: "https://github.com/Sayan-01", label: "GitHub" },
   ];
 
   const footerLinks = [
@@ -57,7 +57,7 @@ export function SiteFooter() {
               >
                 <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">PersonaAI</span>
               </Link>
-              <div className="text-xs text-yellow-300">Build with ❤️ Sayan Das</div>
+              <div className="text-xs text-[#00ffff]">Build with Sayan Das 🚀</div>
             </div>
             <p className="mt-4 text-muted-foreground max-w-xs">AI-powered content creation tailored to your unique brand persona.</p>
             <div className="flex items-center mt-6 space-x-4">

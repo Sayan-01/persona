@@ -9,7 +9,7 @@ const UpgradeCard = ({ credits }: { credits: number }) => {
             {/* TODO: Add Plan Name using webhook */}
             {/* <p>Basic Plane</p>
             <span className="bg-[#D1D6F2] dark:bg-zinc-700  px-3 py-0.5 text-[#4964f9] dark:text-blue-400 rounded-full">4/10</span> */}
-            <p>{credits}</p>/<p>10000 credits</p>
+            <p>{credits}</p>/<p>1000 credits</p>
           </div>
           <div className="h-1.5 bg-[#D1D6F2] dark:bg-zinc-700 rounded-full mt-2" />
           <div className="h-1.5 bg-[#bfc8fb] dark:bg-zinc-600 rounded-full w-[80%] mt-2" />

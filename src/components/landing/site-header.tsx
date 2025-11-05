@@ -33,15 +33,15 @@ export function SiteHeader({ session }: { session: any }) {
           <div className="hidden md:flex items-center gap-4">
             {session?.user ? (
               <>
-              <UserButton/>
-              <Link href="/dashboard">
-                <Button
-                  size="lg"
-                  className="rounded-full"
-                >
-                  Dashboard
-                </Button>
-              </Link>
+                <UserButton />
+                <Link href="/dashboard">
+                  <Button
+                    size="lg"
+                    className="rounded-full"
+                  >
+                    Dashboard
+                  </Button>
+                </Link>
               </>
             ) : (
               <>
@@ -82,14 +82,14 @@ export function SiteHeader({ session }: { session: any }) {
               Home
             </Link>
             <Link
-              href="#features"
+              href="/#features"
               className=" font-medium transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >
               Features
             </Link>
             <Link
-              href="#pricing"
+              href="/#pricing"
               className=" font-medium transition-colors hover:text-blue-600 "
               onClick={() => setIsMenuOpen(false)}
             >

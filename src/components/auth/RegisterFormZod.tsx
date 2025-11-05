@@ -160,9 +160,9 @@ const RegisterForm = () => {
                 <LabelInputContainer className={"mb-4"}>
                   <FormControl>
                     <Input
-                      className="rounded-lg h-[42px] border-[1px] tracking-[6px]"
+                      className="rounded-lg h-[42px] border-[1px] "
                       type="password"
-                      placeholder="@@@@@@"
+                      placeholder="Password"
                       {...field}
                     />
                   </FormControl>
@@ -179,10 +179,10 @@ const RegisterForm = () => {
                 <FormItem className="w-full">
                   <FormControl>
                     <Input
-                      className="rounded-lg w-full h-[42px] border-[1px] tracking-[6px] !overflow-hidden"
+                      className="rounded-lg w-full h-[42px] border-[1px]  !overflow-hidden"
                       type="text "
                       maxLength={6}
-                      placeholder="######"
+                      placeholder="Your OTP"
                       {...field}
                     />
                   </FormControl>

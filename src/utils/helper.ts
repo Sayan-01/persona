@@ -134,3 +134,7 @@ export function parseSimpleCSV(csv: string) {
     return obj;
   });
 }
+
+export const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text);
+};

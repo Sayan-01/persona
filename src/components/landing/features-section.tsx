@@ -52,13 +52,13 @@ const features = [
   },
 ];
 
-export function FeaturesSection() {
+export function FeaturesSection({session}: {session: any}) {
   return (
     <section
       id="features"
       className="relative overflow-hidden  bg-gradient-to-b from-white to-gray-50 dark:from-zinc-900 dark:to-zinc-900 border-b md:px-[70px]"
     >
-      <div className="md:border-x py-16 sm:py-20">
+      <div className="md:border-x py-20">
         <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
         <div className="container relative px-4 w-full max-w-7xl mx-auto ">
           <div
@@ -96,12 +96,12 @@ export function FeaturesSection() {
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{feature.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
-                  <div className="mt-6">
+                  <Link href="/blog/features" className="mt-6">
                     <button className={cn("inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors")}>
                       Learn more
                       <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1" />
                     </button>
-                  </div>
+                  </Link>
                 </div>
                 <div className={cn("absolute -z-0 inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-5 transition-opacity duration-300", feature.color)} />
               </div>
@@ -114,7 +114,7 @@ export function FeaturesSection() {
             <p className="sm:text-lg text-base text-gray-600 dark:text-gray-400 mb-8">Ready to transform your content creation process?</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
-                href="#pricing"
+                href= {session ? "/dashboard" : "/auth/login"}
                 className="inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-500/20 dark:shadow-violet-500/10"
               >
                 Get Started Free
