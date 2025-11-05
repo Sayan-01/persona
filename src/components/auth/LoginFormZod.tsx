@@ -43,17 +43,21 @@ const LoginForm = () => {
         });
         let data = await res.json();
         if (res.ok) {
-          setLoading(false); // Set loading to false
+          setLoading(false);
           setSuccess(data.message);
           router.refresh();
-          router.push("/onboarding");
+          if (data.onboardUser.onBoarded) {
+            router.push("/dashboard");
+          } else {
+            router.push("/onboarding");
+          }
         } else {
-          setLoading(false); // Set loading to false
+          setLoading(false);
           setError(data.message);
         }
       } catch (error) {
         console.log("Error in login", error);
-        setLoading(false); // Set loading to false
+        setLoading(false);
       }
     }
   };

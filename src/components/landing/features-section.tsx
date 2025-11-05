@@ -6,19 +6,6 @@ import { cn } from "@/lib/utils";
 import Heading from "./heading";
 import Link from "next/link";
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
-
-const stagger = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
 
 const features = [
   {
@@ -93,10 +80,9 @@ export function FeaturesSection() {
             className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {features.map((feature, index) => (
-              <motion.div
+              <div
                 key={index}
-                variants={fadeInUp}
-                whileHover={{ y: -5 }}
+                
                 className={cn(
                   "group relative overflow-hidden rounded-2xl p-6 bg-white dark:bg-zinc-800/50 backdrop-blur-sm border border-gray-200 dark:border-zinc-700 transition-all duration-300",
                   "hover:shadow-lg hover:shadow-blue-500/10 dark:hover:shadow-violet-500/5"
@@ -118,12 +104,11 @@ export function FeaturesSection() {
                   </div>
                 </div>
                 <div className={cn("absolute -z-0 inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-5 transition-opacity duration-300", feature.color)} />
-              </motion.div>
+              </div>
             ))}
           </div>
 
-          <motion.div
-            variants={fadeInUp}
+          <div
             className="sm:mt-16 mt-8 text-center"
           >
             <p className="sm:text-lg text-base text-gray-600 dark:text-gray-400 mb-8">Ready to transform your content creation process?</p>
@@ -141,7 +126,7 @@ export function FeaturesSection() {
                 Watch Demo
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -53,8 +53,8 @@ const HeroSection = () => {
               variants={fadeInUp}
               className=" max-w-[1000px] text-center text-zinc-600 dark:text-zinc-200/80 md:text-lg text-sm max-sm:px-4"
             >
-              Hey there, I'm a Product Designer based in Poland. I'm all about that <br className="md:block hidden" />
-              vibe, and for low-code and interactions.🔥
+              Welcome to Our PersonaAI, your creative AI partner. Using our tool you<br className="md:block hidden" />
+              can craft content, scripts<br className="block md:hidden" /> and stories easily.✨
             </motion.p>
             <motion.div
               variants={fadeInUp}

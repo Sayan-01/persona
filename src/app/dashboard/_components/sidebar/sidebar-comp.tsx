@@ -111,7 +111,7 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
           "hidden md:flex z-0 ": defaultOption,
           "flex md:hidden z-[100] ": !defaultOption,
         })}
-      >
+      ><div>
         <Link
           href="/"
           className={`flex items-center p-2 justify-start rounded-xl`}
@@ -198,8 +198,9 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
             )}
           </ul>
         </nav>
-        <section className="h-full mt-2 px-0.5 overflow-hidden relative">
-          {/* <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400">History</p>
+        </div>
+        {/* <section className="h- mt-2 px-0.5 overflow-hidden relative">
+           <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400">History</p>
           <ul className="h-[calc(100%-42px)] overflow-x-scroll box flex items-center justify-center mt-1">
             {history.length > 0 ? (
               <div className="h-full w-full flex items-start justify-start flex-col">
@@ -224,8 +225,8 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
               <p className="text-xs pl-2 pb-6 font-medium text-neutral-500 dark:text-zinc-500 italic">Empty History</p>
             )}
           </ul>
-          <div className="h-[58px] pointer-events-none flex items-end justify-center bg-gradient-to-b from-transparent via-white dark:via-zinc-900  to-white dark:to-zinc-900 w-full absolute -bottom-6"></div> */}
-        </section>
+          <div className="h-[58px] pointer-events-none flex items-end justify-center bg-gradient-to-b from-transparent via-white dark:via-zinc-900  to-white dark:to-zinc-900 w-full absolute -bottom-6"></div>
+        </section> */}
         <div className="mt-0 pt-1">
           <UpgradeCard credits={credits} />
           <Link

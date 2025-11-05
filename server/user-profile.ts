@@ -4,6 +4,7 @@ import { determineStyleFromTone, generateAIPreferences } from "@/utils/helper";
 import { v4 } from "uuid";
 import { auth } from "../auth";
 import { UserPersona } from "../types";
+import { revalidatePath } from "next/cache";
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
@@ -51,6 +52,7 @@ export const upsertOnboardingUserPersona = async (data: UserPersona & { userId: 
       },
       data: {
         updatedAt: new Date(),
+        onBoarded: true,
       },
     });
 
@@ -141,5 +143,63 @@ export const getUserInfo = async () => {
   } catch (error) {
     console.error("Error in getUserInfo:", error);
     throw new Error("Failed to fetch user info");
+  }
+};
+
+export const getUserOnboardInfo = async (email: string) => {
+
+  try {
+    const userProfile = await db.user.findUnique({
+      where: {
+        email: email,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        onBoarded: true,
+      },
+    });
+
+    if (!userProfile) {
+      throw new Error("User not found");
+    }
+
+    return userProfile;
+  } catch (error) {
+    console.error("Error in getUserInfo:", error);
+    throw new Error("Failed to fetch user info");
+  }
+};
+
+export const updateUserInfo = async (userId: string, data: any) => {
+  try {
+    const updatedUser = await db.user.update({
+      where: { id: userId },
+      data,
+    });
+    revalidatePath("/dashboard/settings");
+    return updatedUser;
+  } catch (error) {
+    console.error("Error in updateUserInfo:", error);
+    throw new Error("Failed to update user info");
+  }
+};
+
+export const updateUserPersona = async (userId: string, data: any) => {
+  try {
+    const updatedUserPersona = await db.userPersona.upsert({
+      where: { userId },
+      update: data,
+      create: {
+        userId,
+        ...data,
+      },
+    });
+    revalidatePath("/dashboard/settings");
+    return updatedUserPersona;
+  } catch (error) {
+    console.error("Error in updateUserPersona:", error);
+    throw new Error("Failed to update user persona");
   }
 };

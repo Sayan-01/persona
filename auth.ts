@@ -59,12 +59,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
-      // If the user is signing in for the first time, or there's an existing user
-      if (trigger === "update") {
-        return {
-          ...token,
-          ...session.user,
-        };
+      if (trigger === "update" && session) {
+        if (session.name) token.name = session.name;
+        if (session.avatarUrl) token.avatarUrl = session.avatarUrl;
       }
       if (user) {
         const email = user.email;
@@ -83,7 +80,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.isVarified = alreadyUser.isVarified;
           token.isAdmin = alreadyUser.isAdmin;
           token.avatarUrl = alreadyUser.avatarUrl;
-          token.credits = alreadyUser.credits;
         }
       }
       return token; // Return the updated token
@@ -100,8 +96,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.isAdmin = token.isAdmin;
         // @ts-ignore: Ignore type error for role
         session.user.avatarUrl = token.avatarUrl;
-        // @ts-ignore: Ignore type error for role
-        session.user.credits = token.credits;
       }
       return session;
     },

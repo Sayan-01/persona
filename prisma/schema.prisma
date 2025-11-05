@@ -57,20 +57,22 @@ model User {
   isAdmin             Boolean   @default(false)
   varifiedToken       String?
   varifiedTokenExpire DateTime?
-  avatarUrl           String?   @db.Text
   email               String    @unique
-  credits             Int       @default(0)
+  credits             Int            @default(1000)
+  activePlan          String         @default("Free Plan")
+  avatarUrl           String?   @db.Text
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
+  onBoarded           Boolean   @default(false)
 
   // Profile and Settings
   aiPersona     UserPersona?
   notifications NotificationSettings?
   security      SecuritySettings?
-  subscription  Subscription?
+  subscription  Subscription[]
 
   // Content Related
-  contents                Content[]
+  contents                Content[] 
   ideas                   Idea[]
   calendar                CalendarEntry[]
   accounts                Account[]
@@ -130,7 +132,7 @@ model Content {
 
   // Relations
   userId    String
-  user      User           @relation(fields: [userId], references: [id])
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   calendar  CalendarEntry?
   analytics Analytics?
 
@@ -148,7 +150,7 @@ model Idea {
   status      IdeaStatus
   createdAt   DateTime   @default(now())
   userId      String
-  user        User       @relation(fields: [userId], references: [id])
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("ideas")
 }
@@ -168,7 +170,7 @@ model CalendarEntry {
   contentId    String         @unique
   content      Content        @relation(fields: [contentId], references: [id])
   userId       String
-  user         User           @relation(fields: [userId], references: [id])
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   scheduledFor DateTime
   status       ScheduleStatus
 
@@ -209,23 +211,28 @@ model SecuritySettings {
 }
 
 model Subscription {
-  id        String             @id @default(uuid())
-  userId    String             @unique
-  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  plan      PlanType
-  startDate DateTime           @default(now())
-  endDate   DateTime?
-  status    SubscriptionStatus
+  id                   String   @id @default(uuid())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  plan                 String     @default("Free Plan")
+  price                String?
+  active               Boolean  @default(false)
+  userId               String
+  customerId           String
+  subscriptionId       String   @unique
+  currentPeriodEndDate DateTime
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("subscriptions")
+  @@index([customerId])
+  @@index([userId])
 }
 
 model GeneratedContentHistory {
   id             String   @id @default(uuid())
   userId         String
-  user           User     @relation(fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   contentId      String
-  contentHistory Content  @relation(fields: [contentId], references: [id])
+  contentHistory Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
   contentTitle   String
   createdAt      DateTime @default(now())
 }
@@ -233,7 +240,7 @@ model GeneratedContentHistory {
 model YtContent {
   id        String   @id @default(uuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   content   Json
 }

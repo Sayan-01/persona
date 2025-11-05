@@ -13,7 +13,10 @@ const FeatureCard = ({ feature }: { feature: (typeof YT_Features)[0] }) => (
         <div className="p-5">
           <div className="flex items-center justify-between mb-5">
             <div className={`p-2.5 rounded-xl dark:bg-zinc-700 bg-zinc-200 border backdrop-blur-sm`}>
-              <feature.icon className={`h-6 w-6 `} strokeWidth={1.2}/>
+              <feature.icon
+                className={`h-6 w-6 `}
+                strokeWidth={1.2}
+              />
             </div>
           </div>
 

@@ -9,6 +9,7 @@ import BlackButton from "./button";
 import Logo from "../global/logo";
 import { LandingPageNav } from "@/constants";
 import { cn } from "@/lib/utils";
+import UserButton from "../global/user-button";
 
 export function SiteHeader({ session }: { session: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,8 +31,9 @@ export function SiteHeader({ session }: { session: any }) {
             ))}
           </nav>
           <div className="hidden md:flex items-center gap-4">
-            <ModeToggle />
             {session?.user ? (
+              <>
+              <UserButton/>
               <Link href="/dashboard">
                 <Button
                   size="lg"
@@ -40,6 +42,7 @@ export function SiteHeader({ session }: { session: any }) {
                   Dashboard
                 </Button>
               </Link>
+              </>
             ) : (
               <>
                 <Link href="/auth/login">
@@ -122,7 +125,7 @@ export function SiteHeader({ session }: { session: any }) {
                   variant="outline"
                   className="w-full border-blue-200 bg-white/50 text-blue-700 hover:bg-blue-50 hover:text-blue-800 "
                 >
-                  Dashboard
+                  Dashbord
                 </Button>
               </Link>
             ) : (

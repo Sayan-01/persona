@@ -50,12 +50,15 @@ export function SiteFooter() {
         <div className="grid md:grid-cols-3 sm:grid-cols-2  gap-10">
           {/* Brand and social */}
           <div className="flex flex-col ">
-            <Link
-              href="/"
-              className="inline-block"
-            >
-              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">PersonaAI</span>
-            </Link>
+            <div>
+              <Link
+                href="/"
+                className="inline-block"
+              >
+                <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">PersonaAI</span>
+              </Link>
+              <div className="text-xs text-yellow-300">Build with ❤️ Sayan Das</div>
+            </div>
             <p className="mt-4 text-muted-foreground max-w-xs">AI-powered content creation tailored to your unique brand persona.</p>
             <div className="flex items-center mt-6 space-x-4">
               {socialLinks.map(({ icon: Icon, href, label }) => (

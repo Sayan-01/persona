@@ -1,13 +1,11 @@
 "use client";
-import React from "react";
-import { Home as HomeIcon, Search, PlusSquare, ChevronLeft, ChevronRight, Settings, LogOut } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { usePathname } from "next/navigation";
-import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import Link from "next/link";
+import UserButton from "@/components/global/user-button";
 import { ModeToggle } from "@/components/mode-toggle";
+import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { PlusSquare, Search } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const pathname = usePathname();
@@ -70,43 +68,7 @@ const Header = () => {
             <PlusSquare className="h-4 w-4 md:mr-1.5" />
             <span className="hidden md:block">New Project</span>
           </button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="relative h-[33.4px] w-[33.4px] rounded-full"
-              >
-                <Avatar className="h-[33.4px] w-[33.4px]">
-                  <AvatarImage
-                    src="/user.jpg"
-                    alt="User"
-                  />
-                  <AvatarFallback>JD</AvatarFallback>
-                </Avatar>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="w-56 dark:bg-zinc-800 dark:border-zinc-700"
-              align="end"
-              forceMount
-            >
-              <DropdownMenuLabel className="font-normal dark:bg-zinc-800">
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none dark:text-zinc-200">John Doe</p>
-                  <p className="text-xs leading-none text-muted-foreground dark:text-zinc-400">john@example.com</p>
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator className="dark:bg-zinc-700" />
-              <DropdownMenuItem className="dark:hover:bg-zinc-700 dark:text-zinc-200">
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </DropdownMenuItem>
-              <DropdownMenuItem className="dark:hover:bg-zinc-700 dark:text-zinc-200">
-                <LogOut className="mr-2 h-4 w-4" />
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <UserButton/>
         </div>
       </div>
     </div>

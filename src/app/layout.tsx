@@ -6,8 +6,9 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { CreditProvider } from "@/hooks/credit-provider";
 import NextTopLoader from "nextjs-toploader";
+import { SessionProvider } from "next-auth/react";
 
-const monaa = Roboto_Mono({ subsets: ["latin"]});
+const monaa = Roboto_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "PersonaAI - AI-Powered Content Creation",
@@ -29,15 +30,14 @@ export default async function RootLayout({
         cz-shortcut-listen="true"
         className={`font-sans ${monaa.className} box `}
       >
-        
-          <CreditProvider>
-            <NextTopLoader
-              color="#ffffff"
-              height={2}
-              showSpinner={false}
-            />
-            {children}
-          </CreditProvider>
+        <CreditProvider>
+          <NextTopLoader
+            color="#ffffff"
+            height={2}
+            showSpinner={false}
+          />
+          <SessionProvider>{children}</SessionProvider>
+        </CreditProvider>
         <Toaster />
       </body>
     </html>
