@@ -3,7 +3,7 @@ import React from "react";
 const UpgradeCard = ({ credits }: { credits: number }) => {
   if (credits > 1) return (
     <div className="border rounded-xl mb-4 dark:border-zinc-800">
-      <div className="p-3 pb-0 h-24 bg-gradient-to-br from-[#D6E1FF] via-[#FFD3E9] to-[#FFEED7] dark:bg-[linear-gradient(60deg,_rgb(247,_149,_51),_rgb(243,_112,_85),_rgb(239,_78,_123),_rgb(161,_102,_171),_rgb(80,_115,_184),_rgb(16,_152,_173),_rgb(7,_179,_155),_rgb(111,_186,_130))] rounded-t-xl text-sm">
+      <div className="md:p-4 p-2 pb-0  bg-gradient-to-br from-[#D6E1FF] via-[#FFD3E9] to-[#FFEED7] dark:bg-[linear-gradient(60deg,_rgb(247,_149,_51),_rgb(243,_112,_85),_rgb(239,_78,_123),_rgb(161,_102,_171),_rgb(80,_115,_184),_rgb(16,_152,_173),_rgb(7,_179,_155),_rgb(111,_186,_130))] rounded-t-xl text-sm">
         <div className="bg-[#F1F2F6] dark:bg-zinc-800 p-3 h-full rounded-t-[10px]">
           <div className="text-xs font-semibold flex justify-right dark:text-zinc-200">
             {/* TODO: Add Plan Name using webhook */}

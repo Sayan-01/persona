@@ -52,6 +52,7 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
     fetchHistory();
   }, [fetchHistory]);
 
+
   if (!isMounted) {
     return null; // ✅ always return something
   }
@@ -83,11 +84,6 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
       icon: FileText,
     },
     {
-      title: "Calendar",
-      href: "/dashboard/calendar",
-      icon: Calendar,
-    },
-    {
       title: "Settings",
       href: "/dashboard/settings",
       icon: Settings,
@@ -111,93 +107,94 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
           "hidden md:flex z-0 ": defaultOption,
           "flex md:hidden z-[100] ": !defaultOption,
         })}
-      ><div>
-        <Link
-          href="/"
-          className={`flex items-center p-2 justify-start rounded-xl`}
-        >
-          <div className="w-10 h-10 flex items-center justify-center rounded-lg border-2 border-orange-600/60 text-lg bg-amber-600/20"> 🏀 </div>
-          <div>
-            <h1 className={`px-3 text-black dark:text-white font-semibold`}>PersonaAI.</h1>
-            <p className="px-3 text-black dark:text-zinc-400 text-xs">AI content tool</p>
-          </div>
-        </Link>
-        <nav className="h-[320px] px-0.5">
-          <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400 mt-3">Menu</p>
+      >
+        <div>
+          <Link
+            href="/"
+            className={`flex items-center p-2 justify-start rounded-xl`}
+          >
+            <div className="w-10 h-10 flex items-center justify-center rounded-lg border-2 border-orange-600/60 text-lg bg-amber-600/20"> 🏀 </div>
+            <div>
+              <h1 className={`px-3 text-black dark:text-white font-semibold`}>PersonaAI.</h1>
+              <p className="px-3 text-black dark:text-zinc-400 text-xs">AI content tool</p>
+            </div>
+          </Link>
+          <nav className="md:h-[320px] h-[240px] px-0.5 relative">
+            <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400 mt-3">Menu</p>
+            <div className="h-[34px] bg-gradient-to-b from-transparent via-zinc-900 z-10 to-zinc-900 pointer-events-none absolute -bottom-10 left-0 w-full md:hidden block" />
+            <ul className="space-y-1 overflow-y-auto h-full ">
+              {navItems.map((item, index) =>
+                item.title === "Content Brain" || item.title === "Special Brain" ? (
+                  <li key={index}>
+                    <Accordion
+                      type="single"
+                      collapsible
+                      defaultValue="item-1"
+                    >
+                      <AccordionItem value="item-1">
+                        <AccordionTrigger
+                          className={cn("flex items-center px-[8px] py-[8px] text-sm rounded-md", "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:no-underline")}
+                        >
+                          <div className="flex">
+                            <item.icon
+                              strokeWidth={2}
+                              className={cn("h-[18px] w-[18px] mr-2", "text-zinc-700 dark:text-zinc-400")}
+                            />
+                            {item.title}
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-0 ">
+                          <div className={cn("ml-4 mt-1 space-y-1 border-l border-zinc-700/50 pl-3 relative")}>
+                            <div className="absolute -left-[2px] top-0 w-1 h-1 rounded-full bg-zinc-700" />
+                            <div className="absolute -left-[2px] -bottom-1 w-1 h-1 rounded-full bg-zinc-700" />
 
-          <ul className="space-y-1">
-            {navItems.map((item, index) =>
-              item.title === "Content Brain" || item.title === "Special Brain" ? (
-                <li key={index}>
-                  <Accordion
-                    type="single"
-                    collapsible
-                    defaultValue="item-1"
-                  >
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger
-                        className={cn("flex items-center px-[8px] py-[8px] text-sm rounded-md", "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:no-underline")}
-                      >
-                        <div className="flex">
-                          <item.icon
-                            strokeWidth={2}
-                            className={cn("h-[18px] w-[18px] mr-2", "text-zinc-700 dark:text-zinc-400")}
-                          />
-                          {item.title}
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-0 ">
-                        <div className={cn("ml-4 mt-1 space-y-1 border-l border-zinc-700/50 pl-3 relative")}>
-                          <div className="absolute -left-[2px] top-0 w-1 h-1 rounded-full bg-zinc-700" />
-                          <div className="absolute -left-[2px] -bottom-1 w-1 h-1 rounded-full bg-zinc-700" />
-
-                          <Link
-                            href={item.href}
-                            className={cn(
-                              "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                              pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                            )}
-                          >
-                            <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
-                            Social Content
-                          </Link>
-                          <Link
-                            href="/dashboard/growth-content"
-                            className={cn(
-                              "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                              pathname === "/dashboard/growth-content"
-                                ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300"
-                                : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                            )}
-                          >
-                            <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
-                            Growth Content
-                          </Link>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </li>
-              ) : (
-                <li key={index}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                      pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                    )}
-                  >
-                    <item.icon
-                      strokeWidth={2}
-                      className={cn("h-[18px] w-[18px] mr-2", pathname === item.href ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-700 dark:text-zinc-400")}
-                    />
-                    {item.title}
-                  </Link>
-                </li>
-              )
-            )}
-          </ul>
-        </nav>
+                            <Link
+                              href={item.href}
+                              className={cn(
+                                "flex items-center px-[8px] py-[8px] text-sm rounded-md",
+                                pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                              )}
+                            >
+                              <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
+                              Social Content
+                            </Link>
+                            <Link
+                              href="/dashboard/growth-content"
+                              className={cn(
+                                "flex items-center px-[8px] py-[8px] text-sm rounded-md",
+                                pathname === "/dashboard/growth-content"
+                                  ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300"
+                                  : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                              )}
+                            >
+                              <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
+                              Growth Content
+                            </Link>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </li>
+                ) : (
+                  <li key={index}>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "flex items-center px-[8px] py-[8px] text-sm rounded-md",
+                        pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                      )}
+                    >
+                      <item.icon
+                        strokeWidth={2}
+                        className={cn("h-[18px] w-[18px] mr-2", pathname === item.href ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-700 dark:text-zinc-400")}
+                      />
+                      {item.title}
+                    </Link>
+                  </li>
+                )
+              )}
+            </ul>
+          </nav>
         </div>
         {/* <section className="h- mt-2 px-0.5 overflow-hidden relative">
            <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400">History</p>

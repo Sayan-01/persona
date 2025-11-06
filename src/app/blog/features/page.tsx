@@ -7,31 +7,37 @@ const Page = () => {
       description:
         "Teach AI to understand your brand's unique tone, voice, and communication style. Train it on your specific industry knowledge, brand values, and audience preferences so that every piece of content it creates feels authentic, consistent, and perfectly aligned with your goals.",
       benefits: ["Define your unique brand voice and tone", "Train AI on industry-specific knowledge", "Ensure authentic and consistent content", "Align output with brand values and goals"],
+      id: "persona-training",
     },
     {
       title: "AI Content Brain",
       description: "Your creative partner that never runs out of ideas. It helps you brainstorm fresh topics, trending themes, and innovative content strategies tailored to your niche.",
       benefits: ["Generate unlimited content ideas and topics", "Stay ahead with trending themes", "Get engaging headlines and titles", "Improve tone and content structure"],
+      id: "ai-content-brain",
     },
     {
       title: "Multi-Platform Writer",
       description: "Create high-quality content for multiple platforms with ease. Get intelligent, AI-powered recommendations for every channel with platform-specific optimization.",
       benefits: ["Optimized content for social media platforms", "Blog posts and newsletter formatting", "Ad copy and marketing materials", "Platform-specific tone adjustments"],
+      id: "multi-platform-writer",
     },
     {
       title: "Content Calendar",
       description: "Organize your entire content strategy from one intuitive dashboard. Plan, schedule, and publish across multiple platforms effortlessly.",
       benefits: ["Visual planning and scheduling interface", "Multi-platform publishing support", "Team collaboration tools", "Never miss important deadlines"],
+      id: "content-calendar",
     },
     {
       title: "Brand Score System",
       description: "Track your brand's performance like never before. Analyze consistency, quality, and engagement across all your content.",
       benefits: ["Monitor content consistency and quality", "Track engagement metrics", "Get actionable insights and reports", "Refine strategy based on data"],
+      id: "brand-score-system",
     },
     {
       title: "Quick Setup",
       description: "Get started in minutes with our simple, guided setup process. PersonaAI makes onboarding effortless with no complex configuration or technical hassle.",
       benefits: ["Guided onboarding in minutes", "Easy preference customization", "Simple goal definition", "Instant productivity from day one"],
+      id: "quick-setup",
     },
   ];
 
@@ -67,13 +73,13 @@ const Page = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="mx-auto max-w-5xl px-6 py-12">
+      <main className="mx-auto max-w-5xl px-6 py-12" >
         <h2 className="text-xl font-semibold tracking-tight">Core Features</h2>
         <p className="mt-2 text-slate-600">Six powerful tools designed to transform your content creation workflow.</p>
 
         <div className="mt-6 grid gap-6">
           {features.map((feature, index) => (
-            <div
+            <section id={feature.id}
               key={index}
               className="rounded-lg border p-6"
             >
@@ -91,10 +97,10 @@ const Page = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
           ))}
         </div>
-      </section>
+      </main>
 
       {/* Why PersonaAI */}
       <section className="mx-auto max-w-5xl px-6 pb-12">

@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 
 const page = () => {
   return (
-    <div className="flex items-center justify-center h-screen bg-zinc-900">
+    <div className="flex items-center justify-center h-screen bg-zinc-900 px-4">
       <Card className="flex flex-col items-center justify-center p-4 w-[380px]">
         <h3 className="text-2xl font-bold border-b w-full text-center pb-4">Success</h3>
         <p className="text-gray-400 text-center">

@@ -1,5 +1,4 @@
 import { BrandScore } from "@/components/dashboard/brand-score";
-import { PersonaList } from "@/components/dashboard/persona-list";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Zap, Calendar, Sparkles, PlusCircle, ArrowRight, TrendingUp, CheckCircle2 } from "lucide-react";
@@ -7,7 +6,7 @@ import { FileText, Zap, Calendar, Sparkles, PlusCircle, ArrowRight, TrendingUp, 
 
 export default function DashboardPage() {
   return (
-    <div className={`p-4 lg:p-6 h-full box bg-white dark:bg-zinc-900`}>
+    <div className={`p-4 lg:p-6 h-auto box bg-white dark:bg-zinc-900`}>
       {/* Hero */}
       <div className="mb-8">
         <h1 className="text-3xl font-black dark:text-white">Persona AI Dashboard</h1>
@@ -290,7 +289,6 @@ export default function DashboardPage() {
       </div>
 
       {/* Personas */}
-      <PersonaList />
     </div>
   );
 }

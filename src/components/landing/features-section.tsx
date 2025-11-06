@@ -14,6 +14,7 @@ const features = [
     icon: BrainCircuit,
     color: "from-blue-500 to-cyan-500",
     hoverColor: "hover:from-blue-600 hover:to-cyan-600",
+    href: "/blog/features",
   },
   {
     title: "AI Content Brain",
@@ -21,6 +22,7 @@ const features = [
     icon: Sparkles,
     color: "from-violet-500 to-purple-500",
     hoverColor: "hover:from-violet-600 hover:to-purple-600",
+    href: "/blog/features/#ai-content-brain",
   },
   {
     title: "Multi-Platform Writer",
@@ -28,6 +30,7 @@ const features = [
     icon: FileText,
     color: "from-orange-500 to-red-500",
     hoverColor: "hover:from-orange-600 hover:to-red-600",
+    href: "/blog/features/#multi-platform-writer",
   },
   {
     title: "Content Calendar",
@@ -35,6 +38,7 @@ const features = [
     icon: Calendar,
     color: "from-red-500 to-pink-500",
     hoverColor: "hover:from-red-600 hover:to-pink-600",
+    href: "/blog/features/#content-calendar",
   },
   {
     title: "Brand Score System",
@@ -42,6 +46,7 @@ const features = [
     icon: Trophy,
     color: "from-blue-400 to-cyan-400",
     hoverColor: "hover:from-blue-500 hover:to-cyan-500",
+    href: "/blog/features/#brand-score-system",
   },
   {
     title: "Quick Setup",
@@ -49,6 +54,7 @@ const features = [
     icon: ArrowRight,
     color: "from-emerald-500 to-green-500",
     hoverColor: "hover:from-emerald-600 hover:to-green-600",
+    href: "/blog/features/#quick-setup",
   },
 ];
 
@@ -96,7 +102,7 @@ export function FeaturesSection({session}: {session: any}) {
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{feature.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
-                  <Link href="/blog/features" className="mt-6">
+                  <Link href={feature.href} className="mt-6">
                     <button className={cn("inline-flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors")}>
                       Learn more
                       <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1" />

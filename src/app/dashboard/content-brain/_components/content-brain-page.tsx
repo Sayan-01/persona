@@ -481,7 +481,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 <div className="flex justify-between items-center mb-8">
                   <div>
                     <h1 className="leading-none font-semibold text-2xl opacity-80 dark:text-white dark:opacity-90">Generate Your Content</h1>
-                    <p className="text-muted-foreground text-sm mt-1 opacity-80 dark:text-gray-400">Get AI-powered content ideas based on your persona and industry trends</p>
+                    <p className="text-muted-foreground text-sm mt-1 opacity-80 dark:text-gray-400">Get AI-powered content based on your persona and industry trends</p>
                   </div>
                 </div>
 
