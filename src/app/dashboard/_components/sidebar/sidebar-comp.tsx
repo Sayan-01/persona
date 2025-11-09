@@ -52,7 +52,6 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
     fetchHistory();
   }, [fetchHistory]);
 
-
   if (!isMounted) {
     return null; // ✅ always return something
   }
@@ -108,7 +107,7 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
           "flex md:hidden z-[100] ": !defaultOption,
         })}
       >
-        <div>
+        <div className="">
           <Link
             href="/"
             className={`flex items-center p-2 justify-start rounded-xl`}
@@ -119,113 +118,88 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
               <p className="px-3 text-black dark:text-zinc-400 text-xs">AI content tool</p>
             </div>
           </Link>
-          <nav className="md:h-[320px] h-[240px] px-0.5 relative">
-            <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400 mt-3">Menu</p>
-            <div className="h-[34px] bg-gradient-to-b from-transparent via-zinc-900 z-10 to-zinc-900 pointer-events-none absolute -bottom-10 left-0 w-full md:hidden block" />
-            <ul className="space-y-1 overflow-y-auto h-full ">
-              {navItems.map((item, index) =>
-                item.title === "Content Brain" || item.title === "Special Brain" ? (
-                  <li key={index}>
-                    <Accordion
-                      type="single"
-                      collapsible
-                      defaultValue="item-1"
-                    >
-                      <AccordionItem value="item-1">
-                        <AccordionTrigger
-                          className={cn("flex items-center px-[8px] py-[8px] text-sm rounded-md", "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:no-underline")}
-                        >
-                          <div className="flex">
-                            <item.icon
-                              strokeWidth={2}
-                              className={cn("h-[18px] w-[18px] mr-2", "text-zinc-700 dark:text-zinc-400")}
-                            />
-                            {item.title}
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-0 ">
-                          <div className={cn("ml-4 mt-1 space-y-1 border-l border-zinc-700/50 pl-3 relative")}>
-                            <div className="absolute -left-[2px] top-0 w-1 h-1 rounded-full bg-zinc-700" />
-                            <div className="absolute -left-[2px] -bottom-1 w-1 h-1 rounded-full bg-zinc-700" />
-
-                            <Link
-                              href={item.href}
-                              className={cn(
-                                "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                                pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                              )}
-                            >
-                              <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
-                              Social Content
-                            </Link>
-                            <Link
-                              href="/dashboard/growth-content"
-                              className={cn(
-                                "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                                pathname === "/dashboard/growth-content"
-                                  ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300"
-                                  : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                              )}
-                            >
-                              <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
-                              Growth Content
-                            </Link>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </li>
-                ) : (
-                  <li key={index}>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                        pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                      )}
-                    >
-                      <item.icon
-                        strokeWidth={2}
-                        className={cn("h-[18px] w-[18px] mr-2", pathname === item.href ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-700 dark:text-zinc-400")}
-                      />
-                      {item.title}
-                    </Link>
-                  </li>
-                )
-              )}
-            </ul>
-          </nav>
+          <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400 mt-3">Menu</p>
         </div>
-        {/* <section className="h- mt-2 px-0.5 overflow-hidden relative">
-           <p className="text-xs pl-2 py-2 font-medium text-neutral-500 dark:text-zinc-400">History</p>
-          <ul className="h-[calc(100%-42px)] overflow-x-scroll box flex items-center justify-center mt-1">
-            {history.length > 0 ? (
-              <div className="h-full w-full flex items-start justify-start flex-col">
-                {history.map((item: any, index: number) => (
-                  <li
-                    key={index}
-                    className="w-full"
+        <nav className=" overflow-y-auto px-0.5 relative mb-auto">
+          <ul className="space-y-1 ">
+            {navItems.map((item, index) =>
+              item.title === "Content Brain" || item.title === "Special Brain" ? (
+                <li key={index}>
+                  <Accordion
+                    type="single"
+                    collapsible
+                    defaultValue="item-1"
                   >
-                    <Link
-                      href={`/dashboard/content-brain/${item.contentId}`}
-                      className={cn(
-                        "flex w-full items-center px-[8px] py-[6px] text-sm rounded-md gap-1 text-zinc-500 dark:text-zinc-400",
-                        pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200" : "hover:bg-gray-100 dark:hover:bg-zinc-800"
-                      )}
-                    >
-                      <p className="one_liner">{item.contentTitle}</p>
-                    </Link>
-                  </li>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xs pl-2 pb-6 font-medium text-neutral-500 dark:text-zinc-500 italic">Empty History</p>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger
+                        className={cn("flex items-center px-[8px] py-[8px] text-sm rounded-md", "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:no-underline")}
+                      >
+                        <div className="flex">
+                          <item.icon
+                            strokeWidth={2}
+                            className={cn("h-[18px] w-[18px] mr-2", "text-zinc-700 dark:text-zinc-400")}
+                          />
+                          {item.title}
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-0 ">
+                        <div className={cn("ml-4 mt-1 space-y-1 border-l border-zinc-700/50 pl-3 relative")}>
+                          <div className="absolute -left-[2px] top-0 w-1 h-1 rounded-full bg-zinc-700" />
+                          <div className="absolute -left-[2px] -bottom-1 w-1 h-1 rounded-full bg-zinc-700" />
+
+                          <Link
+                            href={item.href}
+                            className={cn(
+                              "flex items-center px-[8px] py-[8px] text-sm rounded-md",
+                              pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                            )}
+                          >
+                            <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
+                            Social Content
+                          </Link>
+                          <Link
+                            href="/dashboard/growth-content"
+                            className={cn(
+                              "flex items-center px-[8px] py-[8px] text-sm rounded-md",
+                              pathname === "/dashboard/growth-content"
+                                ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300"
+                                : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                            )}
+                          >
+                            <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
+                            Growth Content
+                          </Link>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </li>
+              ) : (
+                <li key={index}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex items-center px-[8px] py-[8px] text-sm rounded-md",
+                      pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                    )}
+                  >
+                    <item.icon
+                      strokeWidth={2}
+                      className={cn("h-[18px] w-[18px] mr-2", pathname === item.href ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-700 dark:text-zinc-400")}
+                    />
+                    {item.title}
+                  </Link>
+                </li>
+              )
             )}
+            <div className="h-4 w-full bg-zinc-900 md:hidden block" />
           </ul>
-          <div className="h-[58px] pointer-events-none flex items-end justify-center bg-gradient-to-b from-transparent via-white dark:via-zinc-900  to-white dark:to-zinc-900 w-full absolute -bottom-6"></div>
-        </section> */}
-        <div className="mt-0 pt-1">
-          <UpgradeCard credits={credits} />
+        </nav>
+
+        <div className="mt-0 pt-3 h-[272px] relative">
+          <div className="h-[60px] bg-gradient-to-b from-transparent via-zinc-900 z-10 to-zinc-900 pointer-events-none absolute -top-[40px] left-0 w-full md:hidden block" />
+
+          <UpgradeCard credits={credits}/>
           <Link
             href="/help"
             className={cn("flex items-center px-[10px] py-[10px] text-sm rounded-md hover:bg-gray-100 dark:hover:bg-zinc-800 text-gray-500 dark:text-zinc-400")}

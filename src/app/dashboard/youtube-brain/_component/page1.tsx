@@ -5,8 +5,7 @@ import { ArrowUp } from "lucide-react";
 import { useState } from "react";
 
 type SubContent = {
-  video_script: string;
-  tags: string[];
+  video_description: string;
   titles: {
     title: string;
     seo_score: number;
@@ -24,7 +23,7 @@ const Page1 = () => {
     setContent(null);
 
     try {
-      const result = await fetch("/api/yt-content-api", {
+      const result = await fetch("/api/title-desc-optimizer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,6 +38,7 @@ const Page1 = () => {
 
       if (data) {
         const dataObj = JSON.parse(data.data);
+        console.log(dataObj);
         setContent(dataObj);
       }
       setLoading(false);
@@ -89,33 +89,7 @@ const Page1 = () => {
       </div>
       {content && (
         <div className="w-full mt-4 grid grid-cols-1 gap-4">
-          <div className="p-4 rounded-xl bg-[#ffffff10] relative">
-            <h3 className="text-lg font-semibold mb-2">Video Script</h3>
-
-            <button
-              onClick={() => copyToClipboard(content.video_script)}
-              className="absolute top-4 right-4 text-xs px-2 py-1 rounded bg-zinc-700/70 hover:bg-zinc-600"
-            >
-              Copy
-            </button>
-
-            <p className="text-sm whitespace-pre-wrap">{content.video_script}</p>
-          </div>
           <div className="p-4 rounded-xl bg-[#ffffff10]">
-            <div className="">
-              <h3 className="text-lg font-semibold mb-2">Recommended Tags</h3>
-              <div className="flex flex-wrap gap-2 mt-1">
-                {content.tags.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1 bg-zinc-700/70 rounded-lg text-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
             <div className="mt-3">
               <h3 className="text-lg font-semibold mb-2">Suggested Titles</h3>
               <ul className="list-disc list-inside">
@@ -129,6 +103,18 @@ const Page1 = () => {
                 ))}
               </ul>
             </div>
+          </div>
+          <div className="p-4 rounded-xl bg-[#ffffff10] relative">
+            <h3 className="text-lg font-semibold mb-2">Video Script</h3>
+
+            <button
+              onClick={() => copyToClipboard(content.video_description)}
+              className="absolute top-4 right-4 text-xs px-2 py-1 rounded bg-zinc-700/70 hover:bg-zinc-600"
+            >
+              Copy
+            </button>
+
+            <p className="text-sm whitespace-pre-wrap">{content.video_description}</p>
           </div>
         </div>
       )}

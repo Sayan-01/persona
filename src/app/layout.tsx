@@ -28,7 +28,7 @@ export default async function RootLayout({
     >
       <body
         cz-shortcut-listen="true"
-        className={`font-sans ${monaa.className} box `}
+        className={`font-sans ${monaa.className} box scroll-smooth antialiased`}
       >
         <CreditProvider>
           <NextTopLoader
