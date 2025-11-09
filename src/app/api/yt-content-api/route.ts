@@ -11,7 +11,7 @@ export const POST = async (req: Request) => {
     const session = await auth();
     const userId = session?.user?.id;
 
-    const { userTitle, userDesc } = body;
+    const { userTitle, userDesc, videoType } = body;
 
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -27,7 +27,7 @@ export const POST = async (req: Request) => {
       title: userTitle,
       description: userDesc,
       userPersona: userPersonaDetails,
-      videoType: "shorts",
+      videoType: videoType,
     });
 
     const result = await geminiModel.sendMessage(prompt);

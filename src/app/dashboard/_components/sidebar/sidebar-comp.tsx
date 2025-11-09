@@ -2,7 +2,7 @@
 
 import UpgradeCard from "@/app/dashboard/_components/upgrade-card";
 import { cn } from "@/lib/utils";
-import { ArrowBigDown, Brain, Calendar, ChartPie, ChevronDown, ChevronLeftCircleIcon, FileText, Hash, HelpCircle, Instagram, LogOut, Menu, Settings, Sparkles, TvMinimalPlay } from "lucide-react";
+import { ArrowBigDown, Brain, Calendar, ChartPie, ChartSpline, ChevronDown, ChevronLeftCircleIcon, FileText, Hash, HelpCircle, Instagram, LogOut, Menu, Settings, Sparkles, TvMinimalPlay } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
@@ -62,21 +62,29 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
       href: "/dashboard",
       icon: ChartPie,
     },
+
+    {
+      title: "Content Brain",
+      href: "/dashboard/content-brain",
+      icon: Brain,
+    },
     {
       title: "Youtube Brain",
       href: "/dashboard/youtube-brain",
       icon: TvMinimalPlay,
     },
     {
+      title: "Growth Brain",
+      href: "/dashboard/growth-content",
+      icon: ChartSpline,
+    },
+
+    {
       title: "Integration",
       href: "/dashboard/integration",
       icon: Instagram,
     },
-    {
-      title: "Content Brain",
-      href: "/dashboard/content-brain",
-      icon: Sparkles,
-    },
+
     {
       title: "My Content",
       href: "/dashboard/content",
@@ -123,58 +131,7 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
         <nav className=" overflow-y-auto px-0.5 relative mb-auto">
           <ul className="space-y-1 ">
             {navItems.map((item, index) =>
-              item.title === "Content Brain" || item.title === "Special Brain" ? (
-                <li key={index}>
-                  <Accordion
-                    type="single"
-                    collapsible
-                    defaultValue="item-1"
-                  >
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger
-                        className={cn("flex items-center px-[8px] py-[8px] text-sm rounded-md", "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:no-underline")}
-                      >
-                        <div className="flex">
-                          <item.icon
-                            strokeWidth={2}
-                            className={cn("h-[18px] w-[18px] mr-2", "text-zinc-700 dark:text-zinc-400")}
-                          />
-                          {item.title}
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-0 ">
-                        <div className={cn("ml-4 mt-1 space-y-1 border-l border-zinc-700/50 pl-3 relative")}>
-                          <div className="absolute -left-[2px] top-0 w-1 h-1 rounded-full bg-zinc-700" />
-                          <div className="absolute -left-[2px] -bottom-1 w-1 h-1 rounded-full bg-zinc-700" />
-
-                          <Link
-                            href={item.href}
-                            className={cn(
-                              "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                              pathname === item.href ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300" : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                            )}
-                          >
-                            <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
-                            Social Content
-                          </Link>
-                          <Link
-                            href="/dashboard/growth-content"
-                            className={cn(
-                              "flex items-center px-[8px] py-[8px] text-sm rounded-md",
-                              pathname === "/dashboard/growth-content"
-                                ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300"
-                                : "hover:bg-gray-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                            )}
-                          >
-                            <div className="h-2 w-2 rounded-full bg-orange-500 mr-2"></div>
-                            Growth Content
-                          </Link>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </li>
-              ) : (
+              (
                 <li key={index}>
                   <Link
                     href={item.href}

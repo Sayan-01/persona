@@ -133,8 +133,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           }
           const data = await res.json(); //json
 
-          console.log(data);
-
           if (data) {
             decrementCredits(100);
             const dataObj = JSON.parse(data); //object

@@ -105,7 +105,7 @@ const Page1 = () => {
             </div>
           </div>
           <div className="p-4 rounded-xl bg-[#ffffff10] relative">
-            <h3 className="text-lg font-semibold mb-2">Video Script</h3>
+            <h3 className="text-lg font-semibold mb-2">Video Description</h3>
 
             <button
               onClick={() => copyToClipboard(content.video_description)}

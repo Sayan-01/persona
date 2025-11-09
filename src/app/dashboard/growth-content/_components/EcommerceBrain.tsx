@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AIinput from "@/components/global/ai-input";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { callAiApi, parseSimpleCSV } from "@/utils/helper";
 import { Field } from "./growth-content-component";
+import { EcommerceBrainPrompt } from "../../../../../AI/growth-brain/EcommerceBrainPrompt";
+import { getUserPersona } from "../../../../../server/user-profile";
+import { useCredits } from "@/hooks/credit-provider";
+import { useSession } from "next-auth/react";
 
 function buildEcommercePrompt({
   name,
@@ -49,21 +53,62 @@ function EcommerceBrain({ setEcommerceResult }: { setEcommerceResult: (result: G
   const [cta, setCta] = useState("Buy Now");
 
   const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<any>([]);
+  const [generating, setGenerating] = useState(false);
+  const [userPersona, setUserPersona] = useState<any>(null);
+
+  const { decrementCredits } = useCredits();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const fetchUserPersona = async () => {
+      if (session?.user?.id) {
+        const userPersonaDetails = await getUserPersona(session?.user?.id);
+        setUserPersona(userPersonaDetails);
+      }
+    };
+    fetchUserPersona();
+  }, [session]);
 
   async function onGenerate() {
-    setLoading(true);
-    const prompt = buildEcommercePrompt({ name, features, targetKeywords: keywords, tone, length, cta });
-    const res = await callAiApi(prompt);
-    setEcommerceResult(res);
-    setLoading(false);
-  }
+    const ideaPrompt = EcommerceBrainPrompt({
+      name: name,
+      features: features,
+      tone: tone,
+      length: length,
+      cta: cta,
+      userPersona: JSON.stringify(userPersona),
+    });
+    setGenerating(true);
+    try {
+      const res = await fetch("/api/growth-content-api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: ideaPrompt,
+        }),
+      });
 
-  // Bulk demo: accept CSV with product rows: name,features,keywords
-  const [bulkRows, setBulkRows] = useState<Array<Record<string, string>>>([]);
+      if (!res.ok) {
+        throw new Error("Failed to fetch AI template.");
+      }
+      const data = await res.json(); //json
 
-  function onBulkUpload(csvText: string) {
-    const rows = parseSimpleCSV(csvText);
-    setBulkRows(rows);
+      console.log(data);
+
+      if (data) {
+        decrementCredits(100);
+        const dataObj = JSON.parse(data); //object
+        setResult(dataObj);
+      }
+
+      setGenerating(false);
+    } catch (error) {
+      console.log("Error in idea generation", error);
+      setGenerating(false);
+    }
   }
 
   return (
@@ -157,25 +202,12 @@ function EcommerceBrain({ setEcommerceResult }: { setEcommerceResult: (result: G
         </Field>
       </div>
 
-      <div className="mt-6">
-        <Field
-          title="Bulk Upload CSV (name,features,keywords)"
-          description="Upload CSV file with name,features,keywords"
-        >
-          <textarea
-            placeholder={`name,features,keywords\nProduct A,Feat1;Feat2,kw1;kw2`}
-            className="w-full border-2 border-dashed border-indigo-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 dark:hover:border-zinc-600 transition-all"
-            rows={4}
-            onChange={(e) => onBulkUpload(e.target.value)}
-          />
-        </Field>
-      </div>
       <div className="mt-2 flex gap-2">
         <Button
           onClick={onGenerate}
           className="w-full hover:bg-gradient-to-r gap-2 h-10 rounded-lg border-none bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700/60 dark:hover:to-zinc-800/40 text-white shadow-lg  transition-all hover:duration-200 duration-200 "
         >
-          {loading ? (
+          {generating ? (
             <>
               <RefreshCw className="h-4 w-4 animate-spin" />
               Generating...

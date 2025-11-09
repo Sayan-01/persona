@@ -38,47 +38,14 @@ export default function ContentPage() {
   }, []);
 
   return (
-    <div className="container py-8 p-4">
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">My Content</h1>
-          <p className="text-gray-500 ">Manage all your content drafts and posts</p>
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-10 ">
+          <h1 className="text-3xl font-black dark:text-white mb-1">Welcome to Persona AI</h1>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">This is a content generation and management software operate using AI </p>
         </div>
-        <Button className="gap-1.5">
-          <PlusCircle className="h-4 w-4" />
-          Create New
-        </Button>
-      </div>
 
-      <div className="mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
-        <div className="flex w-full gap-2 sm:w-auto">
-          <div className="relative w-full sm:w-64">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 " />
-            <Input
-              placeholder="Search content..."
-              className="pl-9"
-            />
-          </div>
-          <Button
-            variant="outline"
-            size="icon"
-          >
-            <Filter className="h-4 w-4" />
-          </Button>
-        </div>
-        <div className="flex w-full items-center gap-2 sm:w-auto">
-          <Select defaultValue="recent">
-            <SelectTrigger className="w-[160px]">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="recent">Most Recent</SelectItem>
-              <SelectItem value="oldest">Oldest First</SelectItem>
-              <SelectItem value="name">Name (A-Z)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+      
 
       <Tabs
         value={activeTab}
@@ -98,18 +65,18 @@ export default function ContentPage() {
         >
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div className="w-full flex flex-col gap-5">
-              {drafts.map((draft: any) => (
-                <ContentCard content={draft} type="Draft"/>
+              {drafts.map((draft: any, index: number) => (
+                <ContentCard content={draft} type="Draft" key={index}/>
               ))}
             </div>
             <div>
-              {scheduledContent.map((scheduled: any) => (
-                <ContentCard content={scheduled} type="Scheduled" />
+              {scheduledContent.map((scheduled: any, index: number) => (
+                <ContentCard content={scheduled} type="Scheduled" key={index}/>
               ))}
             </div>
             <div>
-              {[1].map((post: any) => (
-                <Card className="overflow-hidden">
+              {postedContent.map((post: any, index: number) => (
+                <Card className="overflow-hidden" key={index}>
                   <div className="bg-green-50 px-4 py-2 ">
                     <div className="flex items-center justify-between">
                       <Badge
@@ -189,8 +156,8 @@ export default function ContentPage() {
 
         <TabsContent value="drafts">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {drafts.map((draft: any) => (
-              <ContentCard type="Draft" content={draft}/>
+            {drafts.map((draft: any, index: number) => (
+              <ContentCard  type="Draft" content={draft} key={index}/>
             ))}
           </div>
         </TabsContent>
@@ -281,6 +248,7 @@ export default function ContentPage() {
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{/* Posted content cards would go here */}</div>
         </TabsContent>
       </Tabs>
+      </div>
     </div>
   );
 }
