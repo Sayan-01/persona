@@ -95,6 +95,7 @@ const page = () => {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-black text-gray-800 mb-8 text-center">🔥 DAILY TIME-BLOCK BLUEPRINT</h2>
 
+          {/* <!-- College Day --> */}
           <div className="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover transition duration-300">
             <h3 className="text-2xl font-bold text-blue-600 mb-4">📘 TYPE A: COLLEGE DAY (Only Mondays)</h3>
             <div className="space-y-3 text-gray-700">
@@ -107,25 +108,26 @@ const page = () => {
                 <span>→ Refresh + Snacks</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-blue-600 w-48">07:00 PM - 09:30 PM</span>
-                <span>→ DSA (2.5hr) - 1 topic deep dive</span>
+                <span className="font-bold text-blue-600 w-48">07:00 PM - 10:00 PM</span>
+                <span>→ DSA (3hr) - 1 topic deep dive</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-blue-600 w-48">09:30 PM - 10:00 PM</span>
+                <span className="font-bold text-blue-600 w-48">10:00 PM - 11:00 PM</span>
                 <span>→ Dinner Break</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-blue-600 w-48">10:00 PM - 11:30 PM</span>
-                <span>→ Exam Prep (1.5hr) - 1 subject only</span>
+                <span className="font-bold text-blue-600 w-48">11:00 PM - 12:00 AM</span>
+                <span>→ Exam Prep (1hr) - 1 subject only</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-blue-600 w-48">11:30 PM - 12:00 AM</span>
-                <span>→ LeetCode Daily + Revision</span>
+                <span className="font-bold text-blue-600 w-48">12:00 AM - 12:30 AM</span>
+                <span>→ LeetCode Daily + Sleep</span>
               </div>
             </div>
             <p className="mt-4 text-xl font-bold text-blue-800">Total Productive: 4 hours</p>
           </div>
 
+          {/* <!-- Weekday Phase 1 --> */}
           <div className="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover transition duration-300">
             <h3 className="text-2xl font-bold text-green-600 mb-4">📗 TYPE B: WEEKDAY - Phase 1 (Week 1: 50% Exam)</h3>
             <div className="space-y-3 text-gray-700">
@@ -134,32 +136,32 @@ const page = () => {
                 <span>→ Wake + Routine</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-green-600 w-48">09:00 AM - 12:00 PM</span>
-                <span>→ EXAM PREP (3hr) - 1 Subject Deep</span>
+                <span className="font-bold text-green-600 w-48">09:00 AM - 02:00 PM</span>
+                <span>→ EXAM PREP (5hr) - 1 Subject Deep</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-green-600 w-48">12:00 PM - 02:00 PM</span>
+                <span className="font-bold text-green-600 w-48">02:00 PM - 03:00 PM</span>
                 <span>→ Lunch + Rest</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-green-600 w-48">02:00 PM - 05:00 PM</span>
-                <span>→ DSA SESSION 1 (3hr) - Theory + Practice</span>
+                <span className="font-bold text-green-600 w-48">03:00 PM - 04:00 PM</span>
+                <span>→ DSA SESSION 1 (1hr) - Theory</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-green-600 w-48">05:00 PM - 06:00 PM</span>
+                <span className="font-bold text-green-600 w-48">04:00 PM - 05:00 PM</span>
                 <span>→ Play/Walk/Refresh</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-green-600 w-48">06:00 PM - 08:30 PM</span>
-                <span>→ DSA SESSION 2 (2.5hr) - LeetCode Pattern</span>
+                <span className="font-bold text-green-600 w-48">05:00 PM - 08:00 PM</span>
+                <span>→ DSA SESSION 2 (3hr) - LeetCode Pattern</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-green-600 w-48">09:30 PM - 10:30 PM</span>
+                <span className="font-bold text-green-600 w-48">08:00 PM - 10:00 PM</span>
                 <span>→ EXAM PREP (2hr) - 2nd Subject</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-green-600 w-48">10:30 PM - 11:00 PM</span>
-                <span>→ Light Snack</span>
+                <span className="font-bold text-green-600 w-48">10:00 PM - 11:00 PM</span>
+                <span>→ Dinner</span>
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-green-600 w-48">11:00 PM - 11:30 PM</span>
@@ -173,6 +175,7 @@ const page = () => {
             <p className="mt-4 text-xl font-bold text-green-800">Total: 10.5 hours (Exam: 5hr | DSA: 5.5hr)</p>
           </div>
 
+          {/* <!-- Weekday Phase 2 --> */}
           <div className="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover transition duration-300">
             <h3 className="text-2xl font-bold text-orange-600 mb-4">📗 TYPE B: WEEKDAY - Phase 2 (Week 2-3: 70% Exam)</h3>
             <div className="space-y-3 text-gray-700">
@@ -181,49 +184,42 @@ const page = () => {
                 <span>→ Wake + Routine</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-orange-600 w-48">09:00 AM - 01:00 PM</span>
-                <span>→ EXAM PREP (4hr) - Primary Subject</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold text-orange-600 w-48">01:00 PM - 02:00 PM</span>
-                <span>→ Lunch</span>
+                <span className="font-bold text-orange-600 w-48">09:00 AM - 02:00 PM</span>
+                <span>→ EXAM PREP (5hr) - Primary Subject</span>
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-orange-600 w-48">02:00 PM - 03:00 PM</span>
+                <span>→ Lunch</span>
+              </div>
+              <div className="flex items-start">
+                <span className="font-bold text-orange-600 w-48">03:00 PM - 04:00 PM</span>
                 <span>→ Rest/Nap</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-orange-600 w-48">03:00 PM - 05:30 PM</span>
-                <span>→ DSA Focus (2.5hr) - New Topic</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold text-orange-600 w-48">05:30 PM - 06:00 PM</span>
+                <span className="font-bold text-orange-600 w-48">04:00 PM - 05:00 PM</span>
                 <span>→ Break</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-orange-600 w-48">06:00 PM - 08:00 PM</span>
-                <span>→ EXAM PREP (2hr) - Secondary Subject</span>
+                <span className="font-bold text-orange-600 w-48">05:00 PM - 07:30 PM</span>
+                <span>→ DSA Focus (2.5hr) - New Topic</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-orange-600 w-48">08:00 PM - 09:00 PM</span>
-                <span>→ Project/Aptitude/WebDev (1hr)</span>
+                <span className="font-bold text-orange-600 w-48">07:30 PM - 10:00 PM</span>
+                <span>→ EXAM PREP (2.5hr) - Secondary Subject</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-orange-600 w-48">09:00 PM - 10:30 PM</span>
-                <span>→ LeetCode (1.5hr) - Pattern Practice</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold text-orange-600 w-48">10:30 PM - 11:30 PM</span>
+                <span className="font-bold text-orange-600 w-48">10:00 PM - 11:00 PM</span>
                 <span>→ Dinner</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-orange-600 w-48">11:30 PM - 12:00 AM</span>
-                <span>→ Revision</span>
+                <span className="font-bold text-orange-600 w-48">11:00 PM - 12:00 AM</span>
+                <span>→ LeetCode (1hr) + Project/Aptitude/WebDev</span>
               </div>
             </div>
             <p className="mt-4 text-xl font-bold text-orange-800">Total: 11 hours (Exam: 6hr | Prep: 5hr)</p>
           </div>
 
+          {/* <!-- Weekday Phase 3 --> */}
           <div className="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover transition duration-300">
             <h3 className="text-2xl font-bold text-red-600 mb-4">📗 TYPE B: WEEKDAY - Phase 3 (Week 4: 90% Exam)</h3>
             <div className="space-y-3 text-gray-700">
@@ -232,29 +228,28 @@ const page = () => {
                 <span>→ Wake + Routine</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-red-600 w-48">09:00 AM - 01:30 PM</span>
-                <span>→ EXAM PREP (4.5hr) - Subject 1</span>
+                <span className="font-bold text-red-600 w-48">09:00 AM - 02:00 PM</span>
+                <span>→ EXAM PREP (5hr) - Subject 1</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-red-600 w-48">01:30 PM - 02:30 PM</span>
+                <span className="font-bold text-red-600 w-48">02:00 PM - 03:00 PM</span>
                 <span>→ Lunch</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-red-600 w-48">02:30 PM - 06:00 PM</span>
-                <span>→ EXAM PREP (3.5hr) - Subject 2</span>
+                <span className="font-bold text-red-600 w-48">03:00 PM - 04:00 PM</span>
+                <span>→ Rest/Nap</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-red-600 w-48">06:00 PM - 07:00 PM</span>
+                <span className="font-bold text-red-600 w-48">04:00 PM - 05:00 PM</span>
                 <span>→ Break/Walk</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-red-600 w-48">07:00 PM - 09:00 PM</span>
-                <span>→ EXAM REVISION (2hr) - Weak Topics</span>
+                <span className="font-bold text-red-600 w-48">05:00 PM - 08:00 PM</span>
+                <span>→ EXAM PREP (3hr) - Subject 2</span>
               </div>
-
               <div className="flex items-start">
-                <span className="font-bold text-red-600 w-48">09:00 PM - 10:00 PM</span>
-                <span>→ DSA Maintenance (1hr) - Easy problems</span>
+                <span className="font-bold text-red-600 w-48">08:00 PM - 10:00 PM</span>
+                <span>→ EXAM REVISION (2hr) - Weak Topics</span>
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-red-600 w-48">10:00 PM - 11:00 PM</span>
@@ -262,12 +257,13 @@ const page = () => {
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-red-600 w-48">11:00 PM - 12:00 AM</span>
-                <span>→ Theory Revision</span>
+                <span>→ DSA Maintenance (1hr) - Easy problems</span>
               </div>
             </div>
             <p className="mt-4 text-xl font-bold text-red-800">Total: 11.5 hours (Exam: 10hr | DSA: 1hr)</p>
           </div>
 
+          {/* <!-- Weekend Phase 1 --> */}
           <div className="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover transition duration-300">
             <h3 className="text-2xl font-bold text-purple-600 mb-4">📙 TYPE C: WEEKEND - Phase 1 (Week 1: 50% Exam)</h3>
             <div className="space-y-3 text-gray-700">
@@ -276,41 +272,42 @@ const page = () => {
                 <span>→ Wake + Routine</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-purple-600 w-48">09:00 AM - 12:30 PM</span>
-                <span>→ DSA DEEP DIVE (3.5hr) - Complete 1 Topic</span>
+                <span className="font-bold text-purple-600 w-48">09:00 AM - 02:00 PM</span>
+                <span>→ DSA DEEP DIVE (5hr) - Complete 1 Topic</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-purple-600 w-48">12:30 PM - 02:00 PM</span>
+                <span className="font-bold text-purple-600 w-48">02:00 PM - 03:00 PM</span>
                 <span>→ Lunch + Rest</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-purple-600 w-48">02:00 PM - 05:00 PM</span>
-                <span>→ PROJECT WORK (3hr) - Features/Testing</span>
+                <span className="font-bold text-purple-600 w-48">03:00 PM - 04:00 PM</span>
+                <span>→ PROJECT WORK (1hr) - Features</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-purple-600 w-48">05:00 PM - 06:00 PM</span>
+                <span className="font-bold text-purple-600 w-48">04:00 PM - 05:00 PM</span>
                 <span>→ Break</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-purple-600 w-48">06:00 PM - 09:00 PM</span>
+                <span className="font-bold text-purple-600 w-48">05:00 PM - 07:00 PM</span>
+                <span>→ PROJECT WORK (2hr) - Testing</span>
+              </div>
+              <div className="flex items-start">
+                <span className="font-bold text-purple-600 w-48">07:00 PM - 10:00 PM</span>
                 <span>→ EXAM PREP (3hr) - Theory Consolidation</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-purple-600 w-48">09:00 PM - 10:00 PM</span>
+                <span className="font-bold text-purple-600 w-48">10:00 PM - 11:00 PM</span>
                 <span>→ Dinner</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-purple-600 w-48">10:00 PM - 11:30 PM</span>
-                <span>→ Mock Interview/Aptitude (1.5hr)</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold text-purple-600 w-48">11:30 PM - 12:00 AM</span>
-                <span>→ Weekly Review</span>
+                <span className="font-bold text-purple-600 w-48">11:00 PM - 12:00 AM</span>
+                <span>→ Mock Interview/Aptitude (1hr)</span>
               </div>
             </div>
             <p className="mt-4 text-xl font-bold text-purple-800">Total: 11 hours (DSA: 3.5hr | Exam: 3hr | Project: 3hr | Mock: 1.5hr)</p>
           </div>
 
+          {/* <!-- Weekend Phase 2 --> */}
           <div className="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover transition duration-300">
             <h3 className="text-2xl font-bold text-indigo-600 mb-4">📙 TYPE C: WEEKEND - Phase 2 (Week 2-3: 70% Exam)</h3>
             <div className="space-y-3 text-gray-700">
@@ -354,6 +351,7 @@ const page = () => {
             <p className="mt-4 text-xl font-bold text-indigo-800">Total: 11.5 hours (Exam: 7hr | DSA: 3hr | Others: 1.5hr)</p>
           </div>
 
+          {/* <!-- Post-Exam Weekend --> */}
           <div className="bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-xl shadow-xl p-8 card-hover transition duration-300">
             <h3 className="text-2xl font-bold mb-4">📙 TYPE C: POST-EXAM WEEKEND (Week 5)</h3>
             <div className="space-y-3">
@@ -362,36 +360,35 @@ const page = () => {
                 <span>→ Wake + Routine</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold w-48">09:00 AM - 01:00 PM</span>
-                <span>→ DSA BEAST MODE (4hr) - Advanced Topics</span>
+                <span className="font-bold w-48">09:00 AM - 02:00 PM</span>
+                <span>→ DSA BEAST MODE (5hr) - Advanced Topics</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold w-48">01:00 PM - 02:00 PM</span>
+                <span className="font-bold w-48">02:00 PM - 03:00 PM</span>
                 <span>→ Lunch</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold w-48">02:00 PM - 05:30 PM</span>
-                <span>→ LeetCode Marathon (3.5hr) - Hard Problems</span>
+                <span className="font-bold w-48">03:00 PM - 04:00 PM</span>
+                <span>→ LeetCode Marathon (1hr) - Hard Problems</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold w-48">05:30 PM - 06:00 PM</span>
+                <span className="font-bold w-48">04:00 PM - 05:00 PM</span>
                 <span>→ Break</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold w-48">06:00 PM - 08:30 PM</span>
-                <span>→ System Design (2.5hr) - Case Studies</span>
+                <span className="font-bold w-48">05:00 PM - 08:00 PM</span>
+                <span>→ System Design (3hr) - Case Studies</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold w-48">08:30 PM - 10:30 PM</span>
+                <span className="font-bold w-48">08:00 PM - 10:00 PM</span>
                 <span>→ MOCK INTERVIEW (2hr) - Full Stack</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold w-48">10:30 PM - 11:30 PM</span>
+                <span className="font-bold w-48">10:00 PM - 11:00 PM</span>
                 <span>→ Dinner</span>
               </div>
-  
               <div className="flex items-start">
-                <span className="font-bold w-48">11:30 PM - 12:00 AM</span>
+                <span className="font-bold w-48">11:00 PM - 12:00 AM</span>
                 <span>→ Day Review</span>
               </div>
             </div>
@@ -436,161 +433,196 @@ const page = () => {
             </ul>
           </div>
 
+          {/* <!-- Week 1 Days --> */}
           <div className="space-y-4">
+            {/* <!-- Day 1 --> */}
             <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition">
               <div className="flex items-center justify-between mb-3">
-                <h5 className="text-xl font-bold text-gray-800">Day 1: Sun, 24 Nov ⚡ BATTLE START</h5>
-                <span className="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold">Weekend</span>
-              </div>
-              <ul className="space-y-2 text-gray-700">
-                <li>
-                  • 09:00-12:30 → <strong>DP Deep Dive</strong> (Partition DP, DP on Trees)
-                </li>
-                <li>
-                  • 02:00-05:00 → <strong>Project</strong>: UI fixes + testing plan
-                </li>
-                <li>
-                  • 06:00-09:00 → <strong>DBMS Ch1</strong>: ER Model, Normalization
-                </li>
-                <li>
-                  • 10:00-11:30 → <strong>Aptitude</strong>: Quantitative basics
-                </li>
-                <li>• ✅ LeetCode: 3 DP problems</li>
-              </ul>
-            </div>
-
-            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition">
-              <div className="flex items-center justify-between mb-3">
-                <h5 className="text-xl font-bold text-gray-800">Day 2: Mon, 25 Nov 🏫 COLLEGE DAY</h5>
+                <h5 className="text-xl font-bold text-gray-800">Day 1: Mon, 24 Nov 🏫 COLLEGE DAY + BATTLE START</h5>
                 <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">College</span>
               </div>
               <ul className="space-y-2 text-gray-700">
                 <li>• 08:00-06:00 → College</li>
                 <li>
-                  • 07:00-09:30 → <strong>DP Practice</strong> (5 problems)
+                  • 07:00-10:00 → <strong>DP Deep Dive</strong> (3hr)
                 </li>
+                <li>• 10:00-11:00 → Dinner Break</li>
                 <li>
-                  • 10:00-11:30 → <strong>AI Ch2</strong>: Search Algorithms
+                  • 11:00-12:00 → <strong>DBMS Ch1</strong>: ER Model basics
                 </li>
-                <li>• 11:30-12:00 → LeetCode Daily Challenge</li>
+                <li>• 12:00-12:30 → LeetCode Daily + Sleep</li>
               </ul>
             </div>
+
+            {/* <!-- Day 2 --> */}
             <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition">
               <div className="flex items-center justify-between mb-3">
-                <h5 className="text-xl font-bold text-gray-800">Day 3: Tue, 26 Nov 🔥</h5>
+                <h5 className="text-xl font-bold text-gray-800">Day 2: Tue, 25 Nov 🔥</h5>
                 <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">Weekday</span>
               </div>
               <ul className="space-y-2 text-gray-700">
                 <li>
-                  • 09:00-12:00 → <strong>DBMS Ch1</strong>: Solve numerical + practice
+                  • 09:00-02:00 → <strong>DBMS Ch1</strong>: ER Model, Normalization (5hr)
+                </li>
+                <li>• 02:00-03:00 → Lunch + Rest</li>
+                <li>
+                  • 03:00-04:00 → <strong>DP Theory</strong>: Partition DP
+                </li>
+                <li>• 04:00-05:00 → Play/Rest</li>
+                <li>
+                  • 05:00-08:00 → <strong>LeetCode DP</strong>: 5 problems
                 </li>
                 <li>
-                  • 02:00-05:00 → <strong>Stack Complete</strong>: Theory + All patterns
+                  • 08:00-10:00 → <strong>AI Ch2</strong>: Search Algorithms
+                </li>
+                <li>• 10:00-11:00 → Dinner</li>
+                <li>• 11:00-12:00 → Communication practice</li>
+              </ul>
+            </div>
+
+            {/* <!-- Day 3 --> */}
+            <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition">
+              <div className="flex items-center justify-between mb-3">
+                <h5 className="text-xl font-bold text-gray-800">Day 3: Wed, 26 Nov 🔥</h5>
+                <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">Weekday</span>
+              </div>
+              <ul className="space-y-2 text-gray-700">
+                <li>
+                  • 09:00-02:00 → <strong>AI Ch2</strong>: Complete + solve questions (5hr)
+                </li>
+                <li>• 02:00-03:00 → Lunch</li>
+                <li>
+                  • 03:00-04:00 → <strong>Stack Theory</strong>: All types
+                </li>
+                <li>• 04:00-05:00 → Play/Rest</li>
+                <li>
+                  • 05:00-08:00 → <strong>LeetCode Stack</strong>: 8 problems
                 </li>
                 <li>
-                  • 06:00-08:30 → <strong>LeetCode Stack</strong>: 8 problems
+                  • 08:00-10:00 → <strong>DBMS Ch2</strong>: SQL Basics
                 </li>
-                <li>
-                  • 09:00-11:00 → <strong>AI Ch2</strong>: Continue + solve questions
-                </li>
+                <li>• 10:00-11:00 → Dinner</li>
+                <li>• 11:00-12:00 → WebDev: React basics revision</li>
                 <li>
                   • ✅ <strong>Stack = 100%</strong>
                 </li>
               </ul>
             </div>
 
+            {/* <!-- Day 4 --> */}
             <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition">
               <div className="flex items-center justify-between mb-3">
-                <h5 className="text-xl font-bold text-gray-800">Day 4: Wed, 27 Nov 🔥</h5>
+                <h5 className="text-xl font-bold text-gray-800">Day 4: Thu, 27 Nov 🔥</h5>
                 <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">Weekday</span>
               </div>
               <ul className="space-y-2 text-gray-700">
                 <li>
-                  • 09:00-12:00 → <strong>AI Ch2</strong>: Complete + solve all questions
+                  • 09:00-02:00 → <strong>DBMS Ch2</strong>: Advanced SQL (5hr)
+                </li>
+                <li>• 02:00-03:00 → Lunch</li>
+                <li>
+                  • 03:00-04:00 → <strong>Queue Theory</strong>: All types
+                </li>
+                <li>• 04:00-05:00 → Play/Rest</li>
+                <li>
+                  • 05:00-08:00 → <strong>LeetCode Queue</strong>: 8 problems
                 </li>
                 <li>
-                  • 02:00-05:00 → <strong>Queue Theory</strong>: All types
+                  • 08:00-10:00 → <strong>Compiler Design Ch1</strong>: Introduction
                 </li>
-                <li>
-                  • 06:00-08:30 → <strong>LeetCode Queue</strong>: 8 problems
-                </li>
-                <li>
-                  • 09:00-11:00 → <strong>DBMS Ch2</strong>: SQL Basics
-                </li>
+                <li>• 10:00-11:00 → Dinner</li>
+                <li>• 11:00-12:00 → Aptitude: Quantitative basics</li>
                 <li>
                   • ✅ <strong>Queue = 100%</strong>
                 </li>
               </ul>
             </div>
 
+            {/* <!-- Day 5 --> */}
             <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition">
               <div className="flex items-center justify-between mb-3">
-                <h5 className="text-xl font-bold text-gray-800">Day 5: Thu, 28 Nov 🔥</h5>
+                <h5 className="text-xl font-bold text-gray-800">Day 5: Fri, 28 Nov 🔥</h5>
                 <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">Weekday</span>
               </div>
               <ul className="space-y-2 text-gray-700">
                 <li>
-                  • 09:00-12:00 → <strong>DBMS Ch2</strong>: Advanced SQL
+                  • 09:00-02:00 → <strong>Compiler Design Ch1</strong>: Lexical Analysis (5hr)
+                </li>
+                <li>• 02:00-03:00 → Lunch</li>
+                <li>
+                  • 03:00-04:00 → <strong>Heap Theory</strong>: Min/Max heap
+                </li>
+                <li>• 04:00-05:00 → Play/Rest</li>
+                <li>
+                  • 05:00-08:00 → <strong>LeetCode Heap</strong>: 8 problems
                 </li>
                 <li>
-                  • 02:00-05:00 → <strong>Heap Theory</strong>: Min/Max heap operations
+                  • 08:00-10:00 → <strong>Economics</strong>: Basic concepts
                 </li>
-                <li>
-                  • 06:00-08:30 → <strong>LeetCode Heap</strong>: 8 problems
-                </li>
-                <li>
-                  • 09:00-11:00 → <strong>Compiler Design Ch1</strong>: Introduction
-                </li>
+                <li>• 10:00-11:00 → Dinner</li>
+                <li>• 11:00-12:00 → Communication + Tomorrow prep</li>
                 <li>
                   • ✅ <strong>Heap = 60%</strong>
                 </li>
               </ul>
             </div>
 
+            {/* <!-- Day 6 --> */}
             <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition">
               <div className="flex items-center justify-between mb-3">
-                <h5 className="text-xl font-bold text-gray-800">Day 6: Fri, 29 Nov 🔥</h5>
-                <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">Weekday</span>
+                <h5 className="text-xl font-bold text-gray-800">Day 6: Sat, 29 Nov 💪</h5>
+                <span className="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold">Weekend</span>
               </div>
               <ul className="space-y-2 text-gray-700">
                 <li>
-                  • 09:00-12:00 → <strong>Compiler Design Ch1</strong>: Lexical Analysis
+                  • 09:00-02:00 → <strong>Heap Complete</strong>: Advanced problems (5hr)
+                </li>
+                <li>• 02:00-03:00 → Lunch</li>
+                <li>
+                  • 03:00-04:00 → <strong>Project</strong>: UI fixes start
+                </li>
+                <li>• 04:00-05:00 → Break</li>
+                <li>
+                  • 05:00-07:00 → <strong>Project</strong>: UI fixes continue
                 </li>
                 <li>
-                  • 02:00-05:00 → <strong>Heap Complete</strong>: Advanced problems
+                  • 07:00-10:00 → <strong>Exam Revision</strong>: DBMS + AI
                 </li>
-                <li>
-                  • 06:00-08:30 → <strong>LeetCode Heap</strong>: 6 hard problems
-                </li>
-                <li>
-                  • 09:00-11:00 → <strong>Economics</strong>: Basic concepts
-                </li>
+                <li>• 10:00-11:00 → Dinner</li>
+                <li>• 11:00-12:00 → Aptitude practice</li>
                 <li>
                   • ✅ <strong>Heap = 100%</strong>
                 </li>
               </ul>
             </div>
 
+            {/* <!-- Day 7 --> */}
             <div className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition border-4 border-purple-500">
               <div className="flex items-center justify-between mb-3">
-                <h5 className="text-xl font-bold text-gray-800">Day 7: Sat, 30 Nov 💪 WEEK 1 END</h5>
+                <h5 className="text-xl font-bold text-gray-800">Day 7: Sun, 30 Nov 💪 WEEK 1 END</h5>
                 <span className="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold">Weekend</span>
               </div>
               <ul className="space-y-2 text-gray-700">
                 <li>
-                  • 09:00-12:30 → <strong>Trie Theory + Practice</strong>: Complete
+                  • 09:00-02:00 → <strong>Trie Theory + Practice</strong>: Complete (5hr)
+                </li>
+                <li>• 02:00-03:00 → Lunch</li>
+                <li>
+                  • 03:00-04:00 → <strong>Project</strong>: Testing plan
+                </li>
+                <li>• 04:00-05:00 → Break</li>
+                <li>
+                  • 05:00-07:00 → <strong>Project</strong>: Feature additions
                 </li>
                 <li>
-                  • 02:00-05:00 → <strong>Project</strong>: Feature additions (Target 90%)
+                  • 07:00-10:00 → <strong>Exam Revision</strong>: All subjects
+                </li>
+                <li>• 10:00-11:00 → Dinner</li>
+                <li>
+                  • 11:00-12:00 → <strong>First Mock Interview</strong>
                 </li>
                 <li>
-                  • 06:00-09:00 → <strong>Exam Revision</strong>: DBMS + AI rapid review
-                </li>
-                <li>
-                  • 10:00-11:30 → <strong>First Mock Interview</strong>
-                </li>
-                <li>
-                  • ✅ <strong>Trie = 100% | LeetCode = 170</strong>
+                  • ✅ <strong>Trie = 100% | LeetCode = 170 | Project = 90%</strong>
                 </li>
               </ul>
             </div>
@@ -685,19 +717,19 @@ const page = () => {
             <h4 className="text-xl font-bold text-gray-800 mb-4">Exam Schedule:</h4>
             <div className="space-y-3">
               <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                <span className="font-bold">15-Dec (Sun)</span>
+                <span className="font-bold">15-Dec (Mon)</span>
                 <span className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">ARTIFICIAL INTELLIGENCE</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                <span className="font-bold">17-Dec (Tue)</span>
+                <span className="font-bold">17-Dec (Wed)</span>
                 <span className="bg-green-600 text-white px-4 py-2 rounded-full text-sm">DATABASE MANAGEMENT SYSTEMS</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
-                <span className="font-bold">19-Dec (Thu)</span>
+                <span className="font-bold">19-Dec (Fry)</span>
                 <span className="bg-purple-600 text-white px-4 py-2 rounded-full text-sm">COMPILER DESIGN</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                <span className="font-bold">21-Dec (Sat)</span>
+                <span className="font-bold">22-Dec (Mon)</span>
                 <span className="bg-orange-600 text-white px-4 py-2 rounded-full text-sm">ECONOMICS FOR ENGINEERS</span>
               </div>
             </div>
