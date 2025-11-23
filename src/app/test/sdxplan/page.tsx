@@ -1,5 +1,5 @@
 import React from "react";
-import "./sdxplan.css"
+import "./sdxplan.css";
 
 const page = () => {
   return (
@@ -154,12 +154,12 @@ const page = () => {
                 <span>→ DSA SESSION 2 (2.5hr) - LeetCode Pattern</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-green-600 w-48">08:30 PM - 09:00 PM</span>
-                <span>→ Light Snack</span>
+                <span className="font-bold text-green-600 w-48">09:30 PM - 10:30 PM</span>
+                <span>→ EXAM PREP (2hr) - 2nd Subject</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold text-green-600 w-48">09:00 PM - 11:00 PM</span>
-                <span>→ EXAM PREP (2hr) - 2nd Subject</span>
+                <span className="font-bold text-green-600 w-48">10:30 PM - 11:00 PM</span>
+                <span>→ Light Snack</span>
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-green-600 w-48">11:00 PM - 11:30 PM</span>
@@ -206,7 +206,7 @@ const page = () => {
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-orange-600 w-48">08:00 PM - 09:00 PM</span>
-                <span>→ Dinner</span>
+                <span>→ Project/Aptitude/WebDev (1hr)</span>
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-orange-600 w-48">09:00 PM - 10:30 PM</span>
@@ -214,7 +214,7 @@ const page = () => {
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-orange-600 w-48">10:30 PM - 11:30 PM</span>
-                <span>→ Project/Aptitude/WebDev (1hr)</span>
+                <span>→ Dinner</span>
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-orange-600 w-48">11:30 PM - 12:00 AM</span>
@@ -251,13 +251,14 @@ const page = () => {
                 <span className="font-bold text-red-600 w-48">07:00 PM - 09:00 PM</span>
                 <span>→ EXAM REVISION (2hr) - Weak Topics</span>
               </div>
+
               <div className="flex items-start">
                 <span className="font-bold text-red-600 w-48">09:00 PM - 10:00 PM</span>
-                <span>→ Dinner</span>
+                <span>→ DSA Maintenance (1hr) - Easy problems</span>
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-red-600 w-48">10:00 PM - 11:00 PM</span>
-                <span>→ DSA Maintenance (1hr) - Easy problems</span>
+                <span>→ Dinner</span>
               </div>
               <div className="flex items-start">
                 <span className="font-bold text-red-600 w-48">11:00 PM - 12:00 AM</span>
@@ -381,13 +382,14 @@ const page = () => {
                 <span>→ System Design (2.5hr) - Case Studies</span>
               </div>
               <div className="flex items-start">
-                <span className="font-bold w-48">08:30 PM - 09:30 PM</span>
-                <span>→ Dinner</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold w-48">09:30 PM - 11:30 PM</span>
+                <span className="font-bold w-48">08:30 PM - 10:30 PM</span>
                 <span>→ MOCK INTERVIEW (2hr) - Full Stack</span>
               </div>
+              <div className="flex items-start">
+                <span className="font-bold w-48">10:30 PM - 11:30 PM</span>
+                <span>→ Dinner</span>
+              </div>
+  
               <div className="flex items-start">
                 <span className="font-bold w-48">11:30 PM - 12:00 AM</span>
                 <span>→ Day Review</span>
