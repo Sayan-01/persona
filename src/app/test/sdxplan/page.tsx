@@ -1127,7 +1127,7 @@ const page = () => {
                   <tr className="bg-orange-100">
                     <td
                       className="px-4 py-3 font-black text-lg"
-                      colspan="6"
+                      colSpan={6}
                     >
                       TOTAL
                     </td>
