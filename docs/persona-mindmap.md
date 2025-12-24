@@ -11,18 +11,23 @@
 - Existing User
   - Logs In directly to Dashboard
 
-## Dashboard Features
-- Content Overview (Stats)
+## Dashboard Pages
+- Dashboard (Content and social media stats)
+
 - Action Hub
   - Content Brain
     - Ideas Generation
     - Content Creation
     - Content Enhancement
+  - Youtube Brain
   - Content Calendar
-- Content Management
+  - Growth Brain
+- Social media Integrations
+- My content (Content Management)
   - Drafts
   - Scheduled Content
   - Posted Content
+- Settings & Configuration
 
 ## Content Workflow
   ### Content For Youtube (Youtebe Brain)
@@ -51,9 +56,18 @@
       - Plateform
       - Existing content
       - Enhance type
-
+  ### Growth brain
+    - E-commerce
+    - Edtech
+    - Startup
+    - Marketing campaign
 ## Integrations
+- Instagram
+- Facebook
+- Twitter
+- LinkedIn
 
+* For schedule andd post generated content directly form persona ai plateform
 
 
 ## My Content
@@ -66,10 +80,6 @@
     - Duplicate posts
     - Track performance
 
-## Calendar Management
-- View Schedule
-- Add New Content
-- Reschedule Posts
 
 ## Settings & Configuration
 - Persona Settings

@@ -16,14 +16,14 @@ With PersonaAI, it's like having your own personal branding agency — at your f
 
 ## Key Features
 
-User Persona Builder
+Copy use tone
 → Trains AI on your goals, tone, backstory, and industry.
 
 AI-Powered Content Brain
 → Generates tailored content ideas and trends, aligned with your brand.
 
 Multi-Platform Writer
-→ Instantly create posts for LinkedIn, X/Twitter, Medium blogs, and newsletters.
+→ Instantly create posts for LinkedIn, X/Twitter, Medium blogs, newsletters, email, e-commerce description, product description, .
 
 Content Calendar & Scheduling
 → Plan, organize, and auto-post your content to stay consistent.
