@@ -51,7 +51,7 @@ const FeatureCard = ({ feature }: { feature: Integration }) => (
               <Image src={feature.icon} alt={feature.title} width={500} height={500} className="h-12 w-12" />
             </div>
             <div className="">
-              <Button>
+              <Button className="opacity-60">
                 Try Now <ChevronRight className="h-4 w-4 " />
               </Button>
             </div>

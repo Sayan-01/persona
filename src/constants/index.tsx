@@ -85,7 +85,7 @@ export const YT_Features = [
     id: 4,
     title: "Outline Generator",
     icon: List, // 📋 for structured outlines
-    path: "outline-generator",
+    path: "outlier-generator",
     desc: "Create structured AI outlines to plan your video flow and organize topics effectively before scripting.",
     border: "border-orange-200 dark:border-orange-600",
   },
