@@ -1,102 +1,67 @@
 "use client";
-import { motion } from "motion/react";
-import { Button } from "../ui/button";
+
+import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
-import { Aclonica } from "next/font/google";
-const outfit = Aclonica({ subsets: ["latin"], weight: ["400"] });
 
 const HeroSection = () => {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5 },
-  };
-
-  const stagger = {
-    animate: {
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
   return (
-    <section className="relative w-full overflow-hidden dark:bg-zinc-900 bg-white md:px-[70px] border-b ">
-      <div className="md:border-x">
-        <div className="w-full max-w-7xl mx-auto py-16 sm:py-20 sm:pt-[200px] pt-[150px] flex flex-col items-center">
-          <div className="absolute w-full h-[400px] top-52 opacity-70 bg-gradient-to-br from-[#fc5eea] via-[#ffffff] to-[#7a8cfa] dark:from-[#00000000] dark:via-[#00000000] dark:to-[#00000000] rounded-[100%] blur-[100px]" />{" "}
-          <div className="absolute inset-0 bg-[radial-gradient(#cccccc_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:32px_32px]" />
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={stagger}
-            className="container relative flex min-h-[90vh] flex-col items-center justify-center px-4  md:px-6"
-          >
-            <motion.div
-              variants={fadeInUp}
-              className="inline-flex items-center rounded-full border border-purple-300 dark:border-purple-600/50 bg-white/30 dark:bg-zinc-600/10 px-2 py-1 text-zinc-600 dark:text-zinc-300 backdrop-blur-sm sm:text-sm text-xs"
-            >
-              <span className="mr-1">✨</span>
-              AI-Powered Content Generation
-            </motion.div>
-            <motion.h1
-              variants={fadeInUp}
-              className={`my-4 mt-7 max-w-7xl text-center font-extrabold tracking-tight leading-[1.1] lg:text-6xl md:text-5xl text-[34px]  text-[#000000] dark:text-white sm:text-6xl md:text-[58px] ${outfit.className}`}
-            >
-              Grow your brand
-              <br className="sm:hidden" /> and{" "}
-              <br className="hidden sm:block" />
-              create lasting engagement
-            </motion.h1>
-            <motion.p
-              variants={fadeInUp}
-              className=" max-w-[1000px] text-center text-zinc-600 dark:text-zinc-200/80 md:text-lg text-sm max-sm:px-4"
-            >
-              Welcome to Our PersonaAI, your creative AI partner. Using our tool you<br className="md:block hidden" />
-              can craft content, scripts<br className="block md:hidden" /> and stories easily.✨
-            </motion.p>
-            <motion.div
-              variants={fadeInUp}
-              className="mt-6 z-10 flex gap-2 sm:gap-6"
-            >
-              <Link href="/dashboard/content-brain">
-                <Button
-                  size="lg"
-                  className="group rounded-full md:h-12 h-10 dark:bg-primary dark:text-black"
-                >
-                  Let's Start Creating
-                </Button>
-              </Link>
-              <Link href="#features">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-32 rounded-full sm:block hidden  md:h-12 bg-zinc-300 dark:bg-zinc-800 dark:text-white"
-                >
-                  Learn more
-                </Button>
-              </Link>
-            </motion.div>
-            <motion.div
-              variants={fadeInUp}
-              className="sm:mt-24 mt-12 sm:w-full w-[200%] relative sm:top-0 -right-[65%] sm:left-0  rounded-3xl border-4 border-white dark:border-black/70 bg-[#f1f1f1] dark:bg-zinc-800 sm:p-5 p-4 backdrop-blur-sm"
-            >
-              <div className=" w-full overflow-hidden rounded-2xl bg-[#212121] ">
-                <div className="flex h-full items-center justify-center">
-                  <Image
-                    src="/dashboard-dark.png"
-                    alt="dashboard"
-                    width={5000}
-                    height={5000}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
+    <section className="min-h-screen relative overflow-hidden flex flex-col items-center justify-center pt-[80px]">
+      {/* Background Media */}
+      <video
+        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260324_151826_c7218672-6e92-402c-9e45-f1e0f454bdc4.mp4"
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+      
+      {/* Overlay Gradients */}
+      <div className="absolute inset-0 bg-black/40 z-1" />
+      <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-black via-black/60 to-transparent z-1" />
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 text-center">
+        <motion.div
+           initial={{ opacity: 0, y: 24 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.8, ease: "easeOut" }}
+           className="flex flex-col items-center"
+        >
+          <h1 className="font-instrument text-[clamp(2.5rem,8vw,5.5rem)] leading-[0.95] tracking-[-0.03em] font-normal text-white max-w-[1100px] mb-8">
+            Create <em className="italic">personalized</em> content <br className="hidden md:block" />
+             through the <em className="italic">silence</em> of AI.
+          </h1>
+
+          <p className="font-sans text-[clamp(1rem,1.5vw,1.125rem)] text-white/80 max-w-[640px] leading-relaxed mb-12">
+            Design tools for deep thinkers and bold creators. 
+            Amid the digital noise, we build spaces for sharp focus 
+            and inspired content generation.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <Link href="/dashboard/content-brain">
+              <button className="liquid-glass rounded-full px-12 py-5 text-[16px] font-medium text-white hover:scale-[1.02] transition-transform duration-200 cursor-pointer">
+                Begin Journey
+              </button>
+            </Link>
+            <Link href="#features" className="text-white/60 hover:text-white text-[14px] font-medium transition-colors">
+              Explore Features →
+            </Link>
+          </div>
+        </motion.div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-4"
+      >
+        <span className="text-[10px] uppercase tracking-[0.3em] text-white/40">Scroll</span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-white/40 to-transparent" />
+      </motion.div>
     </section>
   );
 };

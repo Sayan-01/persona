@@ -1,6 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { DM_Sans, Geist, Roboto_Mono } from "next/font/google";
+import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/ui/theme-provider";
@@ -8,7 +8,13 @@ import { CreditProvider } from "@/hooks/credit-provider";
 import NextTopLoader from "nextjs-toploader";
 import { SessionProvider } from "next-auth/react";
 
-const monaa = Roboto_Mono({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
+});
 
 export const metadata: Metadata = {
   title: "PersonaAI - AI-Powered Content Creation",
@@ -28,7 +34,7 @@ export default async function RootLayout({
     >
       <body
         cz-shortcut-listen="true"
-        className={`font-sans ${monaa.className} box scroll-smooth antialiased`}
+        className={`${inter.variable} ${instrumentSerif.variable} font-sans box scroll-smooth antialiased`}
       >
         <CreditProvider>
           <NextTopLoader

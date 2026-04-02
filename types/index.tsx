@@ -64,3 +64,19 @@ export type UserPersona = {
   contentGoals: string[];
   sampleContent: string;
 }
+
+export interface PlatformHelper {
+  getAuthUrl: (state: string) => string;
+  exchangeCode: (code: string, codeVerifier?: string) => Promise<any>;
+  refreshToken: (refreshToken: string) => Promise<any>;
+}
+
+export interface OAuthTokens {
+  accessToken?: string;
+  refreshToken?: string;
+  expiresAt?: number;
+  accountHandle?: string;
+  accountName?: string;
+  accountImage?: string;
+  providerAccountId?: string;
+}

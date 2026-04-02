@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/mode-toggle";
 import { Menu, X } from "lucide-react";
-import BlackButton from "./button";
 import Logo from "../global/logo";
 import { LandingPageNav } from "@/constants";
 import { cn } from "@/lib/utils";
@@ -15,131 +12,99 @@ export function SiteHeader({ session }: { session: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className={cn("w-full absolute z-10 px-6 border-b backdrop-blur-lg bg-zinc-900/90 max-sm:fixed max-sm:top-0 max-sm:z-50", isMenuOpen ? "h-full" : "")}>
-      <div className="">
-        <div className="container flex h-[70px] items-center justify-between max-w-[1400px] mx-auto">
+    <header className={cn(
+      "w-full fixed top-0 left-0 z-[100] transition-all duration-300",
+      isMenuOpen ? "h-full bg-black" : "h-[80px]"
+    )}>
+      <nav className="max-w-[1280px] mx-auto px-6 h-full flex items-center justify-between">
+        {/* Brand */}
+        <div className="z-[101]">
           <Logo />
-          <nav className="hidden md:flex gap-6 ">
+        </div>
+
+        {/* Nav Links - Desktop */}
+        <div className="hidden md:flex items-center gap-10">
+          {LandingPageNav.map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              className="text-[14px] font-medium text-white/90 hover:text-white transition-opacity duration-200"
+            >
+              {item.title}
+            </Link>
+          ))}
+        </div>
+
+        {/* CTA - Desktop */}
+        <div className="hidden md:flex items-center gap-6">
+          {session?.user ? (
+            <div className="flex items-center gap-4">
+              <UserButton />
+              <Link href="/dashboard">
+                <button className="liquid-glass rounded-full px-6 py-2.5 text-[14px] font-medium text-white hover:scale-[1.03] transition-transform duration-200 cursor-pointer">
+                  Dashboard
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center gap-6">
+              <Link href="/auth/login" className="text-[14px] font-medium text-white/80 hover:text-white">
+                Login
+              </Link>
+              <Link href="/auth/register">
+                <button className="liquid-glass rounded-full px-6 py-2.5 text-[14px] font-medium text-white hover:scale-[1.03] transition-transform duration-200 cursor-pointer">
+                  Begin Journey
+                </button>
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Toggle */}
+        <div className="flex md:hidden z-[101]">
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="text-white p-2"
+          >
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 bg-black pt-[100px] px-6 flex flex-col gap-8 animate-fade-rise duration-300">
+          <div className="flex flex-col gap-6">
             {LandingPageNav.map((item) => (
               <Link
                 key={item.title}
                 href={item.href}
-                className=" font-medium transition-colors hover:text-blue-600 "
+                className="text-2xl font-instrument text-white border-b border-white/10 pb-4"
+                onClick={() => setIsMenuOpen(false)}
               >
                 {item.title}
               </Link>
             ))}
-          </nav>
-          <div className="hidden md:flex items-center gap-4">
-            {session?.user ? (
-              <>
-                <UserButton />
-                <Link href="/dashboard">
-                  <Button
-                    size="lg"
-                    className="rounded-full"
-                  >
-                    Dashboard
-                  </Button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link href="/auth/login">
-                  <Button
-                    variant="ghost"
-                    className="hover:text-blue-700 hover:bg-blue-50/50 h-10"
-                  >
-                    Login
-                  </Button>
-                </Link>
-                <Link href="/auth/register">
-                  <Button className="rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:shadow-md hover:shadow-blue-500/25 h-10">Get Started</Button>
-                </Link>
-              </>
-            )}
           </div>
-          <div className="flex md:hidden items-center gap-4 border rounded-full">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="hover:text-blue-700 "
-            >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </div>
-        </div>
-      </div>
-      {isMenuOpen && (
-        <div className="container h-[calc(100vh-70px)] md:hidden py-4 pb-6 flex flex-col gap-5">
-          <nav className="flex flex-col gap-4">
-            <Link
-              href="/"
-              className=" font-medium transition-colors hover:text-blue-600 "
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              href="/#features"
-              className=" font-medium transition-colors hover:text-blue-600 "
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Features
-            </Link>
-            <Link
-              href="/#pricing"
-              className=" font-medium transition-colors hover:text-blue-600 "
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Pricing
-            </Link>
-
-            <Link
-              href="#faq"
-              className=" font-medium transition-colors hover:text-blue-600 "
-              onClick={() => setIsMenuOpen(false)}
-            >
-              FAQ
-            </Link>
-            <Link
-              href="/dashboard/settings"
-              className=" font-medium transition-colors hover:text-blue-600 "
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Profile
-            </Link>
-            <Link
-              href="/blog/know-more"
-              className=" font-medium transition-colors hover:text-blue-600 "
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Know More
-            </Link>
-          </nav>
-          <div className="flex flex-col gap-5 mt-2">
+          
+          <div className="mt-auto pb-10 flex flex-col gap-4">
             {session?.user ? (
-              <Link href="/dashboard">
-                <Button
-                  variant="outline"
-                  className="w-full border-blue-200 bg-white/50 text-blue-700 hover:bg-blue-50 hover:text-blue-800 "
-                >
-                  Dashbord
-                </Button>
+              <Link href="/dashboard" className="w-full" onClick={() => setIsMenuOpen(false)}>
+                <button className="liquid-glass w-full rounded-full py-4 text-white">
+                  Enter Dashboard
+                </button>
               </Link>
             ) : (
               <>
-                <Link href="/auth/login">
-                  <Button
-                    variant="outline"
-                    className="w-full border-blue-200 bg-white/50 text-blue-700 hover:bg-blue-50 hover:text-blue-800 "
-                  >
+                <Link href="/auth/login" className="w-full" onClick={() => setIsMenuOpen(false)}>
+                  <button className="w-full py-4 text-white border border-white/20 rounded-full">
                     Login
-                  </Button>
+                  </button>
                 </Link>
-                <Link href="auth/register">
-                  <Button className="w-full">Register</Button>
+                <Link href="/auth/register" className="w-full" onClick={() => setIsMenuOpen(false)}>
+                  <button className="liquid-glass w-full rounded-full py-4 text-white">
+                    Start Creating
+                  </button>
                 </Link>
               </>
             )}

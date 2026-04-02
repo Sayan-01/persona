@@ -4,7 +4,7 @@ import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { X, XIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 interface CustomSheetContentProps {
   showX?: boolean;

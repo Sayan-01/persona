@@ -2,6 +2,7 @@
 import { ArrowUp, Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { copyToClipboard } from "@/utils/helper";
+import { useCredits } from "@/hooks/credit-provider";
 
 type ScriptContent = {
   hook: string;
@@ -28,6 +29,8 @@ const Page3 = () => {
   const [videoType, setVideoType] = useState<"shorts" | "long">("shorts");
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
 
+  const { decrementCredits } = useCredits();
+
   const onGenerate = async () => {
     setLoading(true);
     setContent(null);
@@ -49,6 +52,7 @@ const Page3 = () => {
 
       if (data) {
         const dataObj = JSON.parse(data.data);
+        decrementCredits(100);
         console.log("Generated content:", dataObj);
         setContent(dataObj);
       }

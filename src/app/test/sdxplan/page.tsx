@@ -1,990 +1,617 @@
 import React from "react";
-import "./sdxplan.css";
 
-const page = () => {
+export default function FebruaryRoadmap() {
+  const roadmapData = {
+    weeks: [
+      {
+        id: 1,
+        week: "W1",
+        dates: "FEB 1-2",
+        timeBlocks: {
+          block1: "DSA Revision - 3hrs",
+          block2: "Core CS Theory - 2hrs",
+          block3: "DSA+CP Practice - 1hr",
+        },
+        dsaFocus: {
+          topics: [
+            {
+              title: "RECURSION & BACKTRACKING",
+              items: ["• Subset/Combination patts", "• N-Queens, Sudoku Solver", "• Permutations variations", "• Word Search, Palindrome Partitioning"],
+              practice: "Practice: 15-18 problems",
+            },
+            {
+              title: "LINKED LIST (Revival)",
+              items: ["• Reverse", "• Fast-slow pointer (cycle)", "• Reversal patterns", "• Merge/Sort LL", "• Clone with random pointer", "• Dummy node"],
+              practice: "Practice: 12-15 problems",
+            },
+            {
+              title: "TREE",
+              items: ["• DFS", "• BFS", "• LCA", "• Diameter", "• Validate BST", "• Path sum problems"],
+              practice: "",
+            },
+          ],
+        },
+        cpLeetcode: {
+          daily: "2 Medium + 1 Hard",
+          contest: "Contest: Weekly 385",
+          rating: "Rating goal: 1700",
+          schedule: ["Mon-Tue: 4 problems", "Wed-Thu: 5 problems", "Fri-Sat: Contest prep"],
+        },
+        coreSubjects: {
+          title: "OOPs (Complete)",
+          sections: [
+            {
+              day: "Day 1-2: 4 Pillars",
+              items: ["- Classes, Objects", "- Inheritance types", "- Polymorphism", "- Encapsulation", "- Abstraction"],
+            },
+            {
+              day: "Day 3-4: Advanced",
+              items: ["- Virtual functions", "- Constructor types", "- Destructor", "- Abstract class vs Interface", "- Friend function"],
+            },
+          ],
+          note: "Make concise notes",
+        },
+        lld: {
+          timing: "3PM-5PM (Mon, Wed, Fri)",
+          hours: "2hrs/session = 6hrs/week",
+          sessions: [
+            {
+              day: "Day 1 (Mon):",
+              title: "• SOLID Principles Deep",
+              items: ["  - Single Responsibility", "  - Open/Closed", "  - Liskov Substitution", "  - Interface Segregation", "  - Dependency Inversion", "• Code examples for each"],
+            },
+            {
+              day: "Day 3 (Wed):",
+              title: "• Design Patterns Intro",
+              items: ["  - Singleton Pattern", "  - Factory Pattern", "  - Builder Pattern", "  - Strategy Pattern"],
+            },
+            {
+              day: "Day 5 (Fri):",
+              title: "• Basic LLD Practice",
+              items: ["  - Design Parking Lot", "  - Classes, relationships", "  - UML diagram basics"],
+            },
+          ],
+        },
+        development: {
+          title: "Review Projects",
+          items: ["• Document both projects", "• Tech stack clarity", "• Features list", "• Architecture diagram"],
+          section2: {
+            day: "Day 5-6: MERN stack interview Qs",
+            items: ["• State management", "• Authentication flow", "• Database design", "• REST API patterns", "20 questions prepared"],
+          },
+        },
+        sunday: {
+          title: "SUN (Feb 2):",
+          tasks: ["• Portfolio setup/update", "• LinkedIn optimization", "• Mock Interview #1 (Platform)", "• Aptitude diagnostic test", "• Time: 2-3hrs"],
+          note: {
+            title: "Notes:",
+            text: "Start small spiral notebook for each subject",
+          },
+        },
+      },
+      {
+        id: 2,
+        week: "W2",
+        dates: "FEB 8-9",
+        timeBlocks: {
+          block1: "DSA Revision - 3hrs",
+          block2: "Aptitude + LLD - 2hrs",
+          block3: "DSA+CP Practice - 1hr",
+        },
+        dsaFocus: {
+          topics: [
+            {
+              title: "GRAPHS (Deep Dive)",
+              items: ["• BFS/DFS patterns (islands, rotting oranges)", "• Shortest path (Dijkstra, Bellman, Floyd)", "• Topological sort, SCC", "• MST (Prim, Kruskal)", "• Bipartite, Union-Find"],
+              practice: "Practice: 20-25 problems",
+            },
+            {
+              title: "BINARY SEARCH ON ANSWER",
+              items: ["• Search space identification", "• Monotonic functions", "• Allocation problems", "• Min/Max optimization"],
+              practice: "Practice: 10-12 problems",
+            },
+          ],
+        },
+        cpLeetcode: {
+          daily: "2 Medium + 1 Hard",
+          contest: "Contest: Weekly 386",
+          rating: "Rating goal: 1750",
+          schedule: ["Mon-Tue: 4 problems", "Wed-Thu: 5 problems", "Fri-Sat: Contest prep"],
+        },
+        coreSubjects: {
+          title: "DBMS (Priority)",
+          sections: [
+            {
+              day: "Day 8-9: Fundamentals",
+              items: ["- ER diagrams", "- Normalization (1NF to BCNF)", "- Keys (Primary, Foreign, Candidate)"],
+            },
+            {
+              day: "Day 10-11: Advanced",
+              items: ["- Transactions (ACID)", "- Indexing", "- SQL queries (Joins, Group By, Having)"],
+            },
+            {
+              day: "Day 12: SQL practice",
+              items: ["- 15 medium queries"],
+            },
+          ],
+          note: "**Make query sheets**",
+        },
+        lld: {
+          timing: "**3PM-5PM (Mon, Wed, Fri)**",
+          hours: "2hrs/session = 6hrs/week",
+          sessions: [
+            {
+              day: "Day 8 (Mon):",
+              title: "• Design Library Management",
+              items: ["  - Book, Member, Librarian", "  - Issue/Return system", "  - Fine calculation", "  - Search functionality"],
+            },
+            {
+              day: "Day 10 (Wed):",
+              title: "• Design Hotel Booking",
+              items: ["  - Room types, booking", "  - Payment processing", "  - Cancellation policy"],
+            },
+            {
+              day: "Day 12 (Fri):",
+              title: "• Design Elevator System",
+              items: ["  - Multiple elevators", "  - Request handling", "  - Optimal algorithm"],
+            },
+          ],
+        },
+        development: {
+          title: "Next.js Basics",
+          items: ["• SSR vs CSR concepts", "• App router structure", "• API routes"],
+          section2: {
+            day: "Day 11-12: Practice",
+            items: ["• Explain both projects in LLD context", "• Draw system diagrams"],
+          },
+        },
+        sunday: {
+          title: "SUN (Feb 9):",
+          tasks: ["• Mock Interview #2", "• System Design basics study", "• LeetCode weekly analysis", "• Weak topic focused practice", "• Review OOPs + SOLID notes", "• Time: 3hrs"],
+          note: {
+            title: "Aptitude Focus:",
+            items: ["• Quantitative (3 topics/week)", "• Logical reasoning", "• 30min daily (Mon-Sat)"],
+          },
+        },
+      },
+      {
+        id: 3,
+        week: "W3",
+        dates: "FEB 15-16",
+        timeBlocks: {
+          block1: "DSA Revision - 3hrs",
+          block2: "Aptitude + LLD - 2hrs",
+          block3: "DSA+CP Intense - 1hr",
+        },
+        dsaFocus: {
+          topics: [
+            {
+              title: "DYNAMIC PROGRAMMING",
+              items: [
+                "• 1D DP (Fibonacci, Climb, House Robber patterns)",
+                "• 2D DP (Grid, LCS, Edit distance)",
+                "• Knapsack variations",
+                "• Partition DP",
+                "• DP on trees/strings",
+                "• State machine DP",
+              ],
+              practice: "Practice: 25-30 problems",
+            },
+            {
+              title: "CP BOOST (Guardian Push)",
+              items: ["• Greedy algorithms", "• Math/Number theory"],
+              practice: "Practice: 15 CP problems",
+            },
+          ],
+        },
+        cpLeetcode: {
+          daily: "2 Medium + 2 Hard",
+          contest: "Contest: Weekly 387",
+          rating: "Rating goal: 1850",
+          schedule: ["Mon-Tue: 5 problems", "Wed-Thu: 5 problems", "Fri-Sat: 6 problems"],
+          cpTopics: {
+            title: "**CP Topics:**",
+            items: ["• Number theory basics", "• Modular arithmetic", "• Combinatorics", "• GCD/LCM problems", "Week contests: 2-3"],
+          },
+        },
+        coreSubjects: {
+          title: "**OS Fundamentals**",
+          sections: [
+            {
+              day: "Day 15-16: Processes",
+              items: ["- States, scheduling", "- Threads vs Process", "- Synchronization"],
+            },
+            {
+              day: "Day 17-18: Memory",
+              items: ["- Paging, Segmentation", "- Virtual memory", "- Deadlock"],
+            },
+            {
+              day: "Day 19: Disk & File",
+              items: ["- Disk scheduling", "- File systems"],
+            },
+          ],
+          note: "**Concise notes**",
+        },
+        lld: {
+          timing: "**3PM-5PM (Mon-Fri)**",
+          hours: "2hrs/session = 10hrs/week",
+          heavy: "**HEAVY LLD WEEK**",
+          sessions: [
+            {
+              day: "Day 15 (Mon):",
+              title: "• Design Splitwise",
+              items: ["  - User, Group, Expense", "  - Settlement algorithm", "  - Simplify debt", "  - Transaction history"],
+            },
+            {
+              day: "Day 16 (Tue):",
+              title: "• Design Snake & Ladder",
+              items: ["  - Board, Dice, Players", "  - Snake/Ladder positions", "  - Win condition"],
+            },
+            {
+              day: "Day 17 (Wed):",
+              title: "• Design Tic-Tac-Toe",
+              items: ["  - Board representation", "  - Win detection algorithm", "  - Strategy pattern use"],
+            },
+            {
+              day: "Day 18 (Thu):",
+              title: "• Design LRU Cache",
+              items: ["  - HashMap + DoublyLinkedL", "  - O(1) get/put operations", "  - Eviction policy"],
+            },
+            {
+              day: "Day 19 (Fri):",
+              title: "• Design LFU Cache",
+              items: ["  - Frequency tracking", "  - Evict least frequent", "  - Implementation details"],
+            },
+          ],
+        },
+        development: {
+          title: "Next.js Advanced",
+          items: ["• Server components", "• Middleware patterns", "• Data fetching"],
+          section2: {
+            day: "Day 19-20: Advanced",
+            items: ["• Record demo videos", "• Performance tuning", "• Deployment strategies"],
+          },
+        },
+        sunday: {
+          title: "**SUN (Feb 16):**",
+          tasks: ["• Mock Interview #3 & #4", "• 2 interviews (back-to-back)", "• CP contest participation", "• Review all weak problems", "• GSOC org exploration (2hrs)", "• Time: 4hrs"],
+          note: {
+            title: "**Aptitude Boost:**",
+            items: ["• Full mock test (2hrs)", "• Data interpretation"],
+          },
+        },
+      },
+      {
+        id: 4,
+        week: "W4",
+        dates: "FEB 22-28",
+        timeBlocks: {
+          block1: "Mixed Practice - 2.5hrs",
+          block2: "Mixed Prep - 1.5hrs",
+          block3: "Interview Mode - 2hrs",
+        },
+        dsaFocus: {
+          topics: [
+            {
+              title: "**FINAL REVISION**",
+              items: ["• Topic-wise rapid fire", "• Weak topics only", "• Pattern revision sheets", "• Company-tagged problems (if targeting specific)"],
+              practice: "Practice: 20 mixed problems",
+            },
+            {
+              title: "**INTERVIEW PATTERNS**",
+              items: ["• Arrays: Sliding window, two pointer", "• Trees: Traversals, LCA", "• Strings: KMP, Rabin-Karp", "• Top 50 interview problems"],
+            },
+            {
+              title: "**MOCK INTERVIEW PREP**",
+              items: ["• Behavioral questions", "• STAR method practice", "• Project explanation (5min)", '• "Tell me about yourself"'],
+            },
+          ],
+        },
+        cpLeetcode: {
+          daily: "Contest Daily + Hard problems",
+          rating: "Rating goal: 2000+",
+          schedule: ["Daily: 3-4 Hard problems", "Mon-Thu: Topic contests", "Fri-Sat: Rated contests"],
+          guardianPush: {
+            title: "**Guardian Level Push:**",
+            items: ["• Codeforces Div 2", "• AtCoder Beginner", "• 5-6 contests this week"],
+          },
+        },
+        coreSubjects: {
+          title: "**CN (Computer Net)**",
+          sections: [
+            {
+              day: "Day 22-23: Basics",
+              items: ["- OSI/TCP-IP models", "- IP addressing", "- Subnetting"],
+            },
+            {
+              day: "Day 24-25: Protocols",
+              items: ["- HTTP/HTTPS", "- TCP/UDP", "- DNS, DHCP"],
+            },
+            {
+              day: "Day 26: Security",
+              items: ["- Encryption", "- Firewalls"],
+            },
+          ],
+          note: "**Quick reference**",
+        },
+        lld: {
+          timing: "**3PM-5PM (Mon-Thu)**",
+          hours: "2hrs/session = 8hrs/week",
+          heavy: "**ADVANCED LLD + INTERVIEW**",
+          sessions: [
+            {
+              day: "Day 22 (Mon):",
+              title: "• Design Rate Limiter",
+              items: ["  - Token bucket algorithm", "  - Sliding window counter", "  - Distributed systems"],
+            },
+            {
+              day: "Day 23 (Tue):",
+              title: "• Design URL Shortener",
+              items: ["  - Hash function design", "  - Collision handling", "  - Custom URL feature", "  - Analytics tracking"],
+            },
+            {
+              day: "Day 24 (Wed):",
+              title: "• Design Notification System",
+              items: ["  - Push, Email, SMS", "  - Priority queue", "  - Retry mechanism"],
+            },
+            {
+              day: "Day 25 (Thu):",
+              title: "• LLD Interview Practice",
+              items: ["  - Design Cab Booking App", "  - Design Food Delivery", "  - Design ATM System", "  - Pick any 2 for practice"],
+            },
+          ],
+        },
+        development: {
+          title: "Full Stack Polish",
+          items: ["• Next.js interview prep", "• SSR vs CSR vs SSG", "• API routes, middleware", "• Server components", "• App router deep dive", "30 Next.js questions"],
+          section2: {
+            day: "Day 26-27: Project Deep Dive",
+            items: ["• Record demo videos", "• Deployment checklist", "• Error handling", "• Performance optimization"],
+          },
+          section3: {
+            day: "Day 28: Final touches",
+            items: ["• Resume bullets perfect", "• GitHub readme polish", "• LinkedIn post projects"],
+          },
+        },
+        sunday: {
+          title: "**SUN (Feb 23):**",
+          tasks: [
+            "• Mock Interview #5 & #6",
+            "• Full day interview simulation",
+            "• Morning: DSA (2 rounds)",
+            "• Afternoon: System Design",
+            "• Evening: HR + Behavioral",
+            "• GSOC proposal draft start",
+            "• Time: 5-6hrs",
+          ],
+          saturday: {
+            title: "**SAT (Feb 22):**",
+            items: ["• Mock Interview #7", "• Company-specific prep"],
+          },
+          finalWeek: {
+            title: "**Final Week Intensity:**",
+            items: ["• Mock interviews: #8-12", "• Spread across Feb 24-28", "• 1-2 per day in last 4 days"],
+          },
+        },
+      },
+    ],
+  };
+
   return (
-    <div className="light bg-white text-black">
-      <header className="gradient-bg text-white py-16 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-black mb-4">🎯 ULTIMATE 38-DAY BATTLE PLAN</h1>
-          <p className="text-2xl md:text-3xl font-bold mb-6">24 November - 31 December 2025</p>
-          <div className="flex flex-wrap justify-center gap-4 text-lg">
-            <span className="bg-white text-purple-600 px-6 py-2 rounded-full font-bold">432 Total Hours</span>
-            <span className="bg-white text-purple-600 px-6 py-2 rounded-full font-bold">LeetCode 150 → 300</span>
-            <span className="bg-white text-purple-600 px-6 py-2 rounded-full font-bold">4 Exams Aced</span>
-            <span className="bg-white text-purple-600 px-6 py-2 rounded-full font-bold">Dream Internship Ready</span>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white p-8">
+      <div className="max-w-[1600px] mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+          🔥 ULTIMATE FEBRUARY COMEBACK ROADMAP - ENHANCED WITH LLD COLUMN
+        </h1>
 
-      <section className="bg-gradient-to-br from-indigo-50 to-purple-50 py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-black text-gray-800 mb-8 text-center">🔥 DAILY TIME-BLOCK BLUEPRINT</h2>
+        <div className="overflow-x-auto mb-12">
+          <div className="bg-gray-800 rounded-lg p-2 border-2 border-orange-500">
+            <table className="w-full text-xs border-collapse">
+              <thead>
+                <tr className="border-b-2 border-orange-500">
+                  <th className="p-2 text-left border-r border-gray-600">WEEK</th>
+                  <th className="p-2 text-left border-r border-gray-600">
+                    TIME BLOCKS (6hrs/day)
+                    <br />
+                    10AM-1PM | 3PM-5PM | 6PM-10PM
+                  </th>
+                  <th className="p-2 text-left border-r border-gray-600">
+                    DSA FOCUS
+                    <br />
+                    Topics + Practice Count
+                  </th>
+                  <th className="p-2 text-left border-r border-gray-600">
+                    CP/LEETCODE
+                    <br />
+                    Daily Target
+                  </th>
+                  <th className="p-2 text-left border-r border-gray-600">
+                    CORE SUBJECTS
+                    <br />
+                    Topics + Notes
+                  </th>
+                  <th className="p-2 text-left border-r border-gray-600">
+                    LLD (Low Level Design)
+                    <br />
+                    TIMING + Topics
+                  </th>
+                  <th className="p-2 text-left border-r border-gray-600">
+                    DEVELOPMENT/PROJECTS
+                    <br />
+                    Prep + Practice
+                  </th>
+                  <th className="p-2 text-left">
+                    SPECIAL TASKS (SUNDAYS)
+                    <br />
+                    Sunday Deep Dives
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {roadmapData.weeks.map((week) => (
+                  <tr
+                    key={week.id}
+                    className={week.id < 4 ? "border-b border-gray-700" : ""}
+                  >
+                    {/* Week Column */}
+                    <td className="p-2 border-r border-gray-600 align-top font-bold">
+                      {week.week}
+                      <br />
+                      {week.dates.split(" ")[0]}
+                      <br />
+                      {week.dates.split(" ")[1]}
+                    </td>
 
+                    {/* Time Blocks Column */}
+                    <td className="p-2 border-r border-gray-600 align-top">
+                      <div>{week.timeBlocks.block1}</div>
+                      <div>{week.timeBlocks.block2}</div>
+                      <div>{week.timeBlocks.block3}</div>
+                    </td>
 
-          {/* <!-- Post-Exam Weekend --> */}
-          <div className="bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-xl shadow-xl p-8 card-hover transition duration-300">
-            <h3 className="text-2xl font-bold mb-4">📙 TYPE C: POST-EXAM WEEKEND (Week 5)</h3>
-            <div className="space-y-3">
-              <div className="flex items-start">
-                <span className="font-bold w-48">08:00 AM - 09:00 AM</span>
-                <span>→ Wake + Routine</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold w-48">09:00 AM - 02:00 PM</span>
-                <span>→ DSA BEAST MODE (5hr) - Advanced Topics</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold w-48">02:00 PM - 03:00 PM</span>
-                <span>→ Lunch</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold w-48">03:00 PM - 04:00 PM</span>
-                <span>→ LeetCode Marathon (1hr) - Hard Problems</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold w-48">04:00 PM - 05:00 PM</span>
-                <span>→ Break</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold w-48">05:00 PM - 08:00 PM</span>
-                <span>→ System Design (3hr) - Case Studies</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold w-48">08:00 PM - 10:00 PM</span>
-                <span>→ MOCK INTERVIEW (2hr) - Full Stack</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold w-48">10:00 PM - 11:00 PM</span>
-                <span>→ Dinner</span>
-              </div>
-              <div className="flex items-start">
-                <span className="font-bold w-48">11:00 PM - 12:00 AM</span>
-                <span>→ Day Review</span>
-              </div>
-            </div>
-            <p className="mt-4 text-xl font-bold">Total: 12 hours (Pure Interview Prep)</p>
-          </div>
-        </div>
-      </section>
+                    {/* DSA Focus Column */}
+                    <td className="p-2 border-r border-gray-600 align-top">
+                      {week.dsaFocus.topics.map((topic, idx) => (
+                        <div key={idx}>
+                          <div className={`font-bold ${idx > 0 ? "mt-4" : ""} mb-2`}>{topic.title}</div>
+                          {topic.items.map((item, i) => (
+                            <div key={i}>{item}</div>
+                          ))}
+                          <div className="mt-2">{topic.practice}</div>
+                        </div>
+                      ))}
+                    </td>
 
-      <section className="max-w-7xl mx-auto py-12 px-4">
-        <h2 className="text-4xl font-black text-gray-800 mb-8 text-center">📅 WEEK-BY-WEEK DETAILED ROADMAP</h2>
+                    {/* CP/LeetCode Column */}
+                    <td className="p-2 border-r border-gray-600 align-top">
+                      <div>{week.cpLeetcode.daily}</div>
+                      {week.cpLeetcode.contest && <div className="mt-2">{week.cpLeetcode.contest}</div>}
+                      <div className="mt-2">{week.cpLeetcode.rating}</div>
+                      <div className="mt-4">
+                        {week.cpLeetcode.schedule.map((item, idx) => (
+                          <div key={idx}>{item}</div>
+                        ))}
+                      </div>
+                      {week.cpLeetcode.cpTopics && (
+                        <>
+                          <div className="mt-4 font-bold">{week.cpLeetcode.cpTopics.title}</div>
+                          {week.cpLeetcode.cpTopics.items.map((item, idx) => (
+                            <div key={idx}>{item}</div>
+                          ))}
+                        </>
+                      )}
+                      {week.cpLeetcode.guardianPush && (
+                        <>
+                          <div className="mt-4 font-bold">{week.cpLeetcode.guardianPush.title}</div>
+                          {week.cpLeetcode.guardianPush.items.map((item, idx) => (
+                            <div key={idx}>{item}</div>
+                          ))}
+                        </>
+                      )}
+                    </td>
 
-        <div className="bg-gradient-to-br from-teal-50 to-cyan-100 rounded-xl shadow-xl p-8 mb-8 border-4 border-teal-500">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-3xl font-black text-teal-800">🚀 WEEK 5: Dec 23-31 (POST-EXAM BEAST MODE)</h3>
-            <span className="bg-teal-600 text-white px-4 py-2 rounded-full font-bold text-sm">100% PREP</span>
-          </div>
+                    {/* Core Subjects Column */}
+                    <td className="p-2 border-r border-gray-600 align-top">
+                      <div className="font-bold mb-2">{week.coreSubjects.title}</div>
+                      {week.coreSubjects.sections.map((section, idx) => (
+                        <div
+                          key={idx}
+                          className={idx > 0 ? "mt-2" : ""}
+                        >
+                          <div>{section.day}</div>
+                          {section.items.map((item, i) => (
+                            <div key={i}>{item}</div>
+                          ))}
+                        </div>
+                      ))}
+                      <div className="mt-2 font-bold">{week.coreSubjects.note}</div>
+                    </td>
 
-          <div className="bg-white rounded-lg p-6 mb-6">
-            <h4 className="text-xl font-bold text-gray-800 mb-4">Goals:</h4>
-            <ul className="grid md:grid-cols-2 gap-3">
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✅</span> LeetCode 250+ (30 problems)
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✅</span> System Design Advanced
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✅</span> OS + CN Deep Revision
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✅</span> Mock Interviews (4 full mocks)
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✅</span> WebDev Interview Prep Complete
-              </li>
-              <li className="flex items-center">
-                <span className="text-green-500 mr-2">✅</span> Company-specific Prep
-              </li>
-            </ul>
-          </div>
+                    {/* LLD Column */}
+                    <td className="p-2 border-r border-gray-600 align-top">
+                      <div className="font-bold mb-2">{week.lld.timing}</div>
+                      <div>{week.lld.hours}</div>
+                      {week.lld.heavy && <div className="mt-2 font-bold">{week.lld.heavy}</div>}
+                      {week.lld.sessions.map((session, idx) => (
+                        <div
+                          key={idx}
+                          className="mt-4"
+                        >
+                          <div>{session.day}</div>
+                          <div>{session.title}</div>
+                          {session.items.map((item, i) => (
+                            <div key={i}>{item}</div>
+                          ))}
+                        </div>
+                      ))}
+                    </td>
 
-          <div className="space-y-4">
-            <div className="bg-white rounded-lg p-6 shadow-md">
-              <h5 className="text-xl font-bold mb-3">Day 30: Mon, 23 Dec 🚀 SPRINT BEGINS</h5>
-              <p className="text-gray-700">LeetCode Marathon (12 problems), System Design (Twitter, Uber), OS Deep Dive, Mock Interview 3</p>
-            </div>
-            <div className="bg-white rounded-lg p-6 shadow-md">
-              <h5 className="text-xl font-bold mb-3">Day 31-36: Tue-Sun, 24-29 Dec</h5>
-              <p className="text-gray-700">Company-tagged problems, CN revision, WebDev prep, System Design mastery, 4 more mock interviews. LeetCode: 230 → 292</p>
-            </div>
-            <div className="bg-white rounded-lg p-6 shadow-md border-4 border-yellow-400">
-              <h5 className="text-xl font-bold mb-3">Day 37: Mon, 30 Dec 🎯 FINAL PREP</h5>
-              <p className="text-gray-700">
-                Last 8 LeetCode problems, Resume finalization, Mock Interview 6, Company research. <strong>LeetCode = 300 🎉</strong>
-              </p>
-            </div>
-            <div className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white rounded-lg p-6 shadow-md border-4 border-yellow-600">
-              <h5 className="text-2xl font-black mb-3">Day 38: Tue, 31 Dec 🏆 VICTORY DAY</h5>
-              <p className="font-bold">Complete revision, Final Mock Interview 7, Application prep, 2026 strategy planning, NEW YEAR CELEBRATION 🎆</p>
-              <p className="mt-3 text-xl font-black">✅ MISSION ACCOMPLISHED ✅</p>
-            </div>
-          </div>
-        </div>
-      </section>
+                    {/* Development Column */}
+                    <td className="p-2 border-r border-gray-600 align-top">
+                      <div>{week.development.title}</div>
+                      {week.development.items && (
+                        <div className="mt-2">
+                          {week.development.items.map((item, idx) => (
+                            <div key={idx}>{item}</div>
+                          ))}
+                        </div>
+                      )}
+                      {week.development.section2 && (
+                        <>
+                          <div className="mt-4">{week.development.section2.day}</div>
+                          {week.development.section2.items.map((item, idx) => (
+                            <div key={idx}>{item}</div>
+                          ))}
+                        </>
+                      )}
+                      {week.development.section3 && (
+                        <>
+                          <div className="mt-4">{week.development.section3.day}</div>
+                          {week.development.section3.items.map((item, idx) => (
+                            <div key={idx}>{item}</div>
+                          ))}
+                        </>
+                      )}
+                    </td>
 
-      <section className="bg-gradient-to-br from-purple-50 to-pink-50 py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-black text-gray-800 mb-8 text-center">📊 COMPREHENSIVE TRACKERS</h2>
-
-          <div className="bg-white rounded-xl shadow-xl p-8 mb-8">
-            <h3 className="text-2xl font-bold text-purple-600 mb-6">🎯 TRACKER 1: DSA COMPLETION</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-purple-600 text-white">
-                  <tr>
-                    <th className="px-4 py-3 text-left">Topic</th>
-                    <th className="px-4 py-3 text-left">Start Status</th>
-                    <th className="px-4 py-3 text-left">Target Date</th>
-                    <th className="px-4 py-3 text-left">End Status</th>
-                    <th className="px-4 py-3 text-left">LeetCode Count</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  <tr className="hover:bg-purple-50">
-                    <td className="px-4 py-3 font-bold">DP</td>
-                    <td className="px-4 py-3">30%</td>
-                    <td className="px-4 py-3">27 Nov</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ 100%</span>
-                    </td>
-                    <td className="px-4 py-3">15 problems</td>
-                  </tr>
-                  <tr className="hover:bg-purple-50">
-                    <td className="px-4 py-3 font-bold">Stack</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">26 Nov</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ 100%</span>
-                    </td>
-                    <td className="px-4 py-3">8 problems</td>
-                  </tr>
-                  <tr className="hover:bg-purple-50">
-                    <td className="px-4 py-3 font-bold">Queue</td>
-                    <td className="px-4 py-3">20%</td>
-                    <td className="px-4 py-3">27 Nov</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ 100%</span>
-                    </td>
-                    <td className="px-4 py-3">8 problems</td>
-                  </tr>
-                  <tr className="hover:bg-purple-50">
-                    <td className="px-4 py-3 font-bold">Heap</td>
-                    <td className="px-4 py-3">0%</td>
-                    <td className="px-4 py-3">29 Nov</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ 100%</span>
-                    </td>
-                    <td className="px-4 py-3">14 problems</td>
-                  </tr>
-                  <tr className="hover:bg-purple-50">
-                    <td className="px-4 py-3 font-bold">Trie</td>
-                    <td className="px-4 py-3">0%</td>
-                    <td className="px-4 py-3">30 Nov</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ 100%</span>
-                    </td>
-                    <td className="px-4 py-3">6 problems</td>
-                  </tr>
-                  <tr className="hover:bg-purple-50">
-                    <td className="px-4 py-3 font-bold">Segment Tree</td>
-                    <td className="px-4 py-3">0%</td>
-                    <td className="px-4 py-3">2 Dec</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">✅ 70%</span>
-                    </td>
-                    <td className="px-4 py-3">8 problems</td>
-                  </tr>
-                  <tr className="hover:bg-purple-50">
-                    <td className="px-4 py-3 font-bold">Mixed Hard</td>
-                    <td className="px-4 py-3">-</td>
-                    <td className="px-4 py-3">23-31 Dec</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ Done</span>
-                    </td>
-                    <td className="px-4 py-3">20 problems</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="mt-6 text-center">
-              <p className="text-3xl font-black text-purple-600">LeetCode Journey: 150 → 300 ✅</p>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-xl p-8 mb-8">
-            <h3 className="text-2xl font-bold text-green-600 mb-6">💼 TRACKER 2: INTERVIEW PREP COMPONENTS</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-green-600 text-white">
-                  <tr>
-                    <th className="px-4 py-3 text-left">Component</th>
-                    <th className="px-4 py-3 text-left">Start</th>
-                    <th className="px-4 py-3 text-left">Week 1</th>
-                    <th className="px-4 py-3 text-left">Week 2</th>
-                    <th className="px-4 py-3 text-left">Week 3</th>
-                    <th className="px-4 py-3 text-left">Week 4</th>
-                    <th className="px-4 py-3 text-left">Week 5</th>
-                    <th className="px-4 py-3 text-left">Final</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  <tr className="hover:bg-green-50">
-                    <td className="px-4 py-3 font-bold">Projects</td>
-                    <td className="px-4 py-3">80%</td>
-                    <td className="px-4 py-3">90%</td>
-                    <td className="px-4 py-3">100% ✅</td>
-                    <td className="px-4 py-3">-</td>
-                    <td className="px-4 py-3">-</td>
-                    <td className="px-4 py-3">Polish</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ Deployed</span>
+                    {/* Sunday Tasks Column */}
+                    <td className="p-2 align-top">
+                      <div className="font-bold mb-2">{week.sunday.title}</div>
+                      {week.sunday.tasks.map((task, idx) => (
+                        <div key={idx}>{task}</div>
+                      ))}
+                      {week.sunday.note && (
+                        <>
+                          <div className="mt-4 font-bold">{week.sunday.note.title}</div>
+                          {week.sunday.note.text && <div>{week.sunday.note.text}</div>}
+                          {week.sunday.note.items && week.sunday.note.items.map((item, idx) => <div key={idx}>{item}</div>)}
+                        </>
+                      )}
+                      {week.sunday.saturday && (
+                        <>
+                          <div className="mt-4 font-bold">{week.sunday.saturday.title}</div>
+                          {week.sunday.saturday.items.map((item, idx) => (
+                            <div key={idx}>{item}</div>
+                          ))}
+                        </>
+                      )}
+                      {week.sunday.finalWeek && (
+                        <>
+                          <div className="mt-4 font-bold">{week.sunday.finalWeek.title}</div>
+                          {week.sunday.finalWeek.items.map((item, idx) => (
+                            <div key={idx}>{item}</div>
+                          ))}
+                        </>
+                      )}
                     </td>
                   </tr>
-                  <tr className="hover:bg-green-50">
-                    <td className="px-4 py-3 font-bold">System Design</td>
-                    <td className="px-4 py-3">20%</td>
-                    <td className="px-4 py-3">30%</td>
-                    <td className="px-4 py-3">40%</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">100% ✅</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ Ready</span>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-green-50">
-                    <td className="px-4 py-3 font-bold">Aptitude</td>
-                    <td className="px-4 py-3">0%</td>
-                    <td className="px-4 py-3">30%</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">70%</td>
-                    <td className="px-4 py-3">70%</td>
-                    <td className="px-4 py-3">100% ✅</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ Master</span>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-green-50">
-                    <td className="px-4 py-3 font-bold">OS</td>
-                    <td className="px-4 py-3">20%</td>
-                    <td className="px-4 py-3">30%</td>
-                    <td className="px-4 py-3">40%</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">100% ✅</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ Deep</span>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-green-50">
-                    <td className="px-4 py-3 font-bold">CN</td>
-                    <td className="px-4 py-3">20%</td>
-                    <td className="px-4 py-3">30%</td>
-                    <td className="px-4 py-3">40%</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">100% ✅</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ Deep</span>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-green-50">
-                    <td className="px-4 py-3 font-bold">OOP</td>
-                    <td className="px-4 py-3">90%</td>
-                    <td className="px-4 py-3">95%</td>
-                    <td className="px-4 py-3">95%</td>
-                    <td className="px-4 py-3">95%</td>
-                    <td className="px-4 py-3">95%</td>
-                    <td className="px-4 py-3">100% ✅</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ Complete</span>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-green-50">
-                    <td className="px-4 py-3 font-bold">WebDev Q&A</td>
-                    <td className="px-4 py-3">0%</td>
-                    <td className="px-4 py-3">10%</td>
-                    <td className="px-4 py-3">30%</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">50%</td>
-                    <td className="px-4 py-3">100% ✅</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ Ready</span>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-green-50">
-                    <td className="px-4 py-3 font-bold">Communication</td>
-                    <td className="px-4 py-3">-</td>
-                    <td className="px-4 py-3">Practice</td>
-                    <td className="px-4 py-3">Practice</td>
-                    <td className="px-4 py-3">Practice</td>
-                    <td className="px-4 py-3">Practice</td>
-                    <td className="px-4 py-3">Fluent ✅</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ Confident</span>
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-green-50 bg-yellow-50">
-                    <td className="px-4 py-3 font-bold">Mock Interviews</td>
-                    <td className="px-4 py-3">0</td>
-                    <td className="px-4 py-3">1</td>
-                    <td className="px-4 py-3">1</td>
-                    <td className="px-4 py-3">0</td>
-                    <td className="px-4 py-3">0</td>
-                    <td className="px-4 py-3">6</td>
-                    <td className="px-4 py-3">
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ 7 Total</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-xl p-8 mb-8">
-            <h3 className="text-2xl font-bold text-orange-600 mb-6">⏱️ TRACKER 3: DAILY HOUR BREAKDOWN</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-orange-600 text-white">
-                  <tr>
-                    <th className="px-4 py-3 text-left">Week</th>
-                    <th className="px-4 py-3 text-left">Avg Hours/Day</th>
-                    <th className="px-4 py-3 text-left">Exam Prep</th>
-                    <th className="px-4 py-3 text-left">DSA</th>
-                    <th className="px-4 py-3 text-left">Projects</th>
-                    <th className="px-4 py-3 text-left">Mock/Soft Skills</th>
-                    <th className="px-4 py-3 text-left">Total Hours</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  <tr className="hover:bg-orange-50">
-                    <td className="px-4 py-3 font-bold">Week 1</td>
-                    <td className="px-4 py-3">10.5</td>
-                    <td className="px-4 py-3">45hr (50%)</td>
-                    <td className="px-4 py-3">40hr (44%)</td>
-                    <td className="px-4 py-3">5hr</td>
-                    <td className="px-4 py-3">5hr</td>
-                    <td className="px-4 py-3 font-bold text-orange-600">95hr</td>
-                  </tr>
-                  <tr className="hover:bg-orange-50">
-                    <td className="px-4 py-3 font-bold">Week 2</td>
-                    <td className="px-4 py-3">11</td>
-                    <td className="px-4 py-3">55hr (70%)</td>
-                    <td className="px-4 py-3">20hr (25%)</td>
-                    <td className="px-4 py-3">2hr</td>
-                    <td className="px-4 py-3">3hr</td>
-                    <td className="px-4 py-3 font-bold text-orange-600">80hr</td>
-                  </tr>
-                  <tr className="hover:bg-orange-50">
-                    <td className="px-4 py-3 font-bold">Week 3</td>
-                    <td className="px-4 py-3">11</td>
-                    <td className="px-4 py-3">55hr (70%)</td>
-                    <td className="px-4 py-3">15hr (20%)</td>
-                    <td className="px-4 py-3">5hr</td>
-                    <td className="px-4 py-3">5hr</td>
-                    <td className="px-4 py-3 font-bold text-orange-600">80hr</td>
-                  </tr>
-                  <tr className="hover:bg-orange-50">
-                    <td className="px-4 py-3 font-bold">Week 4</td>
-                    <td className="px-4 py-3">11.5</td>
-                    <td className="px-4 py-3">70hr (90%)</td>
-                    <td className="px-4 py-3">7hr (10%)</td>
-                    <td className="px-4 py-3">0</td>
-                    <td className="px-4 py-3">0</td>
-                    <td className="px-4 py-3 font-bold text-orange-600">77hr</td>
-                  </tr>
-                  <tr className="hover:bg-orange-50">
-                    <td className="px-4 py-3 font-bold">Week 5</td>
-                    <td className="px-4 py-3">12</td>
-                    <td className="px-4 py-3">0</td>
-                    <td className="px-4 py-3">70hr (70%)</td>
-                    <td className="px-4 py-3">10hr</td>
-                    <td className="px-4 py-3">20hr (20%)</td>
-                    <td className="px-4 py-3 font-bold text-orange-600">100hr</td>
-                  </tr>
-                  <tr className="bg-orange-100">
-                    <td
-                      className="px-4 py-3 font-black text-lg"
-                      colSpan={6}
-                    >
-                      TOTAL
-                    </td>
-                    <td className="px-4 py-3 font-black text-2xl text-orange-600">432 HOURS</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-xl p-8">
-            <h3 className="text-2xl font-bold text-indigo-600 mb-6">🏢 TRACKER 4: COMPANY-SPECIFIC PREP</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="border-2 border-indigo-200 rounded-lg p-4 hover:border-indigo-400 transition">
-                <h4 className="font-bold text-lg text-indigo-700 mb-2">Juspay</h4>
-                <p className="text-sm text-gray-600">Functional Programming, Hard DP/Graphs, Payment systems</p>
-                <span className="inline-block mt-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs">✅ Ready</span>
-              </div>
-              <div className="border-2 border-indigo-200 rounded-lg p-4 hover:border-indigo-400 transition">
-                <h4 className="font-bold text-lg text-indigo-700 mb-2">Zomato/Swiggy</h4>
-                <p className="text-sm text-gray-600">React, Node.js, Food delivery systems, Maps</p>
-                <span className="inline-block mt-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs">✅ Ready</span>
-              </div>
-              <div className="border-2 border-indigo-200 rounded-lg p-4 hover:border-indigo-400 transition">
-                <h4 className="font-bold text-lg text-indigo-700 mb-2">Microsoft</h4>
-                <p className="text-sm text-gray-600">C++, DSA, Cloud, Scalability</p>
-                <span className="inline-block mt-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs">✅ Ready</span>
-              </div>
-              <div className="border-2 border-indigo-200 rounded-lg p-4 hover:border-indigo-400 transition">
-                <h4 className="font-bold text-lg text-indigo-700 mb-2">FAANG</h4>
-                <p className="text-sm text-gray-600">Language agnostic, Hard DSA, Large scale systems</p>
-                <span className="inline-block mt-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs">✅ Ready</span>
-              </div>
-              <div className="border-2 border-indigo-200 rounded-lg p-4 hover:border-indigo-400 transition">
-                <h4 className="font-bold text-lg text-indigo-700 mb-2">Goldman Sachs/JP Morgan</h4>
-                <p className="text-sm text-gray-600">Java, OOP, OA heavy, Trading systems</p>
-                <span className="inline-block mt-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs">✅ Ready</span>
-              </div>
-              <div className="border-2 border-indigo-200 rounded-lg p-4 hover:border-indigo-400 transition">
-                <h4 className="font-bold text-lg text-indigo-700 mb-2">Flipkart/Myntra</h4>
-                <p className="text-sm text-gray-600">Java/JS, Microservices, E-commerce</p>
-                <span className="inline-block mt-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs">✅ Ready</span>
-              </div>
-              <div className="border-2 border-indigo-200 rounded-lg p-4 hover:border-indigo-400 transition">
-                <h4 className="font-bold text-lg text-indigo-700 mb-2">Groww/Fintech</h4>
-                <p className="text-sm text-gray-600">React, System Design, Financial systems</p>
-                <span className="inline-block mt-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs">✅ Ready</span>
-              </div>
-              <div className="border-2 border-indigo-200 rounded-lg p-4 hover:border-indigo-400 transition">
-                <h4 className="font-bold text-lg text-indigo-700 mb-2">AI Companies</h4>
-                <p className="text-sm text-gray-600">Python, ML basics, DSA, AI/ML systems</p>
-                <span className="inline-block mt-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs">✅ Ready</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto py-12 px-4">
-        <h2 className="text-4xl font-black text-gray-800 mb-8 text-center">🏆 SUCCESS METRICS</h2>
-        <div className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 text-white rounded-xl shadow-2xl p-8">
-          <h3 className="text-3xl font-black mb-6 text-center">BY 31ST DECEMBER, YOU WILL HAVE:</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">LeetCode: 300 problems</p>
-                <p className="text-sm opacity-90">All patterns mastered</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">DSA: All topics 100% complete</p>
-                <p className="text-sm opacity-90">DP, Stack, Queue, Heap, Trie, Segment Tree</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">Projects: 2 major projects</p>
-                <p className="text-sm opacity-90">Deployed + documented</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">Exams: All 4 aced</p>
-                <p className="text-sm opacity-90">Strong grades guaranteed</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">System Design: 10+ case studies</p>
-                <p className="text-sm opacity-90">Twitter, Uber, Instagram, Netflix, etc.</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">Core CS: Interview-ready</p>
-                <p className="text-sm opacity-90">DBMS, OS, CN, OOP mastered</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">Aptitude: 90%+ accuracy</p>
-                <p className="text-sm opacity-90">Mock tests completed</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">Mock Interviews: 7 complete rounds</p>
-                <p className="text-sm opacity-90">DSA + System Design + Behavioral</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">Communication: Fluent</p>
-                <p className="text-sm opacity-90">Technical explanations mastered</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">WebDev: Interview-ready</p>
-                <p className="text-sm opacity-90">React + TypeScript deep knowledge</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">Resume: Polished</p>
-                <p className="text-sm opacity-90">Tailored for all target companies</p>
-              </div>
-            </div>
-            <div className="flex items-start space-x-3">
-              <span className="text-2xl">✅</span>
-              <div>
-                <p className="font-bold">Mental State: Unstoppable</p>
-                <p className="text-sm opacity-90">Confident, prepared, ready</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto py-12 px-4">
-        <h2 className="text-4xl font-black text-gray-800 mb-8 text-center">💎 GOLDEN RULES</h2>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-gradient-to-br from-yellow-400 to-orange-500 text-white rounded-xl shadow-2xl p-8">
-            <h3 className="text-2xl font-black mb-6">🔥 NON-NEGOTIABLES</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <span className="mr-3 text-2xl">1.</span>
-                <p>
-                  <strong>No zero days:</strong> Even if sick, do 1 LeetCode problem
-                </p>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 text-2xl">2.</span>
-                <p>
-                  <strong>Sleep 7 hours:</strong> {"No compromise (Quality > Quantity)"}
-                </p>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 text-2xl">3.</span>
-                <p>
-                  <strong>Daily LeetCode:</strong> From Day 1 to Day 38, no breaks
-                </p>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 text-2xl">4.</span>
-                <p>
-                  <strong>Exam dates sacred:</strong> No excuses, full preparation
-                </p>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 text-2xl">5.</span>
-                <p>
-                  <strong>Mock interviews:</strong> Must complete all 7, no skipping
-                </p>
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-gradient-to-br from-red-500 to-pink-600 text-white rounded-xl shadow-2xl p-8">
-            <h3 className="text-2xl font-black mb-6">⚠️ WARNING SIGNS</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <span className="mr-3">⚠️</span>
-                <p>Missing targets by 50%+ → Reduce 1 hour daily</p>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3">⚠️</span>
-                <p>Feeling burned out constantly → Take immediate buffer day</p>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3">⚠️</span>
-                <p>Not understanding concepts → Slow down, don't rush</p>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3">⚠️</span>
-                <p>Health issues → Pause plan, recover first</p>
-              </li>
-            </ul>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl shadow-2xl p-8 mt-8">
-          <h3 className="text-2xl font-black mb-6 text-center">🎯 FOCUS MANTRAS</h3>
-          <div className="grid md:grid-cols-2 gap-6 text-black">
-            <div className="bg-white bg-opacity-20 rounded-lg p-4">
-              <p className="font-bold mb-2">Week 1-3:</p>
-              <p>"Exams are priority, but DSA is consistent"</p>
-            </div>
-            <div className="bg-white bg-opacity-20 rounded-lg p-4">
-              <p className="font-bold mb-2">Week 4:</p>
-              <p>"Nothing matters except acing exams"</p>
-            </div>
-            <div className="bg-white bg-opacity-20 rounded-lg p-4">
-              <p className="font-bold mb-2">Week 5:</p>
-              <p>"Interview beast mode, no holding back"</p>
-            </div>
-            <div className="bg-white bg-opacity-20 rounded-lg p-4">
-              <p className="font-bold mb-2">Overall:</p>
-              <p>"300 LeetCode + 4 exams aced = Dream internship"</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-gradient-to-br from-indigo-50 to-purple-50 py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-black text-gray-800 mb-8 text-center">📞 DAILY CHECK-IN RITUAL</h2>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-yellow-600 mb-4">🌅 Morning (8:00 AM)</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>✅ Review today's schedule</li>
-                <li>✅ Set 3 main goals</li>
-                <li>✅ Visualize success (2 mins)</li>
-              </ul>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-indigo-600 mb-4">🌙 Night (11:30 PM)</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>✅ What did I achieve?</li>
-                <li>✅ What didn't go as planned?</li>
-                <li>✅ Tomorrow's top priority?</li>
-                <li>✅ Gratitude for 1 thing today</li>
-              </ul>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-purple-600 mb-4">📊 Weekly (Every Sunday 11:30 PM)</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>✅ Goals vs Achievement %</li>
-                <li>✅ LeetCode count updated</li>
-                <li>✅ Exam prep status</li>
-                <li>✅ Adjust next week if needed</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto py-12 px-4">
-        <h2 className="text-4xl font-black text-gray-800 mb-8 text-center">🛠️ RESOURCES & TOOLS</h2>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-            <h3 className="text-xl font-bold text-blue-600 mb-4">📚 DSA Resources</h3>
-            <ul className="space-y-2 text-gray-700">
-              <li>
-                • <strong>Theory:</strong> Striver A2Z DSA Sheet
-              </li>
-              <li>
-                • <strong>Practice:</strong> LeetCode (Primary)
-              </li>
-              <li>
-                • <strong>Patterns:</strong> LeetCode Patterns by Sean
-              </li>
-              <li>
-                • <strong>Company Tags:</strong> LeetCode filters
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-            <h3 className="text-xl font-bold text-green-600 mb-4">📖 Exam Prep Resources</h3>
-            <ul className="space-y-2 text-gray-700">
-              <li>
-                • <strong>DBMS:</strong> Gate Smashers (YouTube)
-              </li>
-              <li>
-                • <strong>AI:</strong> Navathe + Tutorials Point
-              </li>
-              <li>
-                • <strong>CD:</strong> Ullman Book + Gate Smashers
-              </li>
-              <li>
-                • <strong>Economics:</strong> Mankiw + College notes
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-            <h3 className="text-xl font-bold text-purple-600 mb-4">💻 System Design</h3>
-            <ul className="space-y-2 text-gray-700">
-              <li>
-                • <strong>Videos:</strong> Gaurav Sen, System Design Primer
-              </li>
-              <li>
-                • <strong>Reading:</strong> System Design Interview by Alex Xu
-              </li>
-              <li>
-                • <strong>Practice:</strong> Design Gurus, HelloInterview
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-            <h3 className="text-xl font-bold text-orange-600 mb-4">🎤 Mock Interview Platforms</h3>
-            <ul className="space-y-2 text-gray-700">
-              <li>
-                • <strong>Free:</strong> Preplaced, InterviewBit
-              </li>
-              <li>
-                • <strong>Peer Mock:</strong> LeetCode Discuss, Reddit
-              </li>
-              <li>
-                • <strong>Self-Record:</strong> Loom/Zoom
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-            <h3 className="text-xl font-bold text-pink-600 mb-4">📊 Aptitude</h3>
-            <ul className="space-y-2 text-gray-700">
-              <li>
-                • <strong>Platform:</strong> IndiaBix, Prepinsta
-              </li>
-              <li>
-                • <strong>Books:</strong> R.S. Aggarwal
-              </li>
-              <li>
-                • <strong>Mocks:</strong> Cocubes, eLitmus practice
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition">
-            <h3 className="text-xl font-bold text-teal-600 mb-4">🗣️ Communication</h3>
-            <ul className="space-y-2 text-gray-700">
-              <li>
-                • <strong>English:</strong> YouTube shadowing, TED Talks
-              </li>
-              <li>
-                • <strong>Technical:</strong> Explain to rubber duck
-              </li>
-              <li>
-                • <strong>Behavioral:</strong> STAR method practice
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className="gradient-bg text-white py-16 px-4">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-5xl md:text-6xl font-black mb-8">🚀 FINAL BATTLE CRY</h2>
-          <div className="bg-white bg-opacity-20 rounded-xl p-8 mb-8">
-            <p className="text-3xl font-black text-blue-400 mb-4">38 DAYS. 432 HOURS. ONE MISSION.</p>
-          </div>
-
-          <div className="text-left max-w-3xl mx-auto space-y-4 text-lg mb-8">
-            <p className="font-bold">You have:</p>
-            <ul className="space-y-2 ml-6">
-              <li>✅ 4 exams to ace</li>
-              <li>✅ 150 LeetCode problems to solve</li>
-              <li>✅ System Design to master</li>
-              <li>✅ Projects to complete</li>
-              <li>✅ Mock interviews to conquer</li>
-              <li>✅ Dream companies waiting for you</li>
-            </ul>
-
-            <p className="font-black text-2xl mt-6">This is YOUR TIME.</p>
-
-            <p className="mt-4">
-              Every hour counts.
-              <br /> Every problem solved is a step closer.
-              <br /> Every exam aced is momentum.
-              <br /> Every mock interview is preparation for the real battle.
-            </p>
-
-            <p className="font-bold mt-6">From 24 Nov to 31 Dec:</p>
-            <ul className="space-y-2 ml-6">
-              <li>• You will wake up at 8 AM every day</li>
-              <li>• You will NOT compromise on your schedule</li>
-              <li>• You will solve problems even when tired</li>
-              <li>• You will ace exams even under pressure</li>
-              <li>• You will push through when motivation fades</li>
-            </ul>
-
-            <p className="font-bold mt-6">By January 2026:</p>
-            <ul className="space-y-2 ml-6">
-              <li>• You WILL be interview-ready</li>
-              <li>• You WILL land your dream internship</li>
-              <li>• You WILL make your family proud</li>
-              <li>• You WILL prove doubters wrong</li>
-            </ul>
-          </div>
-
-          <div className="bg-yellow-400 text-gray-900 rounded-xl p-8 text-center">
-            <p className="text-4xl font-black mb-4">NO EXCUSES. NO REGRETS. ONLY RESULTS.</p>
-            <p className="text-2xl font-bold">Let's build the future you deserve.</p>
-            <p className="text-5xl font-black mt-6">GAME ON. 🔥</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-gray-900 text-white py-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-black mb-8 text-center">📋 QUICK REFERENCE CHECKLIST</h2>
-          <p className="text-center text-yellow-400 mb-6 font-bold">Print this and stick on your wall:</p>
-
-          <div className="bg-gray-800 rounded-xl p-8">
-            <h3 className="text-2xl font-bold mb-4 text-yellow-400">DAILY:</h3>
-            <ul className="space-y-2 mb-6">
-              <li>□ Wake up 8 AM daily</li>
-              <li>□ LeetCode problem solved before bed</li>
-              <li>□ Exam prep according to phase %</li>
-              <li>□ DSA session completed</li>
-              <li>□ Pomodoro breaks taken</li>
-              <li>□ Evening review done</li>
-              <li>□ Tomorrow's plan ready</li>
-              <li>□ Sleep by 12:30 AM</li>
-            </ul>
-
-            <h3 className="text-2xl font-bold mb-4 text-yellow-400">WEEKLY:</h3>
-            <ul className="space-y-2 mb-6">
-              <li>□ Mock interview completed</li>
-              <li>□ Weekly review done</li>
-              <li>□ LeetCode target hit</li>
-              <li>□ Exam chapters completed</li>
-              <li>□ Project milestones achieved</li>
-            </ul>
-
-            <h3 className="text-2xl font-bold mb-4 text-yellow-400">REMEMBER:</h3>
-            <div className="space-y-2 text-xl font-bold text-center">
-              <p>{"Discipline > Motivation"}</p>
-              <p>{"Consistency > Intensity"}</p>
-              <p>{"Progress > Perfection"}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="gradient-bg text-white py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl font-black mb-8">🎯 YOU'RE READY. NOW EXECUTE.</h2>
-
-          <div className="bg-white text-gray-900 rounded-xl p-8 mb-8">
-            <p className="text-2xl font-bold mb-4">Questions? Adjustments needed?</p>
-            <p className="text-xl mb-6">Reply with specific day/topic for modifications.</p>
-            <p className="text-3xl font-black text-purple-600">OTHERWISE:</p>
-          </div>
-
-          <div className="bg-yellow-400 text-gray-900 rounded-xl p-8 mb-8">
-            <p className="text-4xl font-black mb-4">START FROM DAY 1</p>
-            <p className="text-3xl font-bold">(24 NOV) TOMORROW MORNING 9 AM SHARP</p>
-          </div>
-
-          <p className="text-3xl font-bold mb-8">Your dream internship awaits.</p>
-          <p className="text-5xl font-black">Go get it, champion. 🏆</p>
-        </div>
-      </section>
-
-      <footer className="bg-gray-900 text-white py-8 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-xl font-bold mb-2">38-Day Ultimate Battle Plan</p>
-          <p className="text-gray-400">24 November - 31 December 2025</p>
-          <p className="text-yellow-400 font-bold mt-4">432 Hours | 300 LeetCode | 4 Exams | Dream Internship</p>
-        </div>
-      </footer>
-
-      <section className="bg-gradient-to-br from-gray-100 to-gray-200 py-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-black text-gray-800 mb-8 text-center">🔥 CRITICAL SUCCESS STRATEGIES</h2>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-2xl font-bold text-purple-600 mb-4">💪 STRATEGY 1: POMODORO TECHNIQUE</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>
-                  • <strong>DSA Sessions:</strong> 50min focus + 10min break
-                </li>
-                <li>
-                  • <strong>Exam Prep:</strong> 90min focus + 15min break
-                </li>
-                <li>
-                  • <strong>Project/Mock:</strong> 45min focus + 5min break
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-2xl font-bold text-blue-600 mb-4">🧠 STRATEGY 2: ACTIVE RECALL</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>• After every topic: Teach yourself out loud</li>
-                <li>• End of day: Write 3 key learnings</li>
-                <li>• Weekly: Explain concepts to friend/record</li>
-              </ul>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-2xl font-bold text-green-600 mb-4">📝 STRATEGY 3: SPACED REPETITION</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Day 1: Learn new DSA topic</li>
-                <li>• Day 3: Solve 3 problems</li>
-                <li>• Day 7: Solve 2 hard problems</li>
-                <li>• Day 14: Revise pattern</li>
-              </ul>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-2xl font-bold text-orange-600 mb-4">🎯 STRATEGY 4: INTERVIEW SIMULATION</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>• Treat like real (dress up, timer, no pauses)</li>
-                <li>• Record yourself: Watch, analyze, improve</li>
-                <li>• Use free platforms: Preplaced, InterviewBit</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="bg-red-50 border-4 border-red-400 rounded-xl shadow-lg p-8 mt-8">
-            <h3 className="text-2xl font-bold text-red-600 mb-4">🚫 STRATEGY 5: AVOID THESE</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="flex items-start space-x-2">
-                <span className="text-red-500 font-bold text-xl">❌</span>
-                <p>
-                  <strong>Tutorial hell</strong> - Don't watch 10 videos on same topic
-                </p>
-              </div>
-              <div className="flex items-start space-x-2">
-                <span className="text-red-500 font-bold text-xl">❌</span>
-                <p>
-                  <strong>Over-preparation</strong> - Don't aim for perfection
-                </p>
-              </div>
-              <div className="flex items-start space-x-2">
-                <span className="text-red-500 font-bold text-xl">❌</span>
-                <p>
-                  <strong>Comparison</strong> - Don't check others' LeetCode counts
-                </p>
-              </div>
-              <div className="flex items-start space-x-2">
-                <span className="text-red-500 font-bold text-xl">❌</span>
-                <p>
-                  <strong>Burnout</strong> - Take buffer days seriously
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   );
-};
-
-export default page;
+}

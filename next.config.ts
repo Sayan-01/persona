@@ -23,6 +23,7 @@ const nextConfig = {
         hostname: "images.unsplash.com",
       },
       { protocol: "https", hostname: "o3w1jifi2x.ufs.sh" },
+      { protocol: "https", hostname: "pbs.twimg.com" },
     ],
   },
   eslint: {

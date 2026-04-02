@@ -6,7 +6,7 @@ import { ArrowBigDown, Brain, Calendar, ChartPie, ChartSpline, ChevronDown, Chev
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { Poppins } from "next/font/google";
+import { Poppins, Roboto_Mono } from "next/font/google";
 import { useHistory } from "@/hooks/history-provider";
 import { useCredits } from "@/hooks/credit-provider";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -26,6 +26,8 @@ export interface History {
   contentTitle: string;
   userId?: string;
 }
+
+const roboto_Mono = Roboto_Mono({ subsets: ["latin"] });
 
 export function SidebarComp({ userId, defaultOption = false }: { userId: string | undefined; defaultOption?: boolean }) {
   const pathname = usePathname();
@@ -110,9 +112,9 @@ export function SidebarComp({ userId, defaultOption = false }: { userId: string 
       <SheetContent
         showX={!defaultOption}
         side="left"
-        className={cn("w-[240px] gap-0 hidden flex-col min-[1150px]:flex justify-between h-full p-4 bg-[#ffffff] dark:bg-zinc-900  border-0", {
+        className={cn(`w-[240px] gap-0 hidden flex-col min-[1150px]:flex justify-between h-full p-4 bg-[#ffffff] dark:bg-zinc-900  border-0 ${roboto_Mono.className}`, {
           "hidden md:flex z-0 ": defaultOption,
-          "flex md:hidden z-[100] ": !defaultOption,
+          "flex md:hidden z-[100] ": !defaultOption, 
         })}
       >
         <div className="">

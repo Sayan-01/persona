@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Facebook, Twitter, Instagram, Linkedin, Github, Mail } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Github } from "lucide-react";
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
@@ -21,7 +19,6 @@ export function SiteFooter() {
         { label: "Features", href: "#features" },
         { label: "Pricing", href: "#pricing" },
         { label: "Roadmap", href: "/roadmap" },
-        { label: "Changelog", href: "/changelog" },
       ],
     },
     {
@@ -29,131 +26,82 @@ export function SiteFooter() {
       links: [
         { label: "About", href: "/about" },
         { label: "Blog", href: "/blog" },
-        { label: "Careers", href: "/careers" },
-        { label: "Contact", href: "/contact" },
-      ],
-    },
-    {
-      title: "Legal",
-      links: [
         { label: "Privacy", href: "/privacy" },
-        { label: "Terms", href: "/terms" },
-        { label: "Cookies", href: "/cookies" },
-        { label: "Licenses", href: "/licenses" },
       ],
     },
   ];
 
   return (
-    <footer className="border-t bg-zinc-900 backdrop-blur-sm">
-      <div className=" sm:py-20 py-8 md:px-[70px] px-6 mx-auto max-w-7xl">
-        <div className="grid md:grid-cols-3 sm:grid-cols-2  gap-10">
-          {/* Brand and social */}
-          <div className="flex flex-col ">
-            <div>
-              <Link
-                href="/"
-                className="inline-block"
-              >
-                <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">PersonaAI</span>
-              </Link>
-              <div className="text-xs text-[#00ffff]">Build with Sayan Das 🚀</div>
-            </div>
-            <p className="mt-4 text-muted-foreground max-w-xs">AI-powered content creation tailored to your unique brand persona.</p>
-            <div className="flex items-center mt-6 space-x-4">
-              {socialLinks.map(({ icon: Icon, href, label }) => (
-                <Button
-                  key={label}
-                  asChild
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full h-9 w-9 text-muted-foreground hover:text-foreground hover:bg-foreground/5 transition-colors"
-                >
-                  <Link
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={label}
-                  >
-                    <Icon className="h-4 w-4" />
-                  </Link>
-                </Button>
-              ))}
-            </div>
+    <footer className="bg-black border-t border-white/5 py-20 px-6 lg:px-[70px]">
+      <div className="max-w-[1280px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+          
+          <div className="md:col-span-1">
+            <h3 className="font-instrument text-2xl text-white font-normal mb-4">
+              PersonaAI<sup className="text-[10px] ml-1">®</sup>
+            </h3>
+            <p className="text-white/40 text-[14px] leading-relaxed max-w-[240px]">
+              Where content meets the soul. Built with precision for the modern creator.
+            </p>
           </div>
 
-          {/* Navigation links */}
-          <div className="flex md:gap-10 gap-6">
-            {footerLinks.map((section) => (
-              <div
-                key={section.title}
-                className="lg:col-span-2"
-              >
-                <h3 className="text-sm font-medium text-foreground/90">{section.title}</h3>
-                <ul className="mt-4 space-y-3">
-                  {section.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {footerLinks.map((section) => (
+            <div key={section.title}>
+              <h4 className="text-white text-[12px] uppercase tracking-[0.2em] mb-6 font-medium">
+                {section.title}
+              </h4>
+              <ul className="space-y-4">
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <Link 
+                      href={link.href}
+                      className="text-white/40 hover:text-white transition-colors text-[14px]"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
-          {/* Newsletter */}
-          <div className="fle flex-col">
-            <h3 className="text-sm font-medium text-foreground/90">Subscribe to our newsletter</h3>
-            <p className="mt-2 text-sm text-muted-foreground">Get the latest updates and news delivered to your inbox.</p>
-            <form className="mt-4 flex flex-col sm:flex-row gap-3">
-              <div className="relative flex-1">
-                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  type="email"
-                  placeholder="Your email"
-                  className="pl-10 h-10 w-full bg-background/80 border-border/50 focus-visible:ring-1 focus-visible:ring-ring"
-                />
-              </div>
-              <Button
-                type="submit"
-                className="shrink-0 h-10"
-              >
-                Subscribe
-              </Button>
-            </form>
-            <p className="mt-3 text-xs text-muted-foreground">We respect your privacy. Unsubscribe at any time.</p>
+          <div>
+            <h4 className="text-white text-[12px] uppercase tracking-[0.2em] mb-6 font-medium">
+              Join the ride
+            </h4>
+            <p className="text-white/40 text-[14px] mb-6 leading-relaxed">
+              Subscribe for the latest Persona updates and AI insights.
+            </p>
+            <div className="flex gap-2">
+              <input 
+                type="email" 
+                placeholder="Email Address" 
+                className="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-[14px] text-white focus:outline-none focus:border-white/30 flex-1"
+              />
+              <button className="liquid-glass px-6 py-2 rounded-full text-white text-[12px] font-medium">
+                Join
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-16 pt-8 border-t border-border/50">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground text-center md:text-left">© {currentYear} PersonaAI. All rights reserved.</p>
-            <div className="flex items-center space-x-6">
-              <Link
-                href="/privacy"
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+        {/* Bottom Bar */}
+        <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="flex gap-6">
+            {socialLinks.map(({ icon: Icon, href, label }) => (
+              <Link 
+                key={label} 
+                href={href} 
+                className="text-white/20 hover:text-white transition-colors"
+                target="_blank"
               >
-                Privacy Policy
+                <Icon className="w-5 h-5" />
               </Link>
-              <Link
-                href="/terms"
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Terms of Service
-              </Link>
-              <Link
-                href="/cookies"
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Cookies
-              </Link>
-            </div>
+            ))}
+          </div>
+          
+          <div className="text-white/20 text-[12px] tracking-wide">
+            © {currentYear} PersonaAI. All rights reserved. Built by Sayan Das.
           </div>
         </div>
       </div>

@@ -95,52 +95,51 @@ export default function SettingsPage() {
         className="flex flex-col gap-4 lg:flex-row"
       >
         {/* Sidebar Tabs */}
-        <div className="lg:w-1/6 min-w-[240px] relative">
+        <div className=" relative w-[300px] ">
           <TabsList className="flex w-full h-max overflow-x-auto p-0 lg:pb-0 pb-1 box lg:flex-col flex-row items-start justify-start bg-transparent relative">
             <TabsTrigger
               value="persona"
-              className="flex w-full items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
+              className="flex flex-1 items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
             >
               <BrainCircuit className="h-4 w-4" />
               <span>Persona Settings</span>
             </TabsTrigger>
             <TabsTrigger
               value="account"
-              className="flex w-full items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
+              className="flex flex-1 items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
             >
               <User className="h-4 w-4" />
               <span>Account</span>
             </TabsTrigger>
             <TabsTrigger
               value="notifications"
-              className="flex w-full items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
+              className="flex flex-1 items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
             >
               <Bell className="h-4 w-4" />
               <span>Notifications</span>
             </TabsTrigger>
             <TabsTrigger
               value="security"
-              className="flex w-full items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
+              className="flex flex-1 items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
             >
               <Lock className="h-4 w-4" />
               <span>Security</span>
             </TabsTrigger>
             <TabsTrigger
               value="billing"
-              className="flex w-full items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
+              className="flex flex-1 items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary"
             >
               <CreditCard className="h-4 w-4" />
               <span>Billing</span>
             </TabsTrigger>
             <TabsTrigger
               value="help"
-              className="flex w-full items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary mr-4"
+              className="flex flex-1 items-center justify-start gap-2 border-transparent px-3 py-2 text-start data-[state=active]:border-l-primary mr-4"
             >
               <HelpCircle className="h-4 w-4" />
               <span>Help & Support</span>
             </TabsTrigger>
           </TabsList>
-          <div className="bg-gradient-to-r from-transparent to-zinc-900 absolute top-0 right-0 w-20 h-10 pointer-events-none" />
         </div>
 
         {/* Tab Contents */}

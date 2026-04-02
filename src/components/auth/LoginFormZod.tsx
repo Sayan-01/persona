@@ -116,7 +116,7 @@ const LoginForm = () => {
           />
           <div className={`-mt-2 ${error ? "text-red-500 text-end w-full text-[0.8rem] font-medium" : " text-emerald-500 text-end w-full text-[0.8rem] font-medium"} `}>{error ? error : success}</div>
           <SubmitButton
-            className="bg-blue-500 border-x relative group/btn block w-full text-white rounded-lg h-10 border border-blue-600 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] py-0 text-base"
+            className="bg-blue-500 border-x relative group/btn block w-full text-white rounded-lg h-10 border border-blue-600 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] py-0 text-base mt-4"
             disable_className="opacity-80  border-x w-full text-white rounded-xl h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] text-base"
             loading={loading}
           >

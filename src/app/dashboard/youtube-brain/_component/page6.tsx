@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowUp, Copy, Check } from "lucide-react";
+import { useCredits } from "@/hooks/credit-provider";
 
 type ScriptContent = {
   optimized_script: {
@@ -23,6 +24,8 @@ export default function Page6() {
   const [loading, setLoading] = useState<boolean>(false);
   const [content, setContent] = useState<ScriptContent | null>(null);
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
+
+  const { decrementCredits } = useCredits();
 
   const copyToClipboard = (text: string, section: string) => {
     navigator.clipboard.writeText(text);
@@ -51,7 +54,7 @@ export default function Page6() {
 
       if (data) {
         const dataObj = JSON.parse(data.data);
-        console.log(dataObj);
+        decrementCredits(100);
         setContent(dataObj);
       }
       setLoading(false);

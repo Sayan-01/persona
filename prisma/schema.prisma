@@ -68,7 +68,6 @@ model User {
   // Profile and Settings
   aiPersona     UserPersona?
   notifications NotificationSettings?
-  security      SecuritySettings?
   subscription  Subscription[]
 
   // Content Related
@@ -84,20 +83,18 @@ model User {
 
 model Account {
   id                String  @id @default(uuid())
-  userId            String  @unique
-  provider          String
-  providerAccountId String
-  type              String
-  access_token      String?
-  refresh_token     String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
+  userId            String
+  platform          String
+  accountName      String?
+  accountHandle    String?
+  accountImage     String?
+  accessToken      String?
+  refreshToken     String?
+  expiresAt        Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
   @@map("accounts")
 }
 
@@ -117,7 +114,6 @@ model UserPersona {
   @@map("user_personas")
 }
 
-// Content Management
 model Content {
   id          String         @id @default(uuid())
   title       String
@@ -198,16 +194,6 @@ model NotificationSettings {
   preferences Json?
 
   @@map("notification_settings")
-}
-
-model SecuritySettings {
-  id                 String    @id @default(uuid())
-  userId             String    @unique
-  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  twoFactorEnabled   Boolean   @default(false)
-  lastPasswordChange DateTime?
-
-  @@map("security_settings")
 }
 
 model Subscription {

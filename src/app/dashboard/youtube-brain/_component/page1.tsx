@@ -1,5 +1,6 @@
 "use client";
 
+import { useCredits } from "@/hooks/credit-provider";
 import { copyToClipboard } from "@/utils/helper";
 import { ArrowUp } from "lucide-react";
 import { useState } from "react";
@@ -17,6 +18,7 @@ const Page1 = () => {
   const [userDesc, setUserDesc] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [content, setContent] = useState<SubContent | null>();
+  const { decrementCredits } = useCredits();
 
   const onGenerate = async () => {
     setLoading(true);
@@ -38,7 +40,7 @@ const Page1 = () => {
 
       if (data) {
         const dataObj = JSON.parse(data.data);
-        console.log(dataObj);
+        decrementCredits(100);
         setContent(dataObj);
       }
       setLoading(false);

@@ -1,5 +1,6 @@
 "use client";
 import React, { useMemo, useState } from "react";
+import { useCredits } from "@/hooks/credit-provider";
 
 type KeywordTags = {
   keywords:string[]
@@ -43,6 +44,8 @@ const Page5 = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitMsg, setSubmitMsg] = useState<string | null>(null);
   const [limit, setLimit] = useState<number>(20);
+
+  const { decrementCredits } = useCredits();
 
   const prompt = useMemo(() => buildPrompt(title, script), [title, script]);
 
@@ -97,7 +100,8 @@ const Page5 = () => {
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
 
-                const parsed = JSON.parse(data.result); // AI returns JSON string
+                const parsed = JSON.parse(data.result);
+                decrementCredits(100);
                 setGenerated(parsed);
                 setSubmitMsg("AI tags generated ✅");
               } catch (e: any) {
