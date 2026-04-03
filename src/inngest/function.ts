@@ -140,3 +140,39 @@ export const HandleGenerateYtContent = inngest.createFunction({ id: "ai/generate
 
   return "sayan"
 });
+
+export const HandleScheduledPost = inngest.createFunction(
+  { id: "post/scheduled-post" },
+  { event: "post/scheduled" },
+  async ({ event, step }) => {
+    const { postId, scheduledAt } = event.data;
+
+    // Wait until the scheduled time
+    await step.sleepUntil("wait-for-publish-time", scheduledAt);
+
+    // Publish the post
+    await step.run("publish-post", async () => {
+      const post = await db.content.findUnique({
+        where: { id: postId },
+      });
+
+      if (!post || post.status !== "Scheduled") {
+        return { success: false, message: "Post not found or not in scheduled state" };
+      }
+
+      // Here you would call the actual social media APIs
+      // For now, we just mark it as published
+      console.log(`[Scheduled] Publishing post ${postId} to ${post.platform}`);
+
+      await db.content.update({
+        where: { id: postId },
+        data: {
+          status: "Published",
+          publishedAt: new Date(),
+        },
+      });
+
+      return { success: true };
+    });
+  }
+);

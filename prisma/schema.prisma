@@ -85,6 +85,7 @@ model Account {
   id                String  @id @default(uuid())
   userId            String
   platform          String
+  provider          String? // Added for consistency with server actions
   accountName      String?
   accountHandle    String?
   accountImage     String?
@@ -118,7 +119,7 @@ model Content {
   id          String         @id @default(uuid())
   title       String
   body        String
-  status      ContentStatus? // draft, published, scheduled
+  status      ContentStatus? @default(Draft)
   platform    String // facebook, twitter, etc
   type        ContentType?
   createdAt   DateTime       @default(now())
@@ -132,11 +133,29 @@ model Content {
   calendar  CalendarEntry?
   analytics Analytics?
 
+  // Media Relations
+  media     Media[]
+
   // Enhancement History
   enhancements            Enhancement[]
   GeneratedContentHistory GeneratedContentHistory[]
 
   @@map("contents")
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  url       String
+  fileId    String   @unique // ImageKit fileId
+  name      String
+  type      String   // image, video
+  size      Int
+  createdAt DateTime @default(now())
+  userId    String
+  contentId String?
+  content   Content? @relation(fields: [contentId], references: [id])
+
+  @@map("media")
 }
 
 model Idea {

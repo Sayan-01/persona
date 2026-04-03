@@ -3,40 +3,17 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import {
-  Sparkles,
-  RefreshCw,
-  ThumbsUp,
-  Copy,
-  MessageSquare,
-  ArrowRight,
-  CheckCircle2,
-  LightbulbIcon,
-  Wand2,
-  Clock,
-  Send,
-  ChevronLeft,
-  ChevronRight,
-  AlertCircle,
-  X,
-  Info,
-  Plus,
-  Edit,
-  MoveLeft,
-} from "lucide-react";
-import { ContentEditor } from "@/components/content-editor";
+import { ChevronLeft, ChevronRight, AlertCircle, X, Info, RefreshCw, Plus, Edit, MoveLeft, CheckCircle2, Clock, Send, Image as ImageIcon, Loader2 } from "lucide-react";
 import { IdeaGenerateProps } from "../../../../../AI/IdeaGeneratePrompt";
 import IdeaCard from "./idea-card";
 import enhanceContentPrompt from "../../../../../AI/EnhanceContentPrompt";
-import SocialShareButtons from "@/components/buttons/SocialShareButtons";
 import { toast } from "sonner";
-import { saveAsDraft, savePost } from "../../../../../server/post";
+import { saveAsDraft, savePost, publishPost, schedulePost } from "../../../../../server/post";
 import AIinput from "@/components/global/ai-input";
 import InputWrapper from "@/components/global/input-wrapper";
 import { ContentLengths, Platforms, socialPlatforms } from "@/constants";
@@ -47,7 +24,6 @@ import Link from "next/link";
 import { addInHistory } from "../../../../../server/actions";
 import { v4 } from "uuid";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
 import ContentStatus from "./content-status";
 import { getUserPersona } from "../../../../../server/user-profile";
 import { useHistory } from "@/hooks/history-provider";
@@ -64,6 +40,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   });
   const [contentGeneratePromptDetails, setContentGeneratePromptDetails] = useState<ContentGeneratePromptDetails>({
     topic: "",
+    description: "",
     contentType: "linkedIn",
     hashtags: [],
     keyPoints: [],
@@ -74,19 +51,18 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     previousContent: "",
     enhanceType: "rewrite",
   });
-  const [selectedIdea, setSelectedIdea] = useState<{ title: string; description: string; keyPoints: string[]; hashtags: string[]; platform: string } | null>(null);
-  const [showEnhanced, setShowEnhanced] = useState(false);
-  const [showDraft, setShowDraft] = useState(false);
-  const [contentDraft, setContentDraft] = useState<{ id: string; content: string }>();
-  const [contentStatus, setContentStatus] = useState("draft"); // draft, scheduled, published
-  const [editorContent, setEditorContent] = useState("");
+
+  const [selectedIdea, setSelectedIdea] = useState<any>(null);
+  const [contentDraft, setContentDraft] = useState<{ id: string; content: string } | null>(null);
+  const [contentStatus, setContentStatus] = useState("draft");
+  const [scheduledAt, setScheduledAt] = useState<string>("");
   const [generating, setGenerating] = useState(false);
   const [showIdeas, setShowIdeas] = useState(false);
   const [result, setResult] = useState<any>([]);
-  const [contentForEnhance, setContentForEnhance] = useState("");
-  const [enhanceType, setEnhanceType] = useState("rewrite");
   const [enhanceContent, setEnhanceContent] = useState("");
   const [userPersona, setUserPersona] = useState<any>(null);
+  const [uploadedMedia, setUploadedMedia] = useState<{ id: string; url: string; type: string }[]>([]);
+  const [uploading, setUploading] = useState(false);
   const { history, setHistory } = useHistory();
   const { decrementCredits } = useCredits();
 
@@ -107,181 +83,183 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     });
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/media/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Upload failed");
+
+      const data = await res.json();
+      setUploadedMedia((prev) => [...prev, { id: data.id, url: data.url, type: data.type }]);
+      toast.success("Image uploaded successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to upload image");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleGenerate = async (type: string) => {
-    switch (type) {
-      case "idea generate":
-        const ideaPrompt = IdeaGenerateProps({
+    setGenerating(true);
+    try {
+      let prompt = "";
+      if (type === "idea generate") {
+        prompt = IdeaGenerateProps({
           topic: ideaGeneratePromptDetails.topic,
           numberOfIdeas: ideaGeneratePromptDetails.numberOfIdeas,
           platform: ideaGeneratePromptDetails.platform,
           userPersona: userPersona,
         });
-        setGenerating(true);
-        try {
-          const res = await fetch("/api/social-media-content-api", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              prompt: ideaPrompt,
-            }),
-          });
+      } else if (type === "content generate" || type === "regenerate") {
+        prompt = generateContentPrompt({
+          platform: contentGeneratePromptDetails.contentType,
+          topic: contentGeneratePromptDetails.topic,
+          keyPoints: selectedIdea?.keyPoints || [],
+          hashtags: selectedIdea?.hashtags || [],
+          contentLength: contentGeneratePromptDetails.contentLength,
+          userPersona: userPersona,
+        });
+      } else if (type === "content enhance") {
+        prompt = enhanceContentPrompt({
+          platform: contentEnhancePromptDetails.contentType,
+          previousContent: contentEnhancePromptDetails.previousContent,
+          enhanceType: contentEnhancePromptDetails.enhanceType,
+          userPersona: userPersona,
+        });
+      }
 
-          if (!res.ok) {
-            throw new Error("Failed to fetch AI template.");
-          }
-          const data = await res.json(); //json
+      const res = await fetch("/api/social-media-content-api", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt }),
+      });
 
-          if (data) {
-            decrementCredits(100);
-            const dataObj = JSON.parse(data); //object
-            setResult(dataObj);
-            if (activeTab === "ideas") {
-              setShowIdeas(true);
-            } else if (activeTab === "enhance") {
-              setShowEnhanced(true);
-            }
-          }
+      if (!res.ok) throw new Error("AI Generation failed");
 
-          setGenerating(false);
-        } catch (error) {
-          console.log("Error in idea generation", error);
-          setGenerating(false);
-        }
-        break;
+      const rawData = await res.json();
+      const data = JSON.parse(rawData);
 
-      case "content generate":
-        setGenerating(true);
-        try {
-          const contentPrompt = generateContentPrompt({
+      if (type === "idea generate") {
+        setResult(data);
+        setShowIdeas(true);
+        decrementCredits(100);
+      } else if (type === "content generate" || type === "regenerate") {
+        const content = data.content || data;
+        if (type === "content generate") {
+          const post = await savePost({
+            title: contentGeneratePromptDetails.topic,
             platform: contentGeneratePromptDetails.contentType,
-            topic: ideaGeneratePromptDetails.topic || contentGeneratePromptDetails.topic,
-            keyPoints: selectedIdea?.keyPoints || contentGeneratePromptDetails.keyPoints,
-            hashtags: selectedIdea?.hashtags || contentGeneratePromptDetails.hashtags,
-            contentLength: contentGeneratePromptDetails.contentLength,
-            userPersona: userPersona,
+            body: content,
           });
-
-          const res = await fetch("/api/social-media-content-api", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              prompt: contentPrompt,
-            }),
-          });
-
-          if (!res.ok) {
-            throw new Error("Failed to generate content.");
-          }
-
-          const data = await res.json();
-          if (data) {
-            const dataObj = JSON.parse(data);
-            const content = dataObj.content;
-
-            //Save Content
-            const id = v4();
-            setContentDraft({ id, content });
+          const id = post.id;
+          setContentDraft({ id, content });
+          await addInHistory(user.id, id, contentGeneratePromptDetails.topic);
+          setHistory([{ contentId: id, contentTitle: contentGeneratePromptDetails.topic }, ...history]);
+          setActiveTab("create");
+        } else {
+          setContentDraft((prev) => (prev ? { ...prev, content } : null));
+          if (contentDraft?.id) {
             await savePost({
-              id,
-              title: selectedIdea?.title || contentGeneratePromptDetails.topic,
+              id: contentDraft.id,
+              title: contentGeneratePromptDetails.topic,
               platform: contentGeneratePromptDetails.contentType,
-              length: contentGeneratePromptDetails.contentLength,
-              body: dataObj.content,
+              body: content,
             });
-            //Add Content in history
-            await addInHistory(user.id, id, selectedIdea?.title || contentGeneratePromptDetails.topic);
-            setHistory([{ contentId: id, contentTitle: selectedIdea?.title || contentGeneratePromptDetails.topic }, ...history]);
-            setShowDraft(true);
           }
-
-          setGenerating(false);
-        } catch (error) {
-          console.log(error);
-          setGenerating(false);
         }
-        break;
-
-      case "content enhance":
-        setGenerating(true);
-        try {
-          const contentPrompt = enhanceContentPrompt({
-            platform: contentEnhancePromptDetails.contentType,
-            previousContent: contentEnhancePromptDetails.previousContent,
-            enhanceType: contentEnhancePromptDetails.enhanceType,
-            userPersona: userPersona,
-          });
-
-          const res = await fetch("/api/social-media-content-api", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              prompt: contentPrompt,
-            }),
-          });
-
-          if (!res.ok) {
-            throw new Error("Failed to generate content.");
-          }
-
-          const data = await res.json();
-          if (data) {
-            const dataObj = JSON.parse(data);
-
-            setEnhanceContent(dataObj.content);
-            setShowDraft(true);
-          }
-
-          setGenerating(false);
-        } catch (error) {
-          console.log(error);
-          setGenerating(false);
-        }
-        break;
+      } else if (type === "content enhance") {
+        setEnhanceContent(data.content || data);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Generation failed");
+    } finally {
+      setGenerating(false);
     }
   };
 
-  const handleUseIdea = (idea: { title: string; description: string; keyPoints: string[]; hashtags: string[] }, platform: string) => {
+  const handleUseIdea = (idea: any, platform: string) => {
     setSelectedIdea({ ...idea, platform });
+    setContentGeneratePromptDetails((prev) => ({
+      ...prev,
+      topic: idea.title,
+      contentType: platform.toLowerCase().includes("linkedin") ? "linkedIn" : platform.toLowerCase().includes("twitter") || platform.toLowerCase().includes("x") ? "twitter" : "facebook",
+    }));
     setActiveTab("create");
-    // setGContentType(platform.toLowerCase().includes("linkedin") ? "linkedin" : "twitter");
   };
 
-  const handleContentAction = async (contentStatus: string) => {
-    if (!selectedIdea?.title || !selectedIdea?.platform) {
-      toast("No content is present");
+  const handleContentAction = async (status: string) => {
+    if (!contentDraft?.id) {
+      toast.error("No content generated yet");
       return;
     }
-    switch (contentStatus) {
-      case "draft":
-        if (!contentDraft?.id) {
-          toast("No content is present");
-          return;
-        }
-        const res = await saveAsDraft({ id: contentDraft?.id });
-        if (res) toast("🟢 Draft saved successfully");
-        break;
+
+    const platform = contentGeneratePromptDetails.contentType;
+
+    try {
+      switch (status) {
+        case "draft":
+          await saveAsDraft({ id: contentDraft.id });
+          toast.success("Saved as draft");
+          break;
+
+        case "published":
+          await savePost({
+            id: contentDraft.id,
+            title: contentGeneratePromptDetails.topic,
+            platform,
+            body: contentDraft.content,
+            mediaIds: uploadedMedia.map((m) => m.id),
+            status: "Published",
+          });
+          const pubRes = await publishPost(contentDraft.id, platform);
+          if (pubRes.success) {
+            toast.success("Published successfully!");
+          } else if (pubRes.error === "ACCOUNT_NOT_CONNECTED") {
+            toast.error("Account not connected", {
+              description: `Please connect your ${platform} account in settings.`,
+              action: { label: "Connect", onClick: () => router.push("/dashboard/settings") },
+            });
+          } else {
+            toast.error(pubRes.error || "Failed to publish");
+          }
+          break;
+
+        case "scheduled":
+          if (!scheduledAt) {
+            toast.error("Set a schedule time first");
+            return;
+          }
+          await savePost({
+            id: contentDraft.id,
+            title: contentGeneratePromptDetails.topic,
+            platform,
+            body: contentDraft.content,
+            mediaIds: uploadedMedia.map((m) => m.id),
+            status: "Scheduled",
+            scheduledAt: new Date(scheduledAt),
+          });
+          await schedulePost(contentDraft.id, new Date(scheduledAt));
+          toast.success("Post scheduled!");
+          break;
+      }
+    } catch (error) {
+      toast.error("Action failed");
     }
-  };
-
-  // const handleContentSave = (content: string) => {
-  //   setEditorContent(content);
-  //   setContentDraft(content);
-  //   setShowDraft(true);
-  // };
-
-  const handleEnhanceContent = () => {
-    setShowEnhanced(true);
-    // TODO: Implement AI enhancement logic
   };
 
   return (
-    //1150 & 1316
     <div className="w-full h-full bg-zinc-50 dark:bg-zinc-900">
       <Tabs
         value={activeTab}
@@ -322,11 +300,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
             </TabsList>
           </nav>
 
-          <section className="min-[1150px]:h-[calc(100%-48px)] h-full overflow-scroll box">
-            {/* Content Ideas Tab */}
+          <section className="min-[1150px]:h-[calc(100%-48px)] h-full overflow-y-auto box">
             <TabsContent
               value="ideas"
-              className=""
+              className="m-0"
             >
               <div className="md:p-8 p-5 max-w-[750px] min-[1536px]:border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
                 <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/10 dark:to-blue-900/10 border border-indigo-200 dark:border-zinc-700 rounded-xl p-4 mb-8 flex items-start">
@@ -338,13 +315,12 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   </div>
                   <Link
                     href="/blog/know-more"
-                    className="text-indigo-400 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-600 transition-colors"
+                    className="text-indigo-400 hover:text-indigo-600 transition-colors"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </Link>
                 </div>
 
-                {/* Enhanced Title with Progress */}
                 <div className="flex justify-between items-center mb-8">
                   <div>
                     <h1 className="leading-none font-semibold text-2xl opacity-80">Generate Content Ideas</h1>
@@ -353,7 +329,6 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 </div>
 
                 <div className="space-y-8">
-                  {/* Enhanced Content Section */}
                   <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">🔥 Content</h3>
                     <div className="space-y-4">
@@ -458,15 +433,14 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   <Button
                     onClick={() => handleGenerate("idea generate")}
                     disabled={generating}
-                    className="w-full hover:bg-gradient-to-r gap-2 h-10 rounded-lg border-none bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700/60 dark:hover:to-zinc-800/40 text-white shadow-lg  transition-all hover:duration-200 duration-200 "
+                    className="w-full h-10 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
                   >
                     {generating ? (
                       <>
-                        <RefreshCw className="h-4 w-4 animate-spin" />
-                        Generating Ideas...
+                        <RefreshCw className="h-4 w-4 animate-spin mr-2" /> Generating...
                       </>
                     ) : (
-                      <>✨ Generate Ideas</>
+                      "✨ Generate Ideas"
                     )}
                   </Button>
                 </div>
@@ -486,17 +460,15 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 <div className="space-y-8">
                   <InputWrapper
                     heading={"🔥 Topic or Idea"}
-                    label={"Paste your content idea here to get AI-powered content"}
+                    label={"Paste your content idea here"}
                   >
                     <AIinput
-                      id="topic"
-                      placeholder="e.g., 🤔 Stop Wasting Time! Automate Your Business with AI."
-                      value={selectedIdea?.title}
-                      onChange={(e: any) => setSelectedIdea((prev) => (prev ? { ...prev, title: e.target.value } : null))}
-                      className="dark:bg-zinc-800 dark:border-zinc-700 dark:text-white dark:placeholder-gray-500"
+                      placeholder="e.g., 🤗 Stop Wasting Time! Automate Your Business with AI."
+                      value={contentGeneratePromptDetails.topic}
+                      onChange={(e: any) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, topic: e.target.value })}
                     />
                   </InputWrapper>
-                  {/* Key points */}
+
                   <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">🤖 Key Points (Optional)</h3>
                     <div className="space-y-4">
@@ -506,8 +478,8 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                         </Label>
                         <textarea
                           id="keywords"
-                          value={selectedIdea?.description}
-                          onChange={(e) => setSelectedIdea((prev) => (prev ? { ...prev, content: e.target.value } : null))}
+                          value={contentGeneratePromptDetails.description}
+                          onChange={(e) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, description: e.target.value })}
                           className="w-full border-2 border-dashed border-indigo-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 rounded-lg p-4 h-48 text-sm resize-none outline-none hover:border-indigo-400 dark:hover:border-zinc-600 transition-all"
                           placeholder="• Include relevant statistics or data&#10;• Mention your personal experience&#10;• Add industry insights or trends&#10;• Specify your target audience"
                         />
@@ -533,25 +505,19 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       <div className="relative">
                         <Select
                           value={contentGeneratePromptDetails.contentType}
-                          onValueChange={(e) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, contentType: e })}
+                          onValueChange={(v) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, contentType: v })}
                         >
                           <SelectTrigger className="!h-14 w-full border-dashed border-2 border-indigo-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:border-indigo-400 dark:hover:border-zinc-600 transition-colors p-2 shadow-none rounded-xl">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="border-slate-200 dark:border-zinc-700">
+                          <SelectContent>
                             {Platforms.map((p) => (
                               <SelectItem
                                 key={p.value}
                                 value={p.value}
-                                className="py-3"
+                                className="py-1"
                               >
-                                <div className="flex items-center gap-3">
-                                  <div className={`w-8 h-8 rounded-lg ${p.color} flex items-center justify-center text-sm`}>{p.label.split(" ")[0]}</div>
-                                  <div className="text-left">
-                                    <div className="font-medium text-sm -ml-0.5">{p.label}</div>
-                                    <div className="text-xs text-slate-500">{p.desc}</div>
-                                  </div>
-                                </div>
+                                {p.label}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -568,7 +534,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                     <CardContent>
                       <RadioGroup
                         value={contentGeneratePromptDetails.contentLength}
-                        onValueChange={(value) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, contentLength: value as "short" | "medium" | "long" })}
+                        onValueChange={(v: any) => setContentGeneratePromptDetails({ ...contentGeneratePromptDetails, contentLength: v })}
                         className="grid grid-cols-1 md:grid-cols-3 gap-4"
                       >
                         {ContentLengths.map((length) => {
@@ -608,109 +574,57 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                       </RadioGroup>
                     </CardContent>
                   </Card>
-                </div>
-                <div>
+
+                  <div className="bg-gray-100 dark:bg-zinc-800/50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold mb-4">🖼️ Attach Media</h3>
+                    <div className="flex flex-wrap gap-4">
+                      {uploadedMedia.map((m) => (
+                        <div
+                          key={m.id}
+                          className="relative w-20 h-20 rounded-lg border overflow-hidden"
+                        >
+                          <img
+                            src={m.url}
+                            className="w-full h-full object-cover"
+                          />
+                          <Button
+                            size="icon"
+                            variant="destructive"
+                            className="absolute top-0 right-0 h-5 w-5 rounded-none"
+                            onClick={() => setUploadedMedia((prev) => prev.filter((i) => i.id !== m.id))}
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ))}
+                      <label className="w-20 h-20 border-2 border-dashed rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-zinc-50 transition-colors">
+                        {uploading ? <Loader2 className="h-5 w-5 animate-spin text-indigo-600" /> : <ImageIcon className="h-5 w-5 text-gray-400" />}
+                        <input
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          disabled={uploading}
+                        />
+                      </label>
+                    </div>
+                  </div>
+
                   <Button
                     onClick={() => handleGenerate("content generate")}
                     disabled={generating}
-                    className="w-full hover:bg-gradient-to-r gap-2 h-10 rounded-lg border-none bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700/60 dark:hover:to-zinc-800/40 text-white shadow-lg  transition-all hover:duration-200 duration-200 "
+                    className="w-full h-10 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
                   >
-                    {generating ? (
-                      <>
-                        <RefreshCw className="h-4 w-4 animate-spin" />
-                        Generating Contents...
-                      </>
-                    ) : (
-                      <>✨ Generate Contents</>
-                    )}
+                    {generating ? <RefreshCw className="h-4 w-4 animate-spin mr-2" /> : "✨ Generate Content"}
                   </Button>
                 </div>
-                {contentStatus == "scheduled" && (
-                  <div className="space-y-2 mt-8">
-                    <Label htmlFor="schedule-date">Schedule Date & Time</Label>
-                    <Input
-                      type="datetime-local"
-                      id="schedule-date"
-                    />
-                  </div>
-                )}
-                {/* <SocialShareButtons
-                  content={contentDraft}
-                  postId={undefined}
-                /> */}
-
-                <Card className="mt-8">
-                  <CardHeader>
-                    <CardTitle>Content Draft</CardTitle>
-                    <CardDescription>Review and publish your content</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2 mb-4">
-                      <Label>Content Status</Label>
-                      <RadioGroup
-                        value={contentStatus}
-                        onValueChange={setContentStatus}
-                        className="flex space-x-4"
-                      >
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem
-                            value="draft"
-                            id="s1"
-                          />
-                          <Label htmlFor="s1">Save as Draft</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem
-                            value="scheduled"
-                            id="s2"
-                          />
-                          <Label htmlFor="s2">Schedule Post</Label>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <RadioGroupItem
-                            value="published"
-                            id="s3"
-                          />
-                          <Label htmlFor="s3">Publish Now</Label>
-                        </div>
-                      </RadioGroup>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-between">
-                    <Button
-                      variant="outline"
-                      onClick={() => setShowDraft(false)}
-                    >
-                      Back to Editor
-                    </Button>
-                    <Button
-                      onClick={() => handleContentAction(contentStatus)}
-                      className="gap-2"
-                    >
-                      {contentStatus === "draft" && (
-                        <>
-                          <CheckCircle2 className="h-4 w-4" />
-                          Save to Drafts
-                        </>
-                      )}
-                      {contentStatus === "scheduled" && (
-                        <>
-                          <Clock className="h-4 w-4" />
-                          Schedule Post
-                        </>
-                      )}
-                      {contentStatus === "published" && (
-                        <>
-                          <Send className="h-4 w-4" />
-                          Publish Now
-                        </>
-                      )}
-                    </Button>
-                  </CardFooter>
-                </Card>
               </div>
             </TabsContent>
-            <TabsContent value="enhance">
+
+            <TabsContent
+              value="enhance"
+              className="m-0"
+            >
               <div className="p-8 max-w-[750px] min-[1536px]:border-x-2 border-dashed mx-auto bg-white dark:bg-zinc-900 min-h-screen">
                 <div className="flex justify-between items-center mb-8">
                   <div>
@@ -783,104 +697,45 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                   </div>
                   <EnhancetypeSelector
                     contentEnhancePromptDetails={contentEnhancePromptDetails}
-                    setContentEnhancePromptDetails={setContentEnhancePromptDetails}
+                    setContentEnhancePromptDetails={(d: any) => setContentEnhancePromptDetails(d)}
                   />
+                  <Button
+                    onClick={() => handleGenerate("content enhance")}
+                    disabled={generating}
+                    className="w-full h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg"
+                  >
+                    {generating ? "Enhancing..." : "✨ Enhance Content"}
+                  </Button>
                 </div>
-                <Button
-                  onClick={() => handleGenerate("content enhance")}
-                  disabled={generating}
-                  className="w-full gap-2 h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-zinc-800 dark:to-zinc-900 hover:from-indigo-700 hover:to-purple-700 dark:hover:from-zinc-700 dark:hover:to-zinc-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
-                >
-                  {generating ? (
-                    <>
-                      <RefreshCw className="h-4 w-4 animate-spin" />
-                      Enhancing...
-                    </>
-                  ) : (
-                    <>✨ Enhance Content</>
-                  )}
-                </Button>
               </div>
             </TabsContent>
           </section>
         </div>
-        {/* Output box */}
-        <div className=" min-[1150px]:w-[450px] w-full h-full min-h-[500px] md:border-0 border-t-2">
-          {/* Auto Save Badge */}
-          <nav className="flex items-center px-4 h-12 border-b-2 justify-between ">
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-indigo-500 dark:bg-zinc-500 rounded-full"></div>
-              <span className="text-sm text-gray-500 dark:text-gray-400">auto saved</span>
-            </div>
 
-            <div className="flex ml-4 space-x-3">
-              <button className="text-amber-400">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  stroke="none"
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-              </button>
-              <button>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="1"
-                  ></circle>
-                  <circle
-                    cx="12"
-                    cy="5"
-                    r="1"
-                  ></circle>
-                  <circle
-                    cx="12"
-                    cy="19"
-                    r="1"
-                  ></circle>
-                </svg>
-              </button>
+        {/* Output box */}
+        <div className=" min-[1150px]:w-[450px] w-full h-full min-h-[500px]  flex flex-col border-t-2 min-[1150px]:border-t-0">
+          <nav className="flex items-center px-4 h-12 border-b-2 justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+              <span className="text-sm text-gray-500">Live Preview</span>
             </div>
           </nav>
+
           <div className="min-[1150px]:h-[calc(100%-48px)] h-full  overflow-y-auto p-5 ">
             <TabsContent
               value="ideas"
-              className=" h-full rounded-xl"
+              className="m-0 h-full"
             >
               {showIdeas ? (
-                <div className="space-y-5">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold">Generated Ideas</h2>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="gap-1.5"
-                    >
-                      <RefreshCw className="h-4 w-4" />
-                      Regenerate
-                    </Button>
-                  </div>
-                  <div className="grid gap-4 md:grid-cols-1 pb-8">
-                    {result?.map((idea: { title: string; description: string; keyPoints: string[]; hashtags: string[] }, index: number) => (
-                      <IdeaCard
-                        idea={idea}
-                        onClickEvent={handleUseIdea}
-                        platform={ideaGeneratePromptDetails.platform.join(" ,")}
-                        key={index}
-                      />
-                    ))}
-                  </div>
+                <div className="grid gap-4">
+                  {result.map((idea: any, i: number) => (
+                    <IdeaCard
+                      key={i}
+                      idea={idea}
+                      onClickEvent={handleUseIdea}
+                      platform={ideaGeneratePromptDetails.platform.join(", ")}
+                    />
+                  ))}
                 </div>
               ) : (
                 <div className="h-full w-full flex items-center flex-col justify-center">
@@ -893,50 +748,76 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 </div>
               )}
             </TabsContent>
+
             <TabsContent
               value="create"
               className=" h-full rounded-xl"
             >
               {contentDraft ? (
-                <>
-                  <p
+                <div className="space-y-6">
+                  <div
+                    className="whitespace-pre-wrap rounded-xl border h-fit bg-amber-50 dark:bg-zinc-900 border-amber-200 p-5 shadow-sm"
                     dangerouslySetInnerHTML={{ __html: contentDraft.content }}
-                    className="whitespace-pre-wrap rounded-md border h-fit bg-amber-200 dark:bg-zinc-800 p-4 pb-5"
                   />
-                  <div className="h-5" />
-                  <div className="space-y-5">
-                    {/* Share Your Content Section */}
-                    <div className="bg-gray-50 dark:bg-zinc-800  border border-gray-200 dark:border-zinc-700 rounded-lg p-3">
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2 text-sm">Share Your Content</h4>
 
-                      <div className="grid grid-cols-5 gap-1.5 mb-2">
-                        {socialPlatforms.map((platform) => (
-                          <button
-                            key={platform.name}
-                            className={cn(
-                              "flex items-center justify-center p-2 rounded-md font-medium transition-all duration-200 transform hover:scale-105 shadow-sm hover:shadow-md",
-                              platform.color,
-                              platform.textColor
-                            )}
-                            title={platform.name}
+                  <Card className="border-2 border-dashed">
+                    <CardHeader>
+                      <CardTitle className="text-sm uppercase tracking-wider text-zinc-500">Publication Control</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <RadioGroup
+                        value={contentStatus}
+                        onValueChange={(v) => setContentStatus(v)}
+                        className="flex flex-wrap gap-4"
+                      >
+                        {["draft", "scheduled", "published"].map((s) => (
+                          <div
+                            key={s}
+                            className="flex items-center space-x-2"
                           >
-                            <platform.icon className="w-3.5 h-3.5" />
-                          </button>
+                            <RadioGroupItem
+                              value={s}
+                              id={`status-${s}`}
+                            />
+                            <Label
+                              htmlFor={`status-${s}`}
+                              className="capitalize"
+                            >
+                              {s}
+                            </Label>
+                          </div>
                         ))}
-                      </div>
-
-                      <button className="w-full bg-gradient-to-r from-gray-800 to-gray-900 dark:from-zinc-800 dark:to-zinc-900 text-white py-2 px-3 rounded-md font-medium hover:from-gray-900 hover:to-black dark:hover:from-zinc-700 dark:hover:to-zinc-800 transition-all duration-200 transform hover:scale-[1.02] shadow-sm hover:shadow-md text-xs">
-                        Share to All Platforms
-                      </button>
-                      <ContentStatus
-                        contentStatus={contentStatus}
-                        setContentStatus={setContentStatus}
-                        handleContentAction={handleContentAction}
-                      />
-                    </div>
-                  </div>
-                  <div className="h-5"></div>
-                </>
+                      </RadioGroup>
+                      {contentStatus === "scheduled" && (
+                        <Input
+                          type="datetime-local"
+                          value={scheduledAt}
+                          onChange={(e) => setScheduledAt(e.target.value)}
+                        />
+                      )}
+                    </CardContent>
+                    <CardFooter>
+                      <Button
+                        className="w-full gap-2 bg-indigo-600"
+                        onClick={() => handleContentAction(contentStatus)}
+                      >
+                        {contentStatus === "published" ? (
+                          <>
+                            <Send className="h-4 w-4" /> Publish Now
+                          </>
+                        ) : contentStatus === "scheduled" ? (
+                          <>
+                            <Clock className="h-4 w-4" /> Schedule
+                          </>
+                        ) : (
+                          <>
+                            <CheckCircle2 className="h-4 w-4" /> Save
+                          </>
+                        )}
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </div>
               ) : (
                 <div className="h-full w-full flex items-center flex-col justify-center">
                   <div className="text-[70px] md:-mt-10 mt-10">🧠</div>
@@ -948,14 +829,21 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 </div>
               )}
             </TabsContent>
+
             <TabsContent
               value="enhance"
-              className=" h-[calc(100%-48px)] rounded-xl"
+              className="m-0"
             >
-              <ContentEditor
-                initialContent={enhanceContent}
-                onSave={() => {}}
-              />
+              {enhanceContent ? (
+                <div
+                  className="p-5 rounded-xl border bg-amber-50 dark:bg-zinc-900"
+                  dangerouslySetInnerHTML={{ __html: enhanceContent }}
+                />
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center opacity-50 py-20">
+                  🪄 <p>Enhanced output will appear here</p>
+                </div>
+              )}
             </TabsContent>
           </div>
         </div>

@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PlusCircle, FileText, Calendar, Edit, ArrowUpRight, Trash2, Filter, Search, MoreHorizontal, CheckCircle2, Clock } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { deleteDraft, getDrafts, getPostedContent, getScheduledContent } from "../../../../server/post";
+import { deletePost, getDrafts, getPostedContent, getScheduledContent } from "../../../../server/post";
 import { cn } from "@/lib/utils";
 
 export default function ContentPage() {
@@ -306,7 +306,7 @@ const ContentCard = ({ content , type}: { content: any , type: string}) => {
                 <DropdownMenuItem className="text-red-600 ">
                   <div
                     className="flex gap-4"
-                    onClick={() => deleteDraft(content.id)}
+                    onClick={() => deletePost(content.id)}
                   >
                     <Trash2 className="h-4 w-4" />
                     <span>Delete</span>

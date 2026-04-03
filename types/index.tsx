@@ -43,6 +43,7 @@ export type IdeaGeneratePromptDetails = {
 
 export type ContentGeneratePromptDetails = {
   topic: string;
+  description: string;
   contentType: string;
   hashtags: string[];
   keyPoints: string[];

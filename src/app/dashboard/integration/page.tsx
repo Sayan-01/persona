@@ -35,8 +35,8 @@ const integrationsInitial: Integration[] = [
   },
   {
     id: "twitter",
-    title: "Connect X",
-    description: "Connect your X account to start posting content and manage your content in one place.",
+    title: "Connect Twitter/X",
+    description: "Connect your Twitter/X account to start posting content and manage your content in one place.",
     url: "/api/oauth/twitter",
     icon: "/social-media/x.png",
   },
@@ -55,13 +55,13 @@ const FeatureCard = ({ feature, onDisconnect, onDelete }: { feature: Integration
       <div className="relative z-10 flex flex-col h-full">
         <div className="p-5">
           <div className="flex items-center justify-between mb-5">
-            <div className={`  dark:bg-zinc-800 bg-zinc-200 border border-zinc-100 dark:border-zinc-700/30 rounded-xl backdrop-blur-sm relative`}>
+            <div className={`dark:bg-zinc-800 bg-zinc-200 border border-zinc-100 dark:border-zinc-700/30 rounded-xl backdrop-blur-sm relative`}>
               <Image
                 src={feature.accountImage || feature.icon}
                 alt={feature.title}
                 width={500}
                 height={500}
-                className="h-12 w-12 object-cover rounded-xl"
+                className="h-12 w-12 object-cover rounded-md"
               />
               {feature.connected && <div className="absolute -top-2 -right-2 bg-green-500 h-4 w-4 rounded-full border-2 border-white dark:border-zinc-800" />}
             </div>
@@ -92,7 +92,7 @@ const FeatureCard = ({ feature, onDisconnect, onDelete }: { feature: Integration
                 <Button
                   onClick={() => feature.url && (window.location.href = feature.url)}
                   disabled={!feature.url}
-                  className="h-8 px-4 rounded-full text-xs font-bold bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:opacity-90 transition-opacity"
+                  className="h-8 px-4 rounded-full text-sm font-bold bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:opacity-90 transition-opacity"
                 >
                   Connect
                 </Button>
@@ -100,13 +100,13 @@ const FeatureCard = ({ feature, onDisconnect, onDelete }: { feature: Integration
             </div>
           </div>
 
-          <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <h3 className="text-xl font-bold bg-gradient-to-r from-zinc-800 to-zinc-600 dark:from-white dark:to-zinc-200 bg-clip-text text-transparent">{feature.title}</h3>
               {feature.connected && (
                 <div className="flex items-center gap-2 w-fit px-2.5 py-1 rounded-lg border border-indigo-500/10 bg-indigo-500/5">
                   <div className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
-                  <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">@{feature.handle}</span>
+                  <span className="text-sm text-indigo-600 dark:text-indigo-400">@{feature.handle}</span>
                 </div>
               )}
             </div>
@@ -118,7 +118,7 @@ const FeatureCard = ({ feature, onDisconnect, onDelete }: { feature: Integration
           </div>
 
           <div className="flex flex-col gap-3">
-            <p className="text-[13px] text-zinc-500 dark:text-zinc-400 leading-relaxed">{feature.description}</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 ">{feature.description}</p>
           </div>
         </div>
       </div>
