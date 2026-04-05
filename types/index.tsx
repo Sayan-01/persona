@@ -53,7 +53,7 @@ export type ContentGeneratePromptDetails = {
 export type ContentEnhancePromptDetails = {
   contentType: string;
   previousContent: string;
-  enhanceType: string;
+  enhanceType: "rewrite" | "expand" | "condense" | "adjust";
 };
 
 export type UserPersona = {

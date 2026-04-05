@@ -93,8 +93,6 @@ export async function publishPost(postId: string, platform: string) {
   }
 
   // Check if account is connected
-  // Note: we check platform against our database. 
-  // platform can be "facebook", "twitter", "linkedin", "instagram" etc.
   const account = await db.account.findFirst({
     where: { 
       userId: session.user.id, 
@@ -106,7 +104,6 @@ export async function publishPost(postId: string, platform: string) {
   });
 
   if (!account) {
-    // Save as draft and notify user
     await db.content.update({
       where: { id: postId },
       data: { status: "Draft" },
@@ -120,7 +117,6 @@ export async function publishPost(postId: string, platform: string) {
 
   const post = await db.content.findUnique({
     where: { id: postId, userId: session.user.id },
-    include: { media: true }
   });
 
   if (!post) {
@@ -128,24 +124,19 @@ export async function publishPost(postId: string, platform: string) {
   }
 
   try {
-    // REAL POSTING LOGIC HERE (Simulated or actually implemented)
-    // For now we simulate success
-    console.log(`Publishing to ${platform}: ${post.body}`);
-    
-    // Update post status
-    await db.content.update({
-      where: { id: postId },
+    // Send event to Inngest for REAL platform publishing
+    await inngest.send({
+      name: "post/publish",
       data: {
-        status: "Published",
-        publishedAt: new Date(),
+        postId: post.id,
       },
     });
 
     revalidatePath("/dashboard/content");
     return { success: true };
   } catch (error) {
-    console.error(`Failed to publish to ${platform}:`, error);
-    return { error: "Failed to publish", success: false };
+    console.error(`Failed to publish via Inngest to ${platform}:`, error);
+    return { error: "Failed to initiate publishing", success: false };
   }
 }
 

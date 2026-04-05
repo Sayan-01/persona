@@ -14,129 +14,92 @@ export const generateContentPrompt = ({ platform, topic, keyPoints = [], hashtag
   
   const lengthGuide = {
     short: {
-      facebook: "1 paragraphs",
-      instagram: "50-100 words",
-      linkedin: "1-2 paragraphs",
-      twitter: "240-280 characters",
-      blog: "300-500 words",
+      facebook: "1-2 concise paragraphs (~100 words)",
+      instagram: "50-100 words (visual focus)",
+      linkedin: "1-2 paragraphs (insight focus)",
+      twitter: "1 tweet (240-280 chars)",
+      blog: "300-500 words (quick guide)",
     },
     medium: {
-      facebook: "2-3 paragraphs",
-      instagram: "150-300 words",
-      linkedin: "2-4 paragraphs",
-      twitter: "1-2 threaded tweets",
-      blog: "500-800 words",
+      facebook: "2-3 paragraphs with questions (~200 words)",
+      instagram: "150-250 words (storytelling focus)",
+      linkedin: "3-5 paragraphs (educational focus)",
+      twitter: "2-4 tweet thread",
+      blog: "600-900 words (analytical focus)",
     },
     long: {
-      facebook: "4-6 paragraphs",
-      instagram: "300-400 words",
-      linkedin: "4-8 paragraphs",
-      twitter: "3-5 threaded tweets",
-      blog: "800-1500 words",
+      facebook: "4-6 detailed paragraphs (~400 words)",
+      instagram: "300-400 words (deep storytelling)",
+      linkedin: "6-8 paragraphs (thought-leadership focus)",
+      twitter: "5-10 tweet thread (value-packed)",
+      blog: "1000-1500 words (comprehensive resource)",
     },
   };
 
-  const platformGuide = {
-    linkedin: "Professional network focused on B2B content, industry insights, and career development",
-    twitter: "Fast-paced, concise updates with high engagement through hashtags and mentions",
-    instagram: "Visual-first platform with emphasis on storytelling and emotional connection",
-    facebook: "Community-focused platform balancing personal and professional content",
-    blog: "In-depth, comprehensive content with SEO optimization and detailed analysis",
-  };
-
-  const hashtagGuide = () => {
-    return dedent`
-    - Ensure hashtags are:
-      * Relevant to the topic and industry
-      * Currently active in your platform
-      * Mix of broad and specific terms
-      * Properly formatted (camelCase for multi-word tags)
-      * Start from a new line allways`;
+  const platformStrategy = {
+    linkedin: dedent`
+      STRATEGY: Professional & Insight-driven. 
+      - Hook: Start with a contrarian view, a surprising stat, or a relatable pain point.
+      - Body: Provide actionable "How-To" advice or high-level strategic insights.
+      - Authority: Position as an expert in ${userPersona.industry}.
+      - CTA: Encourage professional networking or comments on industry trends.`,
+    twitter: dedent`
+      STRATEGY: Punchy & Conversational.
+      - Hook: Impactful first line. 
+      - Threading: If medium/long, use a "🧵" thread format.
+      - Style: High energy, concise, and often use bullet points for readability.
+      - CTA: Ask for a Retweet or a reply.`,
+    instagram: dedent`
+      STRATEGY: Story-first & Visual.
+      - Hook: Scroll-stopping first sentence before the "read more".
+      - Body: Focus on personal connection, transformation, or behind-the-scenes.
+      - Format: Readable with clear spacing and emojis.
+      - CTA: "Link in bio" or "Save for later".`,
+    facebook: dedent`
+      STRATEGY: Community & Relatable.
+      - Hook: Question-based or relatable scenario.
+      - Body: Humanize the brand, share a story, or provide helpful tips for daily life.
+      - Tone: Friendly and approachable.
+      - CTA: Ask for opinions or community stories.`,
+    blog: dedent`
+      STRATEGY: Authoritative & Informative.
+      - Structure: Clear headings, introduction, body, and conclusion.
+      - SEO: Use relevant industry keywords naturally.
+      - Body: Deep dive into the topic with comprehensive explanations.
+      - CTA: Newsletter signup or related article click.`,
   };
 
   return dedent`
-    You are an expert content creator specializing in ${platform} content. Create content with the following specifications:
+    You are a world-class social media copywriter and growth strategist for ${userPersona.industry}. 
+    Your goal is to generate high-engagement content for ${platform.toUpperCase()} that resonates with ${userPersona.targetAudience} and achieves ${userPersona.contentGoals.join(", ")}.
 
-    TOPIC: ${topic}
-
-    PLATFORM CONTEXT: ${platformGuide[platform as keyof typeof platformGuide]}
+    TOPIC/IDEA: ${topic}
+    ${keyPoints.length > 0 ? `MUST-INCLUDE POINTS:\n${keyPoints.map((p, i) => `- ${p}`).join("\n")}` : ""}
     
-    TARGET LENGTH: ${lengthGuide[contentLength][platform as keyof (typeof lengthGuide)[typeof contentLength]]}
+    PLATFORM SPECIFIC STRATEGY:
+    ${platformStrategy[platform as keyof typeof platformStrategy] || "Focus on delivering value and engagement."}
 
-    USER PROFILE:
-    Industry: ${userPersona.industry}
-    Target Audience: ${userPersona.targetAudience}
-    Content Goals: ${userPersona.contentGoals.join(", ")}
+    CONTENT SPECIFICATIONS:
+    - Target Length: ${lengthGuide[contentLength][platform as keyof (typeof lengthGuide)[typeof contentLength]]}
+    - Tone: ${userPersona.tone.join(", ")}
+    - Platform Habits: Optimize for ${platform}'s current algorithms and best practices.
 
-    CONTENT STYLE:
-    Tone: ${userPersona.tone.join(", ")}
+    CORE WRITING RULES:
+    1. **Strong Hook**: The first sentence MUST grab attention. No boring intros.
+    2. **Readability**: Break text into short, digestible paragraphs.
+    3. **Plain Text ONLY**: Do NOT use Markdown (bold, italics), HTML tags (<br/>), or special characters for formatting. 
+    4. **Line Breaks**: Use a single newline (\n) for small breaks and double newlines (\n\n) to separate major sections/paragraphs.
+    5. **Emojis**: Use ${userPersona.tone.includes("professional") ? "subtle" : "creative"} emojis to add personality and visual structure.
+    6. **Call to Action (CTA)**: Every post must end with a clear, engaging CTA related to the content goals.
 
-    Formatting:
-    - Use Bullet Points When appropriate"}
-    - Include Statistics When relevant"}
+    ${hashtags.length > 0 ? `HASHTAGS:\n${hashtags.join(" ")}` : "Generate 3-5 high-performing, relevant hashtags."}
 
-    ${keyPoints.length > 0 ? `KEY POINTS TO INCLUDE:\n${keyPoints.map((point, index) => `${index + 1}. ${point}`).join("\n")}` : ""}
+    OUTPUT FORMAT:
+    Provide the response as a JSON object: {"content": "Your fully written, formatted, and engaging post here"}.
+    Ensure the "content" value is a single string where newlines are represented as \\n.
 
-    ${hashtags.length > 0 ? `\nHASHTAG GUIDELINES:\n${hashtagGuide()}\nSUGGESTED HASHTAGS: ${hashtags.join(" ")}` : ""}
-
-    ADDITIONAL INSTRUCTIONS:
-    1. Maintain consistency with the user's sample content style
-    2. Incorporate industry-specific terminology appropriate for ${userPersona.targetAudience}
-    3. Focus on achieving the specified content goals: ${userPersona.contentGoals.join(", ")}
-    4. Optimize for ${platform}'s best practices and algorithm preferences
-    5. Follow the specified formatting preferences and language level
-    6. Also use emojis if needed.
-    7. Do not use any text formating like bolding, italics, or any other special character formatting. Write simple HTML text only containing <br/> for line breaks.
-    8. For points use bullet points or numbers or emojis.
-
-
-    ENGAGEMENT OPTIMIZATION:
-    - Include conversation starters or questions
-    - Use active voice and direct address
-    - Add personal insights or experiences when relevant
-    - Maintain authenticity while being informative
-    - Consider your audience's pain points and goals
-
-    CONTENT FORMAT: 
-    - JSON object {"content": "Full engaging post with follow all the above points"}
-    
-    GENERATE CONTENT GUIDLINE OR FORMAT:
-    - Use <br/> for line breaks and <br/><br/> for double line breaks.
-    - The content should be engaging, authentic, and provide value to the audience.
-    - Focus on creating a natural flow.
-    - Position the content to establish me as a thought leader in my field while remaining approachable and relatable.
-    - Incorporate emojis for better engagement.
-    - Structure the content into four distinct sections:
-        1. Introduction part
-        2. Content main body (which can contain bullet points or - or links if needed)
-        3. Conclusion or footer
-        4. Hashtag section
-    - **Crucially, do not use any text formatting like bolding, italics, or any other special character formatting. Write simple HTML text only containing <br/> for line breaks.**
-    - Example post format-> 
-      🚀 Boost Your Brand's Online Presence with Azeorex! 🚀
-
-      <br/><br/>Looking for a website that stands out and grows with your business? Look no further! Azeorex is your trusted Web Development & Design Agency committed to delivering powerful, scalable, and modern web solutions tailored to your needs.
-
-      <br/><br/>✨ Why Choose Azeorex?
-
-      <br/>🖌 Stunning Website Design - Unique, eye-catching designs to elevate your brand.
-      <br/>🔧 Custom Backend Solutions - Built to support your growth with robust infrastructure.
-      <br/>🌐 Professional WordPress Websites - Fully optimized and responsive.
-      <br/>💻 Custom Coded Websites - Tailored from scratch to meet your specific needs.
-      <br/>🚀 Scalable & Future-Ready - Websites designed to evolve with your business.
-      <br/>📱 Responsive Across Devices - Ensuring a seamless experience on mobile, tablet, and desktop.
-      <br/>💥 Modern Tech Stack - Leveraging the latest tools and technologies for best results.
-      <br/>💸 Affordable Pricing - Quality web solutions within your budget!
-      <br/>Let's turn your vision into reality with Azeorex! 🌟
-
-      <br/><br/>📧 Contact Us:
-
-      <br/>Email: xxxxxxxxx@gmail.com
-      <br/>Phone: xxxxx xxxxx (WP only)
-      <br/>Website: xyz.com 
-
-      <br/><br/>#azeorex #webdesign #webdevelopment #customwebsites #moderndesign #responsivedesign #affordablewebsites #scalablesolutions #wordpressexperts #latesttechstack #highqualitydesign #userexperience #creativeagency 
-`;
+    REMINDER: No bolding, no bold characters, no italics. Simple, clean text with emojis.
+  `;
 };
 
 export default generateContentPrompt;

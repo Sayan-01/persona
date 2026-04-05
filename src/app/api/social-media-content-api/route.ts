@@ -7,7 +7,6 @@ export const POST = async (req: any) => {
     const result = await geminiModel.sendMessage(prompt);
     const aiRes = result.response.text(); //json
 
-    console.log("aiRes", aiRes);
 
     return NextResponse.json(aiRes);
   } catch (error) {

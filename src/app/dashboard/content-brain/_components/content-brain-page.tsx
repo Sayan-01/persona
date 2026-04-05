@@ -29,6 +29,8 @@ import { getUserPersona } from "../../../../../server/user-profile";
 import { useHistory } from "@/hooks/history-provider";
 import { useCredits } from "@/hooks/credit-provider";
 import generateContentPrompt from "../../../../../AI/ContentGeneratePrompt";
+import SocialPostPreview from "./social-post-preview";
+
 
 export default function ContentBrainPage({ user }: { user: { id: string; email: string; name: string; isVarified: boolean; isAdmin: boolean } }) {
   const router = useRouter();
@@ -63,6 +65,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
   const [userPersona, setUserPersona] = useState<any>(null);
   const [uploadedMedia, setUploadedMedia] = useState<{ id: string; url: string; type: string }[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { history, setHistory } = useHistory();
   const { decrementCredits } = useCredits();
 
@@ -206,6 +209,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
     }
 
     const platform = contentGeneratePromptDetails.contentType;
+    setLoading(true);
 
     try {
       switch (status) {
@@ -229,6 +233,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           } else if (pubRes.error === "ACCOUNT_NOT_CONNECTED") {
             toast.error("Account not connected", {
               description: `Please connect your ${platform} account in settings.`,
+              duration: Infinity,
               action: { label: "Connect", onClick: () => router.push("/dashboard/settings") },
             });
           } else {
@@ -239,6 +244,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
         case "scheduled":
           if (!scheduledAt) {
             toast.error("Set a schedule time first");
+            setLoading(false);
             return;
           }
           await savePost({
@@ -255,7 +261,10 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           break;
       }
     } catch (error) {
+      console.error(error);
       toast.error("Action failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -753,70 +762,85 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               value="create"
               className=" h-full rounded-xl"
             >
-              {contentDraft ? (
+              {contentGeneratePromptDetails.contentType || contentDraft ? (
                 <div className="space-y-6">
-                  <div
-                    className="whitespace-pre-wrap rounded-xl border h-fit bg-amber-50 dark:bg-zinc-900 border-amber-200 p-5 shadow-sm"
-                    dangerouslySetInnerHTML={{ __html: contentDraft.content }}
+                  <SocialPostPreview
+                    platform={contentGeneratePromptDetails.contentType}
+                    content={contentDraft?.content || ""}
+                    media={uploadedMedia}
+                    user={{ name: user.name }}
+                    isLoading={generating && activeTab === "create"}
+                    onContentChange={(newContent) => {
+                      if (contentDraft) {
+                        setContentDraft({ ...contentDraft, content: newContent });
+                      } else {
+                        setContentDraft({ id: v4(), content: newContent });
+                      }
+                    }}
                   />
 
-                  <Card className="border-2 border-dashed">
-                    <CardHeader>
-                      <CardTitle className="text-sm uppercase tracking-wider text-zinc-500">Publication Control</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <RadioGroup
-                        value={contentStatus}
-                        onValueChange={(v) => setContentStatus(v)}
-                        className="flex flex-wrap gap-4"
-                      >
-                        {["draft", "scheduled", "published"].map((s) => (
-                          <div
-                            key={s}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem
-                              value={s}
-                              id={`status-${s}`}
-                            />
-                            <Label
-                              htmlFor={`status-${s}`}
-                              className="capitalize"
+                  {contentDraft && (
+                    <Card className="border-2 border-dashed">
+                      <CardHeader>
+                        <CardTitle className="text-sm uppercase tracking-wider text-zinc-500">Publication Control</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <RadioGroup
+                          value={contentStatus}
+                          onValueChange={(v) => setContentStatus(v)}
+                          className="flex flex-wrap gap-4"
+                        >
+                          {["draft", "scheduled", "published"].map((s) => (
+                            <div
+                              key={s}
+                              className="flex items-center space-x-2"
                             >
-                              {s}
-                            </Label>
-                          </div>
-                        ))}
-                      </RadioGroup>
-                      {contentStatus === "scheduled" && (
-                        <Input
-                          type="datetime-local"
-                          value={scheduledAt}
-                          onChange={(e) => setScheduledAt(e.target.value)}
-                        />
-                      )}
-                    </CardContent>
-                    <CardFooter>
-                      <Button
-                        className="w-full gap-2 bg-indigo-600"
-                        onClick={() => handleContentAction(contentStatus)}
-                      >
-                        {contentStatus === "published" ? (
-                          <>
-                            <Send className="h-4 w-4" /> Publish Now
-                          </>
-                        ) : contentStatus === "scheduled" ? (
-                          <>
-                            <Clock className="h-4 w-4" /> Schedule
-                          </>
-                        ) : (
-                          <>
-                            <CheckCircle2 className="h-4 w-4" /> Save
-                          </>
+                              <RadioGroupItem
+                                value={s}
+                                id={`status-${s}`}
+                              />
+                              <Label
+                                htmlFor={`status-${s}`}
+                                className="capitalize"
+                              >
+                                {s}
+                              </Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                        {contentStatus === "scheduled" && (
+                          <Input
+                            type="datetime-local"
+                            value={scheduledAt}
+                            onChange={(e) => setScheduledAt(e.target.value)}
+                          />
                         )}
-                      </Button>
-                    </CardFooter>
-                  </Card>
+                      </CardContent>
+                      <CardFooter>
+                        <Button
+                          className="w-full gap-2 bg-indigo-600 hover:bg-indigo-700 text-white"
+                          onClick={() => handleContentAction(contentStatus)}
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                          ) : contentStatus === "published" ? (
+                            <>
+                              <Send className="h-4 w-4" /> Publish Now
+                            </>
+                          ) : contentStatus === "scheduled" ? (
+                            <>
+                              <Clock className="h-4 w-4" /> Schedule
+                            </>
+                          ) : (
+                            <>
+                              <CheckCircle2 className="h-4 w-4" /> Save
+                            </>
+                          )}
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  )}
                 </div>
               ) : (
                 <div className="h-full w-full flex items-center flex-col justify-center">
@@ -830,14 +854,18 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
               )}
             </TabsContent>
 
+
             <TabsContent
               value="enhance"
               className="m-0"
             >
-              {enhanceContent ? (
-                <div
-                  className="p-5 rounded-xl border bg-amber-50 dark:bg-zinc-900"
-                  dangerouslySetInnerHTML={{ __html: enhanceContent }}
+              {contentEnhancePromptDetails.contentType || enhanceContent ? (
+                <SocialPostPreview
+                  platform={contentEnhancePromptDetails.contentType}
+                  content={enhanceContent}
+                  user={{ name: user.name }}
+                  isLoading={generating && activeTab === "enhance"}
+                  onContentChange={(newContent) => setEnhanceContent(newContent)}
                 />
               ) : (
                 <div className="h-full flex flex-col items-center justify-center opacity-50 py-20">
@@ -845,6 +873,7 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
                 </div>
               )}
             </TabsContent>
+
           </div>
         </div>
       </Tabs>
