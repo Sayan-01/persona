@@ -229,7 +229,9 @@ export default function ContentBrainPage({ user }: { user: { id: string; email: 
           });
           const pubRes = await publishPost(contentDraft.id, platform);
           if (pubRes.success) {
-            toast.success("Published successfully!");
+            toast.success("Publishing initiated!", {
+              description: "The post is being sent to X in the background. Check your dashboard status in a moment."
+            });
           } else if (pubRes.error === "ACCOUNT_NOT_CONNECTED") {
             toast.error("Account not connected", {
               description: `Please connect your ${platform} account in settings.`,

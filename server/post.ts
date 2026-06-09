@@ -97,10 +97,10 @@ export async function publishPost(postId: string, platform: string) {
     where: { 
       userId: session.user.id, 
       platform: {
-        contains: platform,
-        mode: 'insensitive'
+        in: platform.toLowerCase() === 'x' || platform.toLowerCase() === 'twitter' ? ['twitter', 'x'] : [platform]
       }
     },
+    orderBy: { updatedAt: 'desc' }
   });
 
   if (!account) {
@@ -123,6 +123,7 @@ export async function publishPost(postId: string, platform: string) {
     return { error: "Post not found", success: false };
   }
 
+
   try {
     // Send event to Inngest for REAL platform publishing
     await inngest.send({
@@ -133,7 +134,7 @@ export async function publishPost(postId: string, platform: string) {
     });
 
     revalidatePath("/dashboard/content");
-    return { success: true };
+    return { success: true, message: "Publishing initiated in background." };
   } catch (error) {
     console.error(`Failed to publish via Inngest to ${platform}:`, error);
     return { error: "Failed to initiate publishing", success: false };
