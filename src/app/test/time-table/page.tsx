@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import {
   legendItems,
   weightageRows,
@@ -13,6 +13,8 @@ import {
   TC,
   type WeekCard,
 } from "./data";
+import { getProgress, toggleProgress, togglePillarProgress } from "../../../../server/time-table";
+import { toast } from "sonner";
 
 /* ─── Pillar color mapping for Tailwind inline styles ──────── */
 const PILL_STYLES: Record<string, { bg: string; text: string; dot: string }> = {
@@ -27,7 +29,132 @@ const PILL_STYLES: Record<string, { bg: string; text: string; dot: string }> = {
 export default function TimeTablePage() {
   const [activeWeek, setActiveWeek] = useState<string | null>(null);
   const [activeDay, setActiveDay] = useState<string>("Mon");
+  const [checkedState, setCheckedState] = useState<Record<string, boolean>>({});
+  const [loading, setLoading] = useState(true);
   const detailRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchInitialProgress = async () => {
+      try {
+        const res = await getProgress();
+        if (res.success && res.data) {
+          const initialState: Record<string, boolean> = {};
+          res.data.forEach((p) => {
+            initialState[`${p.weekId}-${p.pillar}-${p.itemIndex}`] = p.completed;
+          });
+          setCheckedState(initialState);
+        }
+      } catch (err) {
+        console.error("Error loading progress", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInitialProgress();
+  }, []);
+
+  const handleSubtopicToggle = async (weekId: string, pillar: string, itemIndex: number) => {
+    const key = `${weekId}-${pillar}-${itemIndex}`;
+    const newValue = !checkedState[key];
+
+    // Optimistic update
+    setCheckedState((prev) => ({
+      ...prev,
+      [key]: newValue,
+    }));
+
+    try {
+      const res = await toggleProgress(weekId, pillar, itemIndex, newValue);
+      if (!res.success) {
+        // Revert state
+        setCheckedState((prev) => ({
+          ...prev,
+          [key]: !newValue,
+        }));
+        if (res.error === "Unauthorized") {
+          toast.error("Please login to track your progress");
+        } else {
+          toast.error(res.error || "Failed to save progress");
+        }
+      }
+    } catch (err) {
+      // Revert state
+      setCheckedState((prev) => ({
+        ...prev,
+        [key]: !newValue,
+      }));
+      toast.error("Failed to save progress");
+    }
+  };
+
+  const handlePillarToggle = async (weekId: string, pillar: string, itemsCount: number, currentlyAllCompleted: boolean) => {
+    const newValue = !currentlyAllCompleted;
+    const indices = Array.from({ length: itemsCount }, (_, i) => i);
+    
+    // Optimistic update
+    setCheckedState((prev) => {
+      const next = { ...prev };
+      indices.forEach((idx) => {
+        next[`${weekId}-${pillar}-${idx}`] = newValue;
+      });
+      return next;
+    });
+
+    try {
+      const res = await togglePillarProgress(weekId, pillar, indices, newValue);
+      if (!res.success) {
+        // Revert state
+        setCheckedState((prev) => {
+          const next = { ...prev };
+          indices.forEach((idx) => {
+            next[`${weekId}-${pillar}-${idx}`] = currentlyAllCompleted;
+          });
+          return next;
+        });
+        if (res.error === "Unauthorized") {
+          toast.error("Please login to track your progress");
+        } else {
+          toast.error(res.error || "Failed to save progress");
+        }
+      } else {
+        toast.success(`${pillar} marked as ${newValue ? "completed" : "incomplete"}`);
+      }
+    } catch (err) {
+      // Revert state
+      setCheckedState((prev) => {
+        const next = { ...prev };
+        indices.forEach((idx) => {
+          next[`${weekId}-${pillar}-${idx}`] = currentlyAllCompleted;
+        });
+        return next;
+      });
+      toast.error("Failed to save progress");
+    }
+  };
+
+  const getWeekProgress = useCallback((weekId: string) => {
+    const detail = weeks[weekId];
+    if (!detail) return { completed: 0, total: 0 };
+    
+    let total = 0;
+    let completed = 0;
+    
+    detail.cols.forEach((col) => {
+      if (
+        col.items[0] !== "Skip this week entirely" &&
+        col.items[0] !== "Skip — not needed for fresher Tier 2 roles yet"
+      ) {
+        col.items.forEach((_, idx) => {
+          total++;
+          if (checkedState[`${weekId}-${col.label}-${idx}`]) {
+            completed++;
+          }
+        });
+      }
+    });
+    
+    return { completed, total };
+  }, [checkedState]);
 
   const handleWeekClick = useCallback(
     (weekId: string) => {
@@ -172,6 +299,7 @@ export default function TimeTablePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {phase.weeks.map((wk: WeekCard) => {
               const isActive = activeWeek === wk.id;
+              const { completed, total } = getWeekProgress(wk.id);
               return (
                 <div
                   key={wk.id}
@@ -183,9 +311,16 @@ export default function TimeTablePage() {
                         : "border-border bg-card hover:border-muted-foreground/30 hover:shadow-sm"
                     }`}
                 >
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    {wk.num}
-                  </p>
+                  <div className="flex justify-between items-center">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      {wk.num}
+                    </p>
+                    {total > 0 && (
+                      <span className="text-[10px] font-medium text-muted-foreground tabular-nums bg-muted/60 px-1.5 py-0.5 rounded">
+                        {completed}/{total}
+                      </span>
+                    )}
+                  </div>
                   <p className="mt-1 text-sm font-medium text-foreground leading-tight">
                     {wk.name}
                   </p>
@@ -223,41 +358,126 @@ export default function TimeTablePage() {
         {weekDetail && (
           <div className="rounded-2xl border border-border bg-card p-5 sm:p-7">
             {/* Header */}
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              {weekDetail.title}
-            </h2>
-            <p className="mt-1 text-sm text-muted-foreground mb-6">
-              {weekDetail.sub}
-            </p>
+            <div className="flex justify-between items-start mb-6 flex-wrap gap-2">
+              <div>
+                <h2 className="text-lg sm:text-xl font-semibold text-foreground">
+                  {weekDetail.title}
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {weekDetail.sub}
+                </p>
+              </div>
+              {(() => {
+                const { completed, total } = getWeekProgress(activeWeek!);
+                if (total === 0) return null;
+                const pct = Math.round((completed / total) * 100);
+                return (
+                  <div className="flex flex-col items-end shrink-0">
+                    <span className="text-xs font-semibold text-foreground bg-primary/10 text-primary px-2.5 py-1 rounded-full border border-primary/20">
+                      {pct}% Completed ({completed}/{total})
+                    </span>
+                  </div>
+                );
+              })()}
+            </div>
 
             {/* Pillar columns */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-              {filteredCols.map((col) => (
-                <div key={col.label}>
-                  <h4
-                    className="text-[11px] font-semibold uppercase tracking-wider mb-2"
-                    style={{ color: col.color }}
-                  >
-                    {col.label}
-                  </h4>
-                  <div className="space-y-0">
-                    {col.items.map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-start gap-2 py-1.5 border-b border-border last:border-b-0"
+              {filteredCols.map((col) => {
+                const allCompleted = col.items.every((_, idx) => checkedState[`${activeWeek}-${col.label}-${idx}`]);
+                const someCompleted = col.items.some((_, idx) => checkedState[`${activeWeek}-${col.label}-${idx}`]);
+
+                return (
+                  <div key={col.label} className="border border-border rounded-xl p-3 bg-card/50">
+                    <div 
+                      onClick={() => handlePillarToggle(activeWeek!, col.label, col.items.length, allCompleted)}
+                      className="flex items-center justify-between mb-3 group/header cursor-pointer select-none"
+                    >
+                      <h4
+                        className={`text-[11px] font-semibold uppercase tracking-wider transition-all duration-200
+                          ${allCompleted ? "line-through opacity-50" : ""}`}
+                        style={{ color: col.color }}
                       >
-                        <span
-                          className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                          style={{ background: col.color }}
-                        />
-                        <span className="text-xs text-foreground leading-relaxed">
-                          {item}
-                        </span>
+                        {col.label}
+                      </h4>
+                      <div
+                        className={`flex h-4 w-4 items-center justify-center rounded border transition-all duration-150
+                          ${
+                            allCompleted
+                              ? "border-transparent text-white"
+                              : someCompleted
+                              ? "border-transparent text-white"
+                              : "border-muted-foreground/30 opacity-20 group-hover/header:opacity-100"
+                          }`}
+                        style={{
+                          backgroundColor: allCompleted ? col.color : someCompleted ? `${col.color}80` : "transparent",
+                        }}
+                      >
+                        {allCompleted ? (
+                          <svg
+                            className="h-2.5 w-2.5 fill-none stroke-current stroke-[3]"
+                            viewBox="0 0 24 24"
+                          >
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        ) : someCompleted ? (
+                          <span className="h-0.5 w-2 bg-white rounded-full" />
+                        ) : (
+                          <svg
+                            className="h-2.5 w-2.5 fill-none stroke-current stroke-[3] text-muted-foreground"
+                            viewBox="0 0 24 24"
+                          >
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        )}
                       </div>
-                    ))}
+                    </div>
+                    <div className="space-y-1">
+                      {col.items.map((item, idx) => {
+                        const isCompleted = checkedState[`${activeWeek}-${col.label}-${idx}`] || false;
+                        return (
+                          <div
+                            key={idx}
+                            onClick={() => handleSubtopicToggle(activeWeek!, col.label, idx)}
+                            className="flex items-start gap-2.5 py-2 border-b border-border last:border-b-0 cursor-pointer group/item select-none hover:bg-muted/40 px-1.5 rounded-lg transition-colors"
+                          >
+                            <div
+                              className={`mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border transition-all duration-150
+                                ${
+                                  isCompleted
+                                    ? "border-transparent text-white shadow-sm"
+                                    : "border-muted-foreground/30 group-hover/item:border-muted-foreground/60"
+                                }`}
+                              style={{
+                                backgroundColor: isCompleted ? col.color : "transparent",
+                              }}
+                            >
+                              {isCompleted && (
+                                <svg
+                                  className="h-2 w-2 fill-none stroke-current stroke-[3]"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                              )}
+                            </div>
+                            <span
+                              className={`text-xs leading-relaxed transition-all duration-200
+                                ${
+                                  isCompleted
+                                    ? "text-muted-foreground line-through opacity-50"
+                                    : "text-foreground"
+                                }`}
+                            >
+                              {item}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* ── Schedule section ─────────────────────────── */}
