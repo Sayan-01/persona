@@ -1,0 +1,15 @@
+# Build outputs and dependencies
+.next/
+node_modules/
+build/
+dist/
+coverage/
+
+# Database files
+prisma/migrations/
+
+# Static files and configurations
+public/
+package-lock.json
+*.env
+*.env.*
